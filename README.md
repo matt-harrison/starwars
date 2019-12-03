@@ -2,10 +2,8 @@
 # http-server .
 
 TO DO:
-- code cleanup
 - migrate loop logic to relevant "classes"
 - loop should just iterate over a single array of elements and trigger their update and draw methods
-- modularize?
 -
 - enemies sometimes shoot
 - players with no attacks?
@@ -15,4 +13,5 @@ TO DO:
 - password menu
 
 GLITCHES:
+- friendlies not attsached properly
 - blinking enemies disappear on player death

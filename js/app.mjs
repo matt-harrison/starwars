@@ -1,42 +1,70 @@
+import { fps, isMobile, magnification } from './config.js';
+
+import { detonation } from './modules/animations.js';
+import { artoo, stormtrooper, threepio } from './modules/characters.js';
+import { black, blueDark, gray, red, white } from './modules/colors.js';
+import episodes from './modules/episodes.js';
+
 //Initialize global vars
-isDebug = window.location.search.indexOf('debug') !== -1;
-isMobile = (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/).test(navigator.userAgent);
+let isDebug = window.location.search.indexOf('debug') !== -1;
 
-fps           = 16;
-hudOpacity    = '0.5';
-hudStatus     = '';
-cutsceneCount = 0;
-victimCount   = 0;
-victimDelay   = 16;
+let hudOpacity    = '0.5';
+let hudStatus     = '';
+let cutsceneCount = 0;
+let victimCount   = 0;
+let victimDelay   = 16;
 
-magnification = isMobile ? Math.floor(window.innerWidth / 100) : 5;
-titleSize     = isMobile ? '25px' : '40px';
-directionSize = isMobile ? '14px' : '25px';
-lineHeight    = isMobile ? '1' : '1.5';
-clickPrompt   = isMobile ? 'Tap to begin' : 'Press Enter';
-startPrompt   = isMobile ? 'Press Start'  : 'Press Enter';
+let titleSize     = isMobile ? '25px' : '40px';
+let directionSize = isMobile ? '14px' : '25px';
+let lineHeight    = isMobile ? '1' : '1.5';
+let clickPrompt   = isMobile ? 'Tap to begin' : 'Press Enter';
+let startPrompt   = isMobile ? 'Press Start'  : 'Press Enter';
 
-cardinals   = ['up', 'right', 'down', 'left'];
-buttonNames = ['btnRight', 'btnLeft', 'btnDown', 'btnUp', 'btnStart', 'btnAttack', 'btnAttack2'];
-numerals    = ['I', 'II', 'III', 'IV', 'V', 'VI'];
+let cardinals   = ['right', 'left', 'down', 'up'];
+let buttonNames = ['btnRight', 'btnLeft', 'btnDown', 'btnUp', 'btnStart', 'btnAttack', 'btnAttack2'];
+let numerals    = ['I', 'II', 'III', 'IV', 'V', 'VI'];
 
-animations = [];
-enemies    = [];
-friendlies = [];
-keys       = [];
-obstacles  = [];
-props      = [];
+let enemyCount;
+let propCount;
+let invincible;
+let score;
+let menuMode;
+let resetMode;
+let gameOver;
+let paused;
+let episode;
+let level;
 
-//Hex values
-blue     = '#0ff';
-blueDark = '#003471';
-gray     = '#ccc';
-green    = '#0f0';
-purple   = '#f0f';
-red      = '#f00';
-yellow   = '#ff0';
+let animations = [];
+let enemies    = [];
+let friendlies = [];
+let keys       = [];
+let obstacles  = [];
+let props      = [];
 
-Animation = function(obj, origin) {
+//DOM nodes
+let game;
+let stage;
+let hud;
+let title;
+let directions;
+let scoreboard;
+let scoreText;
+let victimText;
+let player;
+let cutscene;
+let hilt;
+let buttons;
+let dpad;
+let btnLeft;
+let btnRight;
+let btnUp;
+let btnDown;
+let btnAttack;
+let btnAttack2;
+let btnStart;
+
+const Animation = function(obj, origin) {
   importJSON(this, obj);
 
   this.origin = origin;
@@ -68,7 +96,7 @@ Animation = function(obj, origin) {
     if (this.remove) {
       stage.selector.removeChild(this.selector);
     }
-    position = animations.indexOf(this);
+    const position = animations.indexOf(this);
     animations.splice(position, 1);
   }
 
@@ -88,7 +116,7 @@ Animation = function(obj, origin) {
   }
 };
 
-Bomb = function(origin) {
+const Bomb = function(origin) {
   props.push(this);
 
   this.type = 'bomb';
@@ -111,17 +139,17 @@ Bomb = function(origin) {
   this.bomb.style.top = this.y + 'px';
   this.bomb.style.width = this.frameWidth + 'px';
   this.bomb.style.height = this.frameHeight + 'px';
-  this.bomb.style.backgroundColor = 'black';
+  this.bomb.style.backgroundColor = black;
   this.bomb.style.zIndex = '2';
   stage.selector.appendChild(this.bomb);
 
   this.selector = this.bomb;
 
   this.kill = function() {
-    detonation = new Animation(detonation, this);
+    new Animation(detonation, this);
 
     stage.selector.removeChild(this.selector);
-    position = props.indexOf(this);
+    const position = props.indexOf(this);
     props.splice(position, 1);
   }
 
@@ -138,7 +166,7 @@ Bomb = function(origin) {
       if (game.counter%2 === 0) {
         this.selector.style.backgroundColor = 'red';
       } else {
-        this.selector.style.backgroundColor = 'black';
+        this.selector.style.backgroundColor = black;
       }
     }
 
@@ -148,7 +176,7 @@ Bomb = function(origin) {
   }
 };
 
-CutScene = function(img) {
+const CutScene = function(img) {
   this.selector = document.createElement('div');
   this.selector.id = 'stage';
   this.selector.style.position = 'absolute';
@@ -158,7 +186,7 @@ CutScene = function(img) {
   this.height = game.height;
   this.selector.style.width = this.width + 'px';
   this.selector.style.height = this.height + 'px';
-  this.selector.style.backgroundColor = 'black';
+  this.selector.style.backgroundColor = black;
   this.selector.style.zIndex = '101';
   this.selector.setAttribute('data-key', 'enter');
   game.selector.insertBefore(this.selector, game.selector.firstChild);
@@ -194,7 +222,7 @@ CutScene = function(img) {
   }
 };
 
-Enemy = function(obj) {
+const Enemy = function(obj) {
   enemies.push(this);
   importJSON(this, obj);
 
@@ -267,7 +295,7 @@ Enemy = function(obj) {
   this.changeDir = function() {
     if (inBounds(this)) {
       this.spriteRow = getRandom(4);
-      randomDir = cardinals[this.spriteRow];
+      const randomDir = cardinals[this.spriteRow];
       if (this.dir === randomDir) {
         this.changeDir();
       } else {
@@ -314,9 +342,9 @@ Enemy = function(obj) {
 
   this.respawn = function() {
     stage.selector.removeChild(this.selector);
-    position = enemies.indexOf(this);
+    const position = enemies.indexOf(this);
     enemies.splice(position, 1);
-    enemy = new Enemy(obj);
+    new Enemy(obj);
   }
 
   this.kill = function() {
@@ -325,7 +353,7 @@ Enemy = function(obj) {
 
     if (typeof(this.death) !== 'undefined') {
       this.selector.style.display = 'none';
-      death = new Animation(this.death, this);
+      new Animation(this.death, this);
     } else {
       this.blinkCount = 0;
       this.spriteColumn = 0;
@@ -435,7 +463,7 @@ Enemy = function(obj) {
   this.draw();
 };
 
-Friendly = function(obj, details) {
+const Friendly = function(obj, details) {
   friendlies.push(this);
   importJSON(this, obj);
   importJSON(this, details);
@@ -498,15 +526,15 @@ Friendly = function(obj, details) {
   }
 
   this.remove = function() {
-    position = friendlies.indexOf(this);
+    const position = friendlies.indexOf(this);
     friendlies.splice(position, 1);
   }
 
   this.respawn = function() {
     stage.selector.removeChild(this.selector);
-    position = friendlies.indexOf(this);
+    const position = friendlies.indexOf(this);
     friendlies.splice(position, 1);
-    friend = new Friendly(obj, details);
+    new Friendly(obj, details);
   }
 
   this.kill = function() {
@@ -514,7 +542,7 @@ Friendly = function(obj, details) {
 
     if (typeof(this.death) !== 'undefined') {
       this.selector.style.display = 'none';
-      death = new Animation(this.death, this);
+      new Animation(this.death, this);
     } else {
       this.spriteColumn = 0;
       this.spriteRow = 4;
@@ -600,7 +628,7 @@ Friendly = function(obj, details) {
   this.draw();
 };
 
-Game = function() {
+const Game = function() {
   this.width  = isMobile ? window.innerWidth : 500;
   this.height = isMobile ? window.innerHeight : 500;
 
@@ -618,7 +646,7 @@ Game = function() {
   this.counter = 0;
 };
 
-Hud = function() {
+const Hud = function() {
   this.selector = document.createElement('div');
   this.selector.id = 'hud';
   this.selector.style.position = 'absolute';
@@ -628,7 +656,7 @@ Hud = function() {
   game.selector.appendChild(this.selector);
 };
 
-Lightsaber = function(origin, isLongRange) {
+const Lightsaber = function(origin, isLongRange) {
   props.push(this);
 
   this.type = 'lightsaber';
@@ -718,7 +746,7 @@ Lightsaber = function(origin, isLongRange) {
 
   this.kill = function() {
     stage.selector.removeChild(this.selector);
-    position = props.indexOf(this);
+    const position = props.indexOf(this);
     props.splice(position, 1);
     origin.lightsaber = '';
     origin.spriteColumn = 0;
@@ -773,7 +801,7 @@ Lightsaber = function(origin, isLongRange) {
   }
 };
 
-Obstacle = function(obj, objX, objY) {
+const Obstacle = function(obj, objX, objY) {
   obstacles.push(this);
   importJSON(this, obj);
 
@@ -830,7 +858,7 @@ Obstacle = function(obj, objX, objY) {
   }
 };
 
-Projectile = function(origin) {
+const Projectile = function(origin) {
   props.push(this);
   importJSON(this, origin.projectile);
 
@@ -889,7 +917,7 @@ Projectile = function(origin) {
 
   this.kill = function() {
     stage.selector.removeChild(this.selector);
-    position = props.indexOf(this);
+    const position = props.indexOf(this);
     props.splice(position, 1);
   }
 
@@ -947,7 +975,7 @@ Projectile = function(origin) {
   this.draw();
 };
 
-Player = function(obj) {
+const Player = function(obj) {
   importJSON(this, obj);
 
   this.speed = this.speed * (magnification / 5);
@@ -997,7 +1025,7 @@ Player = function(obj) {
   this.attack = function(key) {
     if (this.weaponReady) {
       if (this.weaponType === 'projectile') {
-        projectile = new Projectile(this);
+        new Projectile(this);
 
         //Sometimes the enemy will try to dodge
         for (var enemy in enemies) {
@@ -1009,9 +1037,9 @@ Player = function(obj) {
           }
         }
       } else if (this.weaponType === 'bomb') {
-        bomb = new Bomb(this);
+        new Bomb(this);
       } else if (this.weaponType === 'lightsaber') {
-        isLongRange = (key === 'Z');
+        const isLongRange = (key === 'Z');
         this.lightsaber = new Lightsaber(this, isLongRange);
         keys = [key];
 
@@ -1028,7 +1056,7 @@ Player = function(obj) {
     this.active = false;
     if (typeof(this.death) !== 'undefined') {
       this.selector.style.display = 'none';
-      death = new Animation(this.death, this);
+      new Animation(this.death, this);
       if (this.lightsaber !== '') {
         this.lightsaber.kill();
       }
@@ -1122,7 +1150,7 @@ Player = function(obj) {
   this.draw();
 };
 
-Stage = function(obj) {
+const Stage = function(obj) {
   importJSON(this, obj);
 
   //Attach to document
@@ -1150,2351 +1178,17 @@ Stage = function(obj) {
   this.defeated = false;
 };
 
-//Obstacles
-bar = {
-  img: 'bar',
-  width: 23 * magnification,
-  height: 14 * magnification,
-  frameWidth: 23 * magnification,
-  frameHeight: 14 * magnification,
-  frameCount: 1,
-  speed: 0,
-  impassable: true
-};
-
-desks = {
-  img: 'desks',
-  width: 13 * magnification,
-  height: 40 * magnification,
-  frameWidth: 13 * magnification,
-  frameHeight: 40 * magnification,
-  frameCount: 1,
-  speed: 0,
-  impassable: true
-};
-
-dragon = {
-  img: 'dragon',
-  width: 62 * magnification,
-  height: 13 * magnification,
-  frameWidth: 62 * magnification,
-  frameHeight: 13 * magnification,
-  frameCount: 1,
-  speed: 0,
-  impassable: true
-};
-
-falconbig = {
-  img: 'falconbig',
-  width: 76 * magnification,
-  height: 39 * magnification,
-  frameWidth: 76 * magnification,
-  frameHeight: 39 * magnification,
-  frameCount: 1,
-  speed: 0,
-  impassable: true
-};
-
-igloo = {
-  img: 'igloo',
-  width: 28 * magnification,
-  height: 17 * magnification,
-  frameWidth: 28 * magnification,
-  frameHeight: 17 * magnification,
-  frameCount: 1,
-  speed: 0,
-  impassable: true
-};
-
-speeder = {
-  img: 'speeder',
-  width: 120 * magnification,
-  height: 12 * magnification,
-  frameWidth: 30 * magnification,
-  frameHeight: 12 * magnification,
-  frameCount: 4,
-  speed: 0,
-  impassable: true
-};
-
-table = {
-  img: 'table',
-  width: 16 * magnification,
-  height: 11 * magnification,
-  frameWidth: 16 * magnification,
-  frameHeight: 11 * magnification,
-  frameCount: 1,
-  speed: 0,
-  impassable: true
-};
-
-tractorBeamGenerator = {
-  img: 'tractorBeamGenerator',
-  width: 80 * magnification,
-  height: 42 * magnification,
-  frameWidth: 20 * magnification,
-  frameHeight: 42 * magnification,
-  frameCount: 4,
-  speed: 0,
-  impassable: true
-};
-
-//Projectiles
-gunganBall = {
-  name: 'gunganBall',
-  width: 30 * magnification,
-  height: 6 * magnification,
-  frameWidth: 6 * magnification,
-  frameHeight: 6 * magnification,
-  frameCount: 5,
-  speed: 20
-};
-
-rock = {
-  name: 'rock',
-  width: 20 * magnification,
-  height: 5 * magnification,
-  frameWidth: 5 * magnification,
-  frameHeight: 5 * magnification,
-  frameCount: 4,
-  speed: 20
-};
-
-stun = {
-  name: 'stun',
-  width: 60 * magnification,
-  height: 10 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 10 * magnification,
-  frameCount: 6,
-  speed: 20
-};
-
-//Animations
-detonation = {
-  name: 'detonation',
-  frameWidth: 9 * magnification,
-  frameHeight: 5 * magnification,
-  frameCount: 5,
-  remove: true
-};
-
-explosion = {
-  name: 'explosion',
-  frameWidth: 10 * magnification,
-  frameHeight: 12 * magnification,
-  frameCount: 9,
-  remove: true
-};
-
-explosionsmall = {
-  name: 'explosionsmall',
-  frameWidth: 10 * magnification,
-  frameHeight: 10 * magnification,
-  frameCount: 7,
-  remove: true
-};
-
-spritz = {
-  name: 'spritz',
-  frameWidth: 10 * magnification,
-  frameHeight: 12 * magnification,
-  frameCount: 5,
-  remove: true
-};
-
-//Characters
-ackbar = {
-  name: 'Admiral Ackbar',
-  sprite: 'ackbar',
-  ship: false,
-  weaponType: 'projectile',
-  projectile: 'laser',
-  weaponColor: green,
-  weaponOffsetLeft: [0, 4],
-  weaponOffsetUp: [7, 0],
-  weaponOffsetRight: [10, 4],
-  weaponOffsetDown: [3, 8],
-  width: 90 * magnification,
-  height: 60 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 12 * magnification,
-  moveFrameCount: 8,
-  speed: 8
-};
-
-amidala = {
-  name: 'Queen Amidala',
-  sprite: 'amidala',
-  ship: false,
-  weaponType: 'projectile',
-  projectile: 'laser',
-  weaponColor: green,
-  weaponOffsetLeft: [0, 5],
-  weaponOffsetUp: [7, 0],
-  weaponOffsetRight: [10, 5],
-  weaponOffsetDown: [3, 9],
-  width: 90 * magnification,
-  height: 60 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 12 * magnification,
-  moveFrameCount: 8,
-  speed: 8
-};
-
-ani = {
-  name: 'Ani',
-  sprite: 'ani',
-  ship: false,
-  weaponType: 'bomb',
-  weaponOffset: [3, 9],
-  width: 63 * magnification,
-  height: 50 * magnification,
-  frameWidth: 7 * magnification,
-  frameHeight: 10 * magnification,
-  moveFrameCount: 8,
-  speed: 8
-};
-
-artoo = {
-  name: 'R2-D2',
-  sprite: 'artoo',
-  ship: false,
-  weaponType: 'bomb',
-  weaponOffset: [3, 7],
-  width: 14 * magnification,
-  height: 40 * magnification,
-  frameWidth: 7 * magnification,
-  frameHeight: 8 * magnification,
-  moveFrameCount: 1,
-  speed: 10
-};
-
-arfive = {
-  name: 'R5-D4',
-  sprite: 'arfive',
-  ship: false,
-  death: {
-    name: 'arfivedeath',
-    frameWidth: 5 * magnification,
-    frameHeight: 9 * magnification,
-    frameCount: 6,
-    remove: false
-  },
-  weaponType: 'bomb',
-  weaponOffset: [3, 8],
-  width: 10 * magnification,
-  height: 36 * magnification,
-  frameWidth: 5 * magnification,
-  frameHeight: 9 * magnification,
-  moveFrameCount: 1,
-  speed: 6
-};
-
-atst = {
-  name: 'AT-ST',
-  sprite: 'atst',
-  ship: false,
-  weaponType: 'projectile',
-  projectile: 'laser',
-  weaponColor: red,
-  weaponOffsetLeft: [2, 5],
-  weaponOffsetUp: [8, 0],
-  weaponOffsetRight: [13, 5],
-  weaponOffsetDown: [6, 8],
-  width: 135 * magnification,
-  height: 75 * magnification,
-  frameWidth: 15 * magnification,
-  frameHeight: 15 * magnification,
-  moveFrameCount: 8,
-  speed: 4
-};
-
-auntberu = {
-  name: 'Aunt Beru',
-  sprite: 'auntberu',
-  ship: false,
-  death: {
-    name: 'auntberudeath',
-    frameWidth: 10 * magnification,
-    frameHeight: 12 * magnification,
-    frameCount: 10,
-    remove: false
-  },
-  weaponType: 'bomb',
-  weaponOffset: [4, 10],
-  width: 40 * magnification,
-  height: 44 * magnification,
-  frameWidth: 8 * magnification,
-  frameHeight: 11 * magnification,
-  moveFrameCount: 4,
-  speed: 6
-};
-
-bantha = {
-  name: 'Bantha',
-  sprite: 'bantha',
-  ship: false,
-  weaponType: 'attack',
-  width: 100 * magnification,
-  height: 60 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 12 * magnification,
-  moveFrameCount: 8,
-  speed: 10
-};
-
-battledroid = {
-  name: 'Battle Droid',
-  sprite: 'battledroid',
-  ship: false,
-  weaponType: 'projectile',
-  projectile: 'laser',
-  weaponColor: green,
-  weaponOffsetLeft: [0, 4],
-  weaponOffsetUp: [6, 0],
-  weaponOffsetRight: [10, 4],
-  weaponOffsetDown: [3, 8],
-  width: 90 * magnification,
-  height: 55 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 11 * magnification,
-  moveFrameCount: 8,
-  speed: 8
-};
-
-bb8 = {
-  name: 'BB-8',
-  sprite: 'bb8',
-  ship: false,
-  weaponType: 'bomb',
-  weaponOffset: [3, 7],
-  width: 45 * magnification,
-  height: 35 * magnification,
-  frameWidth: 5 * magnification,
-  frameHeight: 7 * magnification,
-  moveFrameCount: 8,
-  speed: 10
-};
-
-ben = {
-  name: 'Ben Kenobi',
-  sprite: 'ben',
-  ship: false,
-  death: {
-    name: 'bendeath',
-    frameWidth: 10 * magnification,
-    frameHeight: 12 * magnification,
-    frameCount: 6,
-    remove: false
-  },
-  weaponType: 'lightsaber',
-  weaponColor: blue,
-  weaponOffsetLeft: [0, 4],
-  weaponOffsetUp: [8, 0],
-  weaponOffsetRight: [10, 4],
-  weaponOffsetDown: [1, 10],
-  width: 60 * magnification,
-  height: 60 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 12 * magnification,
-  moveFrameCount: 4,
-  speed: 6
-};
-
-bikerscout = {
-  name: 'Biker Scout',
-  sprite: 'bikerscout',
-  ship: false,
-  weaponType: 'projectile',
-  projectile: 'laser',
-  weaponColor: red,
-  weaponOffsetLeft: [0, 4],
-  weaponOffsetUp: [7, 0],
-  weaponOffsetRight: [10, 4],
-  weaponOffsetDown: [3, 8],
-  width: 90 * magnification,
-  height: 55 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 11 * magnification,
-  moveFrameCount: 8,
-  speed: 8
-};
-
-bobafett = {
-  name: 'Boba Fett',
-  sprite: 'bobafett',
-  ship: false,
-  weaponType: 'projectile',
-  projectile: 'laser',
-  weaponColor: red,
-  weaponOffsetLeft: [0, 5],
-  weaponOffsetUp: [7, 1],
-  weaponOffsetRight: [10, 5],
-  weaponOffsetDown: [3, 9],
-  width: 90 * magnification,
-  height: 60 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 12 * magnification,
-  moveFrameCount: 8,
-  speed: 8
-};
-
-bossnass = {
-  name: 'Boss Nass',
-  sprite: 'bossnass',
-  ship: false,
-  weaponType: 'attack',
-  width: 90 * magnification,
-  height: 60 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 12 * magnification,
-  moveFrameCount: 8,
-  speed: 4
-};
-
-captainantilles = {
-  name: 'Captain Antilles',
-  sprite: 'captainantilles',
-  ship: false,
-  weaponType: 'projectile',
-  projectile: 'laser',
-  weaponColor: green,
-  weaponOffsetLeft: [0, 4],
-  weaponOffsetUp: [6, 0],
-  weaponOffsetRight: [10, 4],
-  weaponOffsetDown: [3, 7],
-  width: 90 * magnification,
-  height: 55 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 11 * magnification,
-  moveFrameCount: 8,
-  speed: 8
-};
-
-carbonite = {
-  name: 'Frozen Han Solo',
-  sprite: 'carbonite',
-  ship: false,
-  weaponType: 'attack',
-  width: 20 * magnification,
-  height: 60 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 12 * magnification,
-  moveFrameCount: 1,
-  speed: 8
-};
-
-chewbacca = {
-  name: 'Chewbacca',
-  sprite: 'chewbacca',
-  ship: false,
-  weaponType: 'projectile',
-  projectile: 'laser',
-  weaponColor: green,
-  weaponOffsetLeft: [0, 5],
-  weaponOffsetUp: [7, 0],
-  weaponOffsetRight: [10, 5],
-  weaponOffsetDown: [3, 9],
-  width: 90 * magnification,
-  height: 60 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 12 * magnification,
-  moveFrameCount: 8,
-  speed: 8
-};
-
-chewbacca5 = {
-  name: 'Chewbacca',
-  sprite: 'chewbacca5',
-  ship: false,
-  weaponType: 'projectile',
-  projectile: 'laser',
-  weaponColor: green,
-  weaponOffsetLeft: [0, 8],
-  weaponOffsetUp: [8, 1],
-  weaponOffsetRight: [11, 8],
-  weaponOffsetDown: [4, 12],
-  width: 108 * magnification,
-  height: 75 * magnification,
-  frameWidth: 12 * magnification,
-  frameHeight: 15 * magnification,
-  moveFrameCount: 8,
-  speed: 6
-};
-
-clonecaptain = {
-  name: 'Clone Captain',
-  sprite: 'clonecaptain',
-  ship: false,
-  weaponType: 'projectile',
-  projectile: 'laser',
-  weaponColor: blue,
-  weaponOffsetLeft: [0, 4],
-  weaponOffsetUp: [7, 1],
-  weaponOffsetRight: [10, 4],
-  weaponOffsetDown: [3, 8],
-  width: 90 * magnification,
-  height: 55 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 11 * magnification,
-  moveFrameCount: 8,
-  speed: 8
-};
-
-clonetrooper = {
-  name: 'Clone Trooper',
-  sprite: 'clonetrooper',
-  ship: false,
-  weaponType: 'projectile',
-  projectile: 'laser',
-  weaponColor: blue,
-  weaponOffsetLeft: [0, 4],
-  weaponOffsetUp: [7, 0],
-  weaponOffsetRight: [10, 4],
-  weaponOffsetDown: [3, 8],
-  width: 90 * magnification,
-  height: 55 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 11 * magnification,
-  moveFrameCount: 8,
-  speed: 8
-};
-
-coruscantguard = {
-  name: 'Coruscant Guard',
-  sprite: 'coruscantguard',
-  ship: false,
-  weaponType: 'projectile',
-  projectile: 'laser',
-  weaponColor: red,
-  weaponOffsetLeft: [0, 5],
-  weaponOffsetUp: [7, 1],
-  weaponOffsetRight: [10, 5],
-  weaponOffsetDown: [3, 9],
-  width: 50 * magnification,
-  height: 60 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 12 * magnification,
-  moveFrameCount: 4,
-  speed: 8
-};
-
-darthmaul = {
-  name: 'Darth Maul',
-  sprite: 'darthmaul',
-  ship: false,
-  weaponType: 'lightsaber',
-  weaponColor: red,
-  weaponOffsetLeft: [0, 4],
-  weaponOffsetUp: [8, 0],
-  weaponOffsetRight: [10, 4],
-  weaponOffsetDown: [1, 10],
-  width: 100 * magnification,
-  height: 60 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 12 * magnification,
-  moveFrameCount: 8,
-  speed: 8
-};
-
-darthvader = {
-  name: 'Darth Vader',
-  sprite: 'darthvader',
-  ship: false,
-  weaponType: 'lightsaber',
-  weaponColor: red,
-  weaponOffsetLeft: [0, 5],
-  weaponOffsetUp: [8, 0],
-  weaponOffsetRight: [10, 3],
-  weaponOffsetDown: [1, 8],
-  width: 100 * magnification,
-  height: 60 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 12 * magnification,
-  moveFrameCount: 8,
-  speed: 8
-};
-
-darthvader5= {
-  name: 'Darth Vader',
-  sprite: 'darthvader5',
-  ship: false,
-  weaponType: 'lightsaber',
-  weaponColor: red,
-  weaponOffsetLeft: [0, 5],
-  weaponOffsetUp: [8, 0],
-  weaponOffsetRight: [10, 3],
-  weaponOffsetDown: [1, 8],
-  width: 100 * magnification,
-  height: 60 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 12 * magnification,
-  moveFrameCount: 8,
-  speed: 8
-};
-
-darthvader6= {
-  name: 'Darth Vader',
-  sprite: 'darthvader6',
-  ship: false,
-  death: {
-    name: 'darthvader6death',
-    frameWidth: 10 * magnification,
-    frameHeight: 12 * magnification,
-    frameCount: 12,
-    remove: false
-  },
-  weaponType: 'lightsaber',
-  weaponColor: red,
-  weaponOffsetLeft: [0, 5],
-  weaponOffsetUp: [8, 0],
-  weaponOffsetRight: [10, 3],
-  weaponOffsetDown: [1, 8],
-  width: 100 * magnification,
-  height: 60 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 12 * magnification,
-  moveFrameCount: 8,
-  speed: 8
-};
-
-deathstartrooper = {
-  name: 'Death Star Trooper',
-  sprite: 'deathstartrooper',
-  ship: false,
-  weaponType: 'projectile',
-  projectile: 'laser',
-  weaponColor: green,
-  weaponOffsetLeft: [0, 4],
-  weaponOffsetUp: [7, 0],
-  weaponOffsetRight: [10, 4],
-  weaponOffsetDown: [3, 7],
-  width: 90 * magnification,
-  height: 55 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 11 * magnification,
-  moveFrameCount: 8,
-  speed: 8
-};
-
-droideka = {
-  name: 'Droideka',
-  sprite: 'droideka',
-  ship: false,
-  weaponType: 'projectile',
-  projectile: 'laser',
-  weaponColor: red,
-  weaponOffsetLeft: [0, 5],
-  weaponOffsetUp: [7, 1],
-  weaponOffsetRight: [10, 5],
-  weaponOffsetDown: [2, 8],
-  width: 90 * magnification,
-  height: 60 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 12 * magnification,
-  moveFrameCount: 8,
-  speed: 12
-};
-
-emperor = {
-  name: 'Emperor',
-  sprite: 'emperor',
-  ship: false,
-  weaponType: 'bomb',
-  width: 90 * magnification,
-  height: 60 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 12 * magnification,
-  moveFrameCount: 8,
-  speed: 4
-};
-
-ewok = {
-  name: 'Ewok',
-  sprite: 'ewok',
-  ship: false,
-  weaponType: 'projectile',
-  projectile: rock,
-  weaponOffsetLeft: [0, 4],
-  weaponOffsetUp: [3, 0],
-  weaponOffsetRight: [10, 4],
-  weaponOffsetDown: [3, 10],
-  weaponDelay: fps / 2,
-  width: 90 * magnification,
-  height: 55 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 11 * magnification,
-  moveFrameCount: 8,
-  speed: 8
-};
-
-gamorrean = {
-  name: 'Gamorrean Guard',
-  sprite: 'gamorrean',
-  ship: false,
-  weaponType: 'attack',
-  width: 90 * magnification,
-  height: 60 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 12 * magnification,
-  moveFrameCount: 8,
-  speed: 6
-};
-
-garindan = {
-  name: 'Garindan',
-  sprite: 'garindan',
-  ship: false,
-  weaponType: 'projectile',
-  projectile: 'laser',
-  weaponColor: red,
-  weaponOffsetLeft: [0, 5],
-  weaponOffsetUp: [7, 1],
-  weaponOffsetRight: [10, 5],
-  weaponOffsetDown: [3, 9],
-  width: 90 * magnification,
-  height: 60 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 12 * magnification,
-  moveFrameCount: 8,
-  speed: 8
-};
-
-gonkdroid = {
-  name: 'Gonk Droid',
-  sprite: 'gonkdroid',
-  ship: false,
-  weaponType: 'bomb',
-  weaponOffset: [4, 11],
-  weaponDelay: fps / 2,
-  width: 90 * magnification,
-  height: 60 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 12 * magnification,
-  moveFrameCount: 8,
-  speed: 4
-};
-
-greedo = {
-  name: 'Greedo',
-  sprite: 'greedo',
-  ship: false,
-  weaponType: 'projectile',
-  projectile: 'laser',
-  weaponColor: red,
-  weaponOffsetLeft: [0, 4],
-  weaponOffsetUp: [7, 0],
-  weaponOffsetRight: [10, 4],
-  weaponOffsetDown: [3, 8],
-  width: 90 * magnification,
-  height: 55 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 11 * magnification,
-  moveFrameCount: 8,
-  speed: 8
-};
-
-gungan = {
-  name: 'Gungan',
-  sprite: 'gungan',
-  ship: false,
-  weaponType: 'projectile',
-  projectile: gunganBall,
-  weaponOffsetLeft: [0, 3],
-  weaponOffsetUp: [2, 0],
-  weaponOffsetRight: [10, 3],
-  weaponOffsetDown: [2, 12],
-  width: 90 * magnification,
-  height: 60 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 12 * magnification,
-  moveFrameCount: 8,
-  speed: 8
-};
-
-hansolo = {
-  name: 'Han Solo',
-  sprite: 'hansolo',
-  ship: false,
-  weaponType: 'projectile',
-  projectile: 'laser',
-  weaponColor: green,
-  weaponOffsetLeft: [0, 4],
-  weaponOffsetUp: [7, 0],
-  weaponOffsetRight: [10, 4],
-  weaponOffsetDown: [3, 8],
-  width: 90 * magnification,
-  height: 55 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 11 * magnification,
-  moveFrameCount: 8,
-  speed: 8
-};
-
-hansolo5 = {
-  name: 'Han Solo',
-  sprite: 'hansolo5',
-  ship: false,
-  weaponType: 'projectile',
-  projectile: 'laser',
-  weaponColor: green,
-  weaponOffsetLeft: [0, 4],
-  weaponOffsetUp: [7, 0],
-  weaponOffsetRight: [10, 4],
-  weaponOffsetDown: [3, 8],
-  width: 90 * magnification,
-  height: 55 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 11 * magnification,
-  moveFrameCount: 8,
-  speed: 8
-};
-
-imperialguard = {
-  name: 'Imperial Guard',
-  sprite: 'imperialguard',
-  ship: false,
-  weaponType: 'attack',
-  width: 50 * magnification,
-  height: 60 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 12 * magnification,
-  moveFrameCount: 4,
-  speed: 8
-};
-
-jabba = {
-  name: 'Jabba the Hutt',
-  sprite: 'jabba',
-  ship: false,
-  weaponType: 'attack',
-  width: 90 * magnification,
-  height: 55 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 11 * magnification,
-  moveFrameCount: 8,
-  speed: 4
-};
-
-jangofett = {
-  name: 'Jango Fett',
-  sprite: 'jangofett',
-  ship: false,
-  weaponType: 'projectile',
-  projectile: 'laser',
-  weaponColor: red,
-  weaponOffsetLeft: [0, 5],
-  weaponOffsetUp: [7, 1],
-  weaponOffsetRight: [10, 5],
-  weaponOffsetDown: [3, 9],
-  width: 90 * magnification,
-  height: 60 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 12 * magnification,
-  moveFrameCount: 8,
-  speed: 8
-};
-
-jarjar = {
-  name: 'Jar Jar Binks',
-  sprite: 'jarjar',
-  ship: false,
-  weaponType: 'projectile',
-  projectile: gunganBall,
-  weaponOffsetLeft: [0, 3],
-  weaponOffsetUp: [2, 0],
-  weaponOffsetRight: [10, 3],
-  weaponOffsetDown: [2, 12],
-  width: 90 * magnification,
-  height: 60 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 12 * magnification,
-  moveFrameCount: 8,
-  speed: 8
-};
-
-jawa = {
-  name: 'Jawa',
-  sprite: 'jawa',
-  ship: false,
-  weaponType: 'projectile',
-  projectile: 'laser',
-  weaponColor: red,
-  weaponOffsetLeft: [0, 4],
-  weaponOffsetUp: [7, 0],
-  weaponOffsetRight: [10, 4],
-  weaponOffsetDown: [3, 7],
-  width: 50 * magnification,
-  height: 50 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 10 * magnification,
-  moveFrameCount: 4,
-  speed: 8
-};
-
-kyloren = {
-  name: 'Kylo Ren',
-  sprite: 'kyloren',
-  ship: false,
-  weaponType: 'lightsaber',
-  weaponColor: red,
-  weaponOffsetLeft: [0, 5],
-  weaponOffsetUp: [8, 0],
-  weaponOffsetRight: [10, 3],
-  weaponOffsetDown: [1, 8],
-  width: 100 * magnification,
-  height: 60 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 12 * magnification,
-  moveFrameCount: 8,
-  speed: 8
-};
-
-kylorenunmasked = {
-  name: 'Kylo Ren',
-  sprite: 'kylorenunmasked',
-  ship: false,
-  weaponType: 'lightsaber',
-  weaponColor: red,
-  weaponOffsetLeft: [0, 5],
-  weaponOffsetUp: [8, 0],
-  weaponOffsetRight: [10, 3],
-  weaponOffsetDown: [1, 8],
-  width: 100 * magnification,
-  height: 60 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 12 * magnification,
-  moveFrameCount: 8,
-  speed: 8
-};
-
-lando = {
-  name: 'Lando Calrissian',
-  sprite: 'lando',
-  ship: false,
-  weaponType: 'projectile',
-  projectile: 'laser',
-  weaponColor: green,
-  weaponOffsetLeft: [0, 4],
-  weaponOffsetUp: [7, 0],
-  weaponOffsetRight: [10, 4],
-  weaponOffsetDown: [3, 8],
-  width: 90 * magnification,
-  height: 55 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 11 * magnification,
-  moveFrameCount: 8,
-  speed: 8
-};
-
-leia = {
-  name: 'Princess Leia',
-  sprite: 'leia',
-  ship: false,
-  weaponType: 'projectile',
-  projectile: 'laser',
-  weaponColor: green,
-  weaponOffsetLeft: [0, 4],
-  weaponOffsetUp: [7, 0],
-  weaponOffsetRight: [10, 4],
-  weaponOffsetDown: [3, 8],
-  width: 90 * magnification,
-  height: 55 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 11 * magnification,
-  moveFrameCount: 8,
-  speed: 8
-};
-
-leia6 = {
-  name: 'Princess Leia',
-  sprite: 'leia6',
-  ship: false,
-  weaponType: 'projectile',
-  projectile: 'laser',
-  weaponColor: green,
-  weaponOffsetLeft: [0, 4],
-  weaponOffsetUp: [7, 0],
-  weaponOffsetRight: [10, 4],
-  weaponOffsetDown: [3, 8],
-  width: 90 * magnification,
-  height: 55 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 11 * magnification,
-  moveFrameCount: 8,
-  speed: 8
-};
-
-lobot = {
-  name: 'Lobot',
-  sprite: 'lobot',
-  ship: false,
-  weaponType: 'projectile',
-  projectile: 'laser',
-  weaponColor: green,
-  weaponOffsetLeft: [0, 4],
-  weaponOffsetUp: [7, 0],
-  weaponOffsetRight: [10, 4],
-  weaponOffsetDown: [3, 8],
-  width: 90 * magnification,
-  height: 55 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 11 * magnification,
-  moveFrameCount: 8,
-  speed: 8
-};
-
-logray = {
-  name: 'Logray',
-  sprite: 'logray',
-  ship: false,
-  weaponType: 'projectile',
-  projectile: 'rock',
-  width: 90 * magnification,
-  height: 60 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 12 * magnification,
-  moveFrameCount: 8,
-  speed: 8
-};
-
-luke = {
-  name: 'Luke Skywalker',
-  sprite: 'luke',
-  ship: false,
-  weaponType: 'projectile',
-  projectile: 'laser',
-  weaponColor: green,
-  weaponOffsetLeft: [0, 4],
-  weaponOffsetUp: [7, 0],
-  weaponOffsetRight: [10, 4],
-  weaponOffsetDown: [3, 8],
-  width: 90 * magnification,
-  height: 55 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 11 * magnification,
-  moveFrameCount: 8,
-  speed: 8
-};
-
-luke5 = {
-  name: 'Luke Skywalker',
-  sprite: 'luke5',
-  ship: false,
-  weaponType: 'projectile',
-  projectile: 'laser',
-  weaponColor: green,
-  weaponOffsetLeft: [0, 4],
-  weaponOffsetUp: [7, 0],
-  weaponOffsetRight: [10, 4],
-  weaponOffsetDown: [3, 8],
-  width: 90 * magnification,
-  height: 55 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 11 * magnification,
-  moveFrameCount: 8,
-  speed: 8
-};
-
-luke6 = {
-  name: 'Luke Skywalker',
-  sprite: 'luke6',
-  ship: false,
-  weaponType: 'lightsaber',
-  weaponColor: green,
-  weaponOffsetLeft: [0, 3],
-  weaponOffsetUp: [8, 1],
-  weaponOffsetRight: [10, 3],
-  weaponOffsetDown: [1, 9],
-  width: 100 * magnification,
-  height: 60 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 12 * magnification,
-  moveFrameCount: 8,
-  speed: 8
-};
-
-macewindu = {
-  name: 'Mace Windu',
-  sprite: 'macewindu',
-  ship: false,
-  weaponType: 'lightsaber',
-  weaponColor: purple,
-  weaponOffsetLeft: [0, 3],
-  weaponOffsetUp: [8, 0],
-  weaponOffsetRight: [10, 3],
-  weaponOffsetDown: [1, 9],
-  width: 100 * magnification,
-  height: 55 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 11 * magnification,
-  moveFrameCount: 8,
-  speed: 8
-};
-
-mawhonic = {
-  name: 'Mawhonic',
-  sprite: 'mawhonic',
-  ship: false,
-  weaponType: 'projectile',
-  projectile: 'laser',
-  weaponColor: blue,
-  weaponOffsetLeft: [0, 4],
-  weaponOffsetUp: [7, 0],
-  weaponOffsetRight: [10, 4],
-  weaponOffsetDown: [3, 8],
-  width: 90 * magnification,
-  height: 55 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 11 * magnification,
-  moveFrameCount: 8,
-  speed: 8
-};
-
-mousedroid = {
-  name: 'Mouse Droid',
-  sprite: 'mousedroid',
-  ship: false,
-  death: detonation,
-  weaponType: 'bomb',
-  weaponOffset: [4, 5],
-  width: 16 * magnification,
-  height: 32 * magnification,
-  frameWidth: 8 * magnification,
-  frameHeight: 8 * magnification,
-  moveFrameCount: 1,
-  speed: 12
-};
-
-naboopilot = {
-  name: 'Naboo Pilot',
-  sprite: 'naboopilot',
-  ship: false,
-  weaponType: 'projectile',
-  projectile: 'laser',
-  weaponColor: blue,
-  weaponOffsetLeft: [0, 4],
-  weaponOffsetUp: [7, 0],
-  weaponOffsetRight: [10, 4],
-  weaponOffsetDown: [3, 8],
-  width: 90 * magnification,
-  height: 55 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 11 * magnification,
-  moveFrameCount: 8,
-  speed: 8
-};
-
-nutegunray = {
-  name: 'Nute Gunray',
-  sprite: 'nutegunray',
-  ship: false,
-  weaponType: 'none',
-  width: 50 * magnification,
-  height: 60 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 12 * magnification,
-  moveFrameCount: 4,
-  speed: 5
-};
-
-obiwan = {
-  name: 'Obi Wan Kenobi',
-  sprite: 'obiwan',
-  ship: false,
-  weaponType: 'lightsaber',
-  weaponColor: blue,
-  weaponOffsetLeft: [0, 3],
-  weaponOffsetUp: [8, 0],
-  weaponOffsetRight: [10, 3],
-  weaponOffsetDown: [1, 10],
-  width: 100 * magnification,
-  height: 60 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 12 * magnification,
-  moveFrameCount: 8,
-  speed: 8
-};
-
-officerblack = {
-  name: 'Imperial Officer',
-  sprite: 'officerblack',
-  ship: false,
-  weaponType: 'projectile',
-  projectile: 'laser',
-  weaponColor: red,
-  weaponOffsetLeft: [0, 4],
-  weaponOffsetUp: [7, 0],
-  weaponOffsetRight: [10, 4],
-  weaponOffsetDown: [3, 8],
-  width: 90 * magnification,
-  height: 55 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 11 * magnification,
-  moveFrameCount: 8,
-  speed: 8
-};
-
-officergreen = {
-  name: 'Imperial Officer',
-  sprite: 'officergreen',
-  ship: false,
-  weaponType: 'projectile',
-  projectile: 'laser',
-  weaponColor: red,
-  weaponOffsetLeft: [0, 4],
-  weaponOffsetUp: [7, 0],
-  weaponOffsetRight: [10, 4],
-  weaponOffsetDown: [3, 8],
-  width: 90 * magnification,
-  height: 55 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 11 * magnification,
-  moveFrameCount: 8,
-  speed: 8
-};
-
-panaka = {
-  name: 'Captain Panaka',
-  sprite: 'panaka',
-  ship: false,
-  weaponType: 'projectile',
-  projectile: 'laser',
-  weaponColor: blue,
-  weaponOffsetLeft: [0, 4],
-  weaponOffsetUp: [7, 0],
-  weaponOffsetRight: [10, 4],
-  weaponOffsetDown: [3, 8],
-  width: 90 * magnification,
-  height: 55 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 11 * magnification,
-  moveFrameCount: 8,
-  speed: 8
-};
-
-pondababa = {
-  name: 'Ponda Baba',
-  sprite: 'pondababa',
-  ship: false,
-  weaponType: 'none',
-  width: 90 * magnification,
-  height: 60 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 12 * magnification,
-  moveFrameCount: 8,
-  speed: 8
-};
-
-protocolblack = {
-  name: 'Protocol Droid',
-  sprite: 'protocolblack',
-  ship: false,
-  weaponType: 'none',
-  width: 72 * magnification,
-  height: 50 * magnification,
-  frameWidth: 8 * magnification,
-  frameHeight: 10 * magnification,
-  moveFrameCount: 8,
-  speed: 5
-};
-
-protocolwhite = {
-  name: 'Protocol Droid',
-  sprite: 'protocolwhite',
-  ship: false,
-  weaponType: 'none',
-  width: 72 * magnification,
-  height: 50 * magnification,
-  frameWidth: 8 * magnification,
-  frameHeight: 10 * magnification,
-  moveFrameCount: 8,
-  speed: 5
-};
-
-quigonjinn = {
-  name: 'Qui-Gon Jinn',
-  sprite: 'quigonjinn',
-  ship: false,
-  weaponType: 'lightsaber',
-  weaponColor: green,
-  weaponOffsetLeft: [0, 4],
-  weaponOffsetUp: [8, 0],
-  weaponOffsetRight: [10, 4],
-  weaponOffsetDown: [1, 10],
-  width: 100 * magnification,
-  height: 60 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 12 * magnification,
-  moveFrameCount: 8,
-  speed: 8
-};
-
-rancor = {
-  name: 'Rancor',
-  sprite: 'rancor',
-  ship: false,
-  weaponType: 'bomb',
-  weaponOffset: [3, 7],
-  width: 135 * magnification,
-  height: 65 * magnification,
-  frameWidth: 15 * magnification,
-  frameHeight: 13 * magnification,
-  moveFrameCount: 8,
-  speed: 4
-};
-
-rebel = {
-  name: 'Rebel',
-  sprite: 'rebel',
-  ship: false,
-  weaponType: 'projectile',
-  projectile: 'laser',
-  weaponColor: green,
-  weaponOffsetLeft: [0, 4],
-  weaponOffsetUp: [6, 0],
-  weaponOffsetRight: [10, 4],
-  weaponOffsetDown: [3, 7],
-  width: 90 * magnification,
-  height: 55 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 11 * magnification,
-  moveFrameCount: 8,
-  speed: 8
-};
-
-runehaako = {
-  name: 'Rune Haako',
-  sprite: 'runehaako',
-  ship: false,
-  weaponType: 'none',
-  width: 50 * magnification,
-  height: 60 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 12 * magnification,
-  moveFrameCount: 4,
-  speed: 5
-};
-
-sandtrooper = {
-  name: 'Sandtrooper',
-  ship: false,
-  sprite: 'sandtrooper',
-  weaponType: 'projectile',
-  projectile: 'laser',
-  weaponColor: red,
-  weaponOffsetLeft: [0, 4],
-  weaponOffsetUp: [6, 0],
-  weaponOffsetRight: [10, 4],
-  weaponOffsetDown: [3, 7],
-  width: 90 * magnification,
-  height: 55 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 11 * magnification,
-  moveFrameCount: 8,
-  speed: 8
-};
-
-sebulba = {
-  name: 'Sebulba',
-  ship: false,
-  sprite: 'sebulba',
-  weaponType: 'bomb',
-  weaponOffset: [4, 9],
-  width: 90 * magnification,
-  height: 50 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 10 * magnification,
-  moveFrameCount: 8,
-  speed: 8
-};
-
-stormtrooper = {
-  name: 'Stormtrooper',
-  ship: false,
-  sprite: 'stormtrooper',
-  weaponType: 'projectile',
-  projectile: 'laser',
-  weaponColor: red,
-  weaponOffsetLeft: [0, 4],
-  weaponOffsetUp: [6, 0],
-  weaponOffsetRight: [10, 4],
-  weaponOffsetDown: [3, 7],
-  width: 90 * magnification,
-  height: 55 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 11 * magnification,
-  moveFrameCount: 8,
-  speed: 8
-};
-
-stormtrooperhan = {
-  name: 'Han Solo',
-  ship: false,
-  sprite: 'stormtrooperhan',
-  weaponType: 'projectile',
-  projectile: 'laser',
-  weaponColor: red,
-  weaponOffsetLeft: [0, 4],
-  weaponOffsetUp: [6, 0],
-  weaponOffsetRight: [10, 4],
-  weaponOffsetDown: [3, 7],
-  width: 90 * magnification,
-  height: 55 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 11 * magnification,
-  moveFrameCount: 8,
-  speed: 8
-};
-
-stormtrooperluke = {
-  name: 'Luke Skywalker',
-  ship: false,
-  sprite: 'stormtrooperluke',
-  weaponType: 'projectile',
-  projectile: 'laser',
-  weaponColor: red,
-  weaponOffsetLeft: [0, 4],
-  weaponOffsetUp: [6, 0],
-  weaponOffsetRight: [10, 4],
-  weaponOffsetDown: [3, 7],
-  width: 90 * magnification,
-  height: 55 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 11 * magnification,
-  moveFrameCount: 8,
-  speed: 8
-};
-
-stuntrooper = {
-  name: 'Stormtrooper',
-  ship: false,
-  sprite: 'stormtrooper',
-  weaponType: 'projectile',
-  projectile: stun,
-  weaponOffsetLeft: [4, 0],
-  weaponOffsetUp: [0, 4],
-  weaponOffsetRight: [6, 0],
-  weaponOffsetDown: [0, 6],
-  weaponDelay: 2,
-  width: 90 * magnification,
-  height: 55 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 11 * magnification,
-  moveFrameCount: 8,
-  speed: 8
-};
-
-tarkin = {
-  name: 'Grand Moff Tarkin',
-  sprite: 'tarkin',
-  ship: false,
-  weaponType: 'none',
-  width: 90 * magnification,
-  height: 55 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 11 * magnification,
-  moveFrameCount: 8,
-  speed: 4
-};
-
-tauntaun = {
-  name: 'Tauntaun',
-  ship: false,
-  sprite: 'tauntaun',
-  weaponType: 'bomb',
-  weaponOffset: [5, 11],
-  width: 90 * magnification,
-  height: 60 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 12 * magnification,
-  moveFrameCount: 8,
-  speed: 10
-};
-
-threebee = {
-  name: '3B6-RA-7',
-  sprite: 'threebee',
-  ship: false,
-  death: spritz,
-  weaponType: 'none',
-  width: 72 * magnification,
-  height: 55 * magnification,
-  frameWidth: 8 * magnification,
-  frameHeight: 11 * magnification,
-  moveFrameCount: 8,
-  speed: 5
-};
-
-threepio = {
-  name: 'C-3PO',
-  sprite: 'threepio',
-  ship: false,
-  weaponType: 'none',
-  width: 72 * magnification,
-  height: 50 * magnification,
-  frameWidth: 8 * magnification,
-  frameHeight: 10 * magnification,
-  moveFrameCount: 8,
-  speed: 5
-};
-
-tiepilot = {
-  name: 'TIE Fighter Pilot',
-  ship: false,
-  sprite: 'tiepilot',
-  weaponType: 'projectile',
-  projectile: 'laser',
-  weaponColor: red,
-  weaponOffsetLeft: [0, 5],
-  weaponOffsetUp: [2, 0],
-  weaponOffsetRight: [10, 5],
-  weaponOffsetDown: [9, 9],
-  width: 90 * magnification,
-  height: 55 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 11 * magnification,
-  moveFrameCount: 8,
-  speed: 8
-};
-
-tusken = {
-  name: 'Tusken Raider',
-  ship: false,
-  sprite: 'tusken',
-  weaponType: 'projectile',
-  projectile: 'laser',
-  weaponColor: red,
-  weaponOffsetLeft: [0, 4],
-  weaponOffsetUp: [7, 0],
-  weaponOffsetRight: [10, 4],
-  weaponOffsetDown: [3, 9],
-  width: 50 * magnification,
-  height: 55 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 11 * magnification,
-  moveFrameCount: 4,
-  speed: 8
-};
-
-typho = {
-  name: 'Captain Typho',
-  ship: false,
-  sprite: 'typho',
-  weaponType: 'projectile',
-  projectile: 'laser',
-  weaponColor: blue,
-  weaponOffsetLeft: [0, 4],
-  weaponOffsetUp: [7, 0],
-  weaponOffsetRight: [10, 4],
-  weaponOffsetDown: [3, 8],
-  width: 90 * magnification,
-  height: 55 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 11 * magnification,
-  moveFrameCount: 8,
-  speed: 8
-};
-
-uncleowen = {
-  name: 'Uncle Owen',
-  sprite: 'uncleowen',
-  ship: false,
-  death: {
-  name: 'uncleowendeath',
-    frameWidth: 10 * magnification,
-    frameHeight: 12 * magnification,
-    frameCount: 10,
-    remove: false
-  },
-  weaponType: 'bomb',
-  weaponOffset: [4, 11],
-  weaponDelay: fps / 2,
-  width: 90 * magnification,
-  height: 48 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 12 * magnification,
-  moveFrameCount: 8,
-  speed: 6
-};
-
-vallorum = {
-  name: 'Chancellor Vallorum',
-  sprite: 'vallorum',
-  ship: false,
-  weaponType: 'none',
-  width: 90 * magnification,
-  height: 55 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 11 * magnification,
-  moveFrameCount: 8,
-  speed: 4
-};
-
-weequay = {
-  name: 'Weequay',
-  ship: false,
-  sprite: 'weequay',
-  weaponType: 'projectile',
-  projectile: 'laser',
-  weaponColor: red,
-  weaponOffsetLeft: [0, 4],
-  weaponOffsetUp: [7, 0],
-  weaponOffsetRight: [10, 4],
-  weaponOffsetDown: [3, 8],
-  width: 90 * magnification,
-  height: 55 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 11 * magnification,
-  moveFrameCount: 8,
-  speed: 8
-};
-
-xwingpilot = {
-  name: 'X-wing Pilot',
-  ship: false,
-  sprite: 'xwingpilot',
-  weaponType: 'projectile',
-  projectile: 'laser',
-  weaponColor: red,
-  weaponOffsetLeft: [0, 4],
-  weaponOffsetUp: [6, 0],
-  weaponOffsetRight: [10, 4],
-  weaponOffsetDown: [3, 7],
-  width: 90 * magnification,
-  height: 55 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 11 * magnification,
-  moveFrameCount: 8,
-  speed: 8
-};
-
-yoda = {
-  name: 'Yoda',
-  sprite: 'yoda',
-  ship: false,
-  weaponType: 'lightsaber',
-  weaponColor: green,
-  weaponOffsetLeft: [0, 4],
-  weaponOffsetUp: [7, 2],
-  weaponOffsetRight: [9, 4],
-  weaponOffsetDown: [1, 9],
-  width: 100 * magnification,
-  height: 50 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 10 * magnification,
-  moveFrameCount: 8,
-  speed: 4
-};
-
-//Ships
-asteroid = {
-  name: 'Asteroid',
-  sprite: 'asteroid',
-  ship: true,
-  death: spritz,
-  weaponType: null,
-  width: 14 * magnification,
-  height: 28 * magnification,
-  frameWidth: 7 * magnification,
-  frameHeight: 7 * magnification,
-  moveFrameCount: 1,
-  speed: 8
-};
-
-deathstar = {
-  name: 'Death Star',
-  sprite: 'deathstar',
-  ship: true,
-  death: explosion,
-  weaponType: 'projectile',
-  projectile: 'laser',
-  weaponColor: green,
-  weaponOffsetLeft: [2, 3],
-  weaponOffsetUp: [3, 0],
-  weaponOffsetRight: [5, 3],
-  weaponOffsetDown: [3, 5],
-  width: 90 * magnification,
-  height: 40 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 10 * magnification,
-  moveFrameCount: 8,
-  speed: 4,
-  speedMin: 4,
-  speedMax: 4
-};
-
-deathstar6 = {
-  name: 'Death Star II',
-  sprite: 'deathstar6',
-  ship: true,
-  death: explosion,
-  weaponType: 'projectile',
-  projectile: 'laser',
-  weaponColor: green,
-  weaponOffsetLeft: [2, 3],
-  weaponOffsetUp: [3, 0],
-  weaponOffsetRight: [5, 3],
-  weaponOffsetDown: [3, 5],
-  width: 90 * magnification,
-  height: 40 * magnification,
-  frameWidth: 10 * magnification,
-  frameHeight: 10 * magnification,
-  moveFrameCount: 8,
-  speed: 4,
-  speedMin: 4,
-  speedMax: 4
-};
-
-destroyer = {
-  name: 'Star Destroyer',
-  sprite: 'destroyer',
-  ship: true,
-  death: explosion,
-  weaponType: 'projectile',
-  projectile: 'laser',
-  weaponColor: red,
-  weaponOffsetLeft: [16, 14],
-  weaponOffsetUp: [15, 16],
-  weaponOffsetRight: [12, 15 ],
-  weaponOffsetDown: [15, 12],
-  width: 60 * magnification,
-  height: 120 * magnification,
-  frameWidth: 30 * magnification,
-  frameHeight: 30 * magnification,
-  moveFrameCount: 1,
-  speed: 1,
-  speedMin: 1,
-  speedMax: 5
-};
-
-falcon = {
-  name: 'Millenium Falcon',
-  sprite: 'falcon',
-  ship: true,
-  death: spritz,
-  weaponType: 'projectile',
-  projectile: 'laser',
-  weaponColor: green,
-  weaponOffsetLeft: [5, 7],
-  weaponOffsetUp: [7, 6],
-  weaponOffsetRight: [8, 7],
-  weaponOffsetDown: [7, 8],
-  width: 75 * magnification,
-  height: 60 * magnification,
-  frameWidth: 15 * magnification,
-  frameHeight: 15 * magnification,
-  moveFrameCount: 4,
-  speed: 8,
-  speedMin: 8,
-  speedMax: 15
-};
-
-tie = {
-  name: 'TIE Fighter',
-  sprite: 'tie',
-  ship: true,
-  death: spritz,
-  weaponType: 'projectile',
-  projectile: 'laser',
-  weaponColor: red,
-  weaponOffsetLeft: [0, 3],
-  weaponOffsetUp: [3, 0],
-  weaponOffsetRight: [5, 3],
-  weaponOffsetDown: [3, 5],
-  width: 35 * magnification,
-  height: 28 * magnification,
-  frameWidth: 7 * magnification,
-  frameHeight: 7 * magnification,
-  moveFrameCount: 4,
-  speed: 12,
-  speedMin: 8,
-  speedMax: 12
-};
-
-vadertie = {
-  name: 'Darth Vader',
-  sprite: 'vadertie',
-  ship: true,
-  death: {
-    name: 'vadertiedeath',
-    frameWidth: 7 * magnification,
-    frameHeight: 7 * magnification,
-    frameCount: 8,
-    remove: true
-  },
-  weaponType: 'projectile',
-  projectile: 'laser',
-  weaponColor: red,
-  weaponOffsetLeft: [0, 3],
-  weaponOffsetUp: [3, 0],
-  weaponOffsetRight: [5, 3],
-  weaponOffsetDown: [3, 5],
-  width: 35 * magnification,
-  height: 28 * magnification,
-  frameWidth: 7 * magnification,
-  frameHeight: 7 * magnification,
-  moveFrameCount: 4,
-  speed: 12,
-  speedMin: 10,
-  speedMax: 12
-};
-
-xwing = {
-  name: 'X-wing',
-  sprite: 'xwing',
-  ship: true,
-  death: spritz,
-  weaponType: 'projectile',
-  projectile: 'laser',
-  weaponColor: green,
-  weaponOffsetLeft: [1, 4],
-  weaponOffsetUp: [4, 1],
-  weaponOffsetRight: [8, 4],
-  weaponOffsetDown: [4, 8],
-  width: 45 * magnification,
-  height: 36 * magnification,
-  frameWidth: 9 * magnification,
-  frameHeight: 9 * magnification,
-  moveFrameCount: 4,
-  speed: 8,
-  speedMin: 8,
-  speedMax: 12
-};
-
-//Episode IV levels
-tantive4 = {
-  name: 'Tantive IV',
-  password: '',
-  cutscene: [
-    'preface',
-    'episode4-destroyer'
-  ],
-  bg: 'metal',
-  textColor: 'black',
-  enemyInterval: 32,
-  enemyCount: 10,
-  enemyDir: 'right',
-  character: rebel,
-  enemy: stormtrooper,
-  boss: officerblack,
-  bossHP: 2
-};
-
-ambassador = {
-  name: 'Ambassador',
-  password: '',
-  cutscene: [
-    'episode4-antilles'
-  ],
-  bg: 'metal',
-  textColor: 'black',
-  enemyInterval: 32,
-  enemyCount: 3,
-  enemyDir: 'left',
-  character: stuntrooper,
-  enemy: rebel,
-  boss: leia,
-  bossHP: 1,
-  friendlies: [
-    {
-      character: protocolwhite,
-      details: {
-        delay: 5.5 * fps,
-        value: 25,
-        dir: 'down'
-      }
-    }
-  ]
-};
-
-tatooine = {
-  name: 'Tatooine',
-  password: '',
-  cutscene: [
-    'episode4-pod',
-    'episode4-crash'
-  ],
-  bg: 'sand',
-  textColor: 'black',
-  enemyInterval: 32,
-  enemyCount: 1,
-  obstacles: [
-    {
-      type: dragon,
-      x: 50,
-      y: 66
-    }
-  ],
-  character: jawa,
-  enemy: threepio,
-  boss: artoo,
-  bossHP: 1,
-  friendlies: [
-    {
-      character: jawa,
-      details: {
-        delay: 1.5 * fps,
-        value: 0 - 500
-      }
-    },
-    {
-      character: jawa,
-      details: {
-        delay: 2.5 * fps,
-        value: 0 - 500
-      }
-    },
-    {
-      character: jawa,
-      details: {
-        delay: 3.5 * fps,
-        value: 0 - 500
-      }
-    }
-  ]
-};
-
-search = {
-  name: 'Search',
-  password: '',
-  cutscene: [
-    'episode4-jawas',
-    'episode4-hologram',
-    'episode4-binoculars'
-  ],
-  bg: 'sand',
-  textColor: 'black',
-  enemyInterval: 32,
-  enemyCount: 10,
-  obstacles: [
-    {
-      type: speeder,
-      x: 33,
-      y: 33
-    }
-  ],
-  character: luke,
-  enemy: tusken,
-  boss: bantha,
-  bossHP: 2,
-  friendlies: [
-    {
-      character: threepio,
-      details: {
-        delay: 10.5 * fps,
-        value: 0 - 500
-      }
-    },
-    {
-      character: artoo,
-      details: {
-        delay: 12.5 * fps,
-        value: 0 - 500
-      }
-    }
-  ]
-};
-
-sandcrawler = {
-  name: 'Sandcrawler',
-  password: 'endor',
-  cutscene: [
-    'episode4-tusken'
-  ],
-  bg: 'rust',
-  textColor: 'black',
-  enemyInterval: 32,
-  enemyCount: 10,
-  character: sandtrooper,
-  enemy: jawa,
-  boss: threebee,
-  bossHP: 2,
-  friendlies: [
-    {
-      character: arfive,
-      details: {
-        delay: 5.5 * fps,
-        value: 25
-      }
-    },
-    {
-      character: gonkdroid,
-      details: {
-        delay: 10.5 * fps,
-        dir: 'left',
-        value: 25
-      }
-    }
-  ]
-};
-
-farm = {
-  name: 'The Farm',
-  password: '',
-  // 'cutscene' : []
-  bg: 'sand',
-  textColor: 'black',
-  enemyInterval: 16,
-  enemyCount: 1,
-  character: sandtrooper,
-  enemy: uncleowen,
-  boss: auntberu,
-  bossHP: 1,
-  obstacles: [
-    {
-      type: igloo,
-      x: 66,
-      y: 33
-    }
-  ],
-};
-
-mosEisley = {
-  name: 'Mos Eisley',
-  password: '',
-  // 'cutscene' : []
-  bg: 'marble',
-  textColor: 'black',
-  enemyInterval: 32,
-  enemyCount: 10,
-  enemyDir: 'right',
-  obstacles: [
-    {
-      type: bar,
-      x: 0,
-      y: 50
-    },
-    {
-      type: table,
-      x: 33,
-      y: 20
-    },
-    {
-      type: table,
-      x: 66,
-      y: 20
-    },
-    {
-      type: table,
-      x: 33,
-      y: 80
-    },
-    {
-      type: table,
-      x: 66,
-      y: 80
-    }
-  ],
-  character: ben,
-  enemy: sandtrooper,
-  boss: pondababa,
-  bossHP: 1,
-  friendlies: [
-    {
-      character: chewbacca,
-      details: {
-        delay: 10.5 * fps,
-        value: 0 - 500
-      }
-    },
-    {
-      character: greedo,
-      details: {
-        delay: 30 * fps,
-        value: 25
-      }
-    }
-  ]
-};
-
-dockingBay = {
-  name: 'Docking Bay 94',
-  password: '',
-  // 'cutscene' : []
-  bg: 'dust',
-  textColor: 'black',
-  enemyInterval: 32,
-  enemyCount: 10,
-  obstacles: [
-    {
-      type: falconbig,
-      x: 100,
-      y: 0
-    }
-  ],
-  character: hansolo,
-  enemy: sandtrooper,
-  boss: garindan,
-  bossHP: 2
-};
-
-alderaan = {
-  name: 'Alderaan',
-  password: '',
-  cutscene: [
-    'episode4-tarkin',
-    'episode4-deathstar',
-    'episode4-alderaan'
-  ],
-  bg: 'space',
-  textColor: yellow,
-  enemyInterval: 48,
-  enemyCount: 10,
-  character: falcon,
-  enemy: asteroid,
-  boss: tie,
-  bossHP: 2
-};
-
-detention = {
-  name: 'Detention',
-  password: '',
-  // 'cutscene' : []
-  bg: 'dark',
-  textColor: 'black',
-  enemyInterval: 32,
-  enemyCount: 10,
-  obstacles: [
-    {
-      type: desks,
-      x: 75,
-      y: 50
-    }
-  ],
-  character: chewbacca,
-  enemy: deathstartrooper,
-  boss: mousedroid,
-  bossHP: 2,
-  friendlies: [
-    {
-      character: stormtrooperhan,
-      details: {
-        delay: 1.5 * fps,
-        value: 0 - 500,
-        dir: 'right'
-      }
-    },
-    {
-      character: stormtrooperluke,
-      details: {
-        delay: 1.75 * fps,
-        value: 0 - 500,
-        dir: 'right'
-      }
-    }
-  ]
-};
-
-tractorBeam = {
-  name: 'Tractor Beam',
-  password: '',
-  // 'cutscene' : []
-  bg: 'dark',
-  textColor: 'black',
-  enemyInterval: 32,
-  enemyCount: 10,
-  enemyDir: 'right',
-  obstacles: [
-    {
-      type: tractorBeamGenerator,
-      x: 50,
-      y: 0
-    }
-  ],
-  character: ben,
-  enemy: stormtrooper,
-  boss: darthvader,
-  bossHP: 5
-};
-
-showdown4 = {
-  name: 'Showdown',
-  password: '',
-  // 'cutscene' : []
-  bg: 'dark',
-  textColor: 'black',
-  enemyInterval: 32,
-  enemyCount: 0,
-  character: darthvader,
-  enemy: null,
-  boss: ben,
-  bossHP: 1
-};
-
-escapeFromDeathStar = {
-  name: 'Escape',
-  password: '',
-  // 'cutscene' : []
-  bg: 'dark',
-  textColor: 'black',
-  enemyInterval: 32,
-  enemyCount: 10,
-  character: leia,
-  enemy: stormtrooper,
-  boss: tiepilot,
-  bossHP: 2,
-  obstacles: [
-    {
-      type: falconbig,
-      x: 100,
-      y: 0
-    }
-  ],
-  friendlies: [
-    {
-      character: hansolo,
-      details: {
-        delay: 5.5 * fps,
-        value: 0 - 500
-      }
-    },
-    {
-      character: luke,
-      details: {
-        delay: 10.5 * fps,
-        value: 0 - 500
-      }
-    },
-    {
-      character: chewbacca,
-      details: {
-        delay: 15.5 * fps,
-        value: 0 - 500
-      }
-    }
-  ]
-};
-
-battleOfYavin = {
-  name: 'The Battle of Yavin',
-  password: '',
-  // 'cutscene' : []
-  bg: 'space',
-  textColor: yellow,
-  enemyInterval: 16,
-  enemyCount: 3,
-  character: falcon,
-  enemy: tie,
-  boss: vadertie,
-  bossHP: 2,
-  friendlies: [
-    {
-      character: xwing,
-      details: {
-        delay: 5.5 * fps,
-        value: 0 - 500,
-        dir: 'up'
-      }
-    },
-    {
-      character: xwing,
-      details: {
-        delay: 5.5 * fps,
-        value: 0 - 500,
-        dir: 'up'
-      }
-    },
-    {
-      character: xwing,
-      details: {
-        delay: 5.5 * fps,
-        value: 0 - 500,
-        dir: 'up'
-      }
-    }
-  ]
-};
-
-assaultOnDeathStar = {
-  name: 'Death Star',
-  password: '',
-  // 'cutscene' : []
-  bg: 'space',
-  textColor: yellow,
-  enemyInterval: 32,
-  enemyCount: 0,
-  character: xwing,
-  enemy: null,
-  boss: deathstar,
-  bossHP: 10
-};
-
-//Episode V levels
-hoth = {
-  name: 'Hoth',
-  password: '',
-  bg: 'snow',
-  textColor: 'black',
-  enemyInterval: 32,
-  enemyCount: 10,
-  character: luke5,
-  enemy: tauntaun,//probedroid
-  boss: mousedroid,//wampa
-  bossHP: 2
-};
-
-//Episode VI levels
-endor = {
-  name: 'Endor',
-  password: '',
-  bg: 'grass',
-  textColor: 'black',
-  enemyInterval: 32,
-  enemyCount: 10,
-  character: ewok,
-  enemy: stormtrooper,
-  boss: darthvader,
-  bossHP: 2
-};
-
-test = {
-  name: 'TEST',
-  password: '',
-  bg: 'sand',
-  textColor: 'black',
-  enemyInterval: 16,
-  enemyCount: 1,
-  character: luke,
-  enemy: ben,
-  boss: auntberu,
-  bossHP: 1,
-  obstacles: [
-    {
-      type: igloo,
-      x: 66,
-      y: 33
-    },
-  ],
-  friendlies: [
-    {
-      character: jabba,
-      details: {
-        delay: 1 * fps,
-        value: 0
-      }
-    }
-  ]
-};
-
-//Master level array
-episodes    = [];
-episodes[0] = [endor];
-episodes[1] = [endor];
-episodes[2] = [endor];
-episodes[3] = [test, tantive4, ambassador, tatooine, search, sandcrawler, farm, mosEisley, dockingBay, alderaan, detention, tractorBeam, showdown4, escapeFromDeathStar, battleOfYavin, assaultOnDeathStar];
-episodes[4] = [hoth];
-episodes[5] = [endor];
-
 //Initialize game
 (function() {
   game = new Game();
+
   initHud();
   initMenu('title');
+
   if (isDebug) {
     initDebug();
   }
+
   loop();
 })();
 
@@ -3546,7 +1240,7 @@ function buttonPush(key, id) {
     }
   } else if (menuMode === 'episode' && cardinals.indexOf(key) !== -1) {
     for (var i=0; i<numerals.length; i++) {
-      document.getElementById('btnEpisode' + numerals[i]).style.color = 'black';
+      document.getElementById('btnEpisode' + numerals[i]).style.color = black;
     }
     if (key === 'left') {
       episode -= 1;
@@ -3558,10 +1252,10 @@ function buttonPush(key, id) {
       episode += 3;
     }
     episode = (episode < 0) ? 6 + episode : (episode % 6);
-    document.getElementById('btnEpisode' + numerals[episode]).style.color = 'white';
+    document.getElementById('btnEpisode' + numerals[episode]).style.color = white;
   }
   if (buttonNames.indexOf(id) !== -1) {
-    document.getElementById(id).style.opacity = 1;
+    document.getElementById(id).style.opacity = '1';
   }
 }
 
@@ -3619,7 +1313,7 @@ function buttonRelease(key, id) {
   } else if (key === 'escape') {
     reset();
   }
-  position = keys.indexOf(key);
+  const position = keys.indexOf(key);
   if (position !== -1) {
     if (key === 'space') {
       player.attacking = false;
@@ -3958,29 +1652,29 @@ function initHud() {
       var id = '';
       if (!paused) {
         switch (event.keyCode) {
-          case 37: //left
+          case 37:
             key = 'left';
             break;
-          case 38: //up
+          case 38:
             key = 'up';
             break;
-          case 39: //right
+          case 39:
             key = 'right';
             break;
-          case 40: //down
+          case 40:
             key = 'down';
             break;
-          case 90: //Z
+          case 90:
             key = 'Z';
             break;
         }
       }
 
       switch (event.keyCode) {
-        case 13: //enter
+        case 13:
           key = 'enter';
           break;
-        case 27: //escape
+        case 27:
           key = 'escape';
           break;
         default:
@@ -3992,7 +1686,7 @@ function initHud() {
     });
     window.addEventListener('keypress', function(event) {
       var key = '';
-      if (event.charCode === 32) {//space
+      if (event.charCode === 32) {
         key = 'space';
       }
       if (key !== '') {
@@ -4003,32 +1697,32 @@ function initHud() {
       var key = '';
       if (!paused) {
         switch (event.keyCode) {
-          case 37: //left
+          case 37:
             key = 'left';
             break;
-          case 38: //up
+          case 38:
             key = 'up';
             break;
-          case 39: //right
+          case 39:
             key = 'right';
             break;
-          case 40: //down
+          case 40:
             key = 'down';
             break;
-          case 32: //space
+          case 32:
             key = 'space';
             break;
-          case 90: //Z
+          case 90:
             key = 'Z';
             break;
         }
       }
 
       switch (event.keyCode) {
-        case 13: //enter
+        case 13:
           key = 'enter';
           break;
-        case 27: //escape
+        case 27:
           key = 'escape';
           break;
         default:
@@ -4049,7 +1743,7 @@ function initLevel() {
 
   if (typeof(episodes[episode][level].obstacles) !== 'undefined') {
     for (var obstacle in stage.obstacles) {
-      obstacle = new Obstacle(stage.obstacles[obstacle]['type'], stage.obstacles[obstacle]['x'], stage.obstacles[obstacle]['y']);
+      new Obstacle(stage.obstacles[obstacle]['type'], stage.obstacles[obstacle]['x'], stage.obstacles[obstacle]['y']);
     }
   }
 
@@ -4079,14 +1773,14 @@ function initMenu(mode) {
     score = 0;
     cutsceneCount = 0;
 
-    stage = new Stage(tantive4);
-    artoo = new Enemy(artoo);
-    threepio = new Enemy(threepio);
+    stage = new Stage(episodes[3][0]);
+    new Enemy(artoo);
+    new Enemy(threepio);
 
     for (var i=0; i<5; i++) {
       setTimeout(function() {
         if (menuMode === 'title') {
-          enemy = new Enemy(stage.enemy);
+          new Enemy(stormtrooper);
         }
       }, i * 1000);
     }
@@ -4130,7 +1824,7 @@ function initMenu(mode) {
       }
 
       if (i === episode) {
-        btnEpisode.style.color = 'white';
+        btnEpisode.style.color = white;
       }
 
       btnEpisode.addEventListener('click', function(event) {
@@ -4211,7 +1905,7 @@ function loop() {
             var chance = 500 + episodes[episode].length - level;
             var rand = getRandom(chance);
             if (rand === 0) {
-              projectile = new Projectile(enemies[enemy]);
+              new Projectile(enemies[enemy]);
             }
           }
         }
@@ -4305,10 +1999,10 @@ function loop() {
     //Check enemy interval
     if (game.counter % stage.enemyInterval === 0) {
       if (enemies.length < stage.enemyCount) {
-        enemy = new Enemy(stage.enemy);
+        new Enemy(stage.enemy);
       } else {
         if (stage.enemiesKilled === stage.enemyCount && !stage.bossReached) {
-          enemy = new Enemy(stage.boss);
+          new Enemy(stage.boss);
           stage.bossReached = true;
         }
       }
@@ -4317,7 +2011,7 @@ function loop() {
     //Check friendly delay
     for (var friendly in stage.friendlies) {
       if (game.counter === stage.friendlies[friendly].details.delay) {
-        friend = new Friendly(stage.friendlies[friendly].character, stage.friendlies[friendly].details);
+        new Friendly(stage.friendlies[friendly].character, stage.friendlies[friendly].details);
       }
     }
 
@@ -4402,7 +2096,7 @@ function updateVictim(victim, color) {
 }
 
 //Utilities
-function add(num1, num2) {//To distinguish from concatenation operand
+function add(num1, num2) {
   return Number(num1) + Number(num2);
 }
 
@@ -4433,6 +2127,8 @@ function playAs(obj) {
 }
 
 function playLevel(obj) {
+  let skipToLevel;
+
   if (typeof(obj) === 'number') {
     if (obj > 0 && obj < episodes[episode].length) {
       skipToLevel = obj;
