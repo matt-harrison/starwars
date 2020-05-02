@@ -1,9 +1,13 @@
 import { fps, isMobile, magnification } from './config.js';
 
+// Config
 import { detonation } from './modules/animations.js';
 import { artoo, stormtrooper, threepio } from './modules/characters.js';
 import { black, blueDark, gray, red, white } from './modules/colors.js';
 import episodes from './modules/episodes.js';
+import { collision } from './modules/utils.js';
+
+import { Bomb } from './modules/classes/Bomb.js';
 
 //Initialize global vars
 let isDebug = window.location.search.indexOf('debug') !== -1;
@@ -116,67 +120,7 @@ const Animation = function(obj, origin) {
   }
 };
 
-const Bomb = function(origin) {
-  props.push(this);
-
-  this.type = 'bomb';
-  this.count = propCount++;
-  this.origin = origin;
-  this.active = false;
-  this.dead = false;
-
-  this.x = origin.x + (origin.weaponOffset[0] * magnification);
-  this.y = origin.y + (origin.weaponOffset[1] * magnification);
-  this.frameWidth = 1 * magnification;
-  this.frameHeight = 1 * magnification;
-  this.spriteColumn = 0;
-  this.frameCount = 5;
-
-  this.bomb = document.createElement('div');
-  this.bomb.id = 'bomb' + this.count;
-  this.bomb.style.position = 'absolute';
-  this.bomb.style.left = this.x + 'px';
-  this.bomb.style.top = this.y + 'px';
-  this.bomb.style.width = this.frameWidth + 'px';
-  this.bomb.style.height = this.frameHeight + 'px';
-  this.bomb.style.backgroundColor = black;
-  this.bomb.style.zIndex = '2';
-  stage.selector.appendChild(this.bomb);
-
-  this.selector = this.bomb;
-
-  this.kill = function() {
-    new Animation(detonation, this);
-
-    stage.selector.removeChild(this.selector);
-    const position = props.indexOf(this);
-    props.splice(position, 1);
-  }
-
-  this.update = function() {
-    if (!this.active) {
-      if (!collision(this, this.origin)) {
-        this.active = true;
-      }
-    }
-  }
-
-  this.draw = function() {
-    if (this.active) {
-      if (game.counter%2 === 0) {
-        this.selector.style.backgroundColor = 'red';
-      } else {
-        this.selector.style.backgroundColor = black;
-      }
-    }
-
-    if (this.dead) {
-      this.kill();
-    }
-  }
-};
-
-const CutScene = function(img) {
+const Cutscene = function(img) {
   this.selector = document.createElement('div');
   this.selector.id = 'stage';
   this.selector.style.position = 'absolute';
@@ -1037,7 +981,11 @@ const Player = function(obj) {
           }
         }
       } else if (this.weaponType === 'bomb') {
-        new Bomb(this);
+        const bomb = new Bomb;
+
+        bomb.init(this, propCount++);
+        props.push(bomb);
+        stage.selector.appendChild(bomb.selector);
       } else if (this.weaponType === 'lightsaber') {
         const isLongRange = (key === 'Z');
         this.lightsaber = new Lightsaber(this, isLongRange);
@@ -1342,18 +1290,6 @@ function clearStage() {
 
   scoreText.innerHTML = score;
   victimText.innerHTML = '';
-}
-
-function collision(obj1, obj2) {
-  var overlap = false;
-  var rect1 = obj1.selector.getBoundingClientRect();
-  var rect2 = obj2.selector.getBoundingClientRect();
-  if (rect1.right > rect2.left && rect1.left < rect2.right) {
-    if (rect1.bottom > rect2.top && rect1.top < rect2.bottom) {
-      overlap = true;
-    }
-  }
-  return overlap;
 }
 
 function crossPaths(obj1, obj2) {
@@ -1849,7 +1785,7 @@ function initMenu(mode) {
     directions.style.pointerEvents = 'none';
     if (typeof(episodes[episode][level].cutscene) !== 'undefined') {
       clearStage();
-      stage = new CutScene(episodes[episode][level].cutscene[cutsceneCount])
+      stage = new Cutscene(episodes[episode][level].cutscene[cutsceneCount])
     } else {
       initGame();
     }
@@ -1878,6 +1814,8 @@ function levelWin() {
 
 function loop() {
   if (menuMode === '' && !gameOver && !paused) {
+    const deadProps = [];
+
     if (keys.length > 0) {
       if (!player.attacking) {
         for (var key in keys) {
@@ -1957,8 +1895,10 @@ function loop() {
       for (var enemy in enemies) {
         if (!props[prop].dead && !enemies[enemy].dead && props[prop].origin !== enemies[enemy] && collision(enemies[enemy], props[prop])) {
           enemies[enemy].hit();
+
           if (props[prop].type !== 'lightsaber') {
-            props[prop].dead = true;
+            props[prop].kill(Animation);
+            deadProps.push(props[prop])
           }
         }
       }
@@ -1976,6 +1916,13 @@ function loop() {
       props[prop].update();
       props[prop].draw();
     }
+
+    deadProps.forEach(deadProp => {
+      const position = props.indexOf(deadProp);
+
+      stage.selector.removeChild(deadProp.selector);
+      props.splice(position, 1);
+    });
 
     //Iterate over animations
     for (var animation in animations) {
@@ -2106,9 +2053,9 @@ function getRandom(max) {
 
 function importJSON(obj, data) {
   for (var prop in data) {
-      if (data.hasOwnProperty(prop)) {
-        obj[prop] = data[prop];
-      }
+    if (data.hasOwnProperty(prop)) {
+      obj[prop] = data[prop];
+    }
   }
 }
 

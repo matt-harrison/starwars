@@ -2,16 +2,18 @@
 # http-server .
 
 TO DO:
-- migrate loop logic to relevant "classes"
-- loop should just iterate over a single array of elements and trigger their update and draw methods
+- migrate all classes to separate modules with no awareness of their context (except origin)
+- make variables accessible from console for debug purposes
+- import levels.js from episodes.js
+- migrate all variable files into /js/modules/config/
 -
-- enemies sometimes shoot
-- players with no attacks?
+- password menu!
 - post-game cutscenes (hallway, medals)
+- enemies sometimes shoot (?)
+- how can user win with a character with no attacks?
 - sliding touch?
 - preload images
-- password menu
 
 GLITCHES:
-- friendlies not attsached properly
+- friendlies not attached properly
 - blinking enemies disappear on player death
