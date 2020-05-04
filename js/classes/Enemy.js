@@ -1,8 +1,15 @@
-import { cardinals, fps, magnification } from '../../config.js';
+import { cardinals, fps, magnification } from '/js/constants/config.js';
+import {
+  getRandom,
+  getObstruction,
+  importJSON,
+  inBounds,
+  preload,
+  updateScore,
+  updateVictim
+} from '/js/constants/utils.js';
 
-import { getRandom, getObstruction, importJSON, inBounds, preload, updateScore, updateVictim } from '../utils.js';
-
-import { Animation } from './Animation.js';
+import { Animation } from '/js/classes/Animation.js';
 
 export const Enemy = function({
   animations,

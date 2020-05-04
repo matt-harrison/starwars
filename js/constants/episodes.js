@@ -1,9 +1,8 @@
-import { fps } from '../config.js';
-
-import * as characters from './characters.js';
-import * as colors     from './colors.js';
-import * as obstacles  from './obstacles.js';
-import * as ships      from './ships.js';
+import { fps }         from '/js/constants/config.js';
+import * as characters from '/js/constants/characters.js';
+import { COLORS }      from '/js/constants/colors.js';
+import * as obstacles  from '/js/constants/obstacles.js';
+import * as ships      from '/js/constants/ships.js';
 
 //Episode IV levels
 const tantive4 = {
@@ -172,8 +171,8 @@ const sandcrawler = {
   ]
 };
 
-const farm = {
-  name: 'The Farm',
+const moistureFarm = {
+  name: 'Moisture Farm',
   password: '',
   // 'cutscene' : []
   bg: 'sand',
@@ -281,7 +280,7 @@ const alderaan = {
     'episode4-alderaan'
   ],
   bg: 'space',
-  textColor: colors.yellow,
+  textColor: COLORS.YELLOW,
   enemyInterval: 48,
   enemyCount: 10,
   character: ships.falcon,
@@ -414,7 +413,7 @@ const battleOfYavin = {
   password: '',
   // 'cutscene' : []
   bg: 'space',
-  textColor: colors.yellow,
+  textColor: COLORS.YELLOW,
   enemyInterval: 16,
   enemyCount: 3,
   character: ships.falcon,
@@ -454,7 +453,7 @@ const assaultOnDeathStar = {
   password: '',
   // 'cutscene' : []
   bg: 'space',
-  textColor: colors.yellow,
+  textColor: COLORS.YELLOW,
   enemyInterval: 32,
   enemyCount: 0,
   character: ships.xwing,
@@ -532,7 +531,7 @@ episodes[3] = [
   tatooine,
   search,
   sandcrawler,
-  farm,
+  moistureFarm,
   mosEisley,
   dockingBay,
   alderaan,

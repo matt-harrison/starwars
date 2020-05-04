@@ -1,10 +1,14 @@
-import { fps, magnification } from '../../config.js';
+import { fps, magnification } from '/js/constants/config.js';
+import {
+  getRandom,
+  getObstruction,
+  importJSON,
+  preload
+} from '/js/constants/utils.js';
 
-import { getRandom, getObstruction, importJSON, preload } from '../utils.js';
-
-import { Animation } from './Animation.js';
-import { Lightsaber } from './Lightsaber.js';
-import { Projectile } from './Projectile.js';
+import { Animation }  from '/js/classes/Animation.js';
+import { Lightsaber } from '/js/classes/Lightsaber.js';
+import { Projectile } from '/js/classes/Projectile.js';
 
 export const Player = function({
   animations,

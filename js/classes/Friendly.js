@@ -1,9 +1,16 @@
-import { cardinals, magnification } from '../../config.js';
+import { cardinals, magnification } from '/js/constants/config.js';
+import { COLORS } from '/js/constants/colors.js';
+import {
+  getRandom,
+  getObstruction,
+  importJSON,
+  inBounds,
+  preload,
+  updateScore,
+  updateVictim
+} from '/js/constants/utils.js';
 
-import { Animation } from './Animation.js';
-
-import { blueDark, red } from '../colors.js';
-import { getRandom, getObstruction, importJSON, inBounds, preload, updateScore, updateVictim } from '../utils.js';
+import { Animation } from '/js/classes/Animation.js';
 
 export const Friendly = function({
   animations,
@@ -114,13 +121,13 @@ export const Friendly = function({
 
     if (this.value > 0) {
       updateVictim({
-        color: blueDark,
+        color: COLORS.BLUE_DARK,
         hud,
         victim: this
       });
     } else {
       updateVictim({
-        color: red,
+        color: COLORS.RED,
         hud,
         victim: this
       });

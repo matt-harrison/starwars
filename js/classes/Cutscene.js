@@ -1,4 +1,4 @@
-import { black } from '../colors.js';
+import { COLORS } from '/js/constants/colors.js';
 
 export const Cutscene = function({
   game,
@@ -12,7 +12,7 @@ export const Cutscene = function({
   this.height = game.height;
   this.selector.style.width = this.width + 'px';
   this.selector.style.height = this.height + 'px';
-  this.selector.style.backgroundColor = black;
+  this.selector.style.backgroundColor = COLORS.BLACK;
   this.selector.style.zIndex = '101';
   this.selector.setAttribute('data-key', 'enter');
 

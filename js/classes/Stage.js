@@ -1,4 +1,4 @@
-import { importJSON } from '../utils.js';
+import { importJSON } from '/js/constants/utils.js';
 
 export const Stage = function({
   data,

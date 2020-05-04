@@ -1,7 +1,6 @@
-import { magnification } from '../config.js';
-
-import * as animations from './animations.js';
-import * as colors     from './colors.js';
+import { magnification } from '/js/constants/config.js';
+import * as animations   from '/js/constants/animations.js';
+import { COLORS }       from '/js/constants/colors.js';
 
 export const asteroid = {
   name: 'Asteroid',
@@ -24,7 +23,7 @@ export const deathstar = {
   death: animations.explosion,
   weaponType: 'projectile',
   projectile: 'laser',
-  weaponColor: colors.green,
+  weaponColor: COLORS.GREEN,
   weaponOffsetLeft: [2, 3],
   weaponOffsetUp: [3, 0],
   weaponOffsetRight: [5, 3],
@@ -46,7 +45,7 @@ export const deathstar6 = {
   death: animations.explosion,
   weaponType: 'projectile',
   projectile: 'laser',
-  weaponColor: colors.green,
+  weaponColor: COLORS.GREEN,
   weaponOffsetLeft: [2, 3],
   weaponOffsetUp: [3, 0],
   weaponOffsetRight: [5, 3],
@@ -68,7 +67,7 @@ export const destroyer = {
   death: animations.explosion,
   weaponType: 'projectile',
   projectile: 'laser',
-  weaponColor: colors.red,
+  weaponColor: COLORS.RED,
   weaponOffsetLeft: [16, 14],
   weaponOffsetUp: [15, 16],
   weaponOffsetRight: [12, 15 ],
@@ -90,7 +89,7 @@ export const falcon = {
   death: animations.spritz,
   weaponType: 'projectile',
   projectile: 'laser',
-  weaponColor: colors.green,
+  weaponColor: COLORS.GREEN,
   weaponOffsetLeft: [5, 7],
   weaponOffsetUp: [7, 6],
   weaponOffsetRight: [8, 7],
@@ -112,7 +111,7 @@ export const tie = {
   death: animations.spritz,
   weaponType: 'projectile',
   projectile: 'laser',
-  weaponColor: colors.red,
+  weaponColor: COLORS.RED,
   weaponOffsetLeft: [0, 3],
   weaponOffsetUp: [3, 0],
   weaponOffsetRight: [5, 3],
@@ -140,7 +139,7 @@ export const vadertie = {
   },
   weaponType: 'projectile',
   projectile: 'laser',
-  weaponColor: colors.red,
+  weaponColor: COLORS.RED,
   weaponOffsetLeft: [0, 3],
   weaponOffsetUp: [3, 0],
   weaponOffsetRight: [5, 3],
@@ -162,7 +161,7 @@ export const xwing = {
   death: animations.spritz,
   weaponType: 'projectile',
   projectile: 'laser',
-  weaponColor: colors.green,
+  weaponColor: COLORS.GREEN,
   weaponOffsetLeft: [1, 4],
   weaponOffsetUp: [4, 1],
   weaponOffsetRight: [8, 4],

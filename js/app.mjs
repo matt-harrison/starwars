@@ -1,29 +1,37 @@
-import { cardinals, fps, isMobile, magnification } from './config.js';
-
-import { detonation } from './modules/animations.js';
-import { artoo, stormtrooper, threepio } from './modules/characters.js';
-import { black, blueDark, gray, red, white } from './modules/colors.js';
-import episodes from './modules/episodes.js';
+import { detonation } from './constants/animations.js';
+import {
+  artoo,
+  stormtrooper,
+  threepio
+} from './constants/characters.js';
+import { COLORS } from './constants/colors.js';
+import {
+  cardinals,
+  fps,
+  isMobile,
+  magnification
+} from './constants/config.js';
+import episodes from './constants/episodes.js';
 import {
   collision,
   getRandom,
   getObstruction,
   importJSON,
   preload
-} from './modules/utils.js';
+} from './constants/utils.js';
 
-import { Animation } from './modules/classes/Animation.js';
-import { Bomb } from './modules/classes/Bomb.js';
-import { Cutscene } from './modules/classes/Cutscene.js';
-import { Enemy } from './modules/classes/Enemy.js';
-import { Friendly } from './modules/classes/Friendly.js';
-import { Game } from './modules/classes/Game.js';
-import { Hud } from './modules/classes/Hud.js';
-import { Lightsaber } from './modules/classes/Lightsaber.js';
-import { Obstacle } from './modules/classes/Obstacle.js';
-import { Player } from './modules/classes/Player.js';
-import { Projectile } from './modules/classes/Projectile.js';
-import { Stage } from './modules/classes/Stage.js';
+import { Animation }  from './classes/Animation.js';
+import { Bomb }       from './classes/Bomb.js';
+import { Cutscene }   from './classes/Cutscene.js';
+import { Enemy }      from './classes/Enemy.js';
+import { Friendly }   from './classes/Friendly.js';
+import { Game }       from './classes/Game.js';
+import { Hud }        from './classes/Hud.js';
+import { Lightsaber } from './classes/Lightsaber.js';
+import { Obstacle }   from './classes/Obstacle.js';
+import { Player }     from './classes/Player.js';
+import { Projectile } from './classes/Projectile.js';
+import { Stage }      from './classes/Stage.js';
 
 //Initialize global vars
 let hudOpacity    = '0.5';
@@ -124,7 +132,7 @@ function buttonPush(key, id) {
     }
   } else if (menuMode === 'episode' && cardinals.indexOf(key) !== -1) {
     for (var i=0; i<numerals.length; i++) {
-      document.getElementById('btnEpisode' + numerals[i]).style.color = black;
+      document.getElementById('btnEpisode' + numerals[i]).style.color = COLORS.BLACK;
     }
     if (key === 'left') {
       episode -= 1;
@@ -136,7 +144,7 @@ function buttonPush(key, id) {
       episode += 3;
     }
     episode = (episode < 0) ? 6 + episode : (episode % 6);
-    document.getElementById('btnEpisode' + numerals[episode]).style.color = white;
+    document.getElementById('btnEpisode' + numerals[episode]).style.color = COLORS.WHITE;
   }
   if (buttonNames.indexOf(id) !== -1) {
     document.getElementById(id).style.opacity = '1';

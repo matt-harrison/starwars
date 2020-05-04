@@ -1,10 +1,10 @@
-import { magnification } from '../../config.js';
+import { magnification } from '/js/constants/config.js';
 
-import { Animation } from './Animation.js';
+import { detonation } from '/js/constants/animations.js';
+import { COLORS } from '/js/constants/colors.js';
+import { collision }  from '/js/constants/utils.js';
 
-import { detonation } from '../animations.js';
-import { black, red } from '../colors.js';
-import { collision } from '../utils.js';
+import { Animation } from '/js/classes/Animation.js';
 
 export const Bomb = function({
   animations,
@@ -30,7 +30,7 @@ export const Bomb = function({
   this.selector.style.top = this.y + 'px';
   this.selector.style.width = this.frameWidth + 'px';
   this.selector.style.height = this.frameHeight + 'px';
-  this.selector.style.backgroundColor = black;
+  this.selector.style.backgroundColor = COLORS.BLACK;
   this.selector.style.zIndex = '2';
 
   props.push(this);
@@ -49,9 +49,9 @@ export const Bomb = function({
   this.draw = function() {
     if (this.active) {
       if (this.counter % 2) {
-        this.selector.style.backgroundColor = black;
+        this.selector.style.backgroundColor = COLORS.BLACK;
       } else {
-        this.selector.style.backgroundColor = red;
+        this.selector.style.backgroundColor = COLORS.RED;
       }
     }
   }

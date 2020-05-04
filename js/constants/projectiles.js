@@ -1,4 +1,4 @@
-import { magnification } from '../config.js';
+import { magnification } from '/js/constants/config.js';
 
 export const gunganBall = {
   name: 'gunganBall',

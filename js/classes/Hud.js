@@ -1,4 +1,4 @@
-import { isMobile } from '../../config.js';
+import { isMobile } from '/js/constants/config.js';
 
 export const Hud = function({
   clickPrompt,

@@ -1,7 +1,6 @@
-import { magnification } from '../../config.js';
-
-import { gray } from '../colors.js';
-import { collision } from '../utils.js';
+import { COLORS }          from '/js/constants/colors.js';
+import { magnification } from '/js/constants/config.js';
+import { collision }     from '/js/constants/utils.js';
 
 export const Lightsaber = function({
   game,
@@ -74,7 +73,7 @@ export const Lightsaber = function({
   this.hilt.style.top = this.hiltY + 'px';
   this.hilt.style.width = this.hiltWidth + 'px';
   this.hilt.style.height = this.hiltHeight + 'px';
-  this.hilt.style.backgroundColor = gray;
+  this.hilt.style.backgroundColor = COLORS.GRAY;
 
   props.push(this);
   stage.selector.appendChild(this.selector);

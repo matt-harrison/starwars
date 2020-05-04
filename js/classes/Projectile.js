@@ -1,6 +1,5 @@
-import { magnification } from '../../config.js';
-
-import { importJSON } from '../utils.js';
+import { magnification } from '/js/constants/config.js';
+import { importJSON }    from '/js/constants/utils.js';
 
 export const Projectile = function({
   game,
