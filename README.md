@@ -1,18 +1,30 @@
 # cd /Volumes/THUMB/code/starwars
 # http-server .
 
-TO DO:
-- migrate all classes to separate modules with no awareness of their context (except origin)
-- make variables accessible from console for debug purposes
+TO DO (refactor):
+- migrate all variables to /js/modules/config
 - import levels.js from episodes.js
-- migrate all variable files into /js/modules/config/
--
+- adapt for loops to ES6
+- code formatting
+- make variables accessible from console for debug purposes?
+- improve performance
+- replace importJSON with Object.assign()
+- replace menuMode options with constants
+- replace weaponTypes with constants
+- replace colors with constants
+- replace projectile types with constants
+- move all global vars into a master object
+- expose master object to console
+- refactor classes to pull relevant data from master object
+- rename obs to obstruction
+- rename all instances of obj
+
+TO DO (features):
 - password menu!
+- recolor backgrounds and/or characters not to conflict?
 - post-game cutscenes (hallway, medals)
-- enemies sometimes shoot (?)
 - how can user win with a character with no attacks?
 - sliding touch?
-- preload images
 
 GLITCHES:
 - friendlies not attached properly

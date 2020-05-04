@@ -526,7 +526,23 @@ const episodes = [];
 episodes[0] = [test];
 episodes[1] = [test];
 episodes[2] = [test];
-episodes[3] = [tantive4, ambassador, tatooine, search, sandcrawler, farm, mosEisley, dockingBay, alderaan, detention, tractorBeam, showdown4, escapeFromDeathStar, battleOfYavin, assaultOnDeathStar];
+episodes[3] = [
+  tantive4,
+  ambassador,
+  tatooine,
+  search,
+  sandcrawler,
+  farm,
+  mosEisley,
+  dockingBay,
+  alderaan,
+  detention,
+  tractorBeam,
+  showdown4,
+  escapeFromDeathStar,
+  battleOfYavin,
+  assaultOnDeathStar
+];
 episodes[4] = [hoth];
 episodes[5] = [endor];
 
