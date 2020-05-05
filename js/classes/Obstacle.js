@@ -1,5 +1,4 @@
-import { magnification } from '/js/constants/config.js';
-import { importJSON }    from '/js/constants/utils.js';
+import { MAGNIFICATION } from '/js/constants/config.js';
 
 export const Obstacle = function({
   data,
@@ -9,9 +8,9 @@ export const Obstacle = function({
   x,
   y
 }) {
-  importJSON(this, data);
+  Object.assign(this, data);
 
-  this.speed = this.speed * (magnification / 5);
+  this.speed = this.speed * (MAGNIFICATION / 5);
   this.leftPercent = x;
   this.topPercent = y;
 

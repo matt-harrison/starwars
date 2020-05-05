@@ -1,9 +1,7 @@
-import { cardinals, magnification } from '/js/constants/config.js';
-import { COLORS } from '/js/constants/colors.js';
+import { CARDINALS, COLORS, MAGNIFICATION } from '/js/constants/config.js';
 import {
   getRandom,
   getObstruction,
-  importJSON,
   inBounds,
   preload,
   updateScore,
@@ -22,14 +20,14 @@ export const Friendly = function({
   obstacles,
   stage
 }) {
-  importJSON(this, data);
-  importJSON(this, details);
+  Object.assign(this, data);
+  Object.assign(this, details);
 
   this.active = true;
   this.dead = false;
   this.trapped = false;
 
-  this.speed = this.speed * (magnification / 5);
+  this.speed = this.speed * (MAGNIFICATION / 5);
 
   this.selector = document.createElement('div');
   this.selector.style.position = 'absolute';
@@ -45,7 +43,7 @@ export const Friendly = function({
 
   if (typeof(this.dir) === 'undefined') {
     this.spriteRow = getRandom(4)
-    this.dir = cardinals[this.spriteRow];
+    this.dir = CARDINALS[this.spriteRow];
   }
 
   if (this.dir === 'left') {

@@ -1,6 +1,5 @@
-import { fps }         from '/js/constants/config.js';
+import { COLORS, FPS } from '/js/constants/config.js';
 import * as characters from '/js/constants/characters.js';
-import { COLORS }      from '/js/constants/colors.js';
 import * as obstacles  from '/js/constants/obstacles.js';
 import * as ships      from '/js/constants/ships.js';
 
@@ -42,7 +41,7 @@ const ambassador = {
     {
       character: characters.protocolwhite,
       details: {
-        delay: 5.5 * fps,
+        delay: 5.5 * FPS,
         value: 25,
         dir: 'down'
       }
@@ -76,21 +75,21 @@ const tatooine = {
     {
       character: characters.jawa,
       details: {
-        delay: 1.5 * fps,
+        delay: 1.5 * FPS,
         value: 0 - 500
       }
     },
     {
       character: characters.jawa,
       details: {
-        delay: 2.5 * fps,
+        delay: 2.5 * FPS,
         value: 0 - 500
       }
     },
     {
       character: characters.jawa,
       details: {
-        delay: 3.5 * fps,
+        delay: 3.5 * FPS,
         value: 0 - 500
       }
     }
@@ -124,14 +123,14 @@ const search = {
     {
       character: characters.threepio,
       details: {
-        delay: 10.5 * fps,
+        delay: 10.5 * FPS,
         value: 0 - 500
       }
     },
     {
       character: characters.artoo,
       details: {
-        delay: 12.5 * fps,
+        delay: 12.5 * FPS,
         value: 0 - 500
       }
     }
@@ -156,14 +155,14 @@ const sandcrawler = {
     {
       character: characters.arfive,
       details: {
-        delay: 5.5 * fps,
+        delay: 5.5 * FPS,
         value: 25
       }
     },
     {
       character: characters.gonkdroid,
       details: {
-        delay: 10.5 * fps,
+        delay: 10.5 * FPS,
         dir: 'left',
         value: 25
       }
@@ -236,14 +235,14 @@ const mosEisley = {
     {
       character: characters.chewbacca,
       details: {
-        delay: 10.5 * fps,
+        delay: 10.5 * FPS,
         value: 0 - 500
       }
     },
     {
       character: characters.greedo,
       details: {
-        delay: 30 * fps,
+        delay: 30 * FPS,
         value: 25
       }
     }
@@ -312,7 +311,7 @@ const detention = {
     {
       character: characters.stormtrooperhan,
       details: {
-        delay: 1.5 * fps,
+        delay: 1.5 * FPS,
         value: 0 - 500,
         dir: 'right'
       }
@@ -320,7 +319,7 @@ const detention = {
     {
       character: characters.stormtrooperluke,
       details: {
-        delay: 1.75 * fps,
+        delay: 1.75 * FPS,
         value: 0 - 500,
         dir: 'right'
       }
@@ -387,21 +386,21 @@ const escapeFromDeathStar = {
     {
       character: characters.hansolo,
       details: {
-        delay: 5.5 * fps,
+        delay: 5.5 * FPS,
         value: 0 - 500
       }
     },
     {
       character: characters.luke,
       details: {
-        delay: 10.5 * fps,
+        delay: 10.5 * FPS,
         value: 0 - 500
       }
     },
     {
       character: characters.chewbacca,
       details: {
-        delay: 15.5 * fps,
+        delay: 15.5 * FPS,
         value: 0 - 500
       }
     }
@@ -424,7 +423,7 @@ const battleOfYavin = {
     {
       character: ships.xwing,
       details: {
-        delay: 5.5 * fps,
+        delay: 5.5 * FPS,
         value: 0 - 500,
         dir: 'up'
       }
@@ -432,7 +431,7 @@ const battleOfYavin = {
     {
       character: ships.xwing,
       details: {
-        delay: 5.5 * fps,
+        delay: 5.5 * FPS,
         value: 0 - 500,
         dir: 'up'
       }
@@ -440,7 +439,7 @@ const battleOfYavin = {
     {
       character: ships.xwing,
       details: {
-        delay: 5.5 * fps,
+        delay: 5.5 * FPS,
         value: 0 - 500,
         dir: 'up'
       }
@@ -512,37 +511,34 @@ const test = {
     {
       character: characters.jabba,
       details: {
-        delay: 1 * fps,
+        delay: 1 * FPS,
         value: 0
       }
     }
   ]
 };
 
-//Master level array
-const episodes = [];
-
-episodes[0] = [test];
-episodes[1] = [test];
-episodes[2] = [test];
-episodes[3] = [
-  tantive4,
-  ambassador,
-  tatooine,
-  search,
-  sandcrawler,
-  moistureFarm,
-  mosEisley,
-  dockingBay,
-  alderaan,
-  detention,
-  tractorBeam,
-  showdown4,
-  escapeFromDeathStar,
-  battleOfYavin,
-  assaultOnDeathStar
+export const EPISODES = [
+  [test],
+  [test],
+  [test],
+  [
+    tantive4,
+    ambassador,
+    tatooine,
+    search,
+    sandcrawler,
+    moistureFarm,
+    mosEisley,
+    dockingBay,
+    alderaan,
+    detention,
+    tractorBeam,
+    showdown4,
+    escapeFromDeathStar,
+    battleOfYavin,
+    assaultOnDeathStar
+  ],
+  [hoth],
+  [endor]
 ];
-episodes[4] = [hoth];
-episodes[5] = [endor];
-
-export default episodes;

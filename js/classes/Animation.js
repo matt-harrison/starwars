@@ -1,12 +1,10 @@
-import { importJSON } from '/js/constants/utils.js';
-
 export const Animation = function({
   animations,
   data,
   origin,
   stage
 }) {
-  importJSON(this, data);
+  Object.assign(this, data);
 
   this.dead = false;
 

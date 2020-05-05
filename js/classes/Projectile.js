@@ -1,5 +1,5 @@
-import { magnification } from '/js/constants/config.js';
-import { importJSON }    from '/js/constants/utils.js';
+import { MAGNIFICATION }             from '/js/constants/config.js';
+import { PROJECTILES, WEAPON_TYPES } from '/js/constants/weapons.js';
 
 export const Projectile = function({
   game,
@@ -7,7 +7,7 @@ export const Projectile = function({
   props,
   stage
 }) {
-  importJSON(this, origin.projectile);
+  Object.assign(this, origin.projectile);
 
   origin.weaponReady = false;
 
@@ -21,15 +21,15 @@ export const Projectile = function({
   this.selector = document.createElement('div');
   this.selector.style.position = 'absolute';
 
-  if (origin.projectile === 'laser') {
+  if (origin.projectile === PROJECTILES.LASER) {
     this.selector.style.backgroundColor = origin.weaponColor;
 
     if (this.dir === 'left' || this.dir === 'right') {
-      this.width = 2 * magnification;
-      this.height = 1 * magnification;
+      this.width = 2 * MAGNIFICATION;
+      this.height = 1 * MAGNIFICATION;
     } else if (this.dir === 'up' || this.dir === 'down') {
-      this.width = 1 * magnification;
-      this.height = 2 * magnification;
+      this.width = 1 * MAGNIFICATION;
+      this.height = 2 * MAGNIFICATION;
     }
 
     this.frameWidth = this.width;
@@ -41,20 +41,20 @@ export const Projectile = function({
 
   this.selector.style.backgroundSize = this.width + 'px ' + this.height + 'px';
 
-  this.speed = this.speed * (magnification / 5);
+  this.speed = this.speed * (MAGNIFICATION / 5);
 
   if (this.dir === 'left') {
-    this.x = origin.x + (origin.weaponOffsetLeft[0] * magnification) - this.frameWidth;
-    this.y = origin.y + (origin.weaponOffsetLeft[1] * magnification);
+    this.x = origin.x + (origin.weaponOffsetLeft[0] * MAGNIFICATION) - this.frameWidth;
+    this.y = origin.y + (origin.weaponOffsetLeft[1] * MAGNIFICATION);
   } else if (this.dir === 'up') {
-    this.x = origin.x + (origin.weaponOffsetUp[0] * magnification);
-    this.y = origin.y + (origin.weaponOffsetUp[1] * magnification) - this.frameHeight;
+    this.x = origin.x + (origin.weaponOffsetUp[0] * MAGNIFICATION);
+    this.y = origin.y + (origin.weaponOffsetUp[1] * MAGNIFICATION) - this.frameHeight;
   } else if (this.dir === 'right') {
-    this.x = origin.x + (origin.weaponOffsetRight[0] * magnification);
-    this.y = origin.y + (origin.weaponOffsetRight[1] * magnification);
+    this.x = origin.x + (origin.weaponOffsetRight[0] * MAGNIFICATION);
+    this.y = origin.y + (origin.weaponOffsetRight[1] * MAGNIFICATION);
   } else if (this.dir === 'down') {
-    this.x = origin.x + (origin.weaponOffsetDown[0] * magnification);
-    this.y = origin.y + (origin.weaponOffsetDown[1] * magnification);
+    this.x = origin.x + (origin.weaponOffsetDown[0] * MAGNIFICATION);
+    this.y = origin.y + (origin.weaponOffsetDown[1] * MAGNIFICATION);
   }
 
   this.selector.style.width = this.frameWidth + 'px';

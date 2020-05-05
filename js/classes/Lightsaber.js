@@ -1,6 +1,5 @@
-import { COLORS }          from '/js/constants/colors.js';
-import { magnification } from '/js/constants/config.js';
-import { collision }     from '/js/constants/utils.js';
+import { COLORS, MAGNIFICATION } from '/js/constants/config.js';
+import { collision }             from '/js/constants/utils.js';
 
 export const Lightsaber = function({
   game,
@@ -14,43 +13,43 @@ export const Lightsaber = function({
   this.dir = origin.dir;
   this.color = origin.weaponColor;
   this.active = !isLongRange;
-  this.speed = isLongRange ? 30 * (magnification / 5) : 0;
+  this.speed = isLongRange ? 30 * (MAGNIFICATION / 5) : 0;
   this.thrown = isLongRange;
 
   if (this.dir === 'left') {
-    this.frameWidth = 8 * magnification;
-    this.frameHeight = 1 * magnification;
-    this.hiltWidth = 2 * magnification;
-    this.hiltHeight = 1 * magnification;
-    this.x = origin.x + (origin.weaponOffsetLeft[0] * magnification) - this.frameWidth;
-    this.y = origin.y + (origin.weaponOffsetLeft[1] * magnification);
+    this.frameWidth = 8 * MAGNIFICATION;
+    this.frameHeight = 1 * MAGNIFICATION;
+    this.hiltWidth = 2 * MAGNIFICATION;
+    this.hiltHeight = 1 * MAGNIFICATION;
+    this.x = origin.x + (origin.weaponOffsetLeft[0] * MAGNIFICATION) - this.frameWidth;
+    this.y = origin.y + (origin.weaponOffsetLeft[1] * MAGNIFICATION);
     this.hiltX = this.frameWidth - this.hiltWidth;
     this.hiltY = 0;
   } else if (this.dir === 'up') {
-    this.frameWidth = 1 * magnification;
-    this.frameHeight = 8 * magnification;
-    this.hiltWidth = 1 * magnification;
-    this.hiltHeight = 2 * magnification;
-    this.x = origin.x + (origin.weaponOffsetUp[0] * magnification);
-    this.y = origin.y + (origin.weaponOffsetUp[1] * magnification) - this.frameHeight;
+    this.frameWidth = 1 * MAGNIFICATION;
+    this.frameHeight = 8 * MAGNIFICATION;
+    this.hiltWidth = 1 * MAGNIFICATION;
+    this.hiltHeight = 2 * MAGNIFICATION;
+    this.x = origin.x + (origin.weaponOffsetUp[0] * MAGNIFICATION);
+    this.y = origin.y + (origin.weaponOffsetUp[1] * MAGNIFICATION) - this.frameHeight;
     this.hiltX = 0;
     this.hiltY = this.frameHeight - this.hiltHeight;;
   } else if (this.dir === 'right') {
-    this.frameWidth = 8 * magnification;
-    this.frameHeight = 1 * magnification;
-    this.hiltWidth = 2 * magnification;
-    this.hiltHeight = 1 * magnification;
-    this.x = origin.x + (origin.weaponOffsetRight[0] * magnification);
-    this.y = origin.y + (origin.weaponOffsetRight[1] * magnification);
+    this.frameWidth = 8 * MAGNIFICATION;
+    this.frameHeight = 1 * MAGNIFICATION;
+    this.hiltWidth = 2 * MAGNIFICATION;
+    this.hiltHeight = 1 * MAGNIFICATION;
+    this.x = origin.x + (origin.weaponOffsetRight[0] * MAGNIFICATION);
+    this.y = origin.y + (origin.weaponOffsetRight[1] * MAGNIFICATION);
     this.hiltX = 0;
     this.hiltY = 0;
   } else if (this.dir === 'down') {
-    this.frameWidth = 1 * magnification;
-    this.frameHeight = 8 * magnification;
-    this.hiltWidth = 1 * magnification;
-    this.hiltHeight = 2 * magnification;
-    this.x = origin.x + (origin.weaponOffsetDown[0] * magnification);
-    this.y = origin.y + (origin.weaponOffsetDown[1] * magnification);
+    this.frameWidth = 1 * MAGNIFICATION;
+    this.frameHeight = 8 * MAGNIFICATION;
+    this.hiltWidth = 1 * MAGNIFICATION;
+    this.hiltHeight = 2 * MAGNIFICATION;
+    this.x = origin.x + (origin.weaponOffsetDown[0] * MAGNIFICATION);
+    this.y = origin.y + (origin.weaponOffsetDown[1] * MAGNIFICATION);
     this.hiltX = 0;
     this.hiltY = 0;
   }

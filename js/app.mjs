@@ -1,24 +1,26 @@
-import { detonation } from './constants/animations.js';
 import {
   artoo,
   stormtrooper,
   threepio
 } from './constants/characters.js';
-import { COLORS } from './constants/colors.js';
 import {
-  cardinals,
-  fps,
-  isMobile,
-  magnification
+  BUTTON_NAMES,
+  CARDINALS,
+  COLORS,
+  FPS,
+  HUD_OPACITY,
+  IS_MOBILE,
+  MODES,
+  NUMERALS
 } from './constants/config.js';
-import episodes from './constants/episodes.js';
+import { EPISODES } from './constants/episodes.js';
 import {
   collision,
   getRandom,
   getObstruction,
-  importJSON,
   preload
 } from './constants/utils.js';
+import { WEAPON_TYPES } from '/js/constants/weapons.js';
 
 import { Animation }  from './classes/Animation.js';
 import { Bomb }       from './classes/Bomb.js';
@@ -34,20 +36,16 @@ import { Projectile } from './classes/Projectile.js';
 import { Stage }      from './classes/Stage.js';
 
 //Initialize global vars
-let hudOpacity    = '0.5';
-let hudStatus     = '';
-let cutsceneCount = 0;
-
-let clickPrompt = isMobile ? 'Tap to begin' : 'Press Enter';
-let startPrompt = isMobile ? 'Press Start'  : 'Press Enter';
-
-let buttonNames = ['btnRight', 'btnLeft', 'btnDown', 'btnUp', 'btnStart', 'btnAttack', 'btnAttack2'];
-let numerals    = ['I', 'II', 'III', 'IV', 'V', 'VI'];
+const master = {
+  assetCount: 0,
+  cutsceneCount: 0,
+  mode: MODES.TITLE,
+  promptClick: IS_MOBILE ? 'Tap to begin' : 'Press Enter',
+  promptStart: IS_MOBILE ? 'Press Start'  : 'Press Enter'
+};
 
 let enemyCount;
-let propCount;
-let invincible;
-let menuMode;
+let isInvincible;
 let resetMode;
 let gameOver;
 let isPaused;
@@ -73,13 +71,12 @@ let hilt;
 (function() {
   game = new Game();
   hud = new Hud({
-    clickPrompt,
     game,
-    startPrompt
+    master
   });
 
   initInterface();
-  initMenu('title');
+  initMenu(MODES.TITLE);
 
   loop();
 })();
@@ -113,27 +110,28 @@ function advanceStage() {
   if (level === episode.length) {
     reset();
   } else {
-    if (hud.score === 0 || typeof(episodes[episode][level].cutscene) === 'undefined') {
+    if (hud.score === 0 || typeof(EPISODES[episode][level].cutscene) === 'undefined') {
       clearStage();
       initLevel();
     } else {
-      cutsceneCount = 0;
-      initMenu('cutscene');
+      master.cutsceneCount = 0;
+      initMenu(MODES.CUTSCENE);
     }
   }
 }
 
 function buttonPush(key, id) {
-  if (menuMode === '') {
+  if (master.mode === MODES.GAMEPLAY) {
     if (!player.attacking) {
       if (keys.indexOf(key) === -1) {
         keys.push(key);
       }
     }
-  } else if (menuMode === 'episode' && cardinals.indexOf(key) !== -1) {
-    for (var i=0; i<numerals.length; i++) {
-      document.getElementById('btnEpisode' + numerals[i]).style.color = COLORS.BLACK;
+  } else if (master.mode === MODES.EPISODE && CARDINALS.indexOf(key) !== -1) {
+    for (var i = 0; i < NUMERALS.length; i++) {
+      document.getElementById('btnEpisode' + NUMERALS[i]).style.color = COLORS.BLACK;
     }
+
     if (key === 'left') {
       episode -= 1;
     } else if (key === 'right') {
@@ -143,25 +141,29 @@ function buttonPush(key, id) {
     } else if (key === 'down') {
       episode += 3;
     }
+
     episode = (episode < 0) ? 6 + episode : (episode % 6);
-    document.getElementById('btnEpisode' + numerals[episode]).style.color = COLORS.WHITE;
+
+    document.getElementById('btnEpisode' + NUMERALS[episode]).style.color = COLORS.WHITE;
   }
-  if (buttonNames.indexOf(id) !== -1) {
+
+  if (Object.values(BUTTON_NAMES).indexOf(id) > -1) {
     document.getElementById(id).style.opacity = '1';
   }
 }
 
 function buttonUpdate(event) {
-  for (var i=0; i<cardinals.length; i++) {
+  for (var i = 0; i < CARDINALS.length; i++) {
     var previousButton = document.querySelector('[data-key="' + player.dir + '"]');
-    var button = document.querySelector('[data-key="' + cardinals[i] + '"]');
+    var button = document.querySelector('[data-key="' + CARDINALS[i] + '"]');
     var bounds = button.getBoundingClientRect();
+
     if (event.changedTouches[0].pageX > bounds.left && event.changedTouches[0].pageX < bounds.right && event.changedTouches[0].pageY > bounds.top && event.changedTouches[0].pageY < bounds.bottom) {
-      if (keys.indexOf(cardinals[i]) === -1) {
+      if (keys.indexOf(CARDINALS[i]) === -1) {
         buttonRelease(player.dir, previousButton.id);
-        buttonPush(cardinals[i], button.id);
+        buttonPush(CARDINALS[i], button.id);
       }
-    } else if (keys.indexOf(cardinals[i]) !== -1) {
+    } else if (keys.indexOf(CARDINALS[i]) !== -1) {
       buttonRelease(player.dir, button.id);
     }
   }
@@ -171,19 +173,15 @@ function buttonRelease(key, id) {
   if (key === 'enter') {
     if (resetMode) {
       reset();
-    } else if (menuMode === 'title') {
+    } else if (master.mode === MODES.TITLE) {
       level = 0;
-      cutsceneCount = 0;
-      initMenu('cutscene');
-    } else if (menuMode === 'cutscene') {
-      menuMode = '';
+      master.cutsceneCount = 0;
+      initMenu(MODES.CUTSCENE);
+    } else if (master.mode === MODES.CUTSCENE) {
+      master.mode = MODES.GAMEPLAY;
 
-      if (isMobile) {
-        buttons.style.display = hudStatus;
-      }
-
-      if (++cutsceneCount < episodes[episode][level].cutscene.length) {
-        initMenu('cutscene');
+      if (++master.cutsceneCount < EPISODES[episode][level].cutscene.length) {
+        initMenu(MODES.CUTSCENE);
       } else {
         if (stage.defeated) {
           initLevel();
@@ -217,8 +215,8 @@ function buttonRelease(key, id) {
     keys.splice(position, 1);
   }
 
-  if (buttonNames.indexOf(id) !== -1) {
-    document.getElementById(id).style.opacity = hudOpacity;
+  if (Object.values(BUTTON_NAMES).indexOf(id) > -1) {
+    document.getElementById(id).style.opacity = HUD_OPACITY;
   }
 }
 
@@ -231,7 +229,7 @@ function clearStage() {
   animations.splice(0);
   keys.splice(0);
   enemyCount = 0;
-  propCount = 0;
+  master.assetCount = 0;
 
   hud.scoreText.innerHTML = hud.score;
   hud.victimText.innerHTML = '';
@@ -259,7 +257,7 @@ function crossPaths(obj1, obj2) {
 
 function initGame() {
   clearStage();
-  menuMode = '';
+  master.mode = MODES.GAMEPLAY;
   gameOver = false;
   isPaused = false;
   hud.scoreText.innerHTML = hud.score;
@@ -267,7 +265,7 @@ function initGame() {
 }
 
 function initInterface() {
-  if (isMobile) {
+  if (IS_MOBILE) {
     //Init touchscreen controls
     window.addEventListener('touchstart', function(event) {
       if (typeof(event.target.getAttribute('data-key')) !== 'undefined') {
@@ -286,8 +284,8 @@ function initInterface() {
       }
 
       //Check if touch was released over different d-pad button
-      for (var i=0; i<cardinals.length; i++) {
-        var button = document.querySelector('[data-key="' + cardinals[i] + '"]');
+      for (var i = 0; i < CARDINALS.length; i++) {
+        var button = document.querySelector('[data-key="' + CARDINALS[i] + '"]');
         var bounds = button.getBoundingClientRect();
 
         if (event.pageX > bounds.left && event.pageX < bounds.right && event.pageY > bounds.top && event.pageY < bounds.bottom) {
@@ -297,7 +295,7 @@ function initInterface() {
     }, {passive: false});
 
     window.addEventListener('resize', function() {
-      if (menuMode === '' && !gameOver && !isPaused) {
+      if (master.mode === MODES.GAMEPLAY && !gameOver && !isPaused) {
         pause();
       }
 
@@ -403,7 +401,7 @@ function initInterface() {
 
 function initLevel() {
   stage = new Stage({
-    data: episodes[episode][level],
+    data: EPISODES[episode][level],
     game,
     hud
   });
@@ -422,7 +420,7 @@ function initLevel() {
 
   game.counter = 0;
 
-  if (typeof(episodes[episode][level].obstacles) !== 'undefined') {
+  if (typeof(EPISODES[episode][level].obstacles) !== 'undefined') {
     for (var obstacle in stage.obstacles) {
       new Obstacle({
         data: stage.obstacles[obstacle]['type'],
@@ -440,29 +438,29 @@ function initLevel() {
   hud.directions.innerHTML = '';
   hud.scoreboard.style.display = '';
 
-  if (isMobile) {
-    buttons.style.display = hudStatus;
+  if (IS_MOBILE) {
+    buttons.style.display = '';
   }
 }
 
 function initMenu(mode) {
-  menuMode = mode;
+  master.mode = mode;
   resetMode = false;
   gameOver = true;
   isPaused = false;
   enemyCount = 0;
-  propCount = 0;
+  master.assetCount = 0;
 
-  invincible = false;
+  isInvincible = false;
 
-  if (mode === 'title') {
+  if (master.mode === MODES.TITLE) {
     episode = 3;
     level = 0;
     hud.score = 0;
-    cutsceneCount = 0;
+    master.cutsceneCount = 0;
 
     stage = new Stage({
-      data: episodes[3][0],
+      data: EPISODES[3][0],
       game,
       hud
     });
@@ -489,7 +487,7 @@ function initMenu(mode) {
 
     for (var i = 0; i < 5; i++) {
       setTimeout(function() {
-        if (menuMode === 'title') {
+        if (master.mode === MODES.TITLE) {
           new Enemy({
             animations,
             data:stormtrooper,
@@ -505,26 +503,26 @@ function initMenu(mode) {
 
     hud.selector.setAttribute('data-key', 'enter');
     hud.title.innerHTML = 'Star Wars';
-    hud.directions.innerHTML = clickPrompt;
+    hud.directions.innerHTML = master.promptClick;
     hud.scoreText.innerHTML = '';
     hud.victimText.innerHTML = '';
 
-    if (isMobile) {
-      hudStatus = buttons.style.display;
+    if (IS_MOBILE) {
       buttons.style.display = 'none';
     }
-  } else if (mode === 'cutscene') {
+  } else if (master.mode === MODES.CUTSCENE) {
     scoreboard.style.display = 'none';
     hud.selector.setAttribute('data-key', 'enter');
     title.innerHTML = '';
     directions.innerHTML = '';
     directions.style.pointerEvents = 'none';
 
-    if (typeof(episodes[episode][level].cutscene) !== 'undefined') {
+    if (typeof(EPISODES[episode][level].cutscene) !== 'undefined') {
       clearStage();
+
       stage = new Cutscene({
         game,
-        img: episodes[episode][level].cutscene[cutsceneCount]
+        img: EPISODES[episode][level].cutscene[master.cutsceneCount]
       })
     } else {
       initGame();
@@ -536,30 +534,31 @@ function levelLose() {
   gameOver = true;
   hud.score = 0;
   title.innerHTML = 'Game Over';
-  directions.innerHTML = 'Press Start<br/>to restart level.';
+  directions.innerHTML = `${master.promptStart}<br/>to restart level.`;
   keys.splice(0);
 }
 
 function levelWin() {
   stage.defeated = true;
-  directions.innerHTML = startPrompt;
-  if (++level === episodes[episode].length) {
+  directions.innerHTML = master.promptStart;
+
+  if (++level === EPISODES[episode].length) {
     gameOver = true;
     resetMode = true;
     title.innerHTML = 'You win!';
   } else {
-    title.innerHTML = 'Next:<br/>' + episodes[episode][level].name;
+    title.innerHTML = 'Next:<br/>' + EPISODES[episode][level].name;
   }
 }
 
 function loop() {
-  if (menuMode === '' && !gameOver && !isPaused) {
+  if (master.mode === MODES.GAMEPLAY && !gameOver && !isPaused) {
     const expiredObjects = [];
 
     if (keys.length > 0) {
       if (!player.attacking) {
         for (var key in keys) {
-          if (cardinals.indexOf(keys[key]) !== -1) {
+          if (CARDINALS.indexOf(keys[key]) !== -1) {
             player.dir = keys[key];
             player.running = true;
           }
@@ -575,13 +574,13 @@ function loop() {
       if (enemies[enemy].active) {
         if (!player.dead) {
           if (collision(player, enemies[enemy])) {
-            if (!invincible) {
+            if (!isInvincible) {
               player.dead = true;
             }
 
             enemies[enemy].collide();
-          } else if (enemies[enemy].weaponType === 'projectile' && enemies[enemy].weaponReady && crossPaths(enemies[enemy], player)) {
-            var chance = 500 + episodes[episode].length - level;
+          } else if (enemies[enemy].weaponType === WEAPON_TYPES.PROJECTILE && enemies[enemy].weaponReady && crossPaths(enemies[enemy], player)) {
+            var chance = 500 + EPISODES[episode].length - level;
             var rand = getRandom(chance);
 
             if (rand === 0) {
@@ -603,7 +602,7 @@ function loop() {
     for (var friendly in friendlies) {
       if (friendlies[friendly].ship) {
         if (!player.dead && collision(player, friendlies[friendly])) {
-          if (!invincible) {
+          if (!isInvincible) {
             player.dead = true;
           }
 
@@ -624,7 +623,7 @@ function loop() {
     //Iterate over all props
     for (var prop in props) {
       if (!player.dead && collision(player, props[prop])) {
-        if (!invincible && props[prop].active && props[prop].origin !== player) {
+        if (!isInvincible && props[prop].active && props[prop].origin !== player) {
           player.dead = true;
           props[prop].dead = true;
         }
@@ -738,7 +737,7 @@ function loop() {
 
     //Update the game counter
     game.counter++;
-  } else if (menuMode === 'title') {
+  } else if (master.mode === MODES.TITLE) {
     //Iterate over all enemies
     for (var enemy in enemies) {
       enemies[enemy].update();
@@ -746,7 +745,7 @@ function loop() {
     }
   }
 
-  setTimeout(loop, 1000/fps);
+  setTimeout(loop, 1000 / FPS);
 }
 
 function pause() {
@@ -757,15 +756,17 @@ function pause() {
 
 function reset() {
   clearStage();
-  initMenu('title');
+  initMenu(MODES.TITLE);
 }
 
 function resizeGame(width, height) {
-  if (menuMode === '') {
+  if (master.mode === MODES.GAMEPLAY) {
     adaptCoords(player);
+
     for (var enemy in enemies) {
       adaptCoords(enemies[enemy]);
     }
+
     for (var prop in props) {
       adaptCoords(props[prop]);
     }
@@ -776,7 +777,7 @@ function resizeGame(width, height) {
   game.selector.style.width = game.width + 'px';
   game.selector.style.height = game.height + 'px';
 
-  if (menuMode === 'cutscene') {
+  if (master.mode === MODES.CUTSCENE) {
     stage.resize();
   }
 
@@ -784,64 +785,5 @@ function resizeGame(width, height) {
     adaptCoords(obstacles[obstacle]);
   }
 
-  if (game.width > game.height) {
-    document.getElementById('buttons').style.bottom = ((game.height - document.getElementById('buttons').clientHeight) / 2) + 'px';
-    document.getElementById('buttons').style.opacity = '0.5';
-  } else {
-    document.getElementById('buttons').style.bottom = '0';
-    document.getElementById('buttons').style.opacity = '1';
-  }
   btnStart.style.left = ((game.width - 75) / 2) + 'px';
-}
-
-//Cheats
-function playAs(obj) {
-  if (menuMode !== '') {
-    initGame();
-  }
-  stage.selector.removeChild(player.selector);
-  player = new Player({
-    animations,
-    data: stage.character,
-    enemies,
-    game,
-    keys,
-    level,
-    obstacles,
-    props,
-    stage
-  });
-}
-
-function playLevel(obj) {
-  let skipToLevel;
-
-  if (typeof(obj) === 'number') {
-    if (obj > 0 && obj < episodes[episode].length) {
-      skipToLevel = obj;
-    }
-  } else {
-    for (var i=0; i<episodes[episode].length; i++) {
-      if (obj === episodes[episode][i]) {
-        skipToLevel = i;
-      }
-    }
-  }
-  if (typeof(skipToLevel) === 'number') {
-    if (menuMode !== '') {
-      initGame();
-    }
-    level = skipToLevel;
-    clearStage();
-    initLevel();
-
-    isPaused = false;
-    pause();
-  }
-}
-
-function useTheForce() {
-  invincible = true;
-  isPaused = true;
-  directions.innerHTML = 'May the force be with you.<br/></br/>Press Start';
 }

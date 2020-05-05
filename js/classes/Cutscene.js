@@ -1,4 +1,4 @@
-import { COLORS } from '/js/constants/colors.js';
+import { COLORS } from '/js/constants/config.js';
 
 export const Cutscene = function({
   game,

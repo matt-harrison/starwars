@@ -1,10 +1,10 @@
-import { fps, magnification } from '/js/constants/config.js';
+import { FPS, MAGNIFICATION } from '/js/constants/config.js';
 import {
   getRandom,
   getObstruction,
-  importJSON,
   preload
 } from '/js/constants/utils.js';
+import { PROJECTILES, WEAPON_TYPES } from '/js/constants/weapons.js';
 
 import { Animation }  from '/js/classes/Animation.js';
 import { Lightsaber } from '/js/classes/Lightsaber.js';
@@ -21,9 +21,9 @@ export const Player = function({
   props,
   stage
 }) {
-  importJSON(this, data);
+  Object.assign(this, data);
 
-  this.speed = this.speed * (magnification / 5);
+  this.speed = this.speed * (MAGNIFICATION / 5);
 
   this.x = Math.floor((game.width - this.frameWidth) / 2);
   this.y = Math.floor((game.height - this.frameHeight) / 2);
@@ -36,17 +36,18 @@ export const Player = function({
   this.dead = false;
   this.lightsaber = '';
 
-  if (this.weaponType === 'projectile') {
-    if (this.projectile === 'laser') {
-      this.weaponDelay = fps / 4;
+  if (this.weaponType === WEAPON_TYPES.PROJECTILE) {
+    if (this.projectile === PROJECTILES.LASER) {
+      this.weaponDelay = FPS / 4;
     } else if (typeof(this.weaponDelay) === 'undefined') {
-      this.weaponDelay = fps / 2;
+      this.weaponDelay = FPS / 2;
     }
-  } else if (this.weaponType === 'bomb') {
+  } else if (this.weaponType === WEAPON_TYPES.BOMB) {
     this.weaponDelay = 8;
-  } else if (this.weaponType === 'lightsaber') {
+  } else if (this.weaponType === WEAPON_TYPES.LIGHTSABER) {
     this.weaponDelay = 2;
   }
+
   this.weaponReady = true;
   this.weaponCount = 0;
 
@@ -67,7 +68,7 @@ export const Player = function({
 
   this.attack = function(key) {
     if (this.weaponReady) {
-      if (this.weaponType === 'projectile') {
+      if (this.weaponType === WEAPON_TYPES.PROJECTILE) {
         new Projectile({
           game,
           origin: this,
@@ -84,14 +85,14 @@ export const Player = function({
             }
           }
         }
-      } else if (this.weaponType === 'bomb') {
+      } else if (this.weaponType === WEAPON_TYPES.BOMB) {
         new Bomb({
           animations,
           origin: this,
           props,
           stage
         });
-      } else if (this.weaponType === 'lightsaber') {
+      } else if (this.weaponType === WEAPON_TYPES.LIGHTSABER) {
         const isLongRange = (key === 'Z');
 
         this.lightsaber = new Lightsaber({
@@ -106,7 +107,7 @@ export const Player = function({
         this.running = false;
         this.attacking = true;
         this.spriteColumn = this.moveFrameCount + 1;
-      } else if (this.weaponType === 'attack') {
+      } else if (this.weaponType === WEAPON_TYPES.ATTACK) {
       }
 
       this.weaponReady = false;
@@ -178,7 +179,7 @@ export const Player = function({
             if (obs === '') {
               this.y -= this.speed;
             } else {
-              this.y = obs.y + obs.frameHeight - this.frameHeight + magnification;
+              this.y = obs.y + obs.frameHeight - this.frameHeight + MAGNIFICATION;
             }
           } else if (this.ship) {
             this.y = 0;

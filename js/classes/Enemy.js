@@ -1,8 +1,7 @@
-import { cardinals, fps, magnification } from '/js/constants/config.js';
+import { CARDINALS, FPS, MAGNIFICATION } from '/js/constants/config.js';
 import {
   getRandom,
   getObstruction,
-  importJSON,
   inBounds,
   preload,
   updateScore,
@@ -20,15 +19,15 @@ export const Enemy = function({
   obstacles,
   stage
 }) {
-  importJSON(this, data);
+  Object.assign(this, data);
 
   this.active = true;
   this.dead = false;
   this.trapped = false;
 
-  this.speed = this.speed * (magnification / 5);
+  this.speed = this.speed * (MAGNIFICATION / 5);
 
-  this.weaponDelay = fps;//Shoot once per second max
+  this.weaponDelay = FPS;//Shoot once per second max
   this.weaponReady = true;
   this.weaponCount = 0;
 
@@ -60,7 +59,7 @@ export const Enemy = function({
 
   if (typeof(stage.enemyDir) === 'undefined') {
     this.spriteRow = getRandom(4);
-    this.dir = cardinals[this.spriteRow];
+    this.dir = CARDINALS[this.spriteRow];
   } else {
     this.dir = stage.enemyDir;
   }
@@ -91,7 +90,7 @@ export const Enemy = function({
   this.changeDir = function() {
     if (inBounds({game, obj: this})) {
       this.spriteRow = getRandom(4);
-      const randomDir = cardinals[this.spriteRow];
+      const randomDir = CARDINALS[this.spriteRow];
       if (this.dir === randomDir) {
         this.changeDir();
       } else {
@@ -128,7 +127,7 @@ export const Enemy = function({
         this.dead = true;
       } else {
         this.blinking = true;
-        this.blinkCount = fps;
+        this.blinkCount = FPS;
         this.changeDir();
       }
     }
@@ -237,7 +236,7 @@ export const Enemy = function({
             this.y -= this.speed;
           } else {
             if (obs !== '') {
-              this.y = obs.y + obs.frameHeight - this.frameHeight + magnification;
+              this.y = obs.y + obs.frameHeight - this.frameHeight + MAGNIFICATION;
               this.changeDir();
             } else {
               this.y = 0;
@@ -278,7 +277,6 @@ export const Enemy = function({
       this.respawn();
     } else {
       this.selector.style.backgroundPosition = (0 - this.spriteColumn * this.frameWidth) + 'px ' + (0 - this.spriteRow * this.frameHeight) + 'px';
-
       this.selector.style.left = this.x + 'px';
       this.selector.style.top = this.y + 'px';
     }

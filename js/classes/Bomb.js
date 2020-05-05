@@ -1,8 +1,6 @@
-import { magnification } from '/js/constants/config.js';
-
-import { detonation } from '/js/constants/animations.js';
-import { COLORS } from '/js/constants/colors.js';
-import { collision }  from '/js/constants/utils.js';
+import { detonation }            from '/js/constants/animations.js';
+import { COLORS, MAGNIFICATION } from '/js/constants/config.js';
+import { collision }             from '/js/constants/utils.js';
 
 import { Animation } from '/js/classes/Animation.js';
 
@@ -17,10 +15,10 @@ export const Bomb = function({
   this.active = false;
   this.counter = 0;
 
-  this.x = origin.x + (origin.weaponOffset[0] * magnification);
-  this.y = origin.y + (origin.weaponOffset[1] * magnification);
-  this.frameWidth = 1 * magnification;
-  this.frameHeight = 1 * magnification;
+  this.x = origin.x + (origin.weaponOffset[0] * MAGNIFICATION);
+  this.y = origin.y + (origin.weaponOffset[1] * MAGNIFICATION);
+  this.frameWidth = 1 * MAGNIFICATION;
+  this.frameHeight = 1 * MAGNIFICATION;
   this.spriteColumn = 0;
   this.frameCount = 5;
 

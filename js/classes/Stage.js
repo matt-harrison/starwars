@@ -1,11 +1,9 @@
-import { importJSON } from '/js/constants/utils.js';
-
 export const Stage = function({
   data,
   game,
   hud
 }) {
-  importJSON(this, data);
+  Object.assign(this, data);
 
   this.selector = document.createElement('div');
   this.selector.id = 'stage';

@@ -1,4 +1,5 @@
-import { magnification } from '/js/constants/config.js';
+import { MAGNIFICATION } from '/js/constants/config.js';
+import { EPISODES }      from '/js/constants/episodes.js';
 
 export function add(num1, num2) {
   return Number(num1) + Number(num2);
@@ -22,7 +23,7 @@ export function getObstruction({
 }) {
   var obstruction = '';
   var charLeft = obj.x;
-  var charTop = obj.y + obj.frameHeight - magnification;
+  var charTop = obj.y + obj.frameHeight - MAGNIFICATION;
   var charRight = obj.x + obj.frameWidth;
   var charBottom = obj.y + obj.frameHeight;
 
@@ -68,14 +69,6 @@ export function getRandom(max) {
   return Math.floor(Math.random() * max);
 }
 
-export function importJSON(obj, data) {
-  for (var prop in data) {
-    if (data.hasOwnProperty(prop)) {
-      obj[prop] = data[prop];
-    }
-  }
-}
-
 export function inBounds({
   game,
   obj
@@ -107,4 +100,58 @@ export function updateVictim({
   hud.victimText.style.color = color;
   hud.victimText.innerHTML = victim.name;
   hud.victimCount = 16;
+}
+
+// Cheats
+export function playAs(obj) {
+  if (master.mode !== MODES.GAMEPLAY) {
+    initGame();
+  }
+  stage.selector.removeChild(player.selector);
+  player = new Player({
+    animations,
+    data: stage.character,
+    enemies,
+    game,
+    keys,
+    level,
+    obstacles,
+    props,
+    stage
+  });
+}
+
+export function playLevel(obj) {
+  let skipToLevel;
+
+  if (typeof(obj) === 'number') {
+    if (obj > 0 && obj < EPISODES[3].length) {
+      skipToLevel = obj;
+    }
+  } else {
+    for (var i = 0; i < EPISODES[3].length; i++) {
+      if (obj === EPISODES[3][i]) {
+        skipToLevel = i;
+      }
+    }
+  }
+
+  if (typeof(skipToLevel) === 'number') {
+    if (master.mode !== MODES.GAMEPLAY) {
+      initGame();
+    }
+
+    level = skipToLevel;
+    clearStage();
+    initLevel();
+
+    isPaused = false;
+    pause();
+  }
+}
+
+export function useTheForce() {
+  isInvincible = true;
+  isPaused = true;
+  directions.innerHTML = 'May the force be with you.<br/></br/>Press Start';
 }
