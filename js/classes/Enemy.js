@@ -1,4 +1,3 @@
-import { CARDINALS, FPS, MAGNIFICATION } from '/js/constants/config.js';
 import {
   getRandom,
   getObstruction,
@@ -6,7 +5,9 @@ import {
   preload,
   updateScore,
   updateVictim
-} from '/js/constants/utils.js';
+} from '/js/utils.js';
+
+import { CARDINALS, FPS, MAGNIFICATION } from '/js/constants/config.js';
 
 import { Animation } from '/js/classes/Animation.js';
 
@@ -14,8 +15,8 @@ export const Enemy = function({
   animations,
   data,
   enemies,
-  game,
   hud,
+  master,
   obstacles,
   stage
 }) {
@@ -65,19 +66,19 @@ export const Enemy = function({
   }
 
   if (this.dir === 'left') {
-    this.x = game.width;
-    this.y = getRandom(game.height - this.frameHeight);
+    this.x = master.gameWidth;
+    this.y = getRandom(master.gameHeight - this.frameHeight);
     this.spriteRow = 1;
   } else if (this.dir === 'up') {
-    this.x = getRandom(game.width - this.frameWidth);
-    this.y = game.height;
+    this.x = getRandom(master.gameWidth - this.frameWidth);
+    this.y = master.gameHeight;
     this.spriteRow = 3;
   } else if (this.dir === 'right') {
     this.x = 0 - this.frameWidth;
-    this.y = getRandom(game.height - this.frameHeight);
+    this.y = getRandom(master.gameHeight - this.frameHeight);
     this.spriteRow = 0;
   } else if (this.dir === 'down') {
-    this.x = getRandom(game.width - this.frameWidth);
+    this.x = getRandom(master.gameWidth - this.frameWidth);
     this.y = 0 - this.frameHeight;
     this.spriteRow = 2;
   }
@@ -88,7 +89,7 @@ export const Enemy = function({
   }
 
   this.changeDir = function() {
-    if (inBounds({game, obj: this})) {
+    if (inBounds({master, obj: this})) {
       this.spriteRow = getRandom(4);
       const randomDir = CARDINALS[this.spriteRow];
       if (this.dir === randomDir) {
@@ -149,8 +150,8 @@ export const Enemy = function({
       animations,
       data,
       enemies,
-      game,
       hud,
+      master,
       obstacles,
       stage
     });
@@ -182,7 +183,7 @@ export const Enemy = function({
 
   this.update = function() {
     if (this.blinking) {
-      if (game.counter%2 === 0 || this.dead) {
+      if (master.counter % 2 === 0 || this.dead) {
         this.selector.style.display = '';
       } else {
         this.selector.style.display = 'none';
@@ -216,7 +217,7 @@ export const Enemy = function({
         obstacles
       });
 
-      if (obs !== '' && !inBounds({game, obj: this})) {
+      if (obs !== '' && !inBounds({master, obj: this})) {
         this.trapped = true;
       } else {
         if (this.dir === 'left') {
@@ -244,26 +245,26 @@ export const Enemy = function({
             }
           }
         } else if (this.dir === 'right') {
-          if (this.x + this.speed < game.width - this.frameWidth && obs === '') {
+          if (this.x + this.speed < master.gameWidth - this.frameWidth && obs === '') {
             this.x += this.speed;
           } else {
             if (obs !== '') {
               this.x = obs.x - this.frameHeight;
               this.changeDir();
             } else {
-              this.x = game.width - this.frameWidth;
+              this.x = master.gameWidth - this.frameWidth;
               this.reverse();
             }
           }
         } else if (this.dir === 'down') {
-          if (this.y + this.speed < game.height - this.frameHeight && obs === '') {
+          if (this.y + this.speed < master.gameHeight - this.frameHeight && obs === '') {
             this.y += this.speed;
           } else {
             if (obs !== '') {
               this.y = obs.y - this.frameHeight;
               this.changeDir();
             } else {
-              this.y = game.height - this.frameHeight;
+              this.y = master.gameHeight - this.frameHeight;
               this.reverse();
             }
           }

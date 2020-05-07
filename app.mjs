@@ -1,8 +1,13 @@
 import {
-  artoo,
-  stormtrooper,
-  threepio
-} from './constants/characters.js';
+  collision,
+  getRandom,
+  getObstruction,
+  preload
+} from './js/utils.js';
+
+import * as CHARACTERS  from './js/constants/characters.js';
+import { EPISODES }     from './js/constants/episodes.js';
+import { WEAPON_TYPES } from './js/constants/weapons.js';
 import {
   BUTTON_NAMES,
   CARDINALS,
@@ -12,45 +17,37 @@ import {
   IS_MOBILE,
   MODES,
   NUMERALS
-} from './constants/config.js';
-import { EPISODES } from './constants/episodes.js';
-import {
-  collision,
-  getRandom,
-  getObstruction,
-  preload
-} from './constants/utils.js';
-import { WEAPON_TYPES } from '/js/constants/weapons.js';
+}                       from './js/constants/config.js';
 
-import { Animation }  from './classes/Animation.js';
-import { Bomb }       from './classes/Bomb.js';
-import { Cutscene }   from './classes/Cutscene.js';
-import { Enemy }      from './classes/Enemy.js';
-import { Friendly }   from './classes/Friendly.js';
-import { Game }       from './classes/Game.js';
-import { Hud }        from './classes/Hud.js';
-import { Lightsaber } from './classes/Lightsaber.js';
-import { Obstacle }   from './classes/Obstacle.js';
-import { Player }     from './classes/Player.js';
-import { Projectile } from './classes/Projectile.js';
-import { Stage }      from './classes/Stage.js';
+import { Animation }  from './js/classes/Animation.js';
+import { Bomb }       from './js/classes/Bomb.js';
+import { Cutscene }   from './js/classes/Cutscene.js';
+import { Enemy }      from './js/classes/Enemy.js';
+import { Friendly }   from './js/classes/Friendly.js';
+import { Game }       from './js/classes/Game.js';
+import { Hud }        from './js/classes/Hud.js';
+import { Lightsaber } from './js/classes/Lightsaber.js';
+import { Obstacle }   from './js/classes/Obstacle.js';
+import { Player }     from './js/classes/Player.js';
+import { Projectile } from './js/classes/Projectile.js';
+import { Stage }      from './js/classes/Stage.js';
 
 //Initialize global vars
 const master = {
   assetCount: 0,
+  counter: 0,
   cutsceneCount: 0,
+  episode: 0,
+  gameHeight: IS_MOBILE ? window.innerHeight : 500,
+  gameWidth:  IS_MOBILE ? window.innerWidth : 500,
+  isGameOver: false,
+  isInvincible: false,
+  isPaused: false,
+  level: 0,
   mode: MODES.TITLE,
   promptClick: IS_MOBILE ? 'Tap to begin' : 'Press Enter',
   promptStart: IS_MOBILE ? 'Press Start'  : 'Press Enter'
 };
-
-let enemyCount;
-let isInvincible;
-let resetMode;
-let gameOver;
-let isPaused;
-let episode;
-let level;
 
 let animations = [];
 let enemies    = [];
@@ -69,7 +66,7 @@ let hilt;
 
 //Initialize game
 (function() {
-  game = new Game();
+  game = new Game(master);
   hud = new Hud({
     game,
     master
@@ -86,31 +83,33 @@ function adaptCoords(obj) {
     if (obj.leftPercent === 0) {
       obj.x = 0;
     } else if (obj.leftPercent === 100) {
-      obj.x = game.width - obj.frameWidth;
+      obj.x = master.gameWidth - obj.frameWidth;
     } else {
-      obj.x = Math.floor(game.width * (obj.leftPercent / 100) - (obj.frameWidth / 2));
+      obj.x = Math.floor(master.gameWidth * (obj.leftPercent / 100) - (obj.frameWidth / 2));
     }
     if (obj.topPercent === 0) {
       obj.y = 0;
     } else if (obj.leftPercent === 100) {
-      obj.y = game.height - obj.frameHeight;
+      obj.y = master.gameHeight - obj.frameHeight;
     } else {
-      obj.y = Math.floor(game.height * (obj.topPercent / 100) - (obj.frameHeight / 2));
+      obj.y = Math.floor(master.gameHeight * (obj.topPercent / 100) - (obj.frameHeight / 2));
     }
   } else {
-    var offsetX = obj.x / (game.width - obj.frameWidth);
-    var offsetY = obj.y / (game.height - obj.frameHeight);
+    var offsetX = obj.x / (master.gameWidth - obj.frameWidth);
+    var offsetY = obj.y / (master.gameHeight - obj.frameHeight);
+
     obj.x = Math.floor((window.innerWidth - obj.frameWidth) * offsetX);
     obj.y = Math.floor((window.innerHeight - obj.frameHeight) * offsetY);
   }
+
   obj.draw();
 }
 
 function advanceStage() {
-  if (level === episode.length) {
+  if (master.level === master.episode.length) {
     reset();
   } else {
-    if (hud.score === 0 || typeof(EPISODES[episode][level].cutscene) === 'undefined') {
+    if (hud.score === 0 || typeof(EPISODES[master.episode][master.level].cutscene) === 'undefined') {
       clearStage();
       initLevel();
     } else {
@@ -133,18 +132,18 @@ function buttonPush(key, id) {
     }
 
     if (key === 'left') {
-      episode -= 1;
+      master.episode -= 1;
     } else if (key === 'right') {
-      episode += 1;
+      master.episode += 1;
     } else if (key === 'up') {
-      episode -= 3;
+      master.episode -= 3;
     } else if (key === 'down') {
-      episode += 3;
+      master.episode += 3;
     }
 
-    episode = (episode < 0) ? 6 + episode : (episode % 6);
+    master.episode = (master.episode < 0) ? 6 + master.episode : (master.episode % 6);
 
-    document.getElementById('btnEpisode' + NUMERALS[episode]).style.color = COLORS.WHITE;
+    document.getElementById('btnEpisode' + NUMERALS[master.episode]).style.color = COLORS.WHITE;
   }
 
   if (Object.values(BUTTON_NAMES).indexOf(id) > -1) {
@@ -171,16 +170,16 @@ function buttonUpdate(event) {
 
 function buttonRelease(key, id) {
   if (key === 'enter') {
-    if (resetMode) {
+    if (master.mode === MODES.RESET) {
       reset();
     } else if (master.mode === MODES.TITLE) {
-      level = 0;
+      master.level = 0;
       master.cutsceneCount = 0;
       initMenu(MODES.CUTSCENE);
     } else if (master.mode === MODES.CUTSCENE) {
       master.mode = MODES.GAMEPLAY;
 
-      if (++master.cutsceneCount < EPISODES[episode][level].cutscene.length) {
+      if (++master.cutsceneCount < EPISODES[master.episode][master.level].cutscene.length) {
         initMenu(MODES.CUTSCENE);
       } else {
         if (stage.defeated) {
@@ -189,7 +188,7 @@ function buttonRelease(key, id) {
           initGame();
         }
       }
-    } else if (gameOver) {
+    } else if (master.isGameOver) {
       initGame();
       advanceStage();
     } else if (stage.defeated) {
@@ -228,7 +227,6 @@ function clearStage() {
   props.splice(0);
   animations.splice(0);
   keys.splice(0);
-  enemyCount = 0;
   master.assetCount = 0;
 
   hud.scoreText.innerHTML = hud.score;
@@ -258,8 +256,8 @@ function crossPaths(obj1, obj2) {
 function initGame() {
   clearStage();
   master.mode = MODES.GAMEPLAY;
-  gameOver = false;
-  isPaused = false;
+  master.isGameOver = false;
+  master.isPaused = false;
   hud.scoreText.innerHTML = hud.score;
   initLevel();
 }
@@ -295,7 +293,7 @@ function initInterface() {
     }, {passive: false});
 
     window.addEventListener('resize', function() {
-      if (master.mode === MODES.GAMEPLAY && !gameOver && !isPaused) {
+      if (master.mode === MODES.GAMEPLAY && !master.isGameOver && !master.isPaused) {
         pause();
       }
 
@@ -307,7 +305,7 @@ function initInterface() {
       var key = '';
       var id = '';
 
-      if (!isPaused) {
+      if (!master.isPaused) {
         switch (event.keyCode) {
           case 37:
             key = 'left';
@@ -358,7 +356,7 @@ function initInterface() {
     window.addEventListener('keyup', function(event) {
       var key = '';
 
-      if (!isPaused) {
+      if (!master.isPaused) {
         switch (event.keyCode) {
           case 37:
             key = 'left';
@@ -401,7 +399,7 @@ function initInterface() {
 
 function initLevel() {
   stage = new Stage({
-    data: EPISODES[episode][level],
+    data: EPISODES[master.episode][master.level],
     game,
     hud
   });
@@ -410,21 +408,21 @@ function initLevel() {
     animations,
     data: stage.character,
     enemies,
-    game,
     keys,
-    level,
+    level: master.level,
+    master,
     obstacles,
     props,
     stage
   });
 
-  game.counter = 0;
+  master.counter = 0;
 
-  if (typeof(EPISODES[episode][level].obstacles) !== 'undefined') {
+  if (typeof(EPISODES[master.episode][master.level].obstacles) !== 'undefined') {
     for (var obstacle in stage.obstacles) {
       new Obstacle({
         data: stage.obstacles[obstacle]['type'],
-        game,
+        master,
         obstacles,
         stage,
         x: stage.obstacles[obstacle]['x'],
@@ -445,17 +443,15 @@ function initLevel() {
 
 function initMenu(mode) {
   master.mode = mode;
-  resetMode = false;
-  gameOver = true;
-  isPaused = false;
-  enemyCount = 0;
+  master.isGameOver = true;
+  master.isPaused = false;
   master.assetCount = 0;
 
-  isInvincible = false;
+  master.isInvincible = false;
 
   if (master.mode === MODES.TITLE) {
-    episode = 3;
-    level = 0;
+    master.episode = 3;
+    master.level = 0;
     hud.score = 0;
     master.cutsceneCount = 0;
 
@@ -467,20 +463,20 @@ function initMenu(mode) {
 
     new Enemy({
       animations,
-      data: artoo,
+      data: CHARACTERS.artoo,
       enemies,
-      game,
       hud,
+      master,
       obstacles,
       stage
     });
 
     new Enemy({
       animations,
-      data: threepio,
+      data: CHARACTERS.threepio,
       enemies,
-      game,
       hud,
+      master,
       obstacles,
       stage
     });
@@ -490,10 +486,10 @@ function initMenu(mode) {
         if (master.mode === MODES.TITLE) {
           new Enemy({
             animations,
-            data:stormtrooper,
+            data: CHARACTERS.stormtrooper,
             enemies,
-            game,
             hud,
+            master,
             obstacles,
             stage
           });
@@ -517,12 +513,13 @@ function initMenu(mode) {
     directions.innerHTML = '';
     directions.style.pointerEvents = 'none';
 
-    if (typeof(EPISODES[episode][level].cutscene) !== 'undefined') {
+    if (typeof(EPISODES[master.episode][master.level].cutscene) !== 'undefined') {
       clearStage();
 
       stage = new Cutscene({
         game,
-        img: EPISODES[episode][level].cutscene[master.cutsceneCount]
+        img: EPISODES[master.episode][master.level].cutscene[master.cutsceneCount],
+        master
       })
     } else {
       initGame();
@@ -531,7 +528,7 @@ function initMenu(mode) {
 }
 
 function levelLose() {
-  gameOver = true;
+  master.isGameOver = true;
   hud.score = 0;
   title.innerHTML = 'Game Over';
   directions.innerHTML = `${master.promptStart}<br/>to restart level.`;
@@ -542,17 +539,17 @@ function levelWin() {
   stage.defeated = true;
   directions.innerHTML = master.promptStart;
 
-  if (++level === EPISODES[episode].length) {
-    gameOver = true;
-    resetMode = true;
+  if (++master.level === EPISODES[master.episode].length) {
+    master.isGameOver = true;
+    master.mode = MODES.RESET;
     title.innerHTML = 'You win!';
   } else {
-    title.innerHTML = 'Next:<br/>' + EPISODES[episode][level].name;
+    title.innerHTML = 'Next:<br/>' + EPISODES[master.episode][master.level].name;
   }
 }
 
 function loop() {
-  if (master.mode === MODES.GAMEPLAY && !gameOver && !isPaused) {
+  if (master.mode === MODES.GAMEPLAY && !master.isGameOver && !master.isPaused) {
     const expiredObjects = [];
 
     if (keys.length > 0) {
@@ -574,18 +571,18 @@ function loop() {
       if (enemies[enemy].active) {
         if (!player.dead) {
           if (collision(player, enemies[enemy])) {
-            if (!isInvincible) {
+            if (!master.isInvincible) {
               player.dead = true;
             }
 
             enemies[enemy].collide();
           } else if (enemies[enemy].weaponType === WEAPON_TYPES.PROJECTILE && enemies[enemy].weaponReady && crossPaths(enemies[enemy], player)) {
-            var chance = 500 + EPISODES[episode].length - level;
-            var rand = getRandom(chance);
+            var chance = 500 + EPISODES[master.episode].length - master.level;
+            var random = getRandom(chance);
 
-            if (rand === 0) {
+            if (random === 0) {
               new Projectile({
-                game,
+                master,
                 origin: enemies[enemy],
                 props,
                 stage
@@ -602,7 +599,7 @@ function loop() {
     for (var friendly in friendlies) {
       if (friendlies[friendly].ship) {
         if (!player.dead && collision(player, friendlies[friendly])) {
-          if (!isInvincible) {
+          if (!master.isInvincible) {
             player.dead = true;
           }
 
@@ -623,7 +620,7 @@ function loop() {
     //Iterate over all props
     for (var prop in props) {
       if (!player.dead && collision(player, props[prop])) {
-        if (!isInvincible && props[prop].active && props[prop].origin !== player) {
+        if (!master.isInvincible && props[prop].active && props[prop].origin !== player) {
           player.dead = true;
           props[prop].dead = true;
         }
@@ -668,7 +665,9 @@ function loop() {
     });
 
     expiredObjects.forEach(expiredObject => {
-      expiredObject.kill();
+      if (expiredObject) {
+        expiredObject.kill();
+      }
     });
 
     player.update();
@@ -685,14 +684,14 @@ function loop() {
     }
 
     //Check enemy interval
-    if (game.counter % stage.enemyInterval === 0) {
+    if (master.counter % stage.enemyInterval === 0) {
       if (enemies.length < stage.enemyCount) {
         new Enemy({
           animations,
           data: stage.enemy,
           enemies,
-          game,
           hud,
+          master,
           obstacles,
           stage
         });
@@ -702,8 +701,8 @@ function loop() {
             animations,
             data: stage.boss,
             enemies,
-            game,
             hud,
+            master,
             obstacles,
             stage
           });
@@ -714,14 +713,14 @@ function loop() {
 
     //Check friendly delay
     for (var friendly in stage.friendlies) {
-      if (game.counter === stage.friendlies[friendly].details.delay) {
+      if (master.counter === stage.friendlies[friendly].details.delay) {
         new Friendly({
           animations,
           data: stage.friendlies[friendly].character,
           details: stage.friendlies[friendly].details,
           friendlies,
-          game,
           hud,
+          master,
           obstacles,
           stage
         });
@@ -735,8 +734,7 @@ function loop() {
       hud.victimText.innerHTML = '';
     }
 
-    //Update the game counter
-    game.counter++;
+    master.counter++;
   } else if (master.mode === MODES.TITLE) {
     //Iterate over all enemies
     for (var enemy in enemies) {
@@ -749,9 +747,9 @@ function loop() {
 }
 
 function pause() {
-  isPaused = !isPaused;
+  master.isPaused = !master.isPaused;
   directions.innerHTML = '';
-  title.innerHTML = isPaused ? 'Pause' : '';
+  title.innerHTML = master.isPaused ? 'Pause' : '';
 }
 
 function reset() {
@@ -772,10 +770,10 @@ function resizeGame(width, height) {
     }
   }
 
-  game.width = width;
-  game.height = height;
-  game.selector.style.width = game.width + 'px';
-  game.selector.style.height = game.height + 'px';
+  master.gameWidth = width;
+  master.gameHeight = height;
+  game.selector.style.width = master.gameWidth + 'px';
+  game.selector.style.height = master.gameHeight + 'px';
 
   if (master.mode === MODES.CUTSCENE) {
     stage.resize();
@@ -785,5 +783,5 @@ function resizeGame(width, height) {
     adaptCoords(obstacles[obstacle]);
   }
 
-  btnStart.style.left = ((game.width - 75) / 2) + 'px';
+  btnStart.style.left = ((master.gameWidth - 75) / 2) + 'px';
 }

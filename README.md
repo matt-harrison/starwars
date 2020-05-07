@@ -2,15 +2,6 @@
 # http-server .
 
 TO DO (refactor):
-* /constants vs. /config
-  * config.js?
-  * utils.js?
-* all constants should be in CONSTANT_NOTATION
-  * animations
-  * characters
-  * obstacles
-  * ships
-* separate levels from episodes (for readability)?
 * make all mutable vars part of a "master" object
   * refactor classes to receive all data from constants and master object
   * expose master object to console?

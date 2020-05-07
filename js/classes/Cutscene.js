@@ -2,14 +2,15 @@ import { COLORS } from '/js/constants/config.js';
 
 export const Cutscene = function({
   game,
-  img
+  img,
+  master
 }) {
   this.selector = document.createElement('div');
   this.selector.style.position = 'absolute';
   this.selector.style.top = 0;
   this.selector.style.left = 0;
-  this.width = game.width;
-  this.height = game.height;
+  this.width = master.gameWidth;
+  this.height = master.gameWidth;
   this.selector.style.width = this.width + 'px';
   this.selector.style.height = this.height + 'px';
   this.selector.style.backgroundColor = COLORS.BLACK;
@@ -21,12 +22,12 @@ export const Cutscene = function({
   const cutscene = document.createElement('div');
   cutscene.style.backgroundImage = "url('img/cutscenes/" + img + ".png')";
 
-  if (game.width <= game.height) {
-    cutscene.width = game.width;
-    cutscene.height = game.width;
+  if (master.gameWidth <= master.gameWidth) {
+    cutscene.width = master.gameWidth;
+    cutscene.height = master.gameWidth;
   } else {
-    cutscene.width = game.height;
-    cutscene.height = game.height;
+    cutscene.width = master.gameWidth;
+    cutscene.height = master.gameWidth;
   }
 
   cutscene.style.width = cutscene.width + 'px';
@@ -41,8 +42,8 @@ export const Cutscene = function({
   this.selector.appendChild(cutscene);
 
   this.resize = function() {
-    this.width = game.width;
-    this.height = game.height;
+    this.width = master.gameWidth;
+    this.height = master.gameWidth;
     this.selector.style.width = this.width + 'px';
     this.selector.style.height = this.height + 'px';
 

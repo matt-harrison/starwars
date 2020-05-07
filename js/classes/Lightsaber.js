@@ -1,9 +1,10 @@
+import { collision } from '/js/utils.js';
+
 import { COLORS, MAGNIFICATION } from '/js/constants/config.js';
-import { collision }             from '/js/constants/utils.js';
 
 export const Lightsaber = function({
-  game,
   isLongRange,
+  master,
   origin,
   props,
   stage
@@ -121,17 +122,17 @@ export const Lightsaber = function({
           this.reverse();
         }
       } else if (this.dir === 'right') {
-        if (this.x + this.speed < game.width - this.width) {
+        if (this.x + this.speed < master.gameWidth - this.width) {
           this.x += this.speed;
         } else {
-          this.x = game.width - this.frameWidth;
+          this.x = master.gameWidth - this.frameWidth;
           this.reverse();
         }
       } else if (this.dir === 'down') {
-        if (this.y + this.speed < game.height - this.height) {
+        if (this.y + this.speed < master.gameHeight - this.height) {
           this.y += this.speed;
         } else {
-          this.y = game.height - this.frameHeight;
+          this.y = master.gameHeight - this.frameHeight;
           this.reverse();
         }
       }

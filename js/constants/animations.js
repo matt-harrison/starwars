@@ -1,6 +1,6 @@
 import { MAGNIFICATION } from '/js/constants/config.js';
 
-export const detonation = {
+const DETONATION = {
   name: 'detonation',
   frameWidth: 9 * MAGNIFICATION,
   frameHeight: 5 * MAGNIFICATION,
@@ -8,7 +8,7 @@ export const detonation = {
   remove: true
 };
 
-export const explosion = {
+const EXPLOSION = {
   name: 'explosion',
   frameWidth: 10 * MAGNIFICATION,
   frameHeight: 12 * MAGNIFICATION,
@@ -16,7 +16,7 @@ export const explosion = {
   remove: true
 };
 
-export const explosionsmall = {
+const EXPLOSION_SMALL = {
   name: 'explosionsmall',
   frameWidth: 10 * MAGNIFICATION,
   frameHeight: 10 * MAGNIFICATION,
@@ -24,10 +24,17 @@ export const explosionsmall = {
   remove: true
 };
 
-export const spritz = {
+const SPRITZ = {
   name: 'spritz',
   frameWidth: 10 * MAGNIFICATION,
   frameHeight: 12 * MAGNIFICATION,
   frameCount: 5,
   remove: true
+};
+
+export const ANIMATIONS = {
+  DETONATION,
+  EXPLOSION,
+  EXPLOSION_SMALL,
+  SPRITZ
 };

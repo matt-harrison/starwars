@@ -1,12 +1,12 @@
-import * as animations               from '/js/constants/animations.js';
+import { ANIMATIONS }                from '/js/constants/animations.js';
 import { COLORS, MAGNIFICATION }     from '/js/constants/config.js';
 import { PROJECTILES, WEAPON_TYPES } from '/js/constants/weapons.js';
 
-export const asteroid = {
+const ASTEROID = {
   name: 'Asteroid',
   sprite: 'asteroid',
   ship: true,
-  death: animations.spritz,
+  death: ANIMATIONS.SPRITZ,
   weaponType: null,
   width: 14 * MAGNIFICATION,
   height: 28 * MAGNIFICATION,
@@ -16,11 +16,11 @@ export const asteroid = {
   speed: 8
 };
 
-export const deathstar = {
+const DEATHSTAR = {
   name: 'Death Star',
   sprite: 'deathstar',
   ship: true,
-  death: animations.explosion,
+  death: ANIMATIONS.EXPLOSION,
   weaponType: WEAPON_TYPES.PROJECTILE,
   projectile: PROJECTILES.LASER,
   weaponColor: COLORS.GREEN,
@@ -38,11 +38,11 @@ export const deathstar = {
   speedMax: 4
 };
 
-export const deathstar6 = {
+const DEATHSTAR6 = {
   name: 'Death Star II',
   sprite: 'deathstar6',
   ship: true,
-  death: animations.explosion,
+  death: ANIMATIONS.EXPLOSION,
   weaponType: WEAPON_TYPES.PROJECTILE,
   projectile: PROJECTILES.LASER,
   weaponColor: COLORS.GREEN,
@@ -60,11 +60,11 @@ export const deathstar6 = {
   speedMax: 4
 };
 
-export const destroyer = {
+const DESTROYER = {
   name: 'Star Destroyer',
   sprite: 'destroyer',
   ship: true,
-  death: animations.explosion,
+  death: ANIMATIONS.EXPLOSION,
   weaponType: WEAPON_TYPES.PROJECTILE,
   projectile: PROJECTILES.LASER,
   weaponColor: COLORS.RED,
@@ -82,11 +82,11 @@ export const destroyer = {
   speedMax: 5
 };
 
-export const falcon = {
+const FALCON = {
   name: 'Millenium Falcon',
   sprite: 'falcon',
   ship: true,
-  death: animations.spritz,
+  death: ANIMATIONS.SPRITZ,
   weaponType: WEAPON_TYPES.PROJECTILE,
   projectile: PROJECTILES.LASER,
   weaponColor: COLORS.GREEN,
@@ -104,11 +104,11 @@ export const falcon = {
   speedMax: 15
 };
 
-export const tie = {
+const TIE = {
   name: 'TIE Fighter',
   sprite: 'tie',
   ship: true,
-  death: animations.spritz,
+  death: ANIMATIONS.SPRITZ,
   weaponType: WEAPON_TYPES.PROJECTILE,
   projectile: PROJECTILES.LASER,
   weaponColor: COLORS.RED,
@@ -126,7 +126,7 @@ export const tie = {
   speedMax: 12
 };
 
-export const vadertie = {
+const TIE_ADVANCED = {
   name: 'Darth Vader',
   sprite: 'vadertie',
   ship: true,
@@ -154,11 +154,11 @@ export const vadertie = {
   speedMax: 12
 };
 
-export const xwing = {
+const XWING = {
   name: 'X-wing',
   sprite: 'xwing',
   ship: true,
-  death: animations.spritz,
+  death: ANIMATIONS.SPRITZ,
   weaponType: WEAPON_TYPES.PROJECTILE,
   projectile: PROJECTILES.LASER,
   weaponColor: COLORS.GREEN,
@@ -174,4 +174,15 @@ export const xwing = {
   speed: 8,
   speedMin: 8,
   speedMax: 12
+};
+
+export const SHIPS = {
+  ASTEROID,
+  DEATHSTAR,
+  DEATHSTAR6,
+  DESTROYER,
+  FALCON,
+  TIE,
+  TIE_ADVANCED,
+  XWING
 };

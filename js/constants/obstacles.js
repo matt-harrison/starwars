@@ -1,6 +1,6 @@
 import { MAGNIFICATION } from '/js/constants/config.js';
 
-export const bar = {
+const BAR = {
   img: 'bar',
   width: 23 * MAGNIFICATION,
   height: 14 * MAGNIFICATION,
@@ -11,7 +11,7 @@ export const bar = {
   impassable: true
 };
 
-export const desks = {
+const DESKS = {
   img: 'desks',
   width: 13 * MAGNIFICATION,
   height: 40 * MAGNIFICATION,
@@ -22,7 +22,7 @@ export const desks = {
   impassable: true
 };
 
-export const dragon = {
+const DRAGON = {
   img: 'dragon',
   width: 62 * MAGNIFICATION,
   height: 13 * MAGNIFICATION,
@@ -33,7 +33,7 @@ export const dragon = {
   impassable: true
 };
 
-export const falconbig = {
+const FALCON = {
   img: 'falconbig',
   width: 76 * MAGNIFICATION,
   height: 39 * MAGNIFICATION,
@@ -44,7 +44,7 @@ export const falconbig = {
   impassable: true
 };
 
-export const igloo = {
+const IGLOO = {
   img: 'igloo',
   width: 28 * MAGNIFICATION,
   height: 17 * MAGNIFICATION,
@@ -55,7 +55,7 @@ export const igloo = {
   impassable: true
 };
 
-export const speeder = {
+const SPEEDER = {
   img: 'speeder',
   width: 120 * MAGNIFICATION,
   height: 12 * MAGNIFICATION,
@@ -66,7 +66,7 @@ export const speeder = {
   impassable: true
 };
 
-export const table = {
+const TABLE = {
   img: 'table',
   width: 16 * MAGNIFICATION,
   height: 11 * MAGNIFICATION,
@@ -77,7 +77,7 @@ export const table = {
   impassable: true
 };
 
-export const tractorBeamGenerator = {
+const GENERATOR = {
   img: 'tractorBeamGenerator',
   width: 80 * MAGNIFICATION,
   height: 42 * MAGNIFICATION,
@@ -86,4 +86,15 @@ export const tractorBeamGenerator = {
   frameCount: 4,
   speed: 0,
   impassable: true
+};
+
+export const OBSTACLES = {
+  BAR,
+  DESKS,
+  DRAGON,
+  FALCON,
+  GENERATOR,
+  IGLOO,
+  SPEEDER,
+  TABLE
 };

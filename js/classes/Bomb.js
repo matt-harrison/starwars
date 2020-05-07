@@ -1,11 +1,13 @@
-import { detonation }            from '/js/constants/animations.js';
+import { collision } from '/js/utils.js';
+
+import { ANIMATIONS }            from '/js/constants/animations.js';
 import { COLORS, MAGNIFICATION } from '/js/constants/config.js';
-import { collision }             from '/js/constants/utils.js';
 
 import { Animation } from '/js/classes/Animation.js';
 
 export const Bomb = function({
   animations,
+  master,
   origin,
   props,
   stage
@@ -13,7 +15,6 @@ export const Bomb = function({
   this.type = 'bomb';
   this.origin = origin;
   this.active = false;
-  this.counter = 0;
 
   this.x = origin.x + (origin.weaponOffset[0] * MAGNIFICATION);
   this.y = origin.y + (origin.weaponOffset[1] * MAGNIFICATION);
@@ -35,8 +36,6 @@ export const Bomb = function({
   stage.selector.appendChild(this.selector);
 
   this.update = function() {
-    this.counter++;
-
     if (!this.active) {
       if (!collision(this, this.origin)) {
         this.active = true;
@@ -46,7 +45,7 @@ export const Bomb = function({
 
   this.draw = function() {
     if (this.active) {
-      if (this.counter % 2) {
+      if (master.counter % 2) {
         this.selector.style.backgroundColor = COLORS.BLACK;
       } else {
         this.selector.style.backgroundColor = COLORS.RED;
@@ -62,7 +61,7 @@ export const Bomb = function({
 
     new Animation({
       animations,
-      data: detonation,
+      data: ANIMATIONS.DETONATION,
       origin: this,
       stage
     });

@@ -2,7 +2,7 @@ import { MAGNIFICATION }             from '/js/constants/config.js';
 import { PROJECTILES, WEAPON_TYPES } from '/js/constants/weapons.js';
 
 export const Projectile = function({
-  game,
+  master,
   origin,
   props,
   stage
@@ -92,13 +92,13 @@ export const Projectile = function({
           this.dead = true;
         }
       } else if (this.dir === 'right') {
-        if (this.x < game.width) {
+        if (this.x < master.gameWidth) {
           this.x += this.speed;
         } else {
           // this.dead = true;
         }
       } else if (this.dir === 'down') {
-        if (this.y < game.height) {
+        if (this.y < master.gameHeight) {
           this.y += this.speed;
         } else {
           this.dead = true;

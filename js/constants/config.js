@@ -38,7 +38,8 @@ export const MAGNIFICATION = IS_MOBILE ? Math.floor(window.innerWidth / 100) : 5
 export const MODES = {
   CUTSCENE: 'cutscene',
   EPISODE: 'episode',
-  GAMEPLAY: '',
+  GAMEPLAY: 'gameplay',
+  RESET: 'reset',
   TITLE: 'title'
 };
 

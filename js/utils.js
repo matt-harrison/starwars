@@ -70,12 +70,12 @@ export function getRandom(max) {
 }
 
 export function inBounds({
-  game,
+  master,
   obj
 }) {
   return (
-    obj.x > 0 && add(obj.x, obj.frameWidth) < game.width &&
-    obj.y > 0 && add(obj.y, obj.frameHeight) < game.height
+    obj.x > 0 && add(obj.x, obj.frameWidth) < master.gameWidth &&
+    obj.y > 0 && add(obj.y, obj.frameHeight) < master.gameHeight
   );
 }
 
@@ -112,9 +112,9 @@ export function playAs(obj) {
     animations,
     data: stage.character,
     enemies,
-    game,
     keys,
     level,
+    master,
     obstacles,
     props,
     stage
@@ -145,7 +145,7 @@ export function playLevel(obj) {
     clearStage();
     initLevel();
 
-    isPaused = false;
+    master.isPaused = false;
     pause();
   }
 }

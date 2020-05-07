@@ -1,4 +1,4 @@
-import * as animations                from '/js/constants/animations.js';
+import { ANIMATIONS }                 from '/js/constants/animations.js';
 import { COLORS, FPS, MAGNIFICATION } from '/js/constants/config.js';
 import { PROJECTILES, WEAPON_TYPES }  from '/js/constants/weapons.js';
 
@@ -954,7 +954,7 @@ export const mousedroid = {
   name: 'Mouse Droid',
   sprite: 'mousedroid',
   ship: false,
-  death: animations.detonation,
+  death: ANIMATIONS.DETONATION,
   weaponType: WEAPON_TYPES.BOMB,
   weaponOffset: [4, 5],
   width: 16 * MAGNIFICATION,
@@ -1315,7 +1315,7 @@ export const threebee = {
   name: '3B6-RA-7',
   sprite: 'threebee',
   ship: false,
-  death: animations.spritz,
+  death: ANIMATIONS.SPRITZ,
   weaponType: null,
   width: 72 * MAGNIFICATION,
   height: 55 * MAGNIFICATION,

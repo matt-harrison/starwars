@@ -1,7 +1,7 @@
 import { COLORS, FPS } from '/js/constants/config.js';
-import * as characters from '/js/constants/characters.js';
-import * as obstacles  from '/js/constants/obstacles.js';
-import * as ships      from '/js/constants/ships.js';
+import * as CHARACTERS from '/js/constants/characters.js';
+import { OBSTACLES }   from '/js/constants/obstacles.js';
+import { SHIPS }       from '/js/constants/ships.js';
 
 //Episode IV levels
 const tantive4 = {
@@ -16,9 +16,9 @@ const tantive4 = {
   enemyInterval: 32,
   enemyCount: 10,
   enemyDir: 'right',
-  character: characters.rebel,
-  enemy: characters.stormtrooper,
-  boss: characters.officerblack,
+  character: CHARACTERS.rebel,
+  enemy: CHARACTERS.stormtrooper,
+  boss: CHARACTERS.officerblack,
   bossHP: 2
 };
 
@@ -33,13 +33,13 @@ const ambassador = {
   enemyInterval: 32,
   enemyCount: 3,
   enemyDir: 'left',
-  character: characters.stuntrooper,
-  enemy: characters.rebel,
-  boss: characters.leia,
+  character: CHARACTERS.stuntrooper,
+  enemy: CHARACTERS.rebel,
+  boss: CHARACTERS.leia,
   bossHP: 1,
   friendlies: [
     {
-      character: characters.protocolwhite,
+      character: CHARACTERS.protocolwhite,
       details: {
         delay: 5.5 * FPS,
         value: 25,
@@ -62,32 +62,32 @@ const tatooine = {
   enemyCount: 1,
   obstacles: [
     {
-      type: obstacles.dragon,
+      type: OBSTACLES.DRAGON,
       x: 50,
       y: 66
     }
   ],
-  character: characters.jawa,
-  enemy: characters.threepio,
-  boss: characters.artoo,
+  character: CHARACTERS.jawa,
+  enemy: CHARACTERS.threepio,
+  boss: CHARACTERS.artoo,
   bossHP: 1,
   friendlies: [
     {
-      character: characters.jawa,
+      character: CHARACTERS.jawa,
       details: {
         delay: 1.5 * FPS,
         value: 0 - 500
       }
     },
     {
-      character: characters.jawa,
+      character: CHARACTERS.jawa,
       details: {
         delay: 2.5 * FPS,
         value: 0 - 500
       }
     },
     {
-      character: characters.jawa,
+      character: CHARACTERS.jawa,
       details: {
         delay: 3.5 * FPS,
         value: 0 - 500
@@ -110,25 +110,25 @@ const search = {
   enemyCount: 10,
   obstacles: [
     {
-      type: obstacles.speeder,
+      type: OBSTACLES.SPEEDER,
       x: 33,
       y: 33
     }
   ],
-  character: characters.luke,
-  enemy: characters.tusken,
-  boss: characters.bantha,
+  character: CHARACTERS.luke,
+  enemy: CHARACTERS.tusken,
+  boss: CHARACTERS.bantha,
   bossHP: 2,
   friendlies: [
     {
-      character: characters.threepio,
+      character: CHARACTERS.threepio,
       details: {
         delay: 10.5 * FPS,
         value: 0 - 500
       }
     },
     {
-      character: characters.artoo,
+      character: CHARACTERS.artoo,
       details: {
         delay: 12.5 * FPS,
         value: 0 - 500
@@ -147,20 +147,20 @@ const sandcrawler = {
   textColor: 'black',
   enemyInterval: 32,
   enemyCount: 10,
-  character: characters.sandtrooper,
-  enemy: characters.jawa,
-  boss: characters.threebee,
+  character: CHARACTERS.sandtrooper,
+  enemy: CHARACTERS.jawa,
+  boss: CHARACTERS.threebee,
   bossHP: 2,
   friendlies: [
     {
-      character: characters.arfive,
+      character: CHARACTERS.arfive,
       details: {
         delay: 5.5 * FPS,
         value: 25
       }
     },
     {
-      character: characters.gonkdroid,
+      character: CHARACTERS.gonkdroid,
       details: {
         delay: 10.5 * FPS,
         dir: 'left',
@@ -178,13 +178,13 @@ const moistureFarm = {
   textColor: 'black',
   enemyInterval: 16,
   enemyCount: 1,
-  character: characters.sandtrooper,
-  enemy: characters.uncleowen,
-  boss: characters.auntberu,
+  character: CHARACTERS.sandtrooper,
+  enemy: CHARACTERS.uncleowen,
+  boss: CHARACTERS.auntberu,
   bossHP: 1,
   obstacles: [
     {
-      type: obstacles.igloo,
+      type: OBSTACLES.IGLOO,
       x: 66,
       y: 33
     }
@@ -202,45 +202,45 @@ const mosEisley = {
   enemyDir: 'right',
   obstacles: [
     {
-      type: obstacles.bar,
+      type: OBSTACLES.BAR,
       x: 0,
       y: 50
     },
     {
-      type: obstacles.table,
+      type: OBSTACLES.TABLE,
       x: 33,
       y: 20
     },
     {
-      type: obstacles.table,
+      type: OBSTACLES.TABLE,
       x: 66,
       y: 20
     },
     {
-      type: obstacles.table,
+      type: OBSTACLES.TABLE,
       x: 33,
       y: 80
     },
     {
-      type: obstacles.table,
+      type: OBSTACLES.TABLE,
       x: 66,
       y: 80
     }
   ],
-  character: characters.ben,
-  enemy: characters.sandtrooper,
-  boss: characters.pondababa,
+  character: CHARACTERS.ben,
+  enemy: CHARACTERS.sandtrooper,
+  boss: CHARACTERS.pondababa,
   bossHP: 1,
   friendlies: [
     {
-      character: characters.chewbacca,
+      character: CHARACTERS.chewbacca,
       details: {
         delay: 10.5 * FPS,
         value: 0 - 500
       }
     },
     {
-      character: characters.greedo,
+      character: CHARACTERS.greedo,
       details: {
         delay: 30 * FPS,
         value: 25
@@ -259,14 +259,14 @@ const dockingBay = {
   enemyCount: 10,
   obstacles: [
     {
-      type: obstacles.falconbig,
+      type: OBSTACLES.FALCON,
       x: 100,
       y: 0
     }
   ],
-  character: characters.hansolo,
-  enemy: characters.sandtrooper,
-  boss: characters.garindan,
+  character: CHARACTERS.hansolo,
+  enemy: CHARACTERS.sandtrooper,
+  boss: CHARACTERS.garindan,
   bossHP: 2
 };
 
@@ -282,9 +282,9 @@ const alderaan = {
   textColor: COLORS.YELLOW,
   enemyInterval: 48,
   enemyCount: 10,
-  character: ships.falcon,
-  enemy: ships.asteroid,
-  boss: ships.tie,
+  character: SHIPS.FALCON,
+  enemy: SHIPS.ASTEROID,
+  boss: SHIPS.TIE,
   bossHP: 2
 };
 
@@ -298,18 +298,18 @@ const detention = {
   enemyCount: 10,
   obstacles: [
     {
-      type: obstacles.desks,
+      type: OBSTACLES.DESKS,
       x: 75,
       y: 50
     }
   ],
-  character: characters.chewbacca,
-  enemy: characters.deathstartrooper,
-  boss: characters.mousedroid,
+  character: CHARACTERS.chewbacca,
+  enemy: CHARACTERS.deathstartrooper,
+  boss: CHARACTERS.mousedroid,
   bossHP: 2,
   friendlies: [
     {
-      character: characters.stormtrooperhan,
+      character: CHARACTERS.stormtrooperhan,
       details: {
         delay: 1.5 * FPS,
         value: 0 - 500,
@@ -317,7 +317,7 @@ const detention = {
       }
     },
     {
-      character: characters.stormtrooperluke,
+      character: CHARACTERS.stormtrooperluke,
       details: {
         delay: 1.75 * FPS,
         value: 0 - 500,
@@ -338,14 +338,14 @@ const tractorBeam = {
   enemyDir: 'right',
   obstacles: [
     {
-      type: obstacles.tractorBeamGenerator,
+      type: OBSTACLES.GENERATOR,
       x: 50,
       y: 0
     }
   ],
-  character: characters.ben,
-  enemy: characters.stormtrooper,
-  boss: characters.darthvader,
+  character: CHARACTERS.ben,
+  enemy: CHARACTERS.stormtrooper,
+  boss: CHARACTERS.darthvader,
   bossHP: 5
 };
 
@@ -357,9 +357,9 @@ const showdown4 = {
   textColor: 'black',
   enemyInterval: 32,
   enemyCount: 0,
-  character: characters.darthvader,
-  enemy: characters.null,
-  boss: characters.ben,
+  character: CHARACTERS.darthvader,
+  enemy: null,
+  boss: CHARACTERS.ben,
   bossHP: 1
 };
 
@@ -371,34 +371,34 @@ const escapeFromDeathStar = {
   textColor: 'black',
   enemyInterval: 32,
   enemyCount: 10,
-  character: characters.leia,
-  enemy: characters.stormtrooper,
-  boss: characters.tiepilot,
+  character: CHARACTERS.leia,
+  enemy: CHARACTERS.stormtrooper,
+  boss: CHARACTERS.tiepilot,
   bossHP: 2,
   obstacles: [
     {
-      type: obstacles.falconbig,
+      type: OBSTACLES.FALCONBIG,
       x: 100,
       y: 0
     }
   ],
   friendlies: [
     {
-      character: characters.hansolo,
+      character: CHARACTERS.hansolo,
       details: {
         delay: 5.5 * FPS,
         value: 0 - 500
       }
     },
     {
-      character: characters.luke,
+      character: CHARACTERS.luke,
       details: {
         delay: 10.5 * FPS,
         value: 0 - 500
       }
     },
     {
-      character: characters.chewbacca,
+      character: CHARACTERS.chewbacca,
       details: {
         delay: 15.5 * FPS,
         value: 0 - 500
@@ -415,13 +415,13 @@ const battleOfYavin = {
   textColor: COLORS.YELLOW,
   enemyInterval: 16,
   enemyCount: 3,
-  character: ships.falcon,
-  enemy: ships.tie,
-  boss: ships.vadertie,
+  character: SHIPS.FALCON,
+  enemy: SHIPS.TIE,
+  boss: SHIPS.TIE_ADVANCED,
   bossHP: 2,
   friendlies: [
     {
-      character: ships.xwing,
+      character: SHIPS.XWING,
       details: {
         delay: 5.5 * FPS,
         value: 0 - 500,
@@ -429,7 +429,7 @@ const battleOfYavin = {
       }
     },
     {
-      character: ships.xwing,
+      character: SHIPS.XWING,
       details: {
         delay: 5.5 * FPS,
         value: 0 - 500,
@@ -437,7 +437,7 @@ const battleOfYavin = {
       }
     },
     {
-      character: ships.xwing,
+      character: SHIPS.XWING,
       details: {
         delay: 5.5 * FPS,
         value: 0 - 500,
@@ -455,9 +455,9 @@ const assaultOnDeathStar = {
   textColor: COLORS.YELLOW,
   enemyInterval: 32,
   enemyCount: 0,
-  character: ships.xwing,
-  enemy: characters.null,
-  boss: ships.deathstar,
+  character: SHIPS.XWING,
+  enemy: null,
+  boss: SHIPS.DEATHSTAR,
   bossHP: 10
 };
 
@@ -469,9 +469,9 @@ const hoth = {
   textColor: 'black',
   enemyInterval: 32,
   enemyCount: 10,
-  character: characters.luke5,
-  enemy: characters.tauntaun,//probedroid
-  boss: characters.mousedroid,//wampa
+  character: CHARACTERS.luke5,
+  enemy: CHARACTERS.tauntaun,//probedroid
+  boss: CHARACTERS.mousedroid,//wampa
   bossHP: 2
 };
 
@@ -483,9 +483,9 @@ const endor = {
   textColor: 'black',
   enemyInterval: 32,
   enemyCount: 10,
-  character: characters.ewok,
-  enemy: characters.stormtrooper,
-  boss: characters.darthvader,
+  character: CHARACTERS.ewok,
+  enemy: CHARACTERS.stormtrooper,
+  boss: CHARACTERS.darthvader,
   bossHP: 2
 };
 
@@ -496,20 +496,20 @@ const test = {
   textColor: 'black',
   enemyInterval: 16,
   enemyCount: 1,
-  character: characters.luke,
-  enemy: characters.ben,
-  boss: characters.auntberu,
+  character: CHARACTERS.luke,
+  enemy: CHARACTERS.ben,
+  boss: CHARACTERS.auntberu,
   bossHP: 1,
   obstacles: [
     {
-      type: obstacles.igloo,
+      type: OBSTACLES.IGLOO,
       x: 66,
       y: 33
     },
   ],
   friendlies: [
     {
-      character: characters.jabba,
+      character: CHARACTERS.jabba,
       details: {
         delay: 1 * FPS,
         value: 0

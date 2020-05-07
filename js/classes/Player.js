@@ -1,9 +1,10 @@
-import { FPS, MAGNIFICATION } from '/js/constants/config.js';
 import {
   getRandom,
   getObstruction,
   preload
-} from '/js/constants/utils.js';
+} from '/js/utils.js';
+
+import { FPS, MAGNIFICATION }        from '/js/constants/config.js';
 import { PROJECTILES, WEAPON_TYPES } from '/js/constants/weapons.js';
 
 import { Animation }  from '/js/classes/Animation.js';
@@ -14,7 +15,7 @@ export const Player = function({
   animations,
   data,
   enemies,
-  game,
+  master,
   keys,
   level,
   obstacles,
@@ -25,8 +26,8 @@ export const Player = function({
 
   this.speed = this.speed * (MAGNIFICATION / 5);
 
-  this.x = Math.floor((game.width - this.frameWidth) / 2);
-  this.y = Math.floor((game.height - this.frameHeight) / 2);
+  this.x = Math.floor((master.gameWidth - this.frameWidth) / 2);
+  this.y = Math.floor((master.gameHeight - this.frameHeight) / 2);
   this.dir = 'down';
   this.spriteColumn = 0;
   this.spriteRow = 2;
@@ -70,7 +71,7 @@ export const Player = function({
     if (this.weaponReady) {
       if (this.weaponType === WEAPON_TYPES.PROJECTILE) {
         new Projectile({
-          game,
+          master,
           origin: this,
           props,
           stage
@@ -88,6 +89,7 @@ export const Player = function({
       } else if (this.weaponType === WEAPON_TYPES.BOMB) {
         new Bomb({
           animations,
+          master,
           origin: this,
           props,
           stage
@@ -96,8 +98,8 @@ export const Player = function({
         const isLongRange = (key === 'Z');
 
         this.lightsaber = new Lightsaber({
-          game,
           isLongRange,
+          master,
           origin: this,
           props,
           stage
@@ -187,7 +189,7 @@ export const Player = function({
           }
           this.spriteRow = 3;
         } else if (this.dir === 'right') {
-          if (this.x + this.speed < game.width - this.frameWidth) {
+          if (this.x + this.speed < master.gameWidth - this.frameWidth) {
             var obs = getObstruction({
               obj: this,
               obstacles
@@ -199,12 +201,12 @@ export const Player = function({
               this.x = obs.x - this.frameWidth;
             }
           } else if (this.ship) {
-            this.x = game.width - this.frameWidth;
+            this.x = master.gameWidth - this.frameWidth;
             this.dir = 'left';
           }
           this.spriteRow = 0;
         } else if (this.dir === 'down') {
-          if (this.y + this.speed < game.height - this.frameHeight) {
+          if (this.y + this.speed < master.gameHeight - this.frameHeight) {
             var obs = getObstruction({
               obj: this,
               obstacles
@@ -216,7 +218,7 @@ export const Player = function({
               this.y = obs.y - this.frameHeight;
             }
           } else if (this.ship) {
-            this.y = game.height - this.frameHeight;
+            this.y = master.gameHeight - this.frameHeight;
             this.dir = 'up';
           }
           this.spriteRow = 2;

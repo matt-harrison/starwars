@@ -1,4 +1,3 @@
-import { CARDINALS, COLORS, MAGNIFICATION } from '/js/constants/config.js';
 import {
   getRandom,
   getObstruction,
@@ -6,7 +5,9 @@ import {
   preload,
   updateScore,
   updateVictim
-} from '/js/constants/utils.js';
+} from '/js/utils.js';
+
+import { CARDINALS, COLORS, MAGNIFICATION } from '/js/constants/config.js';
 
 import { Animation } from '/js/classes/Animation.js';
 
@@ -15,8 +16,8 @@ export const Friendly = function({
   data,
   details,
   friendlies,
-  game,
   hud,
+  master,
   obstacles,
   stage
 }) {
@@ -47,19 +48,19 @@ export const Friendly = function({
   }
 
   if (this.dir === 'left') {
-    this.x = game.width;
-    this.y = getRandom(game.height - this.frameHeight);
+    this.x = master.gameWidth;
+    this.y = getRandom(master.gameHeight - this.frameHeight);
     this.spriteRow = 1;
   } else if (this.dir === 'up') {
-    this.x = getRandom(game.width - this.frameWidth);
-    this.y = game.height;
+    this.x = getRandom(master.gameWidth - this.frameWidth);
+    this.y = master.gameHeight;
     this.spriteRow = 3;
   } else if (this.dir === 'right') {
     this.x = 0 - this.frameWidth;
-    this.y = getRandom(game.height - this.frameHeight);
+    this.y = getRandom(master.gameHeight - this.frameHeight);
     this.spriteRow = 0;
   } else if (this.dir === 'down') {
-    this.x = getRandom(game.width - this.frameWidth);
+    this.x = getRandom(master.gameWidth - this.frameWidth);
     this.y = 0 - this.frameHeight;
     this.spriteRow = 2;
   }
@@ -88,14 +89,16 @@ export const Friendly = function({
   this.respawn = function() {
     stage.selector.removeChild(this.selector);
     const position = friendlies.indexOf(this);
+
     friendlies.splice(position, 1);
+
     new Friendly({
       animations,
       data,
       details,
       friendlies,
-      game,
       hud,
+      master,
       obstacles,
       stage
     });
@@ -150,7 +153,7 @@ export const Friendly = function({
         obstacles
       });
 
-      if (obstruction !== '' && !inBounds({game, obj: this})) {
+      if (obstruction !== '' && !inBounds({master, obj: this})) {
         this.trapped = true;
       } else {
         if (this.dir === 'left') {
@@ -174,7 +177,7 @@ export const Friendly = function({
             this.active = false;
           }
         } else if (this.dir === 'right') {
-          if (this.x < game.width + this.frameWidth) {
+          if (this.x < master.gameWidth + this.frameWidth) {
             if (obstruction === '') {
               this.x += this.speed;
             } else {
@@ -184,7 +187,7 @@ export const Friendly = function({
             this.active = false;
           }
         } else if (this.dir === 'down') {
-          if (this.y < game.height + this.frameHeight) {
+          if (this.y < master.gameHeight + this.frameHeight) {
             if (obstruction === '') {
               this.y += this.speed;
             } else {

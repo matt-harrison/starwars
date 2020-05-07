@@ -177,7 +177,7 @@ export const Hud = function({
     this.btnStart.id = BUTTON_NAMES.START;
     this.btnStart.setAttribute('data-key', 'enter');
     this.btnStart.style.position = 'absolute';
-    this.btnStart.style.left = ((game.width - 75) / 2) + 'px';
+    this.btnStart.style.left = ((master.gameWidth - 75) / 2) + 'px';
     this.btnStart.style.bottom = '5px';
     this.btnStart.style.width = '75px';
     this.btnStart.style.height = '40px';
