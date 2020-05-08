@@ -11,7 +11,7 @@ export const Cutscene = function({
   this.selector.style.top = 0;
   this.selector.style.left = 0;
   this.width = master.gameWidth;
-  this.height = master.gameWidth;
+  this.height = master.gameHeight;
   this.selector.style.width = this.width + 'px';
   this.selector.style.height = this.height + 'px';
   this.selector.style.backgroundColor = COLORS.BLACK;
@@ -24,12 +24,12 @@ export const Cutscene = function({
 
   cutsceneImg.style.backgroundImage = "url('img/cutscenes/" + img + ".png')";
 
-  if (master.gameWidth <= master.gameWidth) {
+  if (master.gameWidth <= master.gameHeight) {
     cutsceneImg.width = master.gameWidth;
     cutsceneImg.height = master.gameWidth;
   } else {
-    cutsceneImg.width = master.gameWidth;
-    cutsceneImg.height = master.gameWidth;
+    cutsceneImg.width = master.gameHeight;
+    cutsceneImg.height = master.gameHeight;
   }
 
   cutsceneImg.style.width = cutsceneImg.width + 'px';

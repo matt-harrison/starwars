@@ -35,4 +35,3 @@ BUGS:
 * character frame sometimes redundant to Lighsaber instance
 * concurrent boss and player death results in Game Over + next level
 * friendlies remain on stage after !inBounds ?
-* cutscenes not size correctly on mobile / when resizing
