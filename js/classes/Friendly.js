@@ -36,7 +36,7 @@ export const Friendly = function({
   this.selector.style.backgroundRepeat = 'no-repeat';
   this.selector.style.zIndex = '2';
 
-  master.friendlies.push(this);
+  master.actors.friendlies.push(this);
   stage.selector.appendChild(this.selector);
 
   if (typeof(this.dir) === 'undefined') {
@@ -79,15 +79,15 @@ export const Friendly = function({
   }
 
   this.remove = function() {
-    const position = master.friendlies.indexOf(this);
-    master.friendlies.splice(position, 1);
+    const position = master.actors.friendlies.indexOf(this);
+    master.actors.friendlies.splice(position, 1);
   }
 
   this.respawn = function() {
     stage.selector.removeChild(this.selector);
-    const position = master.friendlies.indexOf(this);
+    const position = master.actors.friendlies.indexOf(this);
 
-    master.friendlies.splice(position, 1);
+    master.actors.friendlies.splice(position, 1);
 
     new Friendly({
       data,
@@ -144,7 +144,7 @@ export const Friendly = function({
 
       var obstruction = getObstruction({
         obj: this,
-        obstacles: master.obstacles
+        obstacles: master.actors.obstacles
       });
 
       if (obstruction !== '' && !inBounds({master, obj: this})) {

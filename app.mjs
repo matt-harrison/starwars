@@ -34,13 +34,17 @@ import { Stage }      from './js/classes/Stage.js';
 
 //Initialize global vars
 const master = {
-  animations: [],
+  actors: {
+    animations: [],
+    enemies:    [],
+    friendlies: [],
+    obstacles:  [],
+    props:      []
+  },
   assetCount: 0,
   counter: 0,
   cutsceneCount: 0,
-  enemies: [],
   episode: 0,
-  friendlies: [],
   gameHeight: IS_MOBILE ? window.innerHeight : 500,
   gameWidth:  IS_MOBILE ? window.innerWidth : 500,
   isGameOver: false,
@@ -49,10 +53,8 @@ const master = {
   keys: [],
   level: 0,
   mode: MODES.TITLE,
-  obstacles: [],
   promptClick: IS_MOBILE ? 'Tap to begin' : 'Press Enter',
   promptStart: IS_MOBILE ? 'Press Start'  : 'Press Enter',
-  props: []
 };
 
 //DOM nodes
@@ -220,11 +222,11 @@ function buttonRelease(key, id) {
 
 function clearStage() {
   game.selector.removeChild(stage.selector);
-  master.enemies.splice(0);
-  master.friendlies.splice(0);
-  master.obstacles.splice(0);
-  master.props.splice(0);
-  master.animations.splice(0);
+  master.actors.enemies.splice(0);
+  master.actors.friendlies.splice(0);
+  master.actors.obstacles.splice(0);
+  master.actors.props.splice(0);
+  master.actors.animations.splice(0);
   master.keys.splice(0);
   master.assetCount = 0;
 
@@ -550,7 +552,7 @@ function loop() {
       }
     }
 
-    master.enemies.forEach(enemy => {
+    master.actors.enemies.forEach(enemy => {
       if (enemy.active) {
         if (!player.dead) {
           if (collision(player, enemy)) {
@@ -577,7 +579,7 @@ function loop() {
       }
     });
 
-    master.friendlies.forEach(friendly => {
+    master.actors.friendlies.forEach(friendly => {
       if (friendly.ship) {
         if (!player.dead && collision(player, friendly)) {
           if (!master.isInvincible) {
@@ -592,12 +594,12 @@ function loop() {
       friendly.draw();
     });
 
-    master.obstacles.forEach(obstacle => {
+    master.actors.obstacles.forEach(obstacle => {
       obstacle.update();
       obstacle.draw();
     });
 
-    master.props.forEach(prop => {
+    master.actors.props.forEach(prop => {
       if (!player.dead && collision(player, prop)) {
         if (!master.isInvincible && prop.active && prop.origin !== player) {
           player.dead = true;
@@ -613,7 +615,7 @@ function loop() {
         }
       }
 
-      master.enemies.forEach(enemy =>{
+      master.actors.enemies.forEach(enemy =>{
         if (!prop.dead && !enemy.dead && prop.origin !== enemy && collision(enemy, prop)) {
           enemy.hit();
 
@@ -623,7 +625,7 @@ function loop() {
         }
       });
 
-      master.friendlies.forEach(friendly =>{
+      master.actors.friendlies.forEach(friendly =>{
         if (!prop.dead && !friendly.dead && collision(friendly, prop)) {
           friendly.kill();
 
@@ -637,7 +639,7 @@ function loop() {
       prop.draw();
     });
 
-    master.animations.forEach(animation => {
+    master.actors.animations.forEach(animation => {
       animation.update();
       animation.draw();
     });
@@ -652,18 +654,18 @@ function loop() {
     player.draw();
 
     //Check for level completion
-    if (stage.enemiesKilled === (stage.enemyCount + 1) && master.animations.length === 0 && !stage.defeated) {
+    if (stage.enemiesKilled === (stage.enemyCount + 1) && master.actors.animations.length === 0 && !stage.defeated) {
       levelWin();
     }
 
     //Check for level failure
-    if (!player.active && master.animations.length === 0) {
+    if (!player.active && master.actors.animations.length === 0) {
       levelLose();
     }
 
     //Check enemy interval
     if (master.counter % stage.enemyInterval === 0) {
-      if (master.enemies.length < stage.enemyCount) {
+      if (master.actors.enemies.length < stage.enemyCount) {
         new Enemy({
           data: stage.enemy,
           hud,
@@ -704,7 +706,7 @@ function loop() {
 
     master.counter++;
   } else if (master.mode === MODES.TITLE) {
-    master.enemies.forEach(enemy => {
+    master.actors.enemies.forEach(enemy => {
       enemy.update();
       enemy.draw();
     });
@@ -728,12 +730,12 @@ function resizeGame(width, height) {
   if (master.mode === MODES.GAMEPLAY) {
     adaptCoords(player);
 
-    master.enemies.forEach(enemy => {
+    master.actors.enemies.forEach(enemy => {
       adaptCoords(enemy);
     });
 
-    master.props.forEach(prop => {
-      adaptCoords(master.props);
+    master.actors.props.forEach(prop => {
+      adaptCoords(master.actors.props);
     });
   }
 
@@ -746,7 +748,7 @@ function resizeGame(width, height) {
     stage.resize();
   }
 
-  master.obstacles.forEach(obstacle => {
+  master.actors.obstacles.forEach(obstacle => {
     adaptCoords(obstacle);
   });
 

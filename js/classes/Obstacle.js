@@ -38,7 +38,7 @@ export const Obstacle = function({
   this.selector.style.backgroundImage = "url('img/obstacles/" + this.img + ".png')";
   this.selector.style.backgroundSize = this.width + 'px ' + this.height + 'px';
 
-  master.obstacles.push(this);
+  master.actors.obstacles.push(this);
   stage.selector.appendChild(this.selector);
 
   this.update = function() {

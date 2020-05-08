@@ -38,7 +38,7 @@ export const Enemy = function({
   this.selector.style.backgroundRepeat = 'no-repeat';
   this.selector.style.zIndex = '2';
 
-  master.enemies.push(this);
+  master.actors.enemies.push(this);
   stage.selector.appendChild(this.selector);
 
   this.spriteColumn = 1;
@@ -138,10 +138,10 @@ export const Enemy = function({
   }
 
   this.respawn = function() {
-    const position = master.enemies.indexOf(this);
+    const position = master.actors.enemies.indexOf(this);
 
     stage.selector.removeChild(this.selector);
-    master.enemies.splice(position, 1);
+    master.actors.enemies.splice(position, 1);
 
     new Enemy({
       data,
@@ -206,20 +206,20 @@ export const Enemy = function({
         this.spriteColumn = 1;
       }
 
-      var obs = getObstruction({
+      const obstruction = getObstruction({
         obj: this,
-        obstacles: master.obstacles
+        obstacles: master.actors.obstacles
       });
 
-      if (obs !== '' && !inBounds({master, obj: this})) {
+      if (obstruction !== '' && !inBounds({master, obj: this})) {
         this.trapped = true;
       } else {
         if (this.dir === 'left') {
-          if (this.x - this.speed > 0 && obs === '') {
+          if (this.x - this.speed > 0 && obstruction === '') {
             this.x -= this.speed;
           } else {
-            if (obs !== '') {
-              this.x = obs.x + obs.frameWidth;
+            if (obstruction !== '') {
+              this.x = obstruction.x + obstruction.frameWidth;
               this.changeDir();
             } else {
               this.x = 0;
@@ -227,11 +227,11 @@ export const Enemy = function({
             }
           }
         } else if (this.dir === 'up') {
-          if (this.y - this.speed > 0 && obs === '') {
+          if (this.y - this.speed > 0 && obstruction === '') {
             this.y -= this.speed;
           } else {
-            if (obs !== '') {
-              this.y = obs.y + obs.frameHeight - this.frameHeight + MAGNIFICATION;
+            if (obstruction !== '') {
+              this.y = obstruction.y + obstruction.frameHeight - this.frameHeight + MAGNIFICATION;
               this.changeDir();
             } else {
               this.y = 0;
@@ -239,11 +239,11 @@ export const Enemy = function({
             }
           }
         } else if (this.dir === 'right') {
-          if (this.x + this.speed < master.gameWidth - this.frameWidth && obs === '') {
+          if (this.x + this.speed < master.gameWidth - this.frameWidth && obstruction === '') {
             this.x += this.speed;
           } else {
-            if (obs !== '') {
-              this.x = obs.x - this.frameHeight;
+            if (obstruction !== '') {
+              this.x = obstruction.x - this.frameHeight;
               this.changeDir();
             } else {
               this.x = master.gameWidth - this.frameWidth;
@@ -251,11 +251,11 @@ export const Enemy = function({
             }
           }
         } else if (this.dir === 'down') {
-          if (this.y + this.speed < master.gameHeight - this.frameHeight && obs === '') {
+          if (this.y + this.speed < master.gameHeight - this.frameHeight && obstruction === '') {
             this.y += this.speed;
           } else {
-            if (obs !== '') {
-              this.y = obs.y - this.frameHeight;
+            if (obstruction !== '') {
+              this.y = obstruction.y - this.frameHeight;
               this.changeDir();
             } else {
               this.y = master.gameHeight - this.frameHeight;

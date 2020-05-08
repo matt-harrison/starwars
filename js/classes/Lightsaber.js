@@ -74,7 +74,7 @@ export const Lightsaber = function({
   this.hilt.style.height = this.hiltHeight + 'px';
   this.hilt.style.backgroundColor = COLORS.GRAY;
 
-  master.props.push(this);
+  master.actors.props.push(this);
   stage.selector.appendChild(this.selector);
   this.selector.appendChild(this.hilt);
 
@@ -91,10 +91,10 @@ export const Lightsaber = function({
   }
 
   this.kill = function() {
-    const position = master.props.indexOf(this);
+    const position = master.actors.props.indexOf(this);
 
     stage.selector.removeChild(this.selector);
-    master.props.splice(position, 1);
+    master.actors.props.splice(position, 1);
     origin.lightsaber = '';
     origin.spriteColumn = 0;
   }

@@ -71,15 +71,14 @@ export const Player = function({
           stage
         });
 
-        //Sometimes the enemy will try to dodge
-        for (var enemy in master.enemies) {
-          if (master.enemies[enemy].sprite !== 'asteroid') {
-            //Dodges will get more likely as game progresses
+        //As levels progress, enemies will become liklier to dodge projectiles
+        master.actors.enemies.forEach(enemy => {
+          if (enemy.sprite !== 'asteroid') {
             if (getRandom(20 - level) === 0) {
-              master.enemies[enemy].changeDir();
+              enemy.changeDir();
             }
           }
-        }
+        });
       } else if (this.weaponType === WEAPON_TYPES.BOMB) {
         new Bomb({
           master,
@@ -110,6 +109,7 @@ export const Player = function({
 
   this.kill = function() {
     this.active = false;
+
     if (typeof(this.death) !== 'undefined') {
       this.selector.style.display = 'none';
       new Animation({
@@ -147,17 +147,17 @@ export const Player = function({
           this.spriteColumn = 1;
         }
 
-        var obs = getObstruction({
+        var obstruction = getObstruction({
           obj: this,
-          obstacles: master.obstacles
+          obstacles: master.actors.obstacles
         });
 
         if (this.dir === 'left') {
           if (this.x - this.speed > 0) {
-            if (obs === '') {
+            if (obstruction === '') {
               this.x -= this.speed;
             } else {
-              this.x = obs.x + obs.frameWidth;
+              this.x = obstruction.x + obstruction.frameWidth;
             }
           } else if (this.ship) {
             this.x = 0;
@@ -166,15 +166,15 @@ export const Player = function({
           this.spriteRow = 1;
         } else if (this.dir === 'up') {
           if (this.y - this.speed > 0) {
-            var obs = getObstruction({
+            var obstruction = getObstruction({
               obj: this,
-              obstacles: master.obstacles
+              obstacles: master.actors.obstacles
             });
 
-            if (obs === '') {
+            if (obstruction === '') {
               this.y -= this.speed;
             } else {
-              this.y = obs.y + obs.frameHeight - this.frameHeight + MAGNIFICATION;
+              this.y = obstruction.y + obstruction.frameHeight - this.frameHeight + MAGNIFICATION;
             }
           } else if (this.ship) {
             this.y = 0;
@@ -183,15 +183,15 @@ export const Player = function({
           this.spriteRow = 3;
         } else if (this.dir === 'right') {
           if (this.x + this.speed < master.gameWidth - this.frameWidth) {
-            var obs = getObstruction({
+            var obstruction = getObstruction({
               obj: this,
-              obstacles: master.obstacles
+              obstacles: master.actors.obstacles
             });
 
-            if (obs === '') {
+            if (obstruction === '') {
               this.x += this.speed;
             } else {
-              this.x = obs.x - this.frameWidth;
+              this.x = obstruction.x - this.frameWidth;
             }
           } else if (this.ship) {
             this.x = master.gameWidth - this.frameWidth;
@@ -200,15 +200,15 @@ export const Player = function({
           this.spriteRow = 0;
         } else if (this.dir === 'down') {
           if (this.y + this.speed < master.gameHeight - this.frameHeight) {
-            var obs = getObstruction({
+            var obstruction = getObstruction({
               obj: this,
-              obstacles: master.obstacles
+              obstacles: master.actors.obstacles
             });
 
-            if (obs === '') {
+            if (obstruction === '') {
               this.y += this.speed;
             } else {
-              this.y = obs.y - this.frameHeight;
+              this.y = obstruction.y - this.frameHeight;
             }
           } else if (this.ship) {
             this.y = master.gameHeight - this.frameHeight;

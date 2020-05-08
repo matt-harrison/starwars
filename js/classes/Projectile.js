@@ -60,13 +60,13 @@ export const Projectile = function({
   this.selector.style.height = this.frameHeight + 'px';
   this.selector.style.zIndex = '4';
 
-  master.props.push(this);
+  master.actors.props.push(this);
   stage.selector.appendChild(this.selector);
 
   this.kill = function() {
-    const position = master.props.indexOf(this);
+    const position = master.actors.props.indexOf(this);
 
-    master.props.splice(position, 1);
+    master.actors.props.splice(position, 1);
     stage.selector.removeChild(this.selector);
   }
 

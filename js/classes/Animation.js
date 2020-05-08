@@ -25,13 +25,13 @@ export const Animation = function({
   this.selector.style.backgroundSize = this.width + 'px ' + this.height + 'px';
   this.selector.style.zIndex = '2';
 
-  master.animations.push(this);
+  master.actors.animations.push(this);
   stage.selector.appendChild(this.selector);
 
   this.kill = function() {
-    const position = master.animations.indexOf(this);
+    const position = master.actors.animations.indexOf(this);
 
-    master.animations.splice(position, 1);
+    master.actors.animations.splice(position, 1);
 
     if (this.remove) {
       stage.selector.removeChild(this.selector);
@@ -50,6 +50,7 @@ export const Animation = function({
     if (this.dead) {
       this.kill();
     }
+
     this.selector.style.backgroundPosition = (0 - this.spriteColumn * this.frameWidth) + 'px 0';
   }
 };

@@ -24,31 +24,31 @@ export function getObstruction({ obj, obstacles }) {
 
   obstacles.forEach(obstacle => {
     if (obstacle.impassable) {
-      var obsLeft = obstacle.x;
-      var obsTop = obstacle.y;
-      var obsRight = obstacle.x + obstacle.frameWidth;
-      var obsBottom = obstacle.y + obstacle.frameHeight;
+      var obstructionLeft = obstacle.x;
+      var obstructionTop = obstacle.y;
+      var obstructionRight = obstacle.x + obstacle.frameWidth;
+      var obstructionBottom = obstacle.y + obstacle.frameHeight;
 
       if (obj.dir === 'left' || obj.dir === 'right') {
-        if (charBottom > obsTop && charTop < obsBottom) {
+        if (charBottom > obstructionTop && charTop < obstructionBottom) {
           if (obj.dir === 'left') {
-            if (charLeft - obj.speed < obsRight && charRight > obsLeft) {
+            if (charLeft - obj.speed < obstructionRight && charRight > obstructionLeft) {
               obstruction = obstacle;
             }
           } else if (obj.dir === 'right') {
-            if (charRight + obj.speed > obsLeft && charLeft < obsRight) {
+            if (charRight + obj.speed > obstructionLeft && charLeft < obstructionRight) {
               obstruction = obstacle;
             }
           }
         }
       } else if (obj.dir === 'up' || obj.dir === 'down') {
-        if (charRight > obsLeft && charLeft < obsRight) {
+        if (charRight > obstructionLeft && charLeft < obstructionRight) {
           if (obj.dir === 'up') {
-            if (charTop - obj.speed < obsBottom && charBottom > obsTop) {
+            if (charTop - obj.speed < obstructionBottom && charBottom > obstructionTop) {
               obstruction = obstacle;
             }
           } else if (obj.dir === 'down') {
-            if (charBottom + obj.speed > obsTop && charBottom < obsBottom) {
+            if (charBottom + obj.speed > obstructionTop && charBottom < obstructionBottom) {
               obstruction = obstacle;
             }
           }
