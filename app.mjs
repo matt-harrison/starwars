@@ -34,27 +34,26 @@ import { Stage }      from './js/classes/Stage.js';
 
 //Initialize global vars
 const master = {
+  animations: [],
   assetCount: 0,
   counter: 0,
   cutsceneCount: 0,
+  enemies: [],
   episode: 0,
+  friendlies: [],
   gameHeight: IS_MOBILE ? window.innerHeight : 500,
   gameWidth:  IS_MOBILE ? window.innerWidth : 500,
   isGameOver: false,
   isInvincible: false,
   isPaused: false,
+  keys: [],
   level: 0,
   mode: MODES.TITLE,
+  obstacles: [],
   promptClick: IS_MOBILE ? 'Tap to begin' : 'Press Enter',
-  promptStart: IS_MOBILE ? 'Press Start'  : 'Press Enter'
+  promptStart: IS_MOBILE ? 'Press Start'  : 'Press Enter',
+  props: []
 };
-
-let animations = [];
-let enemies    = [];
-let friendlies = [];
-let keys       = [];
-let obstacles  = [];
-let props      = [];
 
 //DOM nodes
 let game;
@@ -122,14 +121,14 @@ function advanceStage() {
 function buttonPush(key, id) {
   if (master.mode === MODES.GAMEPLAY) {
     if (!player.attacking) {
-      if (keys.indexOf(key) === -1) {
-        keys.push(key);
+      if (master.keys.indexOf(key) === -1) {
+        master.keys.push(key);
       }
     }
   } else if (master.mode === MODES.EPISODE && CARDINALS.indexOf(key) !== -1) {
-    for (var i = 0; i < NUMERALS.length; i++) {
-      document.getElementById('btnEpisode' + NUMERALS[i]).style.color = COLORS.BLACK;
-    }
+    NUMERALS.forEach(numeral => {
+      document.getElementById('btnEpisode' + numeral).style.color = COLORS.BLACK;
+    });
 
     if (key === 'left') {
       master.episode -= 1;
@@ -152,20 +151,20 @@ function buttonPush(key, id) {
 }
 
 function buttonUpdate(event) {
-  for (var i = 0; i < CARDINALS.length; i++) {
+  CARDINALS.forEach(cardinal => {
     var previousButton = document.querySelector('[data-key="' + player.dir + '"]');
-    var button = document.querySelector('[data-key="' + CARDINALS[i] + '"]');
+    var button = document.querySelector('[data-key="' + cardinal + '"]');
     var bounds = button.getBoundingClientRect();
 
     if (event.changedTouches[0].pageX > bounds.left && event.changedTouches[0].pageX < bounds.right && event.changedTouches[0].pageY > bounds.top && event.changedTouches[0].pageY < bounds.bottom) {
-      if (keys.indexOf(CARDINALS[i]) === -1) {
+      if (master.keys.indexOf(cardinal) === -1) {
         buttonRelease(player.dir, previousButton.id);
-        buttonPush(CARDINALS[i], button.id);
+        buttonPush(cardinal, button.id);
       }
-    } else if (keys.indexOf(CARDINALS[i]) !== -1) {
+    } else if (master.keys.indexOf(cardinal) !== -1) {
       buttonRelease(player.dir, button.id);
     }
-  }
+  });
 }
 
 function buttonRelease(key, id) {
@@ -196,12 +195,12 @@ function buttonRelease(key, id) {
     } else {
       pause();
     }
-    keys.splice(0);
+    master.keys.splice(0);
   } else if (key === 'escape') {
     reset();
   }
 
-  const position = keys.indexOf(key);
+  const position = master.keys.indexOf(key);
 
   if (position !== -1) {
     if (key === 'space') {
@@ -211,7 +210,7 @@ function buttonRelease(key, id) {
       player.running = false;
       player.spriteColumn = 0;
     }
-    keys.splice(position, 1);
+    master.keys.splice(position, 1);
   }
 
   if (Object.values(BUTTON_NAMES).indexOf(id) > -1) {
@@ -221,12 +220,12 @@ function buttonRelease(key, id) {
 
 function clearStage() {
   game.selector.removeChild(stage.selector);
-  enemies.splice(0);
-  friendlies.splice(0);
-  obstacles.splice(0);
-  props.splice(0);
-  animations.splice(0);
-  keys.splice(0);
+  master.enemies.splice(0);
+  master.friendlies.splice(0);
+  master.obstacles.splice(0);
+  master.props.splice(0);
+  master.animations.splice(0);
+  master.keys.splice(0);
   master.assetCount = 0;
 
   hud.scoreText.innerHTML = hud.score;
@@ -282,14 +281,14 @@ function initInterface() {
       }
 
       //Check if touch was released over different d-pad button
-      for (var i = 0; i < CARDINALS.length; i++) {
-        var button = document.querySelector('[data-key="' + CARDINALS[i] + '"]');
+      CARDINALS.forEach(cardinal => {
+        var button = document.querySelector('[data-key="' + cardinal + '"]');
         var bounds = button.getBoundingClientRect();
 
         if (event.pageX > bounds.left && event.pageX < bounds.right && event.pageY > bounds.top && event.pageY < bounds.bottom) {
           //buttonRelease(player.dir, button.id);
         }
-      }
+      });
     }, {passive: false});
 
     window.addEventListener('resize', function() {
@@ -405,30 +404,24 @@ function initLevel() {
   });
 
   player = new Player({
-    animations,
     data: stage.character,
-    enemies,
-    keys,
     level: master.level,
     master,
-    obstacles,
-    props,
     stage
   });
 
   master.counter = 0;
 
   if (typeof(EPISODES[master.episode][master.level].obstacles) !== 'undefined') {
-    for (var obstacle in stage.obstacles) {
+    stage.obstacles.forEach(obstacle =>{
       new Obstacle({
-        data: stage.obstacles[obstacle]['type'],
+        data: obstacle['type'],
         master,
-        obstacles,
         stage,
-        x: stage.obstacles[obstacle]['x'],
-        y: stage.obstacles[obstacle]['y']
+        x: obstacle['x'],
+        y: obstacle['y']
       });
-    }
+    });
   }
 
   hud.selector.setAttribute('data-key', '');
@@ -462,22 +455,16 @@ function initMenu(mode) {
     });
 
     new Enemy({
-      animations,
       data: CHARACTERS.artoo,
-      enemies,
       hud,
       master,
-      obstacles,
       stage
     });
 
     new Enemy({
-      animations,
       data: CHARACTERS.threepio,
-      enemies,
       hud,
       master,
-      obstacles,
       stage
     });
 
@@ -485,12 +472,9 @@ function initMenu(mode) {
       setTimeout(function() {
         if (master.mode === MODES.TITLE) {
           new Enemy({
-            animations,
             data: CHARACTERS.stormtrooper,
-            enemies,
             hud,
             master,
-            obstacles,
             stage
           });
         }
@@ -532,7 +516,7 @@ function levelLose() {
   hud.score = 0;
   title.innerHTML = 'Game Over';
   directions.innerHTML = `${master.promptStart}<br/>to restart level.`;
-  keys.splice(0);
+  master.keys.splice(0);
 }
 
 function levelWin() {
@@ -552,120 +536,114 @@ function loop() {
   if (master.mode === MODES.GAMEPLAY && !master.isGameOver && !master.isPaused) {
     const expiredObjects = [];
 
-    if (keys.length > 0) {
+    if (master.keys.length > 0) {
       if (!player.attacking) {
-        for (var key in keys) {
-          if (CARDINALS.indexOf(keys[key]) !== -1) {
-            player.dir = keys[key];
+        master.keys.forEach(key => {
+          if (CARDINALS.indexOf(key) !== -1) {
+            player.dir = key;
             player.running = true;
           }
-          if (keys[key] === 'space' || keys[key] === 'Z') {
-            player.attack(keys[key]);
+          if (key === 'space' || key === 'Z') {
+            player.attack(key);
           }
-        }
+        });
       }
     }
 
-    //Iterate over all enemies
-    for (var enemy in enemies) {
-      if (enemies[enemy].active) {
+    master.enemies.forEach(enemy => {
+      if (enemy.active) {
         if (!player.dead) {
-          if (collision(player, enemies[enemy])) {
+          if (collision(player, enemy)) {
             if (!master.isInvincible) {
               player.dead = true;
             }
 
-            enemies[enemy].collide();
-          } else if (enemies[enemy].weaponType === WEAPON_TYPES.PROJECTILE && enemies[enemy].weaponReady && crossPaths(enemies[enemy], player)) {
+            enemy.collide();
+          } else if (enemy.weaponType === WEAPON_TYPES.PROJECTILE && enemy.weaponReady && crossPaths(enemy, player)) {
             var chance = 500 + EPISODES[master.episode].length - master.level;
             var random = getRandom(chance);
 
             if (random === 0) {
               new Projectile({
                 master,
-                origin: enemies[enemy],
-                props,
+                origin: enemy,
                 stage
               });
             }
           }
         }
-        enemies[enemy].update();
-        enemies[enemy].draw();
+        enemy.update();
+        enemy.draw();
       }
-    }
+    });
 
-    //Iterate over all friendlies
-    for (var friendly in friendlies) {
-      if (friendlies[friendly].ship) {
-        if (!player.dead && collision(player, friendlies[friendly])) {
+    master.friendlies.forEach(friendly => {
+      if (friendly.ship) {
+        if (!player.dead && collision(player, friendly)) {
           if (!master.isInvincible) {
             player.dead = true;
           }
 
-          friendlies[friendly].kill();
+          friendly.kill();
         }
       }
 
-      friendlies[friendly].update();
-      friendlies[friendly].draw();
-    }
+      friendly.update();
+      friendly.draw();
+    });
 
-    //Iterate over all obstacles
-    for (var obstacle in obstacles) {
-      obstacles[obstacle].update();
-      obstacles[obstacle].draw();
-    }
+    master.obstacles.forEach(obstacle => {
+      obstacle.update();
+      obstacle.draw();
+    });
 
-    //Iterate over all props
-    for (var prop in props) {
-      if (!player.dead && collision(player, props[prop])) {
-        if (!master.isInvincible && props[prop].active && props[prop].origin !== player) {
+    master.props.forEach(prop => {
+      if (!player.dead && collision(player, prop)) {
+        if (!master.isInvincible && prop.active && prop.origin !== player) {
           player.dead = true;
-          props[prop].dead = true;
+          prop.dead = true;
         }
 
-        if (props[prop].type === 'lightsaber' && props[prop].speed > 0) {
-          if (props[prop].active) {
+        if (prop.type === 'lightsaber' && prop.speed > 0) {
+          if (prop.active) {
             player.attacking = false;
           } else {
-            props[prop].active = true;
+            prop.active = true;
           }
         }
       }
 
-      //Compare all props to all enemies
-      for (var enemy in enemies) {
-        if (!props[prop].dead && !enemies[enemy].dead && props[prop].origin !== enemies[enemy] && collision(enemies[enemy], props[prop])) {
-          enemies[enemy].hit();
+      master.enemies.forEach(enemy =>{
+        if (!prop.dead && !enemy.dead && prop.origin !== enemy && collision(enemy, prop)) {
+          enemy.hit();
 
-          if (props[prop].type !== 'lightsaber') {
-            expiredObjects.push(props[prop])
+          if (prop.type !== 'lightsaber') {
+            expiredObjects.push(prop)
           }
         }
-      }
+      });
 
-      //Compare all props to all friendlies
-      for (var friendly in friendlies) {
-        if (!props[prop].dead && !friendlies[friendly].dead && collision(friendlies[friendly], props[prop])) {
-          friendlies[friendly].kill();
-          if (props[prop].type !== 'lightsaber') {
-            props[prop].dead = true;
+      master.friendlies.forEach(friendly =>{
+        if (!prop.dead && !friendly.dead && collision(friendly, prop)) {
+          friendly.kill();
+
+          if (prop.type !== 'lightsaber') {
+            prop.dead = true;
           }
         }
-      }
+      });
 
-      props[prop].update();
-      props[prop].draw();
-    }
+      prop.update();
+      prop.draw();
+    });
 
-    animations.forEach(animation => {
+    master.animations.forEach(animation => {
       animation.update();
       animation.draw();
     });
 
     expiredObjects.forEach(expiredObject => {
-      if (expiredObject) {
+      if (stage.selector.contains(expiredObject.selector)) {
         expiredObject.kill();
       }
     });
@@ -674,36 +652,30 @@ function loop() {
     player.draw();
 
     //Check for level completion
-    if (stage.enemiesKilled === (stage.enemyCount + 1) && animations.length === 0 && !stage.defeated) {
+    if (stage.enemiesKilled === (stage.enemyCount + 1) && master.animations.length === 0 && !stage.defeated) {
       levelWin();
     }
 
     //Check for level failure
-    if (!player.active && animations.length === 0) {
+    if (!player.active && master.animations.length === 0) {
       levelLose();
     }
 
     //Check enemy interval
     if (master.counter % stage.enemyInterval === 0) {
-      if (enemies.length < stage.enemyCount) {
+      if (master.enemies.length < stage.enemyCount) {
         new Enemy({
-          animations,
           data: stage.enemy,
-          enemies,
           hud,
           master,
-          obstacles,
           stage
         });
       } else {
         if (stage.enemiesKilled === stage.enemyCount && !stage.bossReached) {
           new Enemy({
-            animations,
             data: stage.boss,
-            enemies,
             hud,
             master,
-            obstacles,
             stage
           });
           stage.bossReached = true;
@@ -711,21 +683,17 @@ function loop() {
       }
     }
 
-    //Check friendly delay
-    for (var friendly in stage.friendlies) {
-      if (master.counter === stage.friendlies[friendly].details.delay) {
+    stage.friendlies?.forEach(friendly =>{
+      if (master.counter === friendly.details.delay) {
         new Friendly({
-          animations,
-          data: stage.friendlies[friendly].character,
-          details: stage.friendlies[friendly].details,
-          friendlies,
+          data: friendly.character,
+          details: friendly.details,
           hud,
           master,
-          obstacles,
           stage
         });
       }
-    }
+    });
 
     //Check victim identification interval
     if (hud.victimCount > 0) {
@@ -736,11 +704,10 @@ function loop() {
 
     master.counter++;
   } else if (master.mode === MODES.TITLE) {
-    //Iterate over all enemies
-    for (var enemy in enemies) {
-      enemies[enemy].update();
-      enemies[enemy].draw();
-    }
+    master.enemies.forEach(enemy => {
+      enemy.update();
+      enemy.draw();
+    });
   }
 
   setTimeout(loop, 1000 / FPS);
@@ -761,13 +728,13 @@ function resizeGame(width, height) {
   if (master.mode === MODES.GAMEPLAY) {
     adaptCoords(player);
 
-    for (var enemy in enemies) {
-      adaptCoords(enemies[enemy]);
-    }
+    master.enemies.forEach(enemy => {
+      adaptCoords(enemy);
+    });
 
-    for (var prop in props) {
-      adaptCoords(props[prop]);
-    }
+    master.props.forEach(prop => {
+      adaptCoords(master.props);
+    });
   }
 
   master.gameWidth = width;
@@ -779,9 +746,9 @@ function resizeGame(width, height) {
     stage.resize();
   }
 
-  for (var obstacle in obstacles) {
-    adaptCoords(obstacles[obstacle]);
-  }
+  master.obstacles.forEach(obstacle => {
+    adaptCoords(obstacle);
+  });
 
   btnStart.style.left = ((master.gameWidth - 75) / 2) + 'px';
 }

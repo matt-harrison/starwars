@@ -463,7 +463,7 @@ export const deathstartrooper = {
   ship: false,
   weaponType: WEAPON_TYPES.PROJECTILE,
   projectile: PROJECTILES.LASER,
-  weaponColor: COLORS.GREEN,
+  weaponColor: COLORS.RED,
   weaponOffsetLeft: [0, 4],
   weaponOffsetUp: [7, 0],
   weaponOffsetRight: [10, 4],

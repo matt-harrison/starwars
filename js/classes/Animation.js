@@ -1,6 +1,6 @@
 export const Animation = function({
-  animations,
   data,
+  master,
   origin,
   stage
 }) {
@@ -25,13 +25,13 @@ export const Animation = function({
   this.selector.style.backgroundSize = this.width + 'px ' + this.height + 'px';
   this.selector.style.zIndex = '2';
 
-  animations.push(this);
+  master.animations.push(this);
   stage.selector.appendChild(this.selector);
 
   this.kill = function() {
-    const position = animations.indexOf(this);
+    const position = master.animations.indexOf(this);
 
-    animations.splice(position, 1);
+    master.animations.splice(position, 1);
 
     if (this.remove) {
       stage.selector.removeChild(this.selector);

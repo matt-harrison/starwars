@@ -12,14 +12,9 @@ import { Lightsaber } from '/js/classes/Lightsaber.js';
 import { Projectile } from '/js/classes/Projectile.js';
 
 export const Player = function({
-  animations,
   data,
-  enemies,
   master,
-  keys,
   level,
-  obstacles,
-  props,
   stage
 }) {
   Object.assign(this, data);
@@ -73,25 +68,22 @@ export const Player = function({
         new Projectile({
           master,
           origin: this,
-          props,
           stage
         });
 
         //Sometimes the enemy will try to dodge
-        for (var enemy in enemies) {
-          if (enemies[enemy].sprite !== 'asteroid') {
+        for (var enemy in master.enemies) {
+          if (master.enemies[enemy].sprite !== 'asteroid') {
             //Dodges will get more likely as game progresses
             if (getRandom(20 - level) === 0) {
-              enemies[enemy].changeDir();
+              master.enemies[enemy].changeDir();
             }
           }
         }
       } else if (this.weaponType === WEAPON_TYPES.BOMB) {
         new Bomb({
-          animations,
           master,
           origin: this,
-          props,
           stage
         });
       } else if (this.weaponType === WEAPON_TYPES.LIGHTSABER) {
@@ -101,10 +93,10 @@ export const Player = function({
           isLongRange,
           master,
           origin: this,
-          props,
           stage
         });
-        keys = [key];
+
+        master.keys = [key];
 
         this.running = false;
         this.attacking = true;
@@ -121,11 +113,12 @@ export const Player = function({
     if (typeof(this.death) !== 'undefined') {
       this.selector.style.display = 'none';
       new Animation({
-        animations,
         data: this.death,
+        master,
         origin: this,
         stage
       });
+
       if (this.lightsaber !== '') {
         this.lightsaber.kill();
       }
@@ -156,7 +149,7 @@ export const Player = function({
 
         var obs = getObstruction({
           obj: this,
-          obstacles
+          obstacles: master.obstacles
         });
 
         if (this.dir === 'left') {
@@ -175,7 +168,7 @@ export const Player = function({
           if (this.y - this.speed > 0) {
             var obs = getObstruction({
               obj: this,
-              obstacles
+              obstacles: master.obstacles
             });
 
             if (obs === '') {
@@ -192,7 +185,7 @@ export const Player = function({
           if (this.x + this.speed < master.gameWidth - this.frameWidth) {
             var obs = getObstruction({
               obj: this,
-              obstacles
+              obstacles: master.obstacles
             });
 
             if (obs === '') {
@@ -209,7 +202,7 @@ export const Player = function({
           if (this.y + this.speed < master.gameHeight - this.frameHeight) {
             var obs = getObstruction({
               obj: this,
-              obstacles
+              obstacles: master.obstacles
             });
 
             if (obs === '') {

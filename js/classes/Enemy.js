@@ -12,12 +12,9 @@ import { CARDINALS, FPS, MAGNIFICATION } from '/js/constants/config.js';
 import { Animation } from '/js/classes/Animation.js';
 
 export const Enemy = function({
-  animations,
   data,
-  enemies,
   hud,
   master,
-  obstacles,
   stage
 }) {
   Object.assign(this, data);
@@ -41,7 +38,7 @@ export const Enemy = function({
   this.selector.style.backgroundRepeat = 'no-repeat';
   this.selector.style.zIndex = '2';
 
-  enemies.push(this);
+  master.enemies.push(this);
   stage.selector.appendChild(this.selector);
 
   this.spriteColumn = 1;
@@ -141,18 +138,15 @@ export const Enemy = function({
   }
 
   this.respawn = function() {
-    const position = enemies.indexOf(this);
+    const position = master.enemies.indexOf(this);
 
     stage.selector.removeChild(this.selector);
-    enemies.splice(position, 1);
+    master.enemies.splice(position, 1);
 
     new Enemy({
-      animations,
       data,
-      enemies,
       hud,
       master,
-      obstacles,
       stage
     });
   }
@@ -164,8 +158,8 @@ export const Enemy = function({
     if (typeof(this.death) !== 'undefined') {
       this.selector.style.display = 'none';
       new Animation({
-        animations,
         data: this.death,
+        master,
         origin: this,
         stage
       });
@@ -214,7 +208,7 @@ export const Enemy = function({
 
       var obs = getObstruction({
         obj: this,
-        obstacles
+        obstacles: master.obstacles
       });
 
       if (obs !== '' && !inBounds({master, obj: this})) {

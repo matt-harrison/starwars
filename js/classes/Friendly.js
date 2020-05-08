@@ -12,13 +12,10 @@ import { CARDINALS, COLORS, MAGNIFICATION } from '/js/constants/config.js';
 import { Animation } from '/js/classes/Animation.js';
 
 export const Friendly = function({
-  animations,
   data,
   details,
-  friendlies,
   hud,
   master,
-  obstacles,
   stage
 }) {
   Object.assign(this, data);
@@ -39,7 +36,7 @@ export const Friendly = function({
   this.selector.style.backgroundRepeat = 'no-repeat';
   this.selector.style.zIndex = '2';
 
-  friendlies.push(this);
+  master.friendlies.push(this);
   stage.selector.appendChild(this.selector);
 
   if (typeof(this.dir) === 'undefined') {
@@ -82,24 +79,21 @@ export const Friendly = function({
   }
 
   this.remove = function() {
-    const position = friendlies.indexOf(this);
-    friendlies.splice(position, 1);
+    const position = master.friendlies.indexOf(this);
+    master.friendlies.splice(position, 1);
   }
 
   this.respawn = function() {
     stage.selector.removeChild(this.selector);
-    const position = friendlies.indexOf(this);
+    const position = master.friendlies.indexOf(this);
 
-    friendlies.splice(position, 1);
+    master.friendlies.splice(position, 1);
 
     new Friendly({
-      animations,
       data,
       details,
-      friendlies,
       hud,
       master,
-      obstacles,
       stage
     });
   }
@@ -110,8 +104,8 @@ export const Friendly = function({
     if (typeof(this.death) !== 'undefined') {
       this.selector.style.display = 'none';
       new Animation({
-        animations,
         data: this.death,
+        master,
         origin: this,
         stage
       });
@@ -150,7 +144,7 @@ export const Friendly = function({
 
       var obstruction = getObstruction({
         obj: this,
-        obstacles
+        obstacles: master.obstacles
       });
 
       if (obstruction !== '' && !inBounds({master, obj: this})) {

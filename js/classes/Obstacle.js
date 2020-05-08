@@ -3,7 +3,6 @@ import { MAGNIFICATION } from '/js/constants/config.js';
 export const Obstacle = function({
   data,
   master,
-  obstacles,
   stage,
   x,
   y
@@ -39,7 +38,7 @@ export const Obstacle = function({
   this.selector.style.backgroundImage = "url('img/obstacles/" + this.img + ".png')";
   this.selector.style.backgroundSize = this.width + 'px ' + this.height + 'px';
 
-  obstacles.push(this);
+  master.obstacles.push(this);
   stage.selector.appendChild(this.selector);
 
   this.update = function() {

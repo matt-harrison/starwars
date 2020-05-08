@@ -19,27 +19,28 @@ export const Cutscene = function({
 
   game.selector.insertBefore(this.selector, game.selector.firstChild);
 
-  const cutscene = document.createElement('div');
-  cutscene.style.backgroundImage = "url('img/cutscenes/" + img + ".png')";
+  const cutsceneImg = document.createElement('div');
+
+  cutsceneImg.style.backgroundImage = "url('img/cutscenes/" + img + ".png')";
 
   if (master.gameWidth <= master.gameWidth) {
-    cutscene.width = master.gameWidth;
-    cutscene.height = master.gameWidth;
+    cutsceneImg.width = master.gameWidth;
+    cutsceneImg.height = master.gameWidth;
   } else {
-    cutscene.width = master.gameWidth;
-    cutscene.height = master.gameWidth;
+    cutsceneImg.width = master.gameWidth;
+    cutsceneImg.height = master.gameWidth;
   }
 
-  cutscene.style.width = cutscene.width + 'px';
-  cutscene.style.height = cutscene.height + 'px';
-  cutscene.style.position = 'absolute';
-  cutscene.style.top = (this.height - cutscene.height) / 2 + 'px';
-  cutscene.style.left = (this.width - cutscene.width) / 2 + 'px';
-  cutscene.style.backgroundSize = cutscene.width + 'px ' + cutscene.height + 'px';
-  cutscene.style.zIndex = '100';
-  cutscene.setAttribute('data-key', 'enter');
+  cutsceneImg.style.width = cutsceneImg.width + 'px';
+  cutsceneImg.style.height = cutsceneImg.height + 'px';
+  cutsceneImg.style.position = 'absolute';
+  cutsceneImg.style.top = (this.height - cutsceneImg.height) / 2 + 'px';
+  cutsceneImg.style.left = (this.width - cutsceneImg.width) / 2 + 'px';
+  cutsceneImg.style.backgroundSize = cutsceneImg.width + 'px ' + cutsceneImg.height + 'px';
+  cutsceneImg.style.zIndex = '100';
+  cutsceneImg.setAttribute('data-key', 'enter');
 
-  this.selector.appendChild(cutscene);
+  this.selector.appendChild(cutsceneImg);
 
   this.resize = function() {
     this.width = master.gameWidth;
@@ -47,8 +48,8 @@ export const Cutscene = function({
     this.selector.style.width = this.width + 'px';
     this.selector.style.height = this.height + 'px';
 
-    cutscene.style.top = (this.height - cutscene.height) / 2 + 'px';
-    cutscene.style.left = (this.width - cutscene.width) / 2 + 'px';
-    cutscene.style.backgroundSize = cutscene.width + 'px ' + cutscene.height + 'px';
+    cutsceneImg.style.top = (this.height - cutsceneImg.height) / 2 + 'px';
+    cutsceneImg.style.left = (this.width - cutsceneImg.width) / 2 + 'px';
+    cutsceneImg.style.backgroundSize = cutsceneImg.width + 'px ' + cutsceneImg.height + 'px';
   }
 };

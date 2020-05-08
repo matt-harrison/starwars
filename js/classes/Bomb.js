@@ -6,10 +6,8 @@ import { COLORS, MAGNIFICATION } from '/js/constants/config.js';
 import { Animation } from '/js/classes/Animation.js';
 
 export const Bomb = function({
-  animations,
   master,
   origin,
-  props,
   stage
 }) {
   this.type = 'bomb';
@@ -32,7 +30,7 @@ export const Bomb = function({
   this.selector.style.backgroundColor = COLORS.BLACK;
   this.selector.style.zIndex = '2';
 
-  props.push(this);
+  master.props.push(this);
   stage.selector.appendChild(this.selector);
 
   this.update = function() {
@@ -54,14 +52,14 @@ export const Bomb = function({
   }
 
   this.kill = function() {
-    const position = props.indexOf(this);
+    const position = master.props.indexOf(this);
 
-    props.splice(position, 1);
+    master.props.splice(position, 1);
     stage.selector.removeChild(this.selector);
 
     new Animation({
-      animations,
       data: ANIMATIONS.DETONATION,
+      master,
       origin: this,
       stage
     });

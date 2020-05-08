@@ -4,7 +4,6 @@ import { PROJECTILES, WEAPON_TYPES } from '/js/constants/weapons.js';
 export const Projectile = function({
   master,
   origin,
-  props,
   stage
 }) {
   Object.assign(this, origin.projectile);
@@ -61,13 +60,13 @@ export const Projectile = function({
   this.selector.style.height = this.frameHeight + 'px';
   this.selector.style.zIndex = '4';
 
-  props.push(this);
+  master.props.push(this);
   stage.selector.appendChild(this.selector);
 
   this.kill = function() {
-    const position = props.indexOf(this);
+    const position = master.props.indexOf(this);
 
-    props.splice(position, 1);
+    master.props.splice(position, 1);
     stage.selector.removeChild(this.selector);
   }
 

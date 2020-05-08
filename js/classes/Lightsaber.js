@@ -6,7 +6,6 @@ export const Lightsaber = function({
   isLongRange,
   master,
   origin,
-  props,
   stage
 }) {
   this.type = 'lightsaber';
@@ -75,7 +74,7 @@ export const Lightsaber = function({
   this.hilt.style.height = this.hiltHeight + 'px';
   this.hilt.style.backgroundColor = COLORS.GRAY;
 
-  props.push(this);
+  master.props.push(this);
   stage.selector.appendChild(this.selector);
   this.selector.appendChild(this.hilt);
 
@@ -92,10 +91,10 @@ export const Lightsaber = function({
   }
 
   this.kill = function() {
-    const position = props.indexOf(this);
+    const position = master.props.indexOf(this);
 
     stage.selector.removeChild(this.selector);
-    props.splice(position, 1);
+    master.props.splice(position, 1);
     origin.lightsaber = '';
     origin.spriteColumn = 0;
   }
