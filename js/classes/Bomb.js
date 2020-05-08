@@ -22,6 +22,7 @@ export const Bomb = function({
   this.frameCount = 5;
 
   this.selector = document.createElement('div');
+  this.selector.id = `bomb${master.actorCount++}`;
   this.selector.style.position = 'absolute';
   this.selector.style.left = this.x + 'px';
   this.selector.style.top = this.y + 'px';

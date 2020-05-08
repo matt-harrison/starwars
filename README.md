@@ -3,22 +3,20 @@
 
 REFACTOR:
 * make all mutable vars part of a "master" object
+  * migrate all mutable vars from classes to master object
   * move DOM node refs to master object?
   * refactor classes to receive all data from imports and master object
-  * refactor classes to store nothing beyond what's needed for draw (hud)
   * reimplement kill() as a util?
-  * add unique id attributes to all class instances from master.assetCount
   * remove array slots from main loop?
   * expose master object to console?
   * merge looping arrays into one? https://codepen.io/rootbeercomics/pen/XWmEYeo?editors=0012
   * share common logic across friendlies, enemies, and player as utils (for example)
 * code formatting
   * adapt string concats to template literals
-  * rename all instances of obj
   * alphabetize args
   * distribute functions to relevant class or move to utils
-  * audit performance improvements
-  * replace var with let or const
+* performance improvements
+  * audit each function
 
 FEATURES:
 * password menu!
@@ -36,3 +34,5 @@ BUGS:
 * trying to remove already removed Projectile: dedupe expiredObjects before looping?
 * character frame sometimes redundant to Lighsaber instance
 * concurrent boss and player death results in Game Over + next level
+* friendlies remain on stage after !inBounds ?
+* cutscenes not size correctly on mobile / when resizing

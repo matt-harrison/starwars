@@ -30,6 +30,7 @@ export const Obstacle = function({
   }
 
   this.selector = document.createElement('div');
+  this.selector.id = `obstacle${master.actorCount++}`;
   this.selector.style.position = 'absolute';
   this.selector.style.left = this.x + 'px';
   this.selector.style.top = this.y + 'px';

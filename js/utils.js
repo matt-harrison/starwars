@@ -1,13 +1,41 @@
 import { MAGNIFICATION } from '/js/constants/config.js';
 import { EPISODES }      from '/js/constants/episodes.js';
 
-export function add(num1, num2) {
+export const adaptCoords = ({ actor, master }) => {
+  if (typeof(actor.leftPercent) !== 'undefined' && typeof(actor.topPercent) !== 'undefined') {
+    if (actor.leftPercent === 0) {
+      actor.x = 0;
+    } else if (actor.leftPercent === 100) {
+      actor.x = master.gameWidth - actor.frameWidth;
+    } else {
+      actor.x = Math.floor(master.gameWidth * (actor.leftPercent / 100) - (actor.frameWidth / 2));
+    }
+
+    if (actor.topPercent === 0) {
+      actor.y = 0;
+    } else if (actor.leftPercent === 100) {
+      actor.y = master.gameHeight - actor.frameHeight;
+    } else {
+      actor.y = Math.floor(master.gameHeight * (actor.topPercent / 100) - (actor.frameHeight / 2));
+    }
+  } else {
+    const offsetX = actor.x / (master.gameWidth - actor.frameWidth);
+    const offsetY = actor.y / (master.gameHeight - actor.frameHeight);
+
+    actor.x = Math.floor((window.innerWidth - actor.frameWidth) * offsetX);
+    actor.y = Math.floor((window.innerHeight - actor.frameHeight) * offsetY);
+  }
+
+  actor.draw();
+}
+
+export const add = (num1, num2) => {
   return Number(num1) + Number(num2);
 }
 
-export function collision(obj1, obj2) {
-  var rect1 = obj1.selector.getBoundingClientRect();
-  var rect2 = obj2.selector.getBoundingClientRect();
+export const collision = (actor1, actor2) => {
+  const rect1 = actor1.selector.getBoundingClientRect();
+  const rect2 = actor2.selector.getBoundingClientRect();
 
   return (
     (rect1.right > rect2.left && rect1.left < rect2.right) &&
@@ -15,40 +43,62 @@ export function collision(obj1, obj2) {
   );
 }
 
-export function getObstruction({ obj, obstacles }) {
-  var obstruction = '';
-  var charLeft = obj.x;
-  var charTop = obj.y + obj.frameHeight - MAGNIFICATION;
-  var charRight = obj.x + obj.frameWidth;
-  var charBottom = obj.y + obj.frameHeight;
+export const crossPaths = (actor1, actor2) => {
+  let cross = false;
+  const rect1 = actor1.selector.getBoundingClientRect();
+  const rect2 = actor2.selector.getBoundingClientRect();
+
+  if (rect1.right > rect2.left && rect1.left < rect2.right) {
+    if (rect2.bottom < rect1.top && actor1.dir === 'up') {
+      cross = true;
+    } else if (rect2.top > rect1.bottom && actor1.dir === 'down') {
+      cross = true;
+    }
+  } else if ((rect1.bottom > rect2.top && rect1.top < rect2.bottom)) {
+    if (rect2.right < rect1.left && actor1.dir === 'left') {
+      cross = true;
+    } else if (rect2.left > rect1.right && actor1.dir === 'right') {
+      cross = true;
+    }
+  }
+
+  return cross;
+}
+
+export const getObstruction = ({ character, obstacles }) => {
+  let obstruction = '';
+  const characterLeft   = character.x;
+  const characterTop    = character.y + character.frameHeight - MAGNIFICATION;
+  const characterRight  = character.x + character.frameWidth;
+  const characterBottom = character.y + character.frameHeight;
 
   obstacles.forEach(obstacle => {
     if (obstacle.impassable) {
-      var obstructionLeft = obstacle.x;
-      var obstructionTop = obstacle.y;
-      var obstructionRight = obstacle.x + obstacle.frameWidth;
-      var obstructionBottom = obstacle.y + obstacle.frameHeight;
+      const obstructionLeft = obstacle.x;
+      const obstructionTop = obstacle.y;
+      const obstructionRight = obstacle.x + obstacle.frameWidth;
+      const obstructionBottom = obstacle.y + obstacle.frameHeight;
 
-      if (obj.dir === 'left' || obj.dir === 'right') {
-        if (charBottom > obstructionTop && charTop < obstructionBottom) {
-          if (obj.dir === 'left') {
-            if (charLeft - obj.speed < obstructionRight && charRight > obstructionLeft) {
+      if (character.dir === 'left' || character.dir === 'right') {
+        if (characterBottom > obstructionTop && characterTop < obstructionBottom) {
+          if (character.dir === 'left') {
+            if (characterLeft - character.speed < obstructionRight && characterRight > obstructionLeft) {
               obstruction = obstacle;
             }
-          } else if (obj.dir === 'right') {
-            if (charRight + obj.speed > obstructionLeft && charLeft < obstructionRight) {
+          } else if (character.dir === 'right') {
+            if (characterRight + character.speed > obstructionLeft && characterLeft < obstructionRight) {
               obstruction = obstacle;
             }
           }
         }
-      } else if (obj.dir === 'up' || obj.dir === 'down') {
-        if (charRight > obstructionLeft && charLeft < obstructionRight) {
-          if (obj.dir === 'up') {
-            if (charTop - obj.speed < obstructionBottom && charBottom > obstructionTop) {
+      } else if (character.dir === 'up' || character.dir === 'down') {
+        if (characterRight > obstructionLeft && characterLeft < obstructionRight) {
+          if (character.dir === 'up') {
+            if (characterTop - character.speed < obstructionBottom && characterBottom > obstructionTop) {
               obstruction = obstacle;
             }
-          } else if (obj.dir === 'down') {
-            if (charBottom + obj.speed > obstructionTop && charBottom < obstructionBottom) {
+          } else if (character.dir === 'down') {
+            if (characterBottom + character.speed > obstructionTop && characterBottom < obstructionBottom) {
               obstruction = obstacle;
             }
           }
@@ -60,39 +110,41 @@ export function getObstruction({ obj, obstacles }) {
   return obstruction;
 }
 
-export function getRandom(max) {
+export const getRandom = (max) => {
   return Math.floor(Math.random() * max);
 }
 
-export function inBounds({ master, obj }) {
+export const inBounds = ({ actor, master }) => {
   return (
-    obj.x > 0 && add(obj.x, obj.frameWidth) < master.gameWidth &&
-    obj.y > 0 && add(obj.y, obj.frameHeight) < master.gameHeight
+    actor.x > 0 && add(actor.x, actor.frameWidth) < master.gameWidth &&
+    actor.y > 0 && add(actor.y, actor.frameHeight) < master.gameHeight
   );
 }
 
-export function preload(url) {
-  var image = new Image();
+export const preload = (url) => {
+  const image = new Image();
   image.src = url;
 }
 
-export function updateScore({ hud, points }) {
+export const updateScore = ({ hud, points }) => {
   hud.score += points;
   hud.scoreText.innerHTML = hud.score;
 }
 
-export function updateVictim({ color, hud, victim }) {
+export const updateVictim = ({ color, hud, victim }) => {
   hud.victimText.style.color = color;
   hud.victimText.innerHTML = victim.name;
   hud.victimCount = 16;
 }
 
 // Cheats
-export function playAs(obj) {
+export const playAs = (obj) => {
   if (master.mode !== MODES.GAMEPLAY) {
     initGame();
   }
+
   stage.selector.removeChild(player.selector);
+
   player = new Player({
     data: stage.character,
     level,
@@ -101,7 +153,7 @@ export function playAs(obj) {
   });
 }
 
-export function playLevel(obj) {
+export const playLevel = (obj) => {
   let skipToLevel;
 
   if (typeof(obj) === 'number') {
@@ -109,7 +161,7 @@ export function playLevel(obj) {
       skipToLevel = obj;
     }
   } else {
-    for (var i = 0; i < EPISODES[3].length; i++) {
+    for (const i = 0; i < EPISODES[3].length; i++) {
       if (obj === EPISODES[3][i]) {
         skipToLevel = i;
       }
@@ -130,7 +182,7 @@ export function playLevel(obj) {
   }
 }
 
-export function useTheForce() {
+export const useTheForce = () => {
   isInvincible = true;
   isPaused = true;
   directions.innerHTML = 'May the force be with you.<br/></br/>Press Start';

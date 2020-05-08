@@ -140,6 +140,7 @@ export const Player = function({
           this.weaponCount = 0;
         }
       }
+
       if (this.running || this.ship) {
         if (this.spriteColumn < this.moveFrameCount) {
           this.spriteColumn++;
@@ -147,8 +148,8 @@ export const Player = function({
           this.spriteColumn = 1;
         }
 
-        var obstruction = getObstruction({
-          obj: this,
+        const obstruction = getObstruction({
+          character: this,
           obstacles: master.actors.obstacles
         });
 
@@ -166,8 +167,8 @@ export const Player = function({
           this.spriteRow = 1;
         } else if (this.dir === 'up') {
           if (this.y - this.speed > 0) {
-            var obstruction = getObstruction({
-              obj: this,
+            const obstruction = getObstruction({
+              character: this,
               obstacles: master.actors.obstacles
             });
 
@@ -180,11 +181,12 @@ export const Player = function({
             this.y = 0;
             this.dir = 'down';
           }
+
           this.spriteRow = 3;
         } else if (this.dir === 'right') {
           if (this.x + this.speed < master.gameWidth - this.frameWidth) {
-            var obstruction = getObstruction({
-              obj: this,
+            const obstruction = getObstruction({
+              character: this,
               obstacles: master.actors.obstacles
             });
 
@@ -200,8 +202,8 @@ export const Player = function({
           this.spriteRow = 0;
         } else if (this.dir === 'down') {
           if (this.y + this.speed < master.gameHeight - this.frameHeight) {
-            var obstruction = getObstruction({
-              obj: this,
+            const obstruction = getObstruction({
+              character: this,
               obstacles: master.actors.obstacles
             });
 

@@ -30,6 +30,7 @@ export const Enemy = function({
   this.weaponCount = 0;
 
   this.selector = document.createElement('div');
+  this.selector.id = `enemy${master.actorCount++}`;
   this.selector.style.position = 'absolute';
   this.selector.style.width = this.frameWidth + 'px';
   this.selector.style.height = this.frameHeight + 'px';
@@ -86,7 +87,7 @@ export const Enemy = function({
   }
 
   this.changeDir = function() {
-    if (inBounds({master, obj: this})) {
+    if (inBounds({ actor: this, master })) {
       this.spriteRow = getRandom(4);
       const randomDir = CARDINALS[this.spriteRow];
       if (this.dir === randomDir) {
@@ -207,11 +208,11 @@ export const Enemy = function({
       }
 
       const obstruction = getObstruction({
-        obj: this,
+        character: this,
         obstacles: master.actors.obstacles
       });
 
-      if (obstruction !== '' && !inBounds({master, obj: this})) {
+      if (obstruction !== '' && !inBounds({ actor: this, master })) {
         this.trapped = true;
       } else {
         if (this.dir === 'left') {

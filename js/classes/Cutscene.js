@@ -6,6 +6,7 @@ export const Cutscene = function({
   master
 }) {
   this.selector = document.createElement('div');
+  this.selector.id = `cutscene${master.actorCount++}`;
   this.selector.style.position = 'absolute';
   this.selector.style.top = 0;
   this.selector.style.left = 0;

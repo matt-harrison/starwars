@@ -58,6 +58,7 @@ export const Lightsaber = function({
   this.height = this.frameHeight;
 
   this.selector = document.createElement('div');
+  this.selector.id = `lightsaber${master.actorCount++}`;
   this.selector.style.position = 'absolute';
   this.selector.style.left = this.x + 'px';
   this.selector.style.top = this.y + 'px';

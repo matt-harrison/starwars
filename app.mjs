@@ -1,7 +1,8 @@
 import {
+  adaptCoords,
   collision,
+  crossPaths,
   getRandom,
-  getObstruction,
   preload
 } from './js/utils.js';
 
@@ -32,7 +33,6 @@ import { Player }     from './js/classes/Player.js';
 import { Projectile } from './js/classes/Projectile.js';
 import { Stage }      from './js/classes/Stage.js';
 
-//Initialize global vars
 const master = {
   actors: {
     animations: [],
@@ -41,7 +41,7 @@ const master = {
     obstacles:  [],
     props:      []
   },
-  assetCount: 0,
+  actorCount: 0,
   counter: 0,
   cutsceneCount: 0,
   episode: 0,
@@ -78,33 +78,6 @@ let hilt;
 
   loop();
 })();
-
-function adaptCoords(obj) {
-  if (typeof(obj.leftPercent) !== 'undefined' && typeof(obj.topPercent) !== 'undefined') {
-    if (obj.leftPercent === 0) {
-      obj.x = 0;
-    } else if (obj.leftPercent === 100) {
-      obj.x = master.gameWidth - obj.frameWidth;
-    } else {
-      obj.x = Math.floor(master.gameWidth * (obj.leftPercent / 100) - (obj.frameWidth / 2));
-    }
-    if (obj.topPercent === 0) {
-      obj.y = 0;
-    } else if (obj.leftPercent === 100) {
-      obj.y = master.gameHeight - obj.frameHeight;
-    } else {
-      obj.y = Math.floor(master.gameHeight * (obj.topPercent / 100) - (obj.frameHeight / 2));
-    }
-  } else {
-    var offsetX = obj.x / (master.gameWidth - obj.frameWidth);
-    var offsetY = obj.y / (master.gameHeight - obj.frameHeight);
-
-    obj.x = Math.floor((window.innerWidth - obj.frameWidth) * offsetX);
-    obj.y = Math.floor((window.innerHeight - obj.frameHeight) * offsetY);
-  }
-
-  obj.draw();
-}
 
 function advanceStage() {
   if (master.level === master.episode.length) {
@@ -154,9 +127,9 @@ function buttonPush(key, id) {
 
 function buttonUpdate(event) {
   CARDINALS.forEach(cardinal => {
-    var previousButton = document.querySelector('[data-key="' + player.dir + '"]');
-    var button = document.querySelector('[data-key="' + cardinal + '"]');
-    var bounds = button.getBoundingClientRect();
+    const previousButton = document.querySelector('[data-key="' + player.dir + '"]');
+    const button = document.querySelector('[data-key="' + cardinal + '"]');
+    const bounds = button.getBoundingClientRect();
 
     if (event.changedTouches[0].pageX > bounds.left && event.changedTouches[0].pageX < bounds.right && event.changedTouches[0].pageY > bounds.top && event.changedTouches[0].pageY < bounds.bottom) {
       if (master.keys.indexOf(cardinal) === -1) {
@@ -228,30 +201,10 @@ function clearStage() {
   master.actors.props.splice(0);
   master.actors.animations.splice(0);
   master.keys.splice(0);
-  master.assetCount = 0;
+  master.actorCount = 0;
 
   hud.scoreText.innerHTML = hud.score;
   hud.victimText.innerHTML = '';
-}
-
-function crossPaths(obj1, obj2) {
-  var cross = false;
-  var rect1 = obj1.selector.getBoundingClientRect();
-  var rect2 = obj2.selector.getBoundingClientRect();
-  if (rect1.right > rect2.left && rect1.left < rect2.right) {
-    if (rect2.bottom < rect1.top && obj1.dir === 'up') {
-      cross = true;
-    } else if (rect2.top > rect1.bottom && obj1.dir === 'down') {
-      cross = true;
-    }
-  } else if ((rect1.bottom > rect2.top && rect1.top < rect2.bottom)) {
-    if (rect2.right < rect1.left && obj1.dir === 'left') {
-      cross = true;
-    } else if (rect2.left > rect1.right && obj1.dir === 'right') {
-      cross = true;
-    }
-  }
-  return cross;
 }
 
 function initGame() {
@@ -284,8 +237,8 @@ function initInterface() {
 
       //Check if touch was released over different d-pad button
       CARDINALS.forEach(cardinal => {
-        var button = document.querySelector('[data-key="' + cardinal + '"]');
-        var bounds = button.getBoundingClientRect();
+        const button = document.querySelector('[data-key="' + cardinal + '"]');
+        const bounds = button.getBoundingClientRect();
 
         if (event.pageX > bounds.left && event.pageX < bounds.right && event.pageY > bounds.top && event.pageY < bounds.bottom) {
           //buttonRelease(player.dir, button.id);
@@ -303,8 +256,8 @@ function initInterface() {
   } else {
     //Init desktop controls
     window.addEventListener('keydown', function(event) {
-      var key = '';
-      var id = '';
+      let key = '';
+      let id = '';
 
       if (!master.isPaused) {
         switch (event.keyCode) {
@@ -343,7 +296,7 @@ function initInterface() {
     });
 
     window.addEventListener('keypress', function(event) {
-      var key = '';
+      let key = '';
 
       if (event.charCode === 32) {
         key = 'space';
@@ -355,7 +308,7 @@ function initInterface() {
     });
 
     window.addEventListener('keyup', function(event) {
-      var key = '';
+      let key = '';
 
       if (!master.isPaused) {
         switch (event.keyCode) {
@@ -440,7 +393,7 @@ function initMenu(mode) {
   master.mode = mode;
   master.isGameOver = true;
   master.isPaused = false;
-  master.assetCount = 0;
+  master.actorCount = 0;
 
   master.isInvincible = false;
 
@@ -470,7 +423,7 @@ function initMenu(mode) {
       stage
     });
 
-    for (var i = 0; i < 5; i++) {
+    for (let i = 0; i < 5; i++) {
       setTimeout(function() {
         if (master.mode === MODES.TITLE) {
           new Enemy({
@@ -562,8 +515,8 @@ function loop() {
 
             enemy.collide();
           } else if (enemy.weaponType === WEAPON_TYPES.PROJECTILE && enemy.weaponReady && crossPaths(enemy, player)) {
-            var chance = 500 + EPISODES[master.episode].length - master.level;
-            var random = getRandom(chance);
+            const chance = 500 + EPISODES[master.episode].length - master.level;
+            const random = getRandom(chance);
 
             if (random === 0) {
               new Projectile({
@@ -728,14 +681,23 @@ function reset() {
 
 function resizeGame(width, height) {
   if (master.mode === MODES.GAMEPLAY) {
-    adaptCoords(player);
+    adaptCoords({
+      actor: player,
+      master
+    });
 
     master.actors.enemies.forEach(enemy => {
-      adaptCoords(enemy);
+      adaptCoords({
+        actor: enemy,
+        master
+      });
     });
 
     master.actors.props.forEach(prop => {
-      adaptCoords(master.actors.props);
+      adaptCoords({
+        actor: master.actors.props,
+        master
+      });
     });
   }
 
@@ -749,7 +711,10 @@ function resizeGame(width, height) {
   }
 
   master.actors.obstacles.forEach(obstacle => {
-    adaptCoords(obstacle);
+    adaptCoords({
+      actor: obstacle,
+      master
+    });
   });
 
   btnStart.style.left = ((master.gameWidth - 75) / 2) + 'px';

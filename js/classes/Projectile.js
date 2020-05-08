@@ -18,6 +18,7 @@ export const Projectile = function({
   this.spriteColumn = 0;
 
   this.selector = document.createElement('div');
+  this.selector.id = `projectile${master.actorCount++}`;
   this.selector.style.position = 'absolute';
 
   if (origin.projectile === PROJECTILES.LASER) {

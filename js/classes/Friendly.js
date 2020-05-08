@@ -28,6 +28,7 @@ export const Friendly = function({
   this.speed = this.speed * (MAGNIFICATION / 5);
 
   this.selector = document.createElement('div');
+  this.selector.id = `friendly${master.actorCount++}`;
   this.selector.style.position = 'absolute';
   this.selector.style.width = this.frameWidth + 'px';
   this.selector.style.height = this.frameHeight + 'px';
@@ -142,12 +143,12 @@ export const Friendly = function({
         this.spriteColumn = 1;
       }
 
-      var obstruction = getObstruction({
-        obj: this,
+      const obstruction = getObstruction({
+        character: this,
         obstacles: master.actors.obstacles
       });
 
-      if (obstruction !== '' && !inBounds({master, obj: this})) {
+      if (obstruction !== '' && !inBounds({ actor: this, master })) {
         this.trapped = true;
       } else {
         if (this.dir === 'left') {
