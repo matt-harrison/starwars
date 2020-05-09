@@ -1,55 +1,56 @@
+import { attachNode } from '/js/utils.js';
+
 import { COLORS } from '/js/constants/config.js';
 
 export const Cutscene = function({
   img,
   master
 }) {
-  this.selector = document.createElement('div');
-  this.selector.id = `cutscene${master.actorCount++}`;
-  this.selector.style.position = 'absolute';
-  this.selector.style.top = 0;
-  this.selector.style.left = 0;
-  this.width = master.gameWidth;
-  this.height = master.gameHeight;
-  this.selector.style.width = this.width + 'px';
-  this.selector.style.height = this.height + 'px';
-  this.selector.style.backgroundColor = COLORS.BLACK;
-  this.selector.style.zIndex = '101';
-  this.selector.setAttribute('data-key', 'enter');
+  this.selector = attachNode({
+    attributes: {
+      'data-key': 'enter',
+      id:         'cutscene-bg'
+    },
+    parent: master.dom.game.selector,
+    styles: {
+      backgroundColor: COLORS.BLACK,
+      height:          '100%',
+      left:            0,
+      position:        'absolute',
+      top:             0,
+      width:           '100%',
+      zIndex:          '101'
+    }
+  });
 
-  master.dom.game.selector.insertBefore(this.selector, master.dom.game.selector.firstChild);
+  const sideLength = getSideLength(master);
+  const cutscene   = attachNode({
+    attributes: {
+      'data-key': 'enter',
+      id:         `cutscene${master.actorCount++}`
+    },
+    parent: this.selector,
+    styles: {
+      backgroundImage: `url('img/cutscenes/${img}.png')`,
+      backgroundSize:  `${sideLength}px ${sideLength}px`,
+      height:          `${sideLength}px`,
+      left:            `${(master.gameWidth - sideLength) / 2}px`,
+      position:        'absolute',
+      top:             `${(master.gameHeight - sideLength) / 2}px`,
+      width:           `${sideLength}px`,
+      zIndex:          100
+    }
+  });
 
-  const cutsceneImg = document.createElement('div');
+  this.resize = () => {
+    const sideLength = getSideLength(master);
 
-  cutsceneImg.style.backgroundImage = "url('img/cutscenes/" + img + ".png')";
-
-  if (master.gameWidth <= master.gameHeight) {
-    cutsceneImg.width = master.gameWidth;
-    cutsceneImg.height = master.gameWidth;
-  } else {
-    cutsceneImg.width = master.gameHeight;
-    cutsceneImg.height = master.gameHeight;
+    cutscene.style.backgroundSize = `${sideLength}px ${sideLength}px`;
+    cutscene.style.left           = `${(master.gameWidth - sideLength) / 2}px`;
+    cutscene.style.top            = `${(master.gameHeight - sideLength) / 2}px`;
   }
+};
 
-  cutsceneImg.style.width = cutsceneImg.width + 'px';
-  cutsceneImg.style.height = cutsceneImg.height + 'px';
-  cutsceneImg.style.position = 'absolute';
-  cutsceneImg.style.top = (this.height - cutsceneImg.height) / 2 + 'px';
-  cutsceneImg.style.left = (this.width - cutsceneImg.width) / 2 + 'px';
-  cutsceneImg.style.backgroundSize = cutsceneImg.width + 'px ' + cutsceneImg.height + 'px';
-  cutsceneImg.style.zIndex = '100';
-  cutsceneImg.setAttribute('data-key', 'enter');
-
-  this.selector.appendChild(cutsceneImg);
-
-  this.resize = function() {
-    this.width = master.gameWidth;
-    this.height = master.gameWidth;
-    this.selector.style.width = this.width + 'px';
-    this.selector.style.height = this.height + 'px';
-
-    cutsceneImg.style.top = (this.height - cutsceneImg.height) / 2 + 'px';
-    cutsceneImg.style.left = (this.width - cutsceneImg.width) / 2 + 'px';
-    cutsceneImg.style.backgroundSize = cutsceneImg.width + 'px ' + cutsceneImg.height + 'px';
-  }
+const getSideLength = (master) => {
+  return master.gameWidth <= master.gameHeight ? master.gameWidth : master.gameHeight;
 };

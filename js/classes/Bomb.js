@@ -9,16 +9,15 @@ export const Bomb = function({
   master,
   origin
 }) {
-  this.type = 'bomb';
-  this.origin = origin;
-  this.active = false;
-
-  this.x = origin.x + (origin.weaponOffset[0] * MAGNIFICATION);
-  this.y = origin.y + (origin.weaponOffset[1] * MAGNIFICATION);
-  this.frameWidth = 1 * MAGNIFICATION;
-  this.frameHeight = 1 * MAGNIFICATION;
+  this.active       = false;
+  this.frameCount   = 5;
+  this.frameHeight  = 1 * MAGNIFICATION;
+  this.frameWidth   = 1 * MAGNIFICATION;
+  this.origin       = origin;
   this.spriteColumn = 0;
-  this.frameCount = 5;
+  this.type         = 'bomb';
+  this.x            = origin.x + (origin.weaponOffset[0] * MAGNIFICATION);
+  this.y            = origin.y + (origin.weaponOffset[1] * MAGNIFICATION);
 
   this.selector = document.createElement('div');
   this.selector.id = `bomb${master.actorCount++}`;

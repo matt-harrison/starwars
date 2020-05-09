@@ -18,11 +18,11 @@ export const Friendly = function({
   Object.assign(this, data.character);
   Object.assign(this, data.details);
 
-  this.active = true;
-  this.dead = false;
+  this.active  = true;
+  this.dead    = false;
+  this.dir     = this.dir || CARDINALS[getRandom(4)]
+  this.speed   = this.speed * (MAGNIFICATION / 5);
   this.trapped = false;
-
-  this.speed = this.speed * (MAGNIFICATION / 5);
 
   this.selector = document.createElement('div');
   this.selector.id = `friendly${master.actorCount++}`;
@@ -34,14 +34,7 @@ export const Friendly = function({
   this.selector.style.backgroundRepeat = 'no-repeat';
   this.selector.style.zIndex = '2';
 
-  master.actors.friendlies.push(this);
-  master.dom.stage.selector.appendChild(this.selector);
-
-  if (typeof(this.dir) === 'undefined') {
-    this.spriteRow = getRandom(4)
-    this.dir = CARDINALS[this.spriteRow];
-  }
-
+  // adapt to imported function
   if (this.dir === 'left') {
     this.x = master.gameWidth;
     this.y = getRandom(master.gameHeight - this.frameHeight);
@@ -60,6 +53,10 @@ export const Friendly = function({
     this.spriteRow = 2;
   }
 
+  master.actors.friendlies.push(this);
+  master.dom.stage.selector.appendChild(this.selector);
+
+  // adapt to imported function
   this.reverse = function() {
     if (this.dir === 'left') {
       this.dir = 'right';

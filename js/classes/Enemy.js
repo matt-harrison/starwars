@@ -17,50 +17,22 @@ export const Enemy = function({
 }) {
   Object.assign(this, data);
 
-  this.active = true;
-  this.dead = false;
-  this.trapped = false;
-
-  this.speed = this.speed * (MAGNIFICATION / 5);
-
-  this.weaponDelay = FPS;//Shoot once per second max
-  this.weaponReady = true;
-  this.weaponCount = 0;
-
-  this.selector = document.createElement('div');
-  this.selector.id = `enemy${master.actorCount++}`;
-  this.selector.style.position = 'absolute';
-  this.selector.style.width = this.frameWidth + 'px';
-  this.selector.style.height = this.frameHeight + 'px';
-  this.selector.style.backgroundImage = "url('img/characters/" + this.sprite + ".png')";
-  this.selector.style.backgroundSize = this.width + 'px ' + this.height + 'px';
-  this.selector.style.backgroundRepeat = 'no-repeat';
-  this.selector.style.zIndex = '2';
-
-  master.actors.enemies.push(this);
-  master.dom.stage.selector.appendChild(this.selector);
-
+  this.active       = true;
+  this.blinkCount   = 0;
+  this.blinking     = false;
+  this.dead         = false;
+  this.dir          = master.dom.stage.enemyDir ? master.dom.stage.enemyDir : CARDINALS[getRandom(4)]
+  this.hp           = data === master.dom.stage.boss ? master.dom.stage.bossHP : 1;
+  this.isBoss       = data === master.dom.stage.boss ? true : false;
+  this.speed        = this.speed * (MAGNIFICATION / 5);
   this.spriteColumn = 1;
-  this.blinking = false;
-  this.blinkCount = 0;
+  this.trapped      = false;
+  this.value        = data === master.dom.stage.boss ? master.dom.stage.bossHP * 100 : 100;
+  this.weaponCount  = 0;
+  this.weaponDelay  = FPS;
+  this.weaponReady  = true;
 
-  if (data === master.dom.stage.boss) {
-    this.isBoss = true;
-    this.hp = master.dom.stage.bossHP;
-    this.value = master.dom.stage.bossHP * 100;
-  } else {
-    this.isBoss = false;
-    this.hp = 1;
-    this.value = 100;
-  }
-
-  if (typeof(master.dom.stage.enemyDir) === 'undefined') {
-    this.spriteRow = getRandom(4);
-    this.dir = CARDINALS[this.spriteRow];
-  } else {
-    this.dir = master.dom.stage.enemyDir;
-  }
-
+  // adapt to imported function
   if (this.dir === 'left') {
     this.x = master.gameWidth;
     this.y = getRandom(master.gameHeight - this.frameHeight);
@@ -79,8 +51,20 @@ export const Enemy = function({
     this.spriteRow = 2;
   }
 
-  //Preload death animation for smooth transition
-  if (typeof(this.death) !== 'undefined') {
+  this.selector = document.createElement('div');
+  this.selector.id = `enemy${master.actorCount++}`;
+  this.selector.style.position = 'absolute';
+  this.selector.style.width = this.frameWidth + 'px';
+  this.selector.style.height = this.frameHeight + 'px';
+  this.selector.style.backgroundImage = "url('img/characters/" + this.sprite + ".png')";
+  this.selector.style.backgroundSize = this.width + 'px ' + this.height + 'px';
+  this.selector.style.backgroundRepeat = 'no-repeat';
+  this.selector.style.zIndex = '2';
+
+  master.actors.enemies.push(this);
+  master.dom.stage.selector.appendChild(this.selector);
+
+  if (this.death) {
     preload('img/animations/' + this.death.name + '.png');
   }
 
@@ -88,6 +72,7 @@ export const Enemy = function({
     if (inBounds({ actor: this, master })) {
       this.spriteRow = getRandom(4);
       const randomDir = CARDINALS[this.spriteRow];
+
       if (this.dir === randomDir) {
         this.changeDir();
       } else {
@@ -96,6 +81,7 @@ export const Enemy = function({
     }
   }
 
+  // adapt to imported function
   this.reverse = function() {
     if (this.dir === 'left') {
       this.dir = 'right';

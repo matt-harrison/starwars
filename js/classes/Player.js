@@ -18,33 +18,33 @@ export const Player = function({
 }) {
   Object.assign(this, data);
 
-  this.speed = this.speed * (MAGNIFICATION / 5);
-
-  this.x = Math.floor((master.gameWidth - this.frameWidth) / 2);
-  this.y = Math.floor((master.gameHeight - this.frameHeight) / 2);
-  this.dir = 'down';
+  this.active       = true;
+  this.attacking    = false;
+  this.dead         = false;
+  this.dir          = 'down';
+  this.lightsaber   = '';
+  this.running      = false;
+  this.speed        = this.speed * (MAGNIFICATION / 5);
   this.spriteColumn = 0;
-  this.spriteRow = 2;
-  this.running = false;
-  this.attacking = false;
-  this.active = true;
-  this.dead = false;
-  this.lightsaber = '';
+  this.spriteRow    = 2;
+  this.weaponCount  = 0;
+  this.weaponReady  = true;
+  this.x            = Math.floor((master.gameWidth - this.frameWidth) / 2);
+  this.y            = Math.floor((master.gameHeight - this.frameHeight) / 2);
 
-  if (this.weaponType === WEAPON_TYPES.PROJECTILE) {
-    if (this.projectile === PROJECTILES.LASER) {
-      this.weaponDelay = FPS / 4;
-    } else if (typeof(this.weaponDelay) === 'undefined') {
-      this.weaponDelay = FPS / 2;
+  if (!this.weaponDelay) {
+    switch (this.weaponType) {
+      case WEAPON_TYPES.BOMB:
+        this.weaponDelay = 8;
+        break;
+      case WEAPON_TYPES.LIGHTSABER:
+        this.weaponDelay = 2;
+        break;
+      case WEAPON_TYPES.PROJECTILE:
+        this.weaponDelay = this.projectile === PROJECTILES.LASER ? FPS / 4 :  FPS / 2;
+        break;
     }
-  } else if (this.weaponType === WEAPON_TYPES.BOMB) {
-    this.weaponDelay = 8;
-  } else if (this.weaponType === WEAPON_TYPES.LIGHTSABER) {
-    this.weaponDelay = 2;
   }
-
-  this.weaponReady = true;
-  this.weaponCount = 0;
 
   this.selector = document.createElement('div');
   this.selector.id = 'player';
@@ -58,7 +58,7 @@ export const Player = function({
 
   master.dom.stage.selector.appendChild(this.selector);
 
-  if (typeof(this.death) !== 'undefined') {
+  if (this.death) {
     preload('img/animations/' + this.death.name + '.png');
   }
 

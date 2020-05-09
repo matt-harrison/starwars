@@ -36,6 +36,27 @@ export const add = (num1, num2) => {
   return Number(num1) + Number(num2);
 }
 
+export const attachNode = ({
+  attributes = {},
+  nodeType   = 'div',
+  parent     = document,
+  styles     = {}
+}) => {
+  const node = document.createElement(nodeType);
+
+  for (const key in attributes) {
+    node.setAttribute(key, attributes[key]);
+  };
+
+  for (const key in styles) {
+    node.style[key] = styles[key];
+  };
+
+  parent.appendChild(node);
+
+  return node;
+};
+
 export const collision = (actor1, actor2) => {
   const rect1 = actor1.selector.getBoundingClientRect();
   const rect2 = actor2.selector.getBoundingClientRect();

@@ -5,14 +5,12 @@ export const Animation = function({
 }) {
   Object.assign(this, data);
 
-  this.dead = false;
-
-  this.width = this.frameWidth * this.frameCount;
-  this.height = this.frameHeight;
+  this.dead         = false;
+  this.height       = this.frameHeight;
   this.spriteColumn = 0;
-
-  this.x = Math.floor(origin.x + (origin.frameWidth - this.frameWidth) / 2);
-  this.y = Math.floor(origin.y + (origin.frameHeight - this.frameHeight) / 2);
+  this.width        = this.frameWidth * this.frameCount;
+  this.x            = Math.floor(origin.x + (origin.frameWidth - this.frameWidth) / 2);
+  this.y            = Math.floor(origin.y + (origin.frameHeight - this.frameHeight) / 2);
 
   this.selector = document.createElement('div');
   this.selector.style.position = 'absolute';
