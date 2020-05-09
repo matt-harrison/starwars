@@ -4,6 +4,7 @@ import { PROJECTILES, WEAPON_TYPES }  from '/js/constants/weapons.js';
 
 export const ackbar = {
   name: 'Admiral Ackbar',
+  code: 'ackbar',
   sprite: 'ackbar',
   ship: false,
   weaponType: WEAPON_TYPES.PROJECTILE,
@@ -23,6 +24,7 @@ export const ackbar = {
 
 export const amidala = {
   name: 'Queen Amidala',
+  code: 'amidala',
   sprite: 'amidala',
   ship: false,
   weaponType: WEAPON_TYPES.PROJECTILE,
@@ -42,6 +44,7 @@ export const amidala = {
 
 export const ani = {
   name: 'Ani',
+  code: 'ani',
   sprite: 'ani',
   ship: false,
   weaponType: WEAPON_TYPES.BOMB,
@@ -56,6 +59,7 @@ export const ani = {
 
 export const artoo = {
   name: 'R2-D2',
+  code: 'artoo',
   sprite: 'artoo',
   ship: false,
   weaponType: WEAPON_TYPES.BOMB,
@@ -70,6 +74,7 @@ export const artoo = {
 
 export const arfive = {
   name: 'R5-D4',
+  code: 'arfive',
   sprite: 'arfive',
   ship: false,
   death: {
@@ -91,6 +96,7 @@ export const arfive = {
 
 export const atst = {
   name: 'AT-ST',
+  code: 'atst',
   sprite: 'atst',
   ship: false,
   weaponType: WEAPON_TYPES.PROJECTILE,
@@ -110,6 +116,7 @@ export const atst = {
 
 export const auntberu = {
   name: 'Aunt Beru',
+  code: 'auntberu',
   sprite: 'auntberu',
   ship: false,
   death: {
@@ -131,6 +138,7 @@ export const auntberu = {
 
 export const bantha = {
   name: 'Bantha',
+  code: 'bantha',
   sprite: 'bantha',
   ship: false,
   weaponType: WEAPON_TYPES.ATTACK,
@@ -144,6 +152,7 @@ export const bantha = {
 
 export const battledroid = {
   name: 'Battle Droid',
+  code: 'battledroid',
   sprite: 'battledroid',
   ship: false,
   weaponType: WEAPON_TYPES.PROJECTILE,
@@ -163,6 +172,7 @@ export const battledroid = {
 
 export const bb8 = {
   name: 'BB-8',
+  code: 'bb8',
   sprite: 'bb8',
   ship: false,
   weaponType: WEAPON_TYPES.BOMB,
@@ -177,6 +187,7 @@ export const bb8 = {
 
 export const ben = {
   name: 'Ben Kenobi',
+  code: 'ben',
   sprite: 'ben',
   ship: false,
   death: {
@@ -202,6 +213,7 @@ export const ben = {
 
 export const bikerscout = {
   name: 'Biker Scout',
+  code: 'bikerscout',
   sprite: 'bikerscout',
   ship: false,
   weaponType: WEAPON_TYPES.PROJECTILE,
@@ -221,6 +233,7 @@ export const bikerscout = {
 
 export const bobafett = {
   name: 'Boba Fett',
+  code: 'bobafett',
   sprite: 'bobafett',
   ship: false,
   weaponType: WEAPON_TYPES.PROJECTILE,
@@ -240,6 +253,7 @@ export const bobafett = {
 
 export const bossnass = {
   name: 'Boss Nass',
+  code: 'bossnass',
   sprite: 'bossnass',
   ship: false,
   weaponType: WEAPON_TYPES.ATTACK,
@@ -253,6 +267,7 @@ export const bossnass = {
 
 export const captainantilles = {
   name: 'Captain Antilles',
+  code: 'captainantilles',
   sprite: 'captainantilles',
   ship: false,
   weaponType: WEAPON_TYPES.PROJECTILE,
@@ -272,6 +287,7 @@ export const captainantilles = {
 
 export const carbonite = {
   name: 'Frozen Han Solo',
+  code: 'carbonite',
   sprite: 'carbonite',
   ship: false,
   weaponType: WEAPON_TYPES.ATTACK,
@@ -285,6 +301,7 @@ export const carbonite = {
 
 export const chewbacca = {
   name: 'Chewbacca',
+  code: 'chewbacca',
   sprite: 'chewbacca',
   ship: false,
   weaponType: WEAPON_TYPES.PROJECTILE,
@@ -304,6 +321,7 @@ export const chewbacca = {
 
 export const chewbacca5 = {
   name: 'Chewbacca',
+  code: 'chewbacca5',
   sprite: 'chewbacca5',
   ship: false,
   weaponType: WEAPON_TYPES.PROJECTILE,
@@ -323,6 +341,7 @@ export const chewbacca5 = {
 
 export const clonecaptain = {
   name: 'Clone Captain',
+  code: 'clonecaptain',
   sprite: 'clonecaptain',
   ship: false,
   weaponType: WEAPON_TYPES.PROJECTILE,
@@ -342,6 +361,7 @@ export const clonecaptain = {
 
 export const clonetrooper = {
   name: 'Clone Trooper',
+  code: 'clonetrooper',
   sprite: 'clonetrooper',
   ship: false,
   weaponType: WEAPON_TYPES.PROJECTILE,
@@ -361,6 +381,7 @@ export const clonetrooper = {
 
 export const coruscantguard = {
   name: 'Coruscant Guard',
+  code: 'coruscantguard',
   sprite: 'coruscantguard',
   ship: false,
   weaponType: WEAPON_TYPES.PROJECTILE,
@@ -380,6 +401,7 @@ export const coruscantguard = {
 
 export const darthmaul = {
   name: 'Darth Maul',
+  code: 'darthmaul',
   sprite: 'darthmaul',
   ship: false,
   weaponType: WEAPON_TYPES.LIGHTSABER,
@@ -398,6 +420,7 @@ export const darthmaul = {
 
 export const darthvader = {
   name: 'Darth Vader',
+  code: 'darthvader',
   sprite: 'darthvader',
   ship: false,
   weaponType: WEAPON_TYPES.LIGHTSABER,
@@ -416,6 +439,7 @@ export const darthvader = {
 
 export const darthvader5 = {
   name: 'Darth Vader',
+  code: 'darthvader5',
   sprite: 'darthvader5',
   ship: false,
   weaponType: WEAPON_TYPES.LIGHTSABER,
@@ -434,6 +458,7 @@ export const darthvader5 = {
 
 export const darthvader6 = {
   name: 'Darth Vader',
+  code: 'darthvader6',
   sprite: 'darthvader6',
   ship: false,
   death: {
@@ -459,6 +484,7 @@ export const darthvader6 = {
 
 export const deathstartrooper = {
   name: 'Death Star Trooper',
+  code: 'deathstartrooper',
   sprite: 'deathstartrooper',
   ship: false,
   weaponType: WEAPON_TYPES.PROJECTILE,
@@ -478,6 +504,7 @@ export const deathstartrooper = {
 
 export const droideka = {
   name: 'Droideka',
+  code: 'droideka',
   sprite: 'droideka',
   ship: false,
   weaponType: WEAPON_TYPES.PROJECTILE,
@@ -497,6 +524,7 @@ export const droideka = {
 
 export const emperor = {
   name: 'Emperor',
+  code: 'emperor',
   sprite: 'emperor',
   ship: false,
   weaponType: WEAPON_TYPES.BOMB,
@@ -510,6 +538,7 @@ export const emperor = {
 
 export const ewok = {
   name: 'Ewok',
+  code: 'ewok',
   sprite: 'ewok',
   ship: false,
   weaponType: WEAPON_TYPES.PROJECTILE,
@@ -529,6 +558,7 @@ export const ewok = {
 
 export const gamorrean = {
   name: 'Gamorrean Guard',
+  code: 'gamorrean',
   sprite: 'gamorrean',
   ship: false,
   weaponType: WEAPON_TYPES.ATTACK,
@@ -542,6 +572,7 @@ export const gamorrean = {
 
 export const garindan = {
   name: 'Garindan',
+  code: 'garindan',
   sprite: 'garindan',
   ship: false,
   weaponType: WEAPON_TYPES.PROJECTILE,
@@ -561,6 +592,7 @@ export const garindan = {
 
 export const gonkdroid = {
   name: 'Gonk Droid',
+  code: 'gonkdroid',
   sprite: 'gonkdroid',
   ship: false,
   weaponType: WEAPON_TYPES.BOMB,
@@ -576,6 +608,7 @@ export const gonkdroid = {
 
 export const greedo = {
   name: 'Greedo',
+  code: 'greedo',
   sprite: 'greedo',
   ship: false,
   weaponType: WEAPON_TYPES.PROJECTILE,
@@ -595,6 +628,7 @@ export const greedo = {
 
 export const gungan = {
   name: 'Gungan',
+  code: 'gungan',
   sprite: 'gungan',
   ship: false,
   weaponType: WEAPON_TYPES.PROJECTILE,
@@ -613,6 +647,7 @@ export const gungan = {
 
 export const hansolo = {
   name: 'Han Solo',
+  code: 'hansolo',
   sprite: 'hansolo',
   ship: false,
   weaponType: WEAPON_TYPES.PROJECTILE,
@@ -632,6 +667,7 @@ export const hansolo = {
 
 export const hansolo5 = {
   name: 'Han Solo',
+  code: 'hansolo5',
   sprite: 'hansolo5',
   ship: false,
   weaponType: WEAPON_TYPES.PROJECTILE,
@@ -651,6 +687,7 @@ export const hansolo5 = {
 
 export const imperialguard = {
   name: 'Imperial Guard',
+  code: 'imperialguard',
   sprite: 'imperialguard',
   ship: false,
   weaponType: WEAPON_TYPES.ATTACK,
@@ -664,6 +701,7 @@ export const imperialguard = {
 
 export const jabba = {
   name: 'Jabba the Hutt',
+  code: 'jabba',
   sprite: 'jabba',
   ship: false,
   weaponType: WEAPON_TYPES.ATTACK,
@@ -677,6 +715,7 @@ export const jabba = {
 
 export const jangofett = {
   name: 'Jango Fett',
+  code: 'jangofett',
   sprite: 'jangofett',
   ship: false,
   weaponType: WEAPON_TYPES.PROJECTILE,
@@ -696,6 +735,7 @@ export const jangofett = {
 
 export const jarjar = {
   name: 'Jar Jar Binks',
+  code: 'jarjar',
   sprite: 'jarjar',
   ship: false,
   weaponType: WEAPON_TYPES.PROJECTILE,
@@ -714,6 +754,7 @@ export const jarjar = {
 
 export const jawa = {
   name: 'Jawa',
+  code: 'jawa',
   sprite: 'jawa',
   ship: false,
   weaponType: WEAPON_TYPES.PROJECTILE,
@@ -733,6 +774,7 @@ export const jawa = {
 
 export const kyloren = {
   name: 'Kylo Ren',
+  code: 'kyloren',
   sprite: 'kyloren',
   ship: false,
   weaponType: WEAPON_TYPES.LIGHTSABER,
@@ -751,6 +793,7 @@ export const kyloren = {
 
 export const kylorenunmasked = {
   name: 'Kylo Ren',
+  code: 'kylorenunmasked',
   sprite: 'kylorenunmasked',
   ship: false,
   weaponType: WEAPON_TYPES.LIGHTSABER,
@@ -769,6 +812,7 @@ export const kylorenunmasked = {
 
 export const lando = {
   name: 'Lando Calrissian',
+  code: 'lando',
   sprite: 'lando',
   ship: false,
   weaponType: WEAPON_TYPES.PROJECTILE,
@@ -788,6 +832,7 @@ export const lando = {
 
 export const leia = {
   name: 'Princess Leia',
+  code: 'leia',
   sprite: 'leia',
   ship: false,
   weaponType: WEAPON_TYPES.PROJECTILE,
@@ -807,6 +852,7 @@ export const leia = {
 
 export const leia6 = {
   name: 'Princess Leia',
+  code: 'leia6',
   sprite: 'leia6',
   ship: false,
   weaponType: WEAPON_TYPES.PROJECTILE,
@@ -826,6 +872,7 @@ export const leia6 = {
 
 export const lobot = {
   name: 'Lobot',
+  code: 'lobot',
   sprite: 'lobot',
   ship: false,
   weaponType: WEAPON_TYPES.PROJECTILE,
@@ -845,6 +892,7 @@ export const lobot = {
 
 export const logray = {
   name: 'Logray',
+  code: 'logray',
   sprite: 'logray',
   ship: false,
   weaponType: WEAPON_TYPES.PROJECTILE,
@@ -859,6 +907,7 @@ export const logray = {
 
 export const luke = {
   name: 'Luke Skywalker',
+  code: 'luke',
   sprite: 'luke',
   ship: false,
   weaponType: WEAPON_TYPES.PROJECTILE,
@@ -878,6 +927,7 @@ export const luke = {
 
 export const luke5 = {
   name: 'Luke Skywalker',
+  code: 'luke5',
   sprite: 'luke5',
   ship: false,
   weaponType: WEAPON_TYPES.PROJECTILE,
@@ -897,6 +947,7 @@ export const luke5 = {
 
 export const luke6 = {
   name: 'Luke Skywalker',
+  code: 'luke6',
   sprite: 'luke6',
   ship: false,
   weaponType: WEAPON_TYPES.LIGHTSABER,
@@ -915,6 +966,7 @@ export const luke6 = {
 
 export const macewindu = {
   name: 'Mace Windu',
+  code: 'macewindu',
   sprite: 'macewindu',
   ship: false,
   weaponType: WEAPON_TYPES.LIGHTSABER,
@@ -933,6 +985,7 @@ export const macewindu = {
 
 export const mawhonic = {
   name: 'Mawhonic',
+  code: 'mawhonic',
   sprite: 'mawhonic',
   ship: false,
   weaponType: WEAPON_TYPES.PROJECTILE,
@@ -952,6 +1005,7 @@ export const mawhonic = {
 
 export const mousedroid = {
   name: 'Mouse Droid',
+  code: 'mousedroid',
   sprite: 'mousedroid',
   ship: false,
   death: ANIMATIONS.DETONATION,
@@ -967,6 +1021,7 @@ export const mousedroid = {
 
 export const naboopilot = {
   name: 'Naboo Pilot',
+  code: 'naboopilot',
   sprite: 'naboopilot',
   ship: false,
   weaponType: WEAPON_TYPES.PROJECTILE,
@@ -986,6 +1041,7 @@ export const naboopilot = {
 
 export const nutegunray = {
   name: 'Nute Gunray',
+  code: 'nutegunray',
   sprite: 'nutegunray',
   ship: false,
   weaponType: null,
@@ -999,6 +1055,7 @@ export const nutegunray = {
 
 export const obiwan = {
   name: 'Obi Wan Kenobi',
+  code: 'obiwan',
   sprite: 'obiwan',
   ship: false,
   weaponType: WEAPON_TYPES.LIGHTSABER,
@@ -1017,6 +1074,7 @@ export const obiwan = {
 
 export const officerblack = {
   name: 'Imperial Officer',
+  code: 'officerblack',
   sprite: 'officerblack',
   ship: false,
   weaponType: WEAPON_TYPES.PROJECTILE,
@@ -1036,6 +1094,7 @@ export const officerblack = {
 
 export const officergreen = {
   name: 'Imperial Officer',
+  code: 'officergreen',
   sprite: 'officergreen',
   ship: false,
   weaponType: WEAPON_TYPES.PROJECTILE,
@@ -1055,6 +1114,7 @@ export const officergreen = {
 
 export const panaka = {
   name: 'Captain Panaka',
+  code: 'panaka',
   sprite: 'panaka',
   ship: false,
   weaponType: WEAPON_TYPES.PROJECTILE,
@@ -1074,6 +1134,7 @@ export const panaka = {
 
 export const pondababa = {
   name: 'Ponda Baba',
+  code: 'pondababa',
   sprite: 'pondababa',
   ship: false,
   weaponType: null,
@@ -1087,6 +1148,7 @@ export const pondababa = {
 
 export const protocolblack = {
   name: 'Protocol Droid',
+  code: 'protocolblack',
   sprite: 'protocolblack',
   ship: false,
   weaponType: null,
@@ -1100,6 +1162,7 @@ export const protocolblack = {
 
 export const protocolwhite = {
   name: 'Protocol Droid',
+  code: 'protocolwhite',
   sprite: 'protocolwhite',
   ship: false,
   weaponType: null,
@@ -1113,6 +1176,7 @@ export const protocolwhite = {
 
 export const quigonjinn = {
   name: 'Qui-Gon Jinn',
+  code: 'quigonjinn',
   sprite: 'quigonjinn',
   ship: false,
   weaponType: WEAPON_TYPES.LIGHTSABER,
@@ -1131,6 +1195,7 @@ export const quigonjinn = {
 
 export const rancor = {
   name: 'Rancor',
+  code: 'rancor',
   sprite: 'rancor',
   ship: false,
   weaponType: WEAPON_TYPES.BOMB,
@@ -1145,6 +1210,7 @@ export const rancor = {
 
 export const rebel = {
   name: 'Rebel',
+  code: 'rebel',
   sprite: 'rebel',
   ship: false,
   weaponType: WEAPON_TYPES.PROJECTILE,
@@ -1164,6 +1230,7 @@ export const rebel = {
 
 export const runehaako = {
   name: 'Rune Haako',
+  code: 'runehaako',
   sprite: 'runehaako',
   ship: false,
   weaponType: null,
@@ -1178,6 +1245,7 @@ export const runehaako = {
 export const sandtrooper = {
   name: 'Sandtrooper',
   ship: false,
+  code: 'sandtrooper',
   sprite: 'sandtrooper',
   weaponType: WEAPON_TYPES.PROJECTILE,
   projectile: PROJECTILES.LASER,
@@ -1197,6 +1265,7 @@ export const sandtrooper = {
 export const sebulba = {
   name: 'Sebulba',
   ship: false,
+  code: 'sebulba',
   sprite: 'sebulba',
   weaponType: WEAPON_TYPES.BOMB,
   weaponOffset: [4, 9],
@@ -1211,6 +1280,7 @@ export const sebulba = {
 export const stormtrooper = {
   name: 'Stormtrooper',
   ship: false,
+  code: 'stormtrooper',
   sprite: 'stormtrooper',
   weaponType: WEAPON_TYPES.PROJECTILE,
   projectile: PROJECTILES.LASER,
@@ -1230,6 +1300,7 @@ export const stormtrooper = {
 export const stormtrooperhan = {
   name: 'Han Solo',
   ship: false,
+  code: 'stormtrooperhan',
   sprite: 'stormtrooperhan',
   weaponType: WEAPON_TYPES.PROJECTILE,
   projectile: PROJECTILES.LASER,
@@ -1249,6 +1320,7 @@ export const stormtrooperhan = {
 export const stormtrooperluke = {
   name: 'Luke Skywalker',
   ship: false,
+  code: 'stormtrooperluke',
   sprite: 'stormtrooperluke',
   weaponType: WEAPON_TYPES.PROJECTILE,
   projectile: PROJECTILES.LASER,
@@ -1268,6 +1340,7 @@ export const stormtrooperluke = {
 export const stuntrooper = {
   name: 'Stormtrooper',
   ship: false,
+  code: 'stormtrooper',
   sprite: 'stormtrooper',
   weaponType: WEAPON_TYPES.PROJECTILE,
   projectile: PROJECTILES.STUN,
@@ -1286,6 +1359,7 @@ export const stuntrooper = {
 
 export const tarkin = {
   name: 'Grand Moff Tarkin',
+  code: 'tarkin',
   sprite: 'tarkin',
   ship: false,
   weaponType: null,
@@ -1300,6 +1374,7 @@ export const tarkin = {
 export const tauntaun = {
   name: 'Tauntaun',
   ship: false,
+  code: 'tauntaun',
   sprite: 'tauntaun',
   weaponType: WEAPON_TYPES.BOMB,
   weaponOffset: [5, 11],
@@ -1313,6 +1388,7 @@ export const tauntaun = {
 
 export const threebee = {
   name: '3B6-RA-7',
+  code: 'threebee',
   sprite: 'threebee',
   ship: false,
   death: ANIMATIONS.SPRITZ,
@@ -1327,6 +1403,7 @@ export const threebee = {
 
 export const threepio = {
   name: 'C-3PO',
+  code: 'threepio',
   sprite: 'threepio',
   ship: false,
   weaponType: null,
@@ -1341,6 +1418,7 @@ export const threepio = {
 export const tiepilot = {
   name: 'TIE Fighter Pilot',
   ship: false,
+  code: 'tiepilot',
   sprite: 'tiepilot',
   weaponType: WEAPON_TYPES.PROJECTILE,
   projectile: PROJECTILES.LASER,
@@ -1360,6 +1438,7 @@ export const tiepilot = {
 export const tusken = {
   name: 'Tusken Raider',
   ship: false,
+  code: 'tusken',
   sprite: 'tusken',
   weaponType: WEAPON_TYPES.PROJECTILE,
   projectile: PROJECTILES.LASER,
@@ -1379,6 +1458,7 @@ export const tusken = {
 export const typho = {
   name: 'Captain Typho',
   ship: false,
+  code: 'typho',
   sprite: 'typho',
   weaponType: WEAPON_TYPES.PROJECTILE,
   projectile: PROJECTILES.LASER,
@@ -1397,6 +1477,7 @@ export const typho = {
 
 export const uncleowen = {
   name: 'Uncle Owen',
+  code: 'uncleowen',
   sprite: 'uncleowen',
   ship: false,
   death: {
@@ -1419,6 +1500,7 @@ export const uncleowen = {
 
 export const vallorum = {
   name: 'Chancellor Vallorum',
+  code: 'vallorum',
   sprite: 'vallorum',
   ship: false,
   weaponType: null,
@@ -1433,6 +1515,7 @@ export const vallorum = {
 export const weequay = {
   name: 'Weequay',
   ship: false,
+  code: 'weequay',
   sprite: 'weequay',
   weaponType: WEAPON_TYPES.PROJECTILE,
   projectile: PROJECTILES.LASER,
@@ -1452,6 +1535,7 @@ export const weequay = {
 export const xwingpilot = {
   name: 'X-wing Pilot',
   ship: false,
+  code: 'xwingpilot',
   sprite: 'xwingpilot',
   weaponType: WEAPON_TYPES.PROJECTILE,
   projectile: PROJECTILES.LASER,
@@ -1470,6 +1554,7 @@ export const xwingpilot = {
 
 export const yoda = {
   name: 'Yoda',
+  code: 'yoda',
   sprite: 'yoda',
   ship: false,
   weaponType: WEAPON_TYPES.LIGHTSABER,

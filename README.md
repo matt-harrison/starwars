@@ -3,12 +3,13 @@
 
 REFACTOR:
 * make all mutable vars part of a "master" object
-  * migrate all mutable vars from classes to master object
-  * move DOM node refs to master object?
-  * refactor classes to receive all data from imports and master object
+  * move remaining DOM node refs to master object
+  * purge all redundant master args from all classes
+  * move all functions from app to utils? (master as arg?)
+  *
+  * migrate all mutable vars from classes to master object? (ex. hud.title)
   * reimplement kill() as a util?
   * remove array slots from main loop?
-  * expose master object to console?
   * merge looping arrays into one? https://codepen.io/rootbeercomics/pen/XWmEYeo?editors=0012
   * share common logic across friendlies, enemies, and player as utils (for example)
 * code formatting

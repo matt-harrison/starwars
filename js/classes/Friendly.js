@@ -14,7 +14,6 @@ import { Animation } from '/js/classes/Animation.js';
 export const Friendly = function({
   data,
   details,
-  hud,
   master,
   stage
 }) {
@@ -93,7 +92,6 @@ export const Friendly = function({
     new Friendly({
       data,
       details,
-      hud,
       master,
       stage
     });
@@ -118,19 +116,19 @@ export const Friendly = function({
     if (this.value > 0) {
       updateVictim({
         color: COLORS.BLUE_DARK,
-        hud,
+        hud: master.hud,
         victim: this
       });
     } else {
       updateVictim({
         color: COLORS.RED,
-        hud,
+        hud: master.hud,
         victim: this
       });
     }
 
     updateScore({
-      hud,
+      hud: master.hud,
       points: this.value
     });
   }

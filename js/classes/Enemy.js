@@ -13,7 +13,6 @@ import { Animation } from '/js/classes/Animation.js';
 
 export const Enemy = function({
   data,
-  hud,
   master,
   stage
 }) {
@@ -133,7 +132,7 @@ export const Enemy = function({
 
     updateVictim({
       color: stage.textColor,
-      hud,
+      hud: master.hud,
       victim: this
     });
   }
@@ -146,7 +145,6 @@ export const Enemy = function({
 
     new Enemy({
       data,
-      hud,
       master,
       stage
     });
@@ -171,7 +169,7 @@ export const Enemy = function({
     }
 
     updateScore({
-      hud,
+      hud: master.hud,
       points: this.value
     });
   }

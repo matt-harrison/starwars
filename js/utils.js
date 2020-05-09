@@ -1,5 +1,8 @@
-import { MAGNIFICATION } from '/js/constants/config.js';
-import { EPISODES }      from '/js/constants/episodes.js';
+import { Player } from '/js/classes/Player.js';
+
+import * as CHARACTERS          from  '/js/constants/characters.js';
+import { MAGNIFICATION, MODES } from '/js/constants/config.js';
+import { EPISODES }             from '/js/constants/episodes.js';
 
 export const adaptCoords = ({ actor, master }) => {
   if (typeof(actor.leftPercent) !== 'undefined' && typeof(actor.topPercent) !== 'undefined') {
@@ -138,31 +141,31 @@ export const updateVictim = ({ color, hud, victim }) => {
 }
 
 // Cheats
-export const playAs = (obj) => {
-  if (master.mode !== MODES.GAMEPLAY) {
-    initGame();
+const playAs = (character) => {
+  if (character) {
+    window.master.character = character;
+
+    if (master.mode === MODES.GAMEPLAY) {
+      window.master.stage.selector.removeChild(window.master.player.selector);
+
+      window.master.player = new Player({
+        data: window.master.character,
+        master: window.master
+      });
+    }
   }
-
-  stage.selector.removeChild(player.selector);
-
-  player = new Player({
-    data: stage.character,
-    level,
-    master,
-    stage
-  });
 }
 
-export const playLevel = (obj) => {
+const playLevel = (level) => {
   let skipToLevel;
 
-  if (typeof(obj) === 'number') {
-    if (obj > 0 && obj < EPISODES[3].length) {
-      skipToLevel = obj;
+  if (typeof(level) === 'number') {
+    if (level > 0 && level < EPISODES[3].length) {
+      skipToLevel = level;
     }
   } else {
     for (const i = 0; i < EPISODES[3].length; i++) {
-      if (obj === EPISODES[3][i]) {
+      if (level === EPISODES[3][i]) {
         skipToLevel = i;
       }
     }
@@ -173,17 +176,25 @@ export const playLevel = (obj) => {
       initGame();
     }
 
-    level = skipToLevel;
+    window.master.level = skipToLevel;
     clearStage();
     initLevel();
 
-    master.isPaused = false;
+    window.master.isPaused = false;
     pause();
   }
 }
 
-export const useTheForce = () => {
-  isInvincible = true;
-  isPaused = true;
-  directions.innerHTML = 'May the force be with you.<br/></br/>Press Start';
+const useTheForce = () => {
+  window.master.isInvincible             = true;
+  window.master.isPaused                 = true;
+  window.master.hud.title.innerHTML      = 'Pause';
+  window.master.hud.directions.innerHTML = `May the force be with you.<br/></br/>${window.master.promptStart}`;
 }
+
+Object.values(CHARACTERS).forEach(character => {
+  window[character.code] = character;
+});
+
+window.playAs      = playAs;
+window.useTheForce = useTheForce;

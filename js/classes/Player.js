@@ -8,14 +8,13 @@ import { FPS, MAGNIFICATION }        from '/js/constants/config.js';
 import { PROJECTILES, WEAPON_TYPES } from '/js/constants/weapons.js';
 
 import { Animation }  from '/js/classes/Animation.js';
+import { Bomb }       from '/js/classes/Bomb.js';
 import { Lightsaber } from '/js/classes/Lightsaber.js';
 import { Projectile } from '/js/classes/Projectile.js';
 
 export const Player = function({
   data,
-  master,
-  level,
-  stage
+  master
 }) {
   Object.assign(this, data);
 
@@ -56,7 +55,8 @@ export const Player = function({
   this.selector.style.backgroundSize = this.width + 'px ' + this.height + 'px';
   this.selector.style.backgroundRepeat = 'no-repeat';
   this.selector.style.zIndex = '3';
-  stage.selector.appendChild(this.selector);
+
+  master.stage.selector.appendChild(this.selector);
 
   if (typeof(this.death) !== 'undefined') {
     preload('img/animations/' + this.death.name + '.png');
@@ -68,13 +68,13 @@ export const Player = function({
         new Projectile({
           master,
           origin: this,
-          stage
+          stage: master.stage
         });
 
         //As levels progress, enemies will become liklier to dodge projectiles
         master.actors.enemies.forEach(enemy => {
           if (enemy.sprite !== 'asteroid') {
-            if (getRandom(20 - level) === 0) {
+            if (getRandom(20 - master.level) === 0) {
               enemy.changeDir();
             }
           }
@@ -83,7 +83,7 @@ export const Player = function({
         new Bomb({
           master,
           origin: this,
-          stage
+          stage: master.stage
         });
       } else if (this.weaponType === WEAPON_TYPES.LIGHTSABER) {
         const isLongRange = (key === 'Z');
@@ -92,7 +92,7 @@ export const Player = function({
           isLongRange,
           master,
           origin: this,
-          stage
+          stage: master.stage
         });
 
         master.keys = [key];
@@ -116,7 +116,7 @@ export const Player = function({
         data: this.death,
         master,
         origin: this,
-        stage
+        stage: master.stage
       });
 
       if (this.lightsaber !== '') {
