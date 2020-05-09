@@ -1,7 +1,6 @@
 import { BUTTON_NAMES, HUD_OPACITY, IS_MOBILE } from '/js/constants/config.js';
 
 export const Hud = function({
-  game,
   master
 }) {
   const { promptClick } = master;
@@ -17,7 +16,7 @@ export const Hud = function({
   this.selector.style.height = '100%';
   this.selector.style.zIndex = '99';
 
-  game.selector.appendChild(this.selector);
+  master.dom.game.selector.appendChild(this.selector);
 
   //Add title text
   this.title = document.createElement('h1');

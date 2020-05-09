@@ -1,7 +1,6 @@
 import { COLORS } from '/js/constants/config.js';
 
 export const Cutscene = function({
-  game,
   img,
   master
 }) {
@@ -18,7 +17,7 @@ export const Cutscene = function({
   this.selector.style.zIndex = '101';
   this.selector.setAttribute('data-key', 'enter');
 
-  game.selector.insertBefore(this.selector, game.selector.firstChild);
+  master.dom.game.selector.insertBefore(this.selector, master.dom.game.selector.firstChild);
 
   const cutsceneImg = document.createElement('div');
 

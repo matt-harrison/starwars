@@ -2,22 +2,19 @@
 # http-server .
 
 REFACTOR:
-* make all mutable vars part of a "master" object
-  * move remaining DOM node refs to master object
-  * purge all redundant master args from all classes
-  * move all functions from app to utils? (master as arg?)
-  *
-  * migrate all mutable vars from classes to master object? (ex. hud.title)
-  * reimplement kill() as a util?
-  * remove array slots from main loop?
-  * merge looping arrays into one? https://codepen.io/rootbeercomics/pen/XWmEYeo?editors=0012
-  * share common logic across friendlies, enemies, and player as utils (for example)
+* migrate all mutable vars from classes to master object? (ex. hud.title)
+* move all functions from app to utils? (master as arg?)
+* reimplement kill() as a util?
+* share common logic across friendlies, enemies, and player as utils (for
 * code formatting
   * adapt string concats to template literals
   * alphabetize args
   * distribute functions to relevant class or move to utils
 * performance improvements
   * audit each function
+* separate Friendlies from NPCs?
+* all values based on HP? including negative values for friendlies?
+* merge looping arrays into one? https://codepen.io/rootbeercomics/pen/XWmEYeo?editors=0012example)
 
 FEATURES:
 * password menu!
@@ -28,11 +25,13 @@ FEATURES:
 * sliding touch?
 * how can user win with a character with no attack?
 * make shoot projectile rate a property of the level
-* do not clear score after winning game
 * multiple bosses? (dr evazan)
+* do not clear score after winning game
+* add high score board via CRUD, with defensive coding to hide (anticipating legacy issues)
 
 BUGS:
 * trying to remove already removed Projectile: dedupe expiredObjects before looping?
 * character frame sometimes redundant to Lighsaber instance
 * concurrent boss and player death results in Game Over + next level
 * friendlies remain on stage after !inBounds ?
+* projectiles remain on stage after !inBounds ? (why enemies in level 2 die before stage)

@@ -13,12 +13,10 @@ import { Animation } from '/js/classes/Animation.js';
 
 export const Friendly = function({
   data,
-  details,
-  master,
-  stage
+  master
 }) {
-  Object.assign(this, data);
-  Object.assign(this, details);
+  Object.assign(this, data.character);
+  Object.assign(this, data.details);
 
   this.active = true;
   this.dead = false;
@@ -37,7 +35,7 @@ export const Friendly = function({
   this.selector.style.zIndex = '2';
 
   master.actors.friendlies.push(this);
-  stage.selector.appendChild(this.selector);
+  master.dom.stage.selector.appendChild(this.selector);
 
   if (typeof(this.dir) === 'undefined') {
     this.spriteRow = getRandom(4)
@@ -84,16 +82,14 @@ export const Friendly = function({
   }
 
   this.respawn = function() {
-    stage.selector.removeChild(this.selector);
     const position = master.actors.friendlies.indexOf(this);
 
+    master.dom.stage.selector.removeChild(this.selector);
     master.actors.friendlies.splice(position, 1);
 
     new Friendly({
       data,
-      details,
-      master,
-      stage
+      master
     });
   }
 
@@ -105,8 +101,7 @@ export const Friendly = function({
       new Animation({
         data: this.death,
         master,
-        origin: this,
-        stage
+        origin: this
       });
     } else {
       this.spriteColumn = 0;
@@ -116,19 +111,19 @@ export const Friendly = function({
     if (this.value > 0) {
       updateVictim({
         color: COLORS.BLUE_DARK,
-        hud: master.hud,
+        hud: master.dom.hud,
         victim: this
       });
     } else {
       updateVictim({
         color: COLORS.RED,
-        hud: master.hud,
+        hud: master.dom.hud,
         victim: this
       });
     }
 
     updateScore({
-      hud: master.hud,
+      hud: master.dom.hud,
       points: this.value
     });
   }

@@ -3,7 +3,6 @@ import { MAGNIFICATION } from '/js/constants/config.js';
 export const Obstacle = function({
   data,
   master,
-  stage,
   x,
   y
 }) {
@@ -40,7 +39,7 @@ export const Obstacle = function({
   this.selector.style.backgroundSize = this.width + 'px ' + this.height + 'px';
 
   master.actors.obstacles.push(this);
-  stage.selector.appendChild(this.selector);
+  master.dom.stage.selector.appendChild(this.selector);
 
   this.update = function() {
     if (this.frameCount > 1) {

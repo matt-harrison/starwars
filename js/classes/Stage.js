@@ -1,7 +1,6 @@
 export const Stage = function({
   data,
-  game,
-  hud
+  master
 }) {
   Object.assign(this, data);
 
@@ -20,11 +19,11 @@ export const Stage = function({
   }
 
   this.selector.style.zIndex = '1';
-  game.selector.insertBefore(this.selector, game.selector.firstChild);
+  master.dom.game.selector.insertBefore(this.selector, master.dom.game.selector.firstChild);
 
-  hud.title.style.color = this.textColor;
-  hud.directions.style.color = this.textColor;
-  hud.scoreboard.style.color = this.textColor;
+  master.dom.hud.title.style.color = this.textColor;
+  master.dom.hud.directions.style.color = this.textColor;
+  master.dom.hud.scoreboard.style.color = this.textColor;
 
   this.enemiesKilled = 0;
   this.bossReached = false;

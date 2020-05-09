@@ -13,8 +13,7 @@ import { Animation } from '/js/classes/Animation.js';
 
 export const Enemy = function({
   data,
-  master,
-  stage
+  master
 }) {
   Object.assign(this, data);
 
@@ -39,27 +38,27 @@ export const Enemy = function({
   this.selector.style.zIndex = '2';
 
   master.actors.enemies.push(this);
-  stage.selector.appendChild(this.selector);
+  master.dom.stage.selector.appendChild(this.selector);
 
   this.spriteColumn = 1;
   this.blinking = false;
   this.blinkCount = 0;
 
-  if (data === stage.boss) {
+  if (data === master.dom.stage.boss) {
     this.isBoss = true;
-    this.hp = stage.bossHP;
-    this.value = stage.bossHP * 100;
+    this.hp = master.dom.stage.bossHP;
+    this.value = master.dom.stage.bossHP * 100;
   } else {
     this.isBoss = false;
     this.hp = 1;
     this.value = 100;
   }
 
-  if (typeof(stage.enemyDir) === 'undefined') {
+  if (typeof(master.dom.stage.enemyDir) === 'undefined') {
     this.spriteRow = getRandom(4);
     this.dir = CARDINALS[this.spriteRow];
   } else {
-    this.dir = stage.enemyDir;
+    this.dir = master.dom.stage.enemyDir;
   }
 
   if (this.dir === 'left') {
@@ -131,8 +130,8 @@ export const Enemy = function({
     }
 
     updateVictim({
-      color: stage.textColor,
-      hud: master.hud,
+      color: master.dom.stage.textColor,
+      hud: master.dom.hud,
       victim: this
     });
   }
@@ -140,27 +139,25 @@ export const Enemy = function({
   this.respawn = function() {
     const position = master.actors.enemies.indexOf(this);
 
-    stage.selector.removeChild(this.selector);
+    master.dom.stage.selector.removeChild(this.selector);
     master.actors.enemies.splice(position, 1);
 
     new Enemy({
       data,
-      master,
-      stage
+      master
     });
   }
 
   this.kill = function() {
     this.active = false;
-    stage.enemiesKilled++;
+    master.dom.stage.enemiesKilled++;
 
     if (typeof(this.death) !== 'undefined') {
       this.selector.style.display = 'none';
       new Animation({
         data: this.death,
         master,
-        origin: this,
-        stage
+        origin: this
       });
     } else {
       this.blinkCount = 0;
@@ -169,7 +166,7 @@ export const Enemy = function({
     }
 
     updateScore({
-      hud: master.hud,
+      hud: master.dom.hud,
       points: this.value
     });
   }

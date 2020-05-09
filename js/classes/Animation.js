@@ -1,8 +1,7 @@
 export const Animation = function({
   data,
   master,
-  origin,
-  stage
+  origin
 }) {
   Object.assign(this, data);
 
@@ -26,7 +25,7 @@ export const Animation = function({
   this.selector.style.zIndex = '2';
 
   master.actors.animations.push(this);
-  stage.selector.appendChild(this.selector);
+  master.dom.stage.selector.appendChild(this.selector);
 
   this.kill = function() {
     const position = master.actors.animations.indexOf(this);
@@ -34,7 +33,7 @@ export const Animation = function({
     master.actors.animations.splice(position, 1);
 
     if (this.remove) {
-      stage.selector.removeChild(this.selector);
+      master.dom.stage.selector.removeChild(this.selector);
     }
   }
 

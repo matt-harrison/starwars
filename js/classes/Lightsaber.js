@@ -5,8 +5,7 @@ import { COLORS, MAGNIFICATION } from '/js/constants/config.js';
 export const Lightsaber = function({
   isLongRange,
   master,
-  origin,
-  stage
+  origin
 }) {
   this.type = 'lightsaber';
   this.origin = origin;
@@ -76,7 +75,7 @@ export const Lightsaber = function({
   this.hilt.style.backgroundColor = COLORS.GRAY;
 
   master.actors.props.push(this);
-  stage.selector.appendChild(this.selector);
+  master.dom.stage.selector.appendChild(this.selector);
   this.selector.appendChild(this.hilt);
 
   this.reverse = function() {
@@ -94,7 +93,7 @@ export const Lightsaber = function({
   this.kill = function() {
     const position = master.actors.props.indexOf(this);
 
-    stage.selector.removeChild(this.selector);
+    master.dom.stage.selector.removeChild(this.selector);
     master.actors.props.splice(position, 1);
     origin.lightsaber = '';
     origin.spriteColumn = 0;

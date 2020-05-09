@@ -146,13 +146,15 @@ const playAs = (character) => {
     window.master.character = character;
 
     if (master.mode === MODES.GAMEPLAY) {
-      window.master.stage.selector.removeChild(window.master.player.selector);
+      window.master.dom.stage.selector.removeChild(window.master.dom.player.selector);
 
-      window.master.player = new Player({
+      window.master.dom.player = new Player({
         data: window.master.character,
         master: window.master
       });
     }
+
+    return `Welcome, ${character.name}.`;
   }
 }
 
@@ -183,13 +185,17 @@ const playLevel = (level) => {
     window.master.isPaused = false;
     pause();
   }
+
+  return `Greetings from ${EPISODES[3][skipToLevel]}.`;
 }
 
 const useTheForce = () => {
-  window.master.isInvincible             = true;
-  window.master.isPaused                 = true;
-  window.master.hud.title.innerHTML      = 'Pause';
-  window.master.hud.directions.innerHTML = `May the force be with you.<br/></br/>${window.master.promptStart}`;
+  window.master.isInvincible                 = true;
+  window.master.isPaused                     = true;
+  window.master.dom.hud.title.innerHTML      = 'Pause';
+  window.master.dom.hud.directions.innerHTML = `May the force be with you.<br/></br/>${window.master.promptStart}`;
+
+  return 'May the force be with you.';
 }
 
 Object.values(CHARACTERS).forEach(character => {

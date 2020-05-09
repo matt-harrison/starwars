@@ -19,7 +19,25 @@ const tantive4 = {
   character: CHARACTERS.rebel,
   enemy: CHARACTERS.stormtrooper,
   boss: CHARACTERS.officerblack,
-  bossHP: 2
+  bossHP: 2,
+  friendlies: [
+    {
+      character: CHARACTERS.threepio,
+      details: {
+        delay: 3 * FPS,
+        dir: 'down',
+        value: 0 - 500
+      }
+    },
+    {
+      character: CHARACTERS.artoo,
+      details: {
+        delay: 5 * FPS,
+        dir: 'down',
+        value: 0 - 500
+      }
+    }
+  ]
 };
 
 const ambassador = {

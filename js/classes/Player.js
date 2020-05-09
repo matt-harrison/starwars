@@ -56,7 +56,7 @@ export const Player = function({
   this.selector.style.backgroundRepeat = 'no-repeat';
   this.selector.style.zIndex = '3';
 
-  master.stage.selector.appendChild(this.selector);
+  master.dom.stage.selector.appendChild(this.selector);
 
   if (typeof(this.death) !== 'undefined') {
     preload('img/animations/' + this.death.name + '.png');
@@ -67,8 +67,7 @@ export const Player = function({
       if (this.weaponType === WEAPON_TYPES.PROJECTILE) {
         new Projectile({
           master,
-          origin: this,
-          stage: master.stage
+          origin: this
         });
 
         //As levels progress, enemies will become liklier to dodge projectiles
@@ -82,8 +81,7 @@ export const Player = function({
       } else if (this.weaponType === WEAPON_TYPES.BOMB) {
         new Bomb({
           master,
-          origin: this,
-          stage: master.stage
+          origin: this
         });
       } else if (this.weaponType === WEAPON_TYPES.LIGHTSABER) {
         const isLongRange = (key === 'Z');
@@ -91,8 +89,7 @@ export const Player = function({
         this.lightsaber = new Lightsaber({
           isLongRange,
           master,
-          origin: this,
-          stage: master.stage
+          origin: this
         });
 
         master.keys = [key];
@@ -115,8 +112,7 @@ export const Player = function({
       new Animation({
         data: this.death,
         master,
-        origin: this,
-        stage: master.stage
+        origin: this
       });
 
       if (this.lightsaber !== '') {

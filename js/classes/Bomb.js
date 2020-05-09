@@ -7,8 +7,7 @@ import { Animation } from '/js/classes/Animation.js';
 
 export const Bomb = function({
   master,
-  origin,
-  stage
+  origin
 }) {
   this.type = 'bomb';
   this.origin = origin;
@@ -32,7 +31,7 @@ export const Bomb = function({
   this.selector.style.zIndex = '2';
 
   master.actors.props.push(this);
-  stage.selector.appendChild(this.selector);
+  master.dom.stage.selector.appendChild(this.selector);
 
   this.update = function() {
     if (!this.active) {
@@ -56,13 +55,12 @@ export const Bomb = function({
     const position = master.actors.props.indexOf(this);
 
     master.actors.props.splice(position, 1);
-    stage.selector.removeChild(this.selector);
+    master.dom.stage.selector.removeChild(this.selector);
 
     new Animation({
       data: ANIMATIONS.DETONATION,
       master,
-      origin: this,
-      stage
+      origin: this
     });
   }
 };
