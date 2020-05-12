@@ -1,7 +1,12 @@
 import { Player } from '/js/classes/Player.js';
 
 import * as CHARACTERS          from  '/js/constants/characters.js';
-import { MAGNIFICATION, MODES } from '/js/constants/config.js';
+import {
+  ACTOR_TYPES,
+  CARDINALS,
+  MAGNIFICATION,
+  MODES
+} from '/js/constants/config.js';
 import { EPISODES }             from '/js/constants/episodes.js';
 
 export const adaptCoords = ({ actor, master }) => {
@@ -36,6 +41,14 @@ export const add = (num1, num2) => {
   return Number(num1) + Number(num2);
 }
 
+export const advanceFrame = (actor) => {
+  if (actor.spriteColumn < actor.moveFrameCount) {
+    actor.spriteColumn++;
+  } else {
+    actor.spriteColumn = 1;
+  }
+};
+
 export const attachNode = ({
   attributes = {},
   nodeType   = 'div',
@@ -57,6 +70,20 @@ export const attachNode = ({
   return node;
 };
 
+export const changeDirection = ({ actor, master }) => {
+  if (actor !== master.dom.player && inBounds({ actor, master })) {
+    const cardinals = Object.values(CARDINALS);
+    const position = getRandom(cardinals.length);
+
+    if (cardinals[position] === actor.dir) {
+      changeDirection({ actor, master });
+    } else {
+      actor.spriteRow = position;
+      actor.dir       = cardinals[position];
+    }
+  }
+}
+
 export const collision = (actor1, actor2) => {
   const rect1 = actor1.selector.getBoundingClientRect();
   const rect2 = actor2.selector.getBoundingClientRect();
@@ -73,15 +100,15 @@ export const crossPaths = (actor1, actor2) => {
   const rect2 = actor2.selector.getBoundingClientRect();
 
   if (rect1.right > rect2.left && rect1.left < rect2.right) {
-    if (rect2.bottom < rect1.top && actor1.dir === 'up') {
+    if (rect2.bottom < rect1.top && actor1.dir === CARDINALS.UP) {
       cross = true;
-    } else if (rect2.top > rect1.bottom && actor1.dir === 'down') {
+    } else if (rect2.top > rect1.bottom && actor1.dir === CARDINALS.DOWN) {
       cross = true;
     }
   } else if ((rect1.bottom > rect2.top && rect1.top < rect2.bottom)) {
-    if (rect2.right < rect1.left && actor1.dir === 'left') {
+    if (rect2.right < rect1.left && actor1.dir === CARDINALS.LEFT) {
       cross = true;
-    } else if (rect2.left > rect1.right && actor1.dir === 'right') {
+    } else if (rect2.left > rect1.right && actor1.dir === CARDINALS.RIGHT) {
       cross = true;
     }
   }
@@ -89,49 +116,189 @@ export const crossPaths = (actor1, actor2) => {
   return cross;
 }
 
-export const getObstruction = ({ character, obstacles }) => {
-  let obstruction = '';
-  const characterLeft   = character.x;
-  const characterTop    = character.y + character.frameHeight - MAGNIFICATION;
-  const characterRight  = character.x + character.frameWidth;
-  const characterBottom = character.y + character.frameHeight;
+export const getCoords = ({ actor, master }) => {
+  if (actor.dir === CARDINALS.LEFT) {
+    actor.x = master.gameWidth;
+    actor.y = getRandom(master.gameHeight - actor.frameHeight);
+    actor.spriteRow = 1;
+  } else if (actor.dir === CARDINALS.UP) {
+    actor.x = getRandom(master.gameWidth - actor.frameWidth);
+    actor.y = master.gameHeight;
+    actor.spriteRow = 3;
+  } else if (actor.dir === CARDINALS.RIGHT) {
+    actor.x = 0 - actor.frameWidth;
+    actor.y = getRandom(master.gameHeight - actor.frameHeight);
+    actor.spriteRow = 0;
+  } else if (actor.dir === CARDINALS.DOWN) {
+    actor.x = getRandom(master.gameWidth - actor.frameWidth);
+    actor.y = 0 - actor.frameHeight;
+    actor.spriteRow = 2;
+  }
+}
+
+export const getIsObstructed = ({ actor, obstacles }) => {
+  const actorBottom = actor.y + actor.frameHeight;
+  const actorLeft   = actor.x;
+  const actorRight  = actor.x + actor.frameWidth;
+  const actorTop    = actor.y + actor.frameHeight - MAGNIFICATION;
+
+  let isObstructed = false;
 
   obstacles.forEach(obstacle => {
-    if (obstacle.impassable) {
-      const obstructionLeft = obstacle.x;
-      const obstructionTop = obstacle.y;
-      const obstructionRight = obstacle.x + obstacle.frameWidth;
-      const obstructionBottom = obstacle.y + obstacle.frameHeight;
+    const obstacleBottom = obstacle.y + obstacle.frameHeight;
+    const obstacleLeft   = obstacle.x;
+    const obstacleRight  = obstacle.x + obstacle.frameWidth;
+    const obstacleTop    = obstacle.y;
 
-      if (character.dir === 'left' || character.dir === 'right') {
-        if (characterBottom > obstructionTop && characterTop < obstructionBottom) {
-          if (character.dir === 'left') {
-            if (characterLeft - character.speed < obstructionRight && characterRight > obstructionLeft) {
-              obstruction = obstacle;
+    if (actor.dir === CARDINALS.LEFT || actor.dir === CARDINALS.RIGHT) {
+      if (actorBottom > obstacleTop && actorTop < obstacleBottom) {
+        if (actor.dir === CARDINALS.LEFT) {
+          if (actorLeft - actor.speed < obstacleRight && actorRight > obstacleLeft) {
+            if (actor.type === ACTOR_TYPES.PLAYER) {
+              actor.spriteRow = 1;
+              actor.x = obstacleRight;
+            } else {
+              changeDirection({ actor, master });
             }
-          } else if (character.dir === 'right') {
-            if (characterRight + character.speed > obstructionLeft && characterLeft < obstructionRight) {
-              obstruction = obstacle;
+
+            isObstructed = true;
+          }
+        } else if (actor.dir === CARDINALS.RIGHT) {
+          if (actorRight + actor.speed > obstacleLeft && actorLeft < obstacleRight) {
+            if (actor.type === ACTOR_TYPES.PLAYER) {
+              actor.spriteRow = 0;
+              actor.x = obstacleLeft - actor.frameWidth;
+            } else {
+              changeDirection({ actor, master });
             }
+
+            isObstructed = true;
           }
         }
-      } else if (character.dir === 'up' || character.dir === 'down') {
-        if (characterRight > obstructionLeft && characterLeft < obstructionRight) {
-          if (character.dir === 'up') {
-            if (characterTop - character.speed < obstructionBottom && characterBottom > obstructionTop) {
-              obstruction = obstacle;
+      }
+    } else if (actor.dir === CARDINALS.UP || actor.dir === CARDINALS.DOWN) {
+      if (actorRight > obstacleLeft && actorLeft < obstacleRight) {
+        if (actor.dir === CARDINALS.UP) {
+          if (actorTop - actor.speed < obstacleBottom && actorBottom > obstacleTop) {
+            if (actor.type === ACTOR_TYPES.PLAYER) {
+              actor.spriteRow = 3;
+              actor.y = obstacleBottom - actor.frameHeight + MAGNIFICATION;
+            } else {
+              changeDirection({ actor, master });
             }
-          } else if (character.dir === 'down') {
-            if (characterBottom + character.speed > obstructionTop && characterBottom < obstructionBottom) {
-              obstruction = obstacle;
+
+            isObstructed = true;
+          }
+        } else if (actor.dir === CARDINALS.DOWN) {
+          if (actorBottom + actor.speed > obstacleTop && actorBottom < obstacleBottom) {
+            if (actor.type === ACTOR_TYPES.PLAYER) {
+              actor.spriteRow = 2;
+              actor.y = obstacleTop - actor.frameHeight;
+            } else {
+              changeDirection({ actor, master });
             }
+
+            isObstructed = true;
           }
         }
       }
     }
   });
 
-  return obstruction;
+  return isObstructed;
+}
+
+export const getPosition = ({ actor, master }) => {
+  const actorLeft        = actor.x;
+  const actorRight       = actor.x + actor.frameWidth;
+  const actorTop         = actor.y;
+  const actorBottom      = actor.y + actor.frameHeight;
+  const isBounceLimitMet = typeof(actor.bounceLimit) !== 'undefined' && actor.bounceCount >= actor.bounceCount;
+  const isInBounds       = inBounds({ actor, master });
+  const isObstructed     = getIsObstructed({
+    actor,
+    obstacles: master.actors.obstacles
+  });
+
+  let hasClearedStage = false;
+
+  switch (actor.dir) {
+    case CARDINALS.DOWN:
+      if (actorTop + actor.speed >= master.gameHeight) {
+        hasClearedStage = true;
+      }
+      break;
+    case CARDINALS.LEFT:
+      if (actorRight - actor.speed <= 0) {
+        hasClearedStage = true;
+      }
+      break;
+    case CARDINALS.RIGHT:
+      if (actorLeft + actor.speed >= master.gameWidth) {
+        hasClearedStage = true;
+      }
+      break;
+    case CARDINALS.UP:
+      if (actorTop - actor.speed <= 0) {
+        hasClearedStage = true;
+      }
+      break;
+  }
+
+  if (isObstructed) {
+    if (!isInBounds) {
+      actor.respawn();
+    }
+  } else if (isBounceLimitMet && hasClearedStage) {
+    actor.remove();
+  } else {
+    switch (actor.dir) {
+      case CARDINALS.DOWN:
+        if (isBounceLimitMet || actorBottom + actor.speed < master.gameHeight) {
+          actor.spriteRow = 2;
+          actor.y        += actor.speed;
+        } else {
+          actor.dir = CARDINALS.UP;
+          actor.y   = master.gameHeight - actor.frameHeight;
+
+          actor.bouceCount++;
+        }
+        break;
+      case CARDINALS.LEFT:
+        if (isBounceLimitMet || actorLeft - actor.speed > 0) {
+          actor.spriteRow = 1;
+          actor.x        -= actor.speed;
+        } else {
+          actor.dir = CARDINALS.RIGHT;
+          actor.x   = 0;
+
+          actor.bouceCount++;
+        }
+        break;
+      case CARDINALS.RIGHT:
+        if (isBounceLimitMet || actorRight + actor.speed < master.gameWidth) {
+          actor.spriteRow = 0;
+          actor.x        += actor.speed;
+        } else {
+          actor.dir = CARDINALS.LEFT;
+          actor.x   = master.gameWidth - actor.frameWidth;
+
+          actor.bouceCount++;
+        }
+        break;
+      case CARDINALS.UP:
+        if (isBounceLimitMet || actorTop - actor.speed > 0) {
+          actor.spriteRow = 3;
+          actor.y        -= actor.speed;
+        } else {
+          actor.dir = CARDINALS.DOWN;
+          actor.y   = 0;
+
+          actor.bouceCount++;
+        }
+        break;
+    }
+  }
 }
 
 export const getRandom = (max) => {
@@ -139,9 +306,16 @@ export const getRandom = (max) => {
 }
 
 export const inBounds = ({ actor, master }) => {
+  const actorLeft   = actor.x;
+  const actorRight  = actor.x + actor.frameWidth;
+  const actorTop    = actor.y;
+  const actorBottom = actor.y + actor.frameHeight;
+
   return (
-    actor.x > 0 && add(actor.x, actor.frameWidth) < master.gameWidth &&
-    actor.y > 0 && add(actor.y, actor.frameHeight) < master.gameHeight
+    actorRight  > 0 &&
+    actorBottom > 0 &&
+    actorLeft   < master.gameWidth &&
+    actorTop    < master.gameHeight
   );
 }
 

@@ -7,8 +7,7 @@ const BAR = {
   frameWidth: 23 * MAGNIFICATION,
   frameHeight: 14 * MAGNIFICATION,
   frameCount: 1,
-  speed: 0,
-  impassable: true
+  speed: 0
 };
 
 const DESKS = {
@@ -18,8 +17,7 @@ const DESKS = {
   frameWidth: 13 * MAGNIFICATION,
   frameHeight: 40 * MAGNIFICATION,
   frameCount: 1,
-  speed: 0,
-  impassable: true
+  speed: 0
 };
 
 const DRAGON = {
@@ -29,8 +27,7 @@ const DRAGON = {
   frameWidth: 62 * MAGNIFICATION,
   frameHeight: 13 * MAGNIFICATION,
   frameCount: 1,
-  speed: 0,
-  impassable: true
+  speed: 0
 };
 
 const FALCON = {
@@ -40,8 +37,7 @@ const FALCON = {
   frameWidth: 76 * MAGNIFICATION,
   frameHeight: 39 * MAGNIFICATION,
   frameCount: 1,
-  speed: 0,
-  impassable: true
+  speed: 0
 };
 
 const IGLOO = {
@@ -51,8 +47,7 @@ const IGLOO = {
   frameWidth: 28 * MAGNIFICATION,
   frameHeight: 17 * MAGNIFICATION,
   frameCount: 1,
-  speed: 0,
-  impassable: true
+  speed: 0
 };
 
 const SPEEDER = {
@@ -62,8 +57,7 @@ const SPEEDER = {
   frameWidth: 30 * MAGNIFICATION,
   frameHeight: 12 * MAGNIFICATION,
   frameCount: 4,
-  speed: 0,
-  impassable: true
+  speed: 0
 };
 
 const TABLE = {
@@ -73,8 +67,7 @@ const TABLE = {
   frameWidth: 16 * MAGNIFICATION,
   frameHeight: 11 * MAGNIFICATION,
   frameCount: 1,
-  speed: 0,
-  impassable: true
+  speed: 0
 };
 
 const GENERATOR = {
@@ -84,8 +77,7 @@ const GENERATOR = {
   frameWidth: 20 * MAGNIFICATION,
   frameHeight: 42 * MAGNIFICATION,
   frameCount: 4,
-  speed: 0,
-  impassable: true
+  speed: 0
 };
 
 export const OBSTACLES = {

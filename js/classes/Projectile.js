@@ -94,7 +94,7 @@ export const Projectile = function({
         if (this.x < master.gameWidth) {
           this.x += this.speed;
         } else {
-          // this.dead = true;
+          this.dead = true;
         }
       } else if (this.dir === 'down') {
         if (this.y < master.gameHeight) {

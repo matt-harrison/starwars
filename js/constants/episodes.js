@@ -1,7 +1,55 @@
-import { COLORS, FPS } from '/js/constants/config.js';
-import * as CHARACTERS from '/js/constants/characters.js';
-import { OBSTACLES }   from '/js/constants/obstacles.js';
-import { SHIPS }       from '/js/constants/ships.js';
+import { CARDINALS, COLORS, FPS } from '/js/constants/config.js';
+import * as CHARACTERS            from '/js/constants/characters.js';
+import { OBSTACLES }              from '/js/constants/obstacles.js';
+import { SHIPS }                  from '/js/constants/ships.js';
+
+export const ATTRACTION = {
+  bg: 'metal',
+  textColor: 'black',
+  enemyInterval: FPS,
+  enemyCount: 3,
+  enemyDir: CARDINALS.RIGHT,
+  enemy: CHARACTERS.stormtrooper,
+  friendlies: [
+    {
+      character: CHARACTERS.rebel,
+      details: {
+        delay: 0.5 * FPS,
+        dir: CARDINALS.LEFT
+      }
+    },
+    {
+      character: CHARACTERS.rebel,
+      details: {
+        delay: 1.5 * FPS,
+        dir: CARDINALS.LEFT
+      }
+    },
+    {
+      character: CHARACTERS.rebel,
+      details: {
+        delay: 2.5 * FPS,
+        dir: CARDINALS.LEFT
+      }
+    },
+    {
+      character: CHARACTERS.threepio,
+      details: {
+        bounceLimit: 0,
+        delay: 2 * FPS,
+        dir: CARDINALS.DOWN
+      }
+    },
+    {
+      character: CHARACTERS.artoo,
+      details: {
+        bounceLimit: 0,
+        delay: 4 * FPS,
+        dir: CARDINALS.DOWN
+      }
+    }
+  ]
+};
 
 //Episode IV levels
 const tantive4 = {
@@ -15,7 +63,7 @@ const tantive4 = {
   textColor: 'black',
   enemyInterval: 32,
   enemyCount: 10,
-  enemyDir: 'right',
+  enemyDir: CARDINALS.RIGHT,
   character: CHARACTERS.rebel,
   enemy: CHARACTERS.stormtrooper,
   boss: CHARACTERS.officerblack,
@@ -24,16 +72,18 @@ const tantive4 = {
     {
       character: CHARACTERS.threepio,
       details: {
+        bounceLimit: 0,
         delay: 3 * FPS,
-        dir: 'down',
+        dir: CARDINALS.DOWN,
         value: 0 - 500
       }
     },
     {
       character: CHARACTERS.artoo,
       details: {
+        bounceLimit: 0,
         delay: 5 * FPS,
-        dir: 'down',
+        dir: CARDINALS.DOWN,
         value: 0 - 500
       }
     }
@@ -50,7 +100,7 @@ const ambassador = {
   textColor: 'black',
   enemyInterval: 32,
   enemyCount: 3,
-  enemyDir: 'left',
+  enemyDir: CARDINALS.LEFT,
   character: CHARACTERS.stuntrooper,
   enemy: CHARACTERS.rebel,
   boss: CHARACTERS.leia,
@@ -59,9 +109,10 @@ const ambassador = {
     {
       character: CHARACTERS.protocolwhite,
       details: {
+        bounceLimit: 0,
         delay: 5.5 * FPS,
         value: 25,
-        dir: 'down'
+        dir: CARDINALS.DOWN
       }
     }
   ]
@@ -93,6 +144,7 @@ const tatooine = {
     {
       character: CHARACTERS.jawa,
       details: {
+        bounceLimit: 0,
         delay: 1.5 * FPS,
         value: 0 - 500
       }
@@ -100,6 +152,7 @@ const tatooine = {
     {
       character: CHARACTERS.jawa,
       details: {
+        bounceLimit: 0,
         delay: 2.5 * FPS,
         value: 0 - 500
       }
@@ -107,6 +160,7 @@ const tatooine = {
     {
       character: CHARACTERS.jawa,
       details: {
+        bounceLimit: 0,
         delay: 3.5 * FPS,
         value: 0 - 500
       }
@@ -141,6 +195,7 @@ const search = {
     {
       character: CHARACTERS.threepio,
       details: {
+        bounceLimit: 0,
         delay: 10.5 * FPS,
         value: 0 - 500
       }
@@ -148,6 +203,7 @@ const search = {
     {
       character: CHARACTERS.artoo,
       details: {
+        bounceLimit: 0,
         delay: 12.5 * FPS,
         value: 0 - 500
       }
@@ -173,6 +229,7 @@ const sandcrawler = {
     {
       character: CHARACTERS.arfive,
       details: {
+        bounceLimit: 0,
         delay: 5.5 * FPS,
         value: 25
       }
@@ -180,8 +237,9 @@ const sandcrawler = {
     {
       character: CHARACTERS.gonkdroid,
       details: {
+        bounceLimit: 0,
         delay: 10.5 * FPS,
-        dir: 'left',
+        dir: CARDINALS.LEFT,
         value: 25
       }
     }
@@ -217,7 +275,7 @@ const mosEisley = {
   textColor: 'black',
   enemyInterval: 32,
   enemyCount: 10,
-  enemyDir: 'right',
+  enemyDir: CARDINALS.UP,
   obstacles: [
     {
       type: OBSTACLES.BAR,
@@ -253,6 +311,7 @@ const mosEisley = {
     {
       character: CHARACTERS.chewbacca,
       details: {
+        bounceLimit: 0,
         delay: 10.5 * FPS,
         value: 0 - 500
       }
@@ -260,6 +319,7 @@ const mosEisley = {
     {
       character: CHARACTERS.greedo,
       details: {
+        bounceLimit: 0,
         delay: 30 * FPS,
         value: 25
       }
@@ -275,6 +335,16 @@ const dockingBay = {
   textColor: 'black',
   enemyInterval: 32,
   enemyCount: 10,
+  friendlies: [
+    {
+      character: CHARACTERS.jabba,
+      details: {
+        bounceLimit: 0,
+        bounceLimit: 0,
+        delay: 30 * FPS
+      }
+    }
+  ],
   obstacles: [
     {
       type: OBSTACLES.FALCON,
@@ -329,17 +399,19 @@ const detention = {
     {
       character: CHARACTERS.stormtrooperhan,
       details: {
+        bounceLimit: 0,
         delay: 1.5 * FPS,
         value: 0 - 500,
-        dir: 'right'
+        dir: CARDINALS.RIGHT
       }
     },
     {
       character: CHARACTERS.stormtrooperluke,
       details: {
+        bounceLimit: 0,
         delay: 1.75 * FPS,
         value: 0 - 500,
-        dir: 'right'
+        dir: CARDINALS.RIGHT
       }
     }
   ]
@@ -353,7 +425,7 @@ const tractorBeam = {
   textColor: 'black',
   enemyInterval: 32,
   enemyCount: 10,
-  enemyDir: 'right',
+  enemyDir: CARDINALS.RIGHT,
   obstacles: [
     {
       type: OBSTACLES.GENERATOR,
@@ -404,6 +476,7 @@ const escapeFromDeathStar = {
     {
       character: CHARACTERS.hansolo,
       details: {
+        bounceLimit: 0,
         delay: 5.5 * FPS,
         value: 0 - 500
       }
@@ -411,6 +484,7 @@ const escapeFromDeathStar = {
     {
       character: CHARACTERS.luke,
       details: {
+        bounceLimit: 0,
         delay: 10.5 * FPS,
         value: 0 - 500
       }
@@ -418,6 +492,7 @@ const escapeFromDeathStar = {
     {
       character: CHARACTERS.chewbacca,
       details: {
+        bounceLimit: 0,
         delay: 15.5 * FPS,
         value: 0 - 500
       }
@@ -441,25 +516,28 @@ const battleOfYavin = {
     {
       character: SHIPS.XWING,
       details: {
+        bounceLimit: 0,
         delay: 5.5 * FPS,
         value: 0 - 500,
-        dir: 'up'
+        dir: CARDINALS.UP
       }
     },
     {
       character: SHIPS.XWING,
       details: {
+        bounceLimit: 0,
         delay: 5.5 * FPS,
         value: 0 - 500,
-        dir: 'up'
+        dir: CARDINALS.UP
       }
     },
     {
       character: SHIPS.XWING,
       details: {
+        bounceLimit: 0,
         delay: 5.5 * FPS,
         value: 0 - 500,
-        dir: 'up'
+        dir: CARDINALS.UP
       }
     }
   ]
@@ -541,14 +619,14 @@ export const EPISODES = [
   [test],
   [test],
   [
-    tantive4,
-    ambassador,
-    tatooine,
-    search,
-    sandcrawler,
-    moistureFarm,
-    mosEisley,
-    dockingBay,
+    // tantive4,
+    // ambassador,
+    // tatooine,
+    // search,
+    // sandcrawler,
+    // moistureFarm,
+    // mosEisley,
+    // dockingBay,
     alderaan,
     detention,
     tractorBeam,

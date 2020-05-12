@@ -13,6 +13,7 @@ export const Animation = function({
   this.y            = Math.floor(origin.y + (origin.frameHeight - this.frameHeight) / 2);
 
   this.selector = document.createElement('div');
+  this.selector.id = `animtion${master.actorCount++}`;
   this.selector.style.position = 'absolute';
   this.selector.style.left = this.x + 'px';
   this.selector.style.top = this.y + 'px';

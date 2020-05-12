@@ -1,3 +1,9 @@
+export const ACTOR_TYPES = {
+  ENEMY:    'enemy',
+  FRIENDLY: 'friendly',
+  PLAYER:   'player'
+};
+
 export const BUTTON_NAMES = {
   ATTACK: 'btnAttack',
   ATTACK2: 'btnAttack2',
@@ -8,12 +14,12 @@ export const BUTTON_NAMES = {
   UP: 'btnUp'
 };
 
-export const CARDINALS = [
-  'right',
-  'left',
-  'down',
-  'up'
-];
+export const CARDINALS = {
+  RIGHT: 'right',
+  LEFT:  'left',
+  DOWN:  'down',
+  UP:    'up'
+};
 
 export const COLORS = {
   BLACK:     '#000',

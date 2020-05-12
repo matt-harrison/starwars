@@ -6,9 +6,9 @@ import {
   preload
 } from './js/utils.js';
 
-import * as CHARACTERS  from './js/constants/characters.js';
-import { EPISODES }     from './js/constants/episodes.js';
-import { WEAPON_TYPES } from './js/constants/weapons.js';
+import * as CHARACTERS          from './js/constants/characters.js';
+import { ATTRACTION, EPISODES } from './js/constants/episodes.js';
+import { WEAPON_TYPES }         from './js/constants/weapons.js';
 import {
   BUTTON_NAMES,
   CARDINALS,
@@ -18,7 +18,7 @@ import {
   IS_MOBILE,
   MODES,
   NUMERALS
-}                       from './js/constants/config.js';
+}                               from './js/constants/config.js';
 
 import { Animation }  from './js/classes/Animation.js';
 import { Bomb }       from './js/classes/Bomb.js';
@@ -65,7 +65,7 @@ const master = {
 
 (function() {
   master.dom.game = new Game(master);
-  master.dom.hud = new Hud({ master });
+  master.dom.hud  = new Hud({ master });
 
   initInterface();
   initMenu(MODES.TITLE);
@@ -73,6 +73,7 @@ const master = {
   loop();
 })();
 
+// Temporarily expose master object to the global scope to make cheats accessible from console.
 window.master = master;
 
 function advanceStage() {
@@ -96,7 +97,7 @@ function buttonPush(key, id) {
         master.keys.push(key);
       }
     }
-  } else if (master.mode === MODES.EPISODE && CARDINALS.indexOf(key) !== -1) {
+  } else if (master.mode === MODES.EPISODE && Object.values(CARDINALS).indexOf(key) !== -1) {
     NUMERALS.forEach(numeral => {
       document.getElementById('btnEpisode' + numeral).style.color = COLORS.BLACK;
     });
@@ -122,7 +123,7 @@ function buttonPush(key, id) {
 }
 
 function buttonUpdate(event) {
-  CARDINALS.forEach(cardinal => {
+  Object.values(CARDINALS).forEach(cardinal => {
     const previousButton = document.querySelector('[data-key="' + master.dom.player.dir + '"]');
     const button = document.querySelector('[data-key="' + cardinal + '"]');
     const bounds = button.getBoundingClientRect();
@@ -233,7 +234,7 @@ function initInterface() {
       }
 
       //Check if touch was released over different d-pad button
-      CARDINALS.forEach(cardinal => {
+      Object.values(CARDINALS).forEach(cardinal => {
         const button = document.querySelector('[data-key="' + cardinal + '"]');
         const bounds = button.getBoundingClientRect();
 
@@ -373,8 +374,9 @@ function initLevel() {
   }
 
   master.dom.hud.selector.setAttribute('data-key', '');
-  master.dom.hud.title.innerHTML = '';
-  master.dom.hud.directions.innerHTML = '';
+
+  master.dom.hud.title.innerHTML          = '';
+  master.dom.hud.directions.innerHTML     = '';
   master.dom.hud.scoreboard.style.display = '';
 
   if (IS_MOBILE) {
@@ -383,41 +385,32 @@ function initLevel() {
 }
 
 function initMenu(mode) {
-  master.mode = mode;
-  master.isGameOver = true;
-  master.isPaused = false;
   master.actorCount = 0;
+  master.counter    = 0;
+  master.isGameOver = true;
+  master.isPaused   = false;
+  master.mode       = mode;
 
   if (master.mode === MODES.TITLE) {
-    master.episode = 3;
-    master.level = 0;
-    master.dom.hud.score = 0;
     master.cutsceneCount = 0;
+    master.dom.hud.score = 0;
+    master.episode       = 3;
+    master.level         = 0;
 
     master.dom.stage = new Stage({
-      data: EPISODES[3][0],
+      data: ATTRACTION,
       master
     });
 
-    new Enemy({
-      data: CHARACTERS.artoo,
-      master
-    });
-
-    new Enemy({
-      data: CHARACTERS.threepio,
-      master
-    });
-
-    for (let i = 0; i < 5; i++) {
-      setTimeout(function() {
-        if (master.mode === MODES.TITLE) {
-          new Enemy({
-            data: CHARACTERS.stormtrooper,
-            master
-          });
-        }
-      }, i * 1000);
+    if (typeof(EPISODES[master.episode][master.level].obstacles) !== 'undefined') {
+      master.dom.stage.obstacles?.forEach(obstacle =>{
+        new Obstacle({
+          data: obstacle['type'],
+          master,
+          x: obstacle['x'],
+          y: obstacle['y']
+        });
+      });
     }
 
     master.dom.hud.selector.setAttribute('data-key', 'enter');
@@ -436,7 +429,7 @@ function initMenu(mode) {
     directions.innerHTML = '';
     directions.style.pointerEvents = 'none';
 
-    if (typeof(EPISODES[master.episode][master.level].cutscene) !== 'undefined') {
+    if (EPISODES[master.episode][master.level].cutscene) {
       clearStage();
 
       master.dom.stage = new Cutscene({
@@ -478,8 +471,8 @@ function loop() {
     if (master.keys.length > 0) {
       if (!master.dom.player.attacking) {
         master.keys.forEach(key => {
-          if (CARDINALS.indexOf(key) !== -1) {
-            master.dom.player.dir = key;
+          if (Object.values(CARDINALS).indexOf(key) !== -1) {
+            master.dom.player.dir     = key;
             master.dom.player.running = true;
           }
           if (key === 'space' || key === 'Z') {
@@ -490,29 +483,28 @@ function loop() {
     }
 
     master.actors.enemies.forEach(enemy => {
-      if (enemy.active) {
-        if (!master.dom.player.dead) {
-          if (collision(master.dom.player, enemy)) {
-            if (!master.isInvincible) {
-              master.dom.player.dead = true;
-            }
+      if (!master.dom.player.dead) {
+        if (collision(master.dom.player, enemy)) {
+          if (enemy.active && !master.isInvincible) {
+            master.dom.player.dead = true;
+          }
 
-            enemy.collide();
-          } else if (enemy.weaponType === WEAPON_TYPES.PROJECTILE && enemy.weaponReady && crossPaths(enemy, master.dom.player)) {
-            const chance = 500 + EPISODES[master.episode].length - master.level;
-            const random = getRandom(chance);
+          enemy.collide();
+        } else if (enemy.active && enemy.weaponType === WEAPON_TYPES.PROJECTILE && enemy.weaponReady && crossPaths(enemy, master.dom.player)) {
+          const chance = 500 + EPISODES[master.episode].length - master.level;
+          const random = getRandom(chance);
 
-            if (random === 0) {
-              new Projectile({
-                master,
-                origin: enemy
-              });
-            }
+          if (random === 0) {
+            new Projectile({
+              master,
+              origin: enemy
+            });
           }
         }
-        enemy.update();
-        enemy.draw();
       }
+
+      enemy.update();
+      enemy.draw();
     });
 
     master.actors.friendlies.forEach(friendly => {
@@ -552,7 +544,7 @@ function loop() {
       }
 
       master.actors.enemies.forEach(enemy =>{
-        if (!prop.dead && !enemy.dead && prop.origin !== enemy && collision(enemy, prop)) {
+        if (prop.origin !== enemy && enemy.active && collision(enemy, prop)) {
           enemy.hit();
 
           if (prop.type !== 'lightsaber') {
@@ -562,11 +554,11 @@ function loop() {
       });
 
       master.actors.friendlies.forEach(friendly =>{
-        if (!prop.dead && !friendly.dead && collision(friendly, prop)) {
+        if (prop.origin !== friendly && friendly.active && collision(friendly, prop)) {
           friendly.kill();
 
           if (prop.type !== 'lightsaber') {
-            prop.dead = true;
+            expiredObjects.push(prop)
           }
         }
       });
@@ -601,6 +593,8 @@ function loop() {
 
     //Check enemy interval
     if (master.counter % master.dom.stage.enemyInterval === 0) {
+      console.log(master.actors.enemies.length, master.dom.stage.enemyCount, master.dom.stage.enemiesKilled);
+
       if (master.actors.enemies.length < master.dom.stage.enemyCount) {
         new Enemy({
           data: master.dom.stage.enemy,
@@ -633,14 +627,43 @@ function loop() {
     } else {
       master.dom.hud.victimText.innerHTML = '';
     }
-
-    master.counter++;
   } else if (master.mode === MODES.TITLE) {
     master.actors.enemies.forEach(enemy => {
       enemy.update();
       enemy.draw();
     });
+
+    master.actors.friendlies.forEach(friendly => {
+      friendly.update();
+      friendly.draw();
+    });
+
+    master.actors.obstacles.forEach(obstacle => {
+      obstacle.update();
+      obstacle.draw();
+    });
+
+    if (
+      master.counter % master.dom.stage.enemyInterval === 0 &&
+      master.actors.enemies.length < master.dom.stage.enemyCount
+    ) {
+      new Enemy({
+        data: master.dom.stage.enemy,
+        master
+      });
+    }
+
+    master.dom.stage.friendlies?.forEach(friendly =>{
+      if (master.counter === friendly.details.delay) {
+        new Friendly({
+          data: friendly,
+          master
+        });
+      }
+    });
   }
+
+  master.counter++;
 
   setTimeout(loop, 1000 / FPS);
 }
