@@ -5,130 +5,228 @@ import { SHIPS }                  from '/js/constants/ships.js';
 
 export const ATTRACTION = {
   bg: 'metal',
-  textColor: 'black',
-  enemyInterval: FPS,
-  enemyCount: 3,
-  enemyDir: CARDINALS.RIGHT,
-  enemy: CHARACTERS.stormtrooper,
+  bosses: [],
+  character: CHARACTERS.rebel,
+  cutscenes: [],
+  enemiesOptional: [],
+  enemiesRequiredTemplate: {
+    bounceLimit:   undefined,
+    character:     CHARACTERS.stormtrooper,
+    count:         3,
+    delayInterval: 1 * FPS,
+    dir:           CARDINALS.RIGHT,
+    hp:            1
+  },
   friendlies: [
     {
       character: CHARACTERS.rebel,
       details: {
-        delay: 0.5 * FPS,
-        dir: CARDINALS.LEFT
+        bounceLimit: undefined,
+        delay:       0.5 * FPS,
+        dir:         CARDINALS.LEFT,
+        hp:          1
       }
     },
     {
       character: CHARACTERS.rebel,
       details: {
-        delay: 1.5 * FPS,
-        dir: CARDINALS.LEFT
+        bounceLimit: undefined,
+        delay:       1.5 * FPS,
+        dir:         CARDINALS.LEFT,
+        hp:          1
       }
     },
     {
       character: CHARACTERS.rebel,
       details: {
-        delay: 2.5 * FPS,
-        dir: CARDINALS.LEFT
+        bounceLimit: undefined,
+        delay:       2.5 * FPS,
+        dir:         CARDINALS.LEFT,
+        hp:          1
       }
     },
     {
       character: CHARACTERS.threepio,
       details: {
         bounceLimit: 0,
-        delay: 2 * FPS,
-        dir: CARDINALS.DOWN
+        delay:       2 * FPS,
+        dir:         CARDINALS.DOWN,
+        hp:          1
       }
     },
     {
       character: CHARACTERS.artoo,
       details: {
         bounceLimit: 0,
-        delay: 4 * FPS,
-        dir: CARDINALS.DOWN
+        delay:       4 * FPS,
+        dir:         CARDINALS.DOWN,
+        hp:          1
       }
     }
-  ]
+  ],
+  name: null,
+  neutrals: [],
+  obstacles: [],
+  password: undefined,
+  textColor: COLORS.BLACK
 };
 
 //Episode IV levels
 const tantive4 = {
-  name: 'Tantive IV',
-  password: '',
-  cutscene: [
+  bg: 'metal',
+  bosses: [
+    {
+      character: CHARACTERS.officerblack,
+      details: {
+        bounceLimit: undefined,
+        delay:       0,
+        dir:         undefined,
+        hp:          2
+      }
+    }
+  ],
+  character: CHARACTERS.rebel,
+  cutscenes: [
     'preface',
     'episode4-destroyer'
   ],
-  bg: 'metal',
-  textColor: 'black',
-  enemyInterval: 32,
-  enemyCount: 10,
-  enemyDir: CARDINALS.RIGHT,
-  character: CHARACTERS.rebel,
-  enemy: CHARACTERS.stormtrooper,
-  boss: CHARACTERS.officerblack,
-  bossHP: 2,
+  enemiesOptional: [],
+  enemiesRequiredTemplate: {
+    bounceLimit:   undefined,
+    character:     CHARACTERS.stormtrooper,
+    count:         10,
+    delayInterval: 2 * FPS,
+    dir:           CARDINALS.RIGHT,
+    hp:            1
+  },
   friendlies: [
     {
       character: CHARACTERS.threepio,
       details: {
         bounceLimit: 0,
-        delay: 3 * FPS,
-        dir: CARDINALS.DOWN,
-        value: 0 - 500
+        delay:       3 * FPS,
+        dir:         CARDINALS.DOWN,
+        hp:          1
       }
     },
     {
       character: CHARACTERS.artoo,
       details: {
         bounceLimit: 0,
-        delay: 5 * FPS,
-        dir: CARDINALS.DOWN,
-        value: 0 - 500
+        delay:       5 * FPS,
+        dir:         CARDINALS.DOWN,
+        hp:          1
       }
     }
-  ]
+  ],
+  name: 'Tantive IV',
+  neutrals: [],
+  obstacles: [],
+  password: undefined,
+  textColor: 'black'
 };
 
 const ambassador = {
-  name: 'Ambassador',
-  password: '',
-  cutscene: [
+  bg: 'metal',
+  bosses: [
+    {
+      character: CHARACTERS.leia,
+      details: {
+        bounceLimit: undefined,
+        delay:       0,
+        dir:         undefined,
+        hp:          1
+      }
+    }
+  ],
+  character: CHARACTERS.stuntrooper,
+  cutscenes: [
     'episode4-antilles'
   ],
-  bg: 'metal',
-  textColor: 'black',
-  enemyInterval: 32,
-  enemyCount: 3,
-  enemyDir: CARDINALS.LEFT,
-  character: CHARACTERS.stuntrooper,
-  enemy: CHARACTERS.rebel,
-  boss: CHARACTERS.leia,
-  bossHP: 1,
-  friendlies: [
+  enemiesOptional: [],
+  enemiesRequiredTemplate: {
+    bounceLimit:   undefined,
+    character:     CHARACTERS.rebel,
+    count:         3,
+    delayInterval: 2 * FPS,
+    dir:           CARDINALS.LEFT,
+    hp:            1
+  },
+  friendlies: [],
+  name: 'Ambassador',
+  neutrals: [
     {
       character: CHARACTERS.protocolwhite,
       details: {
         bounceLimit: 0,
-        delay: 5.5 * FPS,
-        value: 25,
-        dir: CARDINALS.DOWN
+        delay:       5.5 * FPS,
+        dir:         CARDINALS.DOWN,
+        hp:          1
       }
     }
-  ]
+  ],
+  obstacles: [],
+  password: undefined,
+  textColor: 'black'
 };
 
 const tatooine = {
-  name: 'Tatooine',
-  password: '',
-  cutscene: [
+  bg: 'sand',
+  bosses: [
+    {
+      character: CHARACTERS.artoo,
+      details: {
+        bounceLimit: undefined,
+        delay:       0,
+        dir:         undefined,
+        hp:          1
+      }
+    }  ],
+  character: CHARACTERS.jawa,
+  cutscenes: [
     'episode4-pod',
     'episode4-crash'
   ],
-  bg: 'sand',
-  textColor: 'black',
-  enemyInterval: 32,
-  enemyCount: 1,
+  enemiesOptional: [],
+  enemiesRequiredTemplate: {
+    bounceLimit:   undefined,
+    character:     CHARACTERS.threepio,
+    count:         1,
+    delayInterval: 0,
+    dir:           undefined,
+    hp:            1
+  },
+  friendlies: [
+    {
+      character: CHARACTERS.jawa,
+      details: {
+        bounceLimit: undefined,
+        delay:       1.5 * FPS,
+        dir:         undefined,
+        hp:          1
+      }
+    },
+    {
+      character: CHARACTERS.jawa,
+      details: {
+        bounceLimit: undefined,
+        delay:       2.5 * FPS,
+        dir:         undefined,
+        hp:          1
+      }
+    },
+    {
+      character: CHARACTERS.jawa,
+      details: {
+        bounceLimit: undefined,
+        delay:       3.5 * FPS,
+        dir:         undefined,
+        hp:          1
+      }
+    }
+  ],
+  name: 'Tatooine',
+  neutrals: [],
   obstacles: [
     {
       type: OBSTACLES.DRAGON,
@@ -136,50 +234,60 @@ const tatooine = {
       y: 66
     }
   ],
-  character: CHARACTERS.jawa,
-  enemy: CHARACTERS.threepio,
-  boss: CHARACTERS.artoo,
-  bossHP: 1,
-  friendlies: [
-    {
-      character: CHARACTERS.jawa,
-      details: {
-        bounceLimit: 0,
-        delay: 1.5 * FPS,
-        value: 0 - 500
-      }
-    },
-    {
-      character: CHARACTERS.jawa,
-      details: {
-        bounceLimit: 0,
-        delay: 2.5 * FPS,
-        value: 0 - 500
-      }
-    },
-    {
-      character: CHARACTERS.jawa,
-      details: {
-        bounceLimit: 0,
-        delay: 3.5 * FPS,
-        value: 0 - 500
-      }
-    }
-  ]
+  password: undefined,
+  textColor: 'black'
 };
 
 const search = {
-  name: 'Search',
-  password: '',
-  cutscene: [
+  bg: 'sand',
+  bosses: [
+    {
+      character: CHARACTERS.bantha,
+      details: {
+        bounceLimit: undefined,
+        delay:       0,
+        dir:         undefined,
+        hp:          2
+      }
+    }
+  ],
+  character: CHARACTERS.luke,
+  cutscenes: [
     'episode4-jawas',
     'episode4-hologram',
     'episode4-binoculars'
   ],
-  bg: 'sand',
-  textColor: 'black',
-  enemyInterval: 32,
-  enemyCount: 10,
+  enemiesOptional: [],
+  enemiesRequiredTemplate: {
+    bounceLimit:   undefined,
+    character:     CHARACTERS.tusken,
+    count:         10,
+    delayInterval: 1.5 * FPS,
+    dir:           CARDINALS.RIGHT,
+    hp:            1
+  },
+  friendlies: [
+    {
+      character: CHARACTERS.threepio,
+      details: {
+        bounceLimit: 0,
+        delay:       10.5 * FPS,
+        dir:         CARDINALS.DOWN,
+        hp:          1
+      }
+    },
+    {
+      character: CHARACTERS.artoo,
+      details: {
+        bounceLimit: 0,
+        delay:       12.5 * FPS,
+        dir:         CARDINALS.DOWN,
+        hp:          1
+      }
+    }
+  ],
+  name: 'Search',
+  neutrals: [],
   obstacles: [
     {
       type: OBSTACLES.SPEEDER,
@@ -187,77 +295,100 @@ const search = {
       y: 33
     }
   ],
-  character: CHARACTERS.luke,
-  enemy: CHARACTERS.tusken,
-  boss: CHARACTERS.bantha,
-  bossHP: 2,
-  friendlies: [
-    {
-      character: CHARACTERS.threepio,
-      details: {
-        bounceLimit: 0,
-        delay: 10.5 * FPS,
-        value: 0 - 500
-      }
-    },
-    {
-      character: CHARACTERS.artoo,
-      details: {
-        bounceLimit: 0,
-        delay: 12.5 * FPS,
-        value: 0 - 500
-      }
-    }
-  ]
+  password: undefined,
+  textColor: 'black'
 };
 
 const sandcrawler = {
-  name: 'Sandcrawler',
-  password: 'endor',
-  cutscene: [
+  bg: 'rust',
+  bosses: [
+    {
+      character: CHARACTERS.threebee,
+      details: {
+        bounceLimit: undefined,
+        delay:       0,
+        dir:         undefined,
+        hp:          2
+      }
+    }
+  ],
+  character: CHARACTERS.sandtrooper,
+  cutscenes: [
     'episode4-tusken'
   ],
-  bg: 'rust',
-  textColor: 'black',
-  enemyInterval: 32,
-  enemyCount: 10,
-  character: CHARACTERS.sandtrooper,
-  enemy: CHARACTERS.jawa,
-  boss: CHARACTERS.threebee,
-  bossHP: 2,
-  friendlies: [
+  enemiesOptional: [],
+  enemiesRequiredTemplate: {
+    bounceLimit:   undefined,
+    character:     CHARACTERS.jawa,
+    count:         10,
+    delayInterval: 2 * FPS,
+    dir:           undefined,
+    hp:            1
+  },
+  friendlies: [],
+  name: 'Sandcrawler',
+  neutrals: [
     {
       character: CHARACTERS.arfive,
       details: {
         bounceLimit: 0,
-        delay: 5.5 * FPS,
-        value: 25
+        delay:       5.5 * FPS,
+        dir:         undefined,
+        hp:          1
       }
     },
     {
       character: CHARACTERS.gonkdroid,
       details: {
         bounceLimit: 0,
-        delay: 10.5 * FPS,
-        dir: CARDINALS.LEFT,
-        value: 25
+        delay:       10.5 * FPS,
+        dir:         CARDINALS.LEFT,
+        hp:          1
       }
     }
-  ]
+  ],
+  obstacles: [],
+  password: undefined,
+  textColor: COLORS.BLACK
 };
 
 const moistureFarm = {
-  name: 'Moisture Farm',
-  password: '',
-  // 'cutscene' : []
   bg: 'sand',
-  textColor: 'black',
-  enemyInterval: 16,
-  enemyCount: 1,
+  bosses: [
+    {
+      character: CHARACTERS.auntberu,
+      details: {
+        bounceLimit: undefined,
+        delay:       0,
+        dir:         undefined,
+        hp:          1
+      }
+    }
+  ],
   character: CHARACTERS.sandtrooper,
-  enemy: CHARACTERS.uncleowen,
-  boss: CHARACTERS.auntberu,
-  bossHP: 1,
+  cutscenes: [],
+  enemiesOptional: [],
+  enemiesRequiredTemplate: {
+    bounceLimit:   undefined,
+    character:     CHARACTERS.uncleowen,
+    count:         1,
+    delayInterval: 0,
+    dir:           undefined,
+    hp:            1
+  },
+  friendlies: [
+    {
+      character: undefined,
+      details: {
+        bounceLimit: undefined,
+        delay:       undefined,
+        dir:         undefined,
+        hp:          undefined
+      }
+    }
+  ],
+  name: 'Moisture Farm',
+  neutrals: [],
   obstacles: [
     {
       type: OBSTACLES.IGLOO,
@@ -265,17 +396,66 @@ const moistureFarm = {
       y: 33
     }
   ],
+  password: undefined,
+  textColor: COLORS.BLACK
 };
 
 const mosEisley = {
-  name: 'Mos Eisley',
-  password: '',
-  // 'cutscene' : []
   bg: 'marble',
-  textColor: 'black',
-  enemyInterval: 32,
-  enemyCount: 10,
-  enemyDir: CARDINALS.UP,
+  bosses: [
+    {
+      character: CHARACTERS.pondababa,
+      details: {
+        bounceLimit: undefined,
+        delay:       0,
+        dir:         undefined,
+        hp:          1
+      }
+    }
+  ],
+  character: CHARACTERS.ben,
+  cutscenes: [],
+  enemiesOptional: [
+    {
+      character: CHARACTERS.greedo,
+      details: {
+        bounceLimit: 0,
+        delay:       30 * FPS,
+        dir:         undefined,
+        hp:          1
+      }
+    }
+  ],
+  enemiesRequiredTemplate: {
+    bounceLimit:   undefined,
+    character:     CHARACTERS.sandtrooper,
+    count:         10,
+    delayInterval: 2 * FPS,
+    dir:           undefined,
+    hp:            1
+  },
+  friendlies: [
+    {
+      character: CHARACTERS.chewbacca,
+      details: {
+        bounceLimit: 0,
+        delay:       10.5 * FPS,
+        dir:         undefined,
+        hp:          1
+      }
+    },
+    {
+      character: CHARACTERS.hansolo,
+      details: {
+        bounceLimit: 0,
+        delay:       10.5 * FPS,
+        dir:         undefined,
+        hp:          1
+      }
+    }
+  ],
+  name: 'Mos Eisley',
+  neutrals: [],
   obstacles: [
     {
       type: OBSTACLES.BAR,
@@ -303,48 +483,46 @@ const mosEisley = {
       y: 80
     }
   ],
-  character: CHARACTERS.ben,
-  enemy: CHARACTERS.sandtrooper,
-  boss: CHARACTERS.pondababa,
-  bossHP: 1,
-  friendlies: [
-    {
-      character: CHARACTERS.chewbacca,
-      details: {
-        bounceLimit: 0,
-        delay: 10.5 * FPS,
-        value: 0 - 500
-      }
-    },
-    {
-      character: CHARACTERS.greedo,
-      details: {
-        bounceLimit: 0,
-        delay: 30 * FPS,
-        value: 25
-      }
-    }
-  ]
+  password: undefined,
+  textColor: COLORS.BLACK
 };
 
 const dockingBay = {
-  name: 'Docking Bay 94',
-  password: '',
-  // 'cutscene' : []
   bg: 'dust',
-  textColor: 'black',
-  enemyInterval: 32,
-  enemyCount: 10,
-  friendlies: [
+  bosses: [
     {
-      character: CHARACTERS.jabba,
+      character: CHARACTERS.garindan,
       details: {
-        bounceLimit: 0,
-        bounceLimit: 0,
-        delay: 30 * FPS
+        bounceLimit: undefined,
+        delay:       0,
+        dir:         undefined,
+        hp:          2
       }
     }
   ],
+  character: CHARACTERS.hansolo,
+  cutscenes: [],
+  enemiesOptional: [
+    {
+      character: CHARACTERS.jabba,
+      details: {
+        bounceLimit: undefined,
+        delay:       30 * FPS,
+        dir:         undefined,
+        hp:          5
+      }
+    }
+  ],
+  enemiesRequiredTemplate: {
+    bounceLimit:   undefined,
+    character:     CHARACTERS.sandtrooper,
+    count:         10,
+    delayInterval: 2 * FPS,
+    dir:           undefined,
+    hp:            1
+  },
+  friendlies: [],
+  name: 'Docking Bay 94',
   obstacles: [
     {
       type: OBSTACLES.FALCON,
@@ -352,38 +530,92 @@ const dockingBay = {
       y: 0
     }
   ],
-  character: CHARACTERS.hansolo,
-  enemy: CHARACTERS.sandtrooper,
-  boss: CHARACTERS.garindan,
-  bossHP: 2
+  password: undefined,
+  textColor: 'black'
 };
 
 const alderaan = {
-  name: 'Alderaan',
-  password: '',
-  cutscene: [
+  bg: 'space',
+  bosses: [
+    {
+      character: SHIPS.TIE,
+      details: {
+        bounceLimit: undefined,
+        delay:       0,
+        dir:         undefined,
+        hp:          2
+      }
+    }
+  ],
+  character: SHIPS.FALCON,
+  cutscenes: [
     'episode4-tarkin',
     'episode4-deathstar',
     'episode4-alderaan'
   ],
-  bg: 'space',
-  textColor: COLORS.YELLOW,
-  enemyInterval: 48,
-  enemyCount: 10,
-  character: SHIPS.FALCON,
-  enemy: SHIPS.ASTEROID,
-  boss: SHIPS.TIE,
-  bossHP: 2
+  enemiesOptional: [],
+  enemiesRequiredTemplate: {
+    bounceLimit:   undefined,
+    character:     SHIPS.ASTEROID,
+    count:         10,
+    delayInterval: 3 * FPS,
+    dir:           undefined,
+    hp:            1
+  },
+  friendlies: [],
+  name: 'Alderaan',
+  neutrals: [],
+  obstacles: [],
+  password: undefined,
+  textColor: COLORS.YELLOW
 };
 
 const detention = {
-  name: 'Detention',
-  password: '',
-  // 'cutscene' : []
   bg: 'dark',
-  textColor: 'black',
-  enemyInterval: 32,
-  enemyCount: 10,
+  bosses: [
+    {
+      character: CHARACTERS.mousedroid,
+      details: {
+        bounceLimit: undefined,
+        delay:       0,
+        dir:         undefined,
+        hp:          2
+      }
+    }
+  ],
+  character: CHARACTERS.chewbacca,
+  cutscenes: [],
+  enemiesOptional: [],
+  enemiesRequiredTemplate: {
+    bounceLimit:   undefined,
+    character:     CHARACTERS.deathstartrooper,
+    count:         10,
+    delayInterval: 2 * FPS,
+    dir:           undefined,
+    hp:            1
+  },
+  friendlies: [
+    {
+      character: CHARACTERS.stormtrooperhan,
+      details: {
+        bounceLimit: 0,
+        delay:       1.5 * FPS,
+        dir:         CARDINALS.RIGHT,
+        hp:          1
+      }
+    },
+    {
+      character: CHARACTERS.stormtrooperluke,
+      details: {
+        bounceLimit: 0,
+        delay:       1.75 * FPS,
+        dir:         CARDINALS.RIGHT,
+        hp:          1
+      }
+    }
+  ],
+  name: 'Detention',
+  neutrals: [],
   obstacles: [
     {
       type: OBSTACLES.DESKS,
@@ -391,41 +623,37 @@ const detention = {
       y: 50
     }
   ],
-  character: CHARACTERS.chewbacca,
-  enemy: CHARACTERS.deathstartrooper,
-  boss: CHARACTERS.mousedroid,
-  bossHP: 2,
-  friendlies: [
-    {
-      character: CHARACTERS.stormtrooperhan,
-      details: {
-        bounceLimit: 0,
-        delay: 1.5 * FPS,
-        value: 0 - 500,
-        dir: CARDINALS.RIGHT
-      }
-    },
-    {
-      character: CHARACTERS.stormtrooperluke,
-      details: {
-        bounceLimit: 0,
-        delay: 1.75 * FPS,
-        value: 0 - 500,
-        dir: CARDINALS.RIGHT
-      }
-    }
-  ]
+  password: undefined,
+  textColor: 'black'
 };
 
 const tractorBeam = {
-  name: 'Tractor Beam',
-  password: '',
-  // 'cutscene' : []
   bg: 'dark',
-  textColor: 'black',
-  enemyInterval: 32,
-  enemyCount: 10,
-  enemyDir: CARDINALS.RIGHT,
+  bosses: [
+    {
+      character: CHARACTERS.darthvader,
+      details: {
+        bounceLimit: undefined,
+        delay:       0,
+        dir:         undefined,
+        hp:          5
+      }
+    }
+  ],
+  character: CHARACTERS.ben,
+  cutscenes: [],
+  enemiesOptional: [],
+  enemiesRequiredTemplate: {
+    bounceLimit:   undefined,
+    character:     CHARACTERS.stormtrooper,
+    count:         10,
+    delayInterval: 2 * FPS,
+    dir:           CARDINALS.RIGHT,
+    hp:            1
+  },
+  friendlies: [],
+  name: 'Tractor Beam',
+  neutrals: [],
   obstacles: [
     {
       type: OBSTACLES.GENERATOR,
@@ -433,38 +661,97 @@ const tractorBeam = {
       y: 0
     }
   ],
-  character: CHARACTERS.ben,
-  enemy: CHARACTERS.stormtrooper,
-  boss: CHARACTERS.darthvader,
-  bossHP: 5
+  password: undefined,
+  textColor: 'black'
 };
 
 const showdown4 = {
-  name: 'Showdown',
-  password: '',
-  // 'cutscene' : []
   bg: 'dark',
-  textColor: 'black',
-  enemyInterval: 32,
-  enemyCount: 0,
+  bosses: [
+    {
+      character: CHARACTERS.ben,
+      details: {
+        bounceLimit: undefined,
+        delay:       0,
+        dir:         undefined,
+        hp:          1
+      }
+    }
+  ],
   character: CHARACTERS.darthvader,
-  enemy: null,
-  boss: CHARACTERS.ben,
-  bossHP: 1
+  cutscenes: [],
+  enemiesOptional: [],
+  enemiesRequiredTemplate: {
+    bounceLimit:   undefined,
+    character:     undefined,
+    count:         0,
+    delayInterval: undefined,
+    dir:           undefined,
+    hp:            undefined
+  },
+  friendlies: [],
+  name: 'Showdown',
+  neutrals: [],
+  obstacles: [],
+  password: undefined,
+  textColor: 'black'
 };
 
 const escapeFromDeathStar = {
-  name: 'Escape',
-  password: '',
-  // 'cutscene' : []
   bg: 'dark',
-  textColor: 'black',
-  enemyInterval: 32,
-  enemyCount: 10,
+  bosses: [
+    {
+      character: CHARACTERS.tiepilot,
+      details: {
+        bounceLimit: undefined,
+        delay:       0,
+        dir:         undefined,
+        hp:          2
+      }
+    }
+  ],
   character: CHARACTERS.leia,
-  enemy: CHARACTERS.stormtrooper,
-  boss: CHARACTERS.tiepilot,
-  bossHP: 2,
+  cutscenes: [],
+  enemiesOptional: [],
+  enemiesRequiredTemplate: {
+    bounceLimit:   undefined,
+    character:     CHARACTERS.stormtrooper,
+    count:         10,
+    delayInterval: 2 * FPS,
+    dir:           undefined,
+    hp:            1
+  },
+  friendlies: [
+    {
+      character: CHARACTERS.hansolo,
+      details: {
+        bounceLimit: 0,
+        delay:       5.5 * FPS,
+        dir:         undefined,
+        hp:          1
+      }
+    },
+    {
+      character: CHARACTERS.luke,
+      details: {
+        bounceLimit: 0,
+        delay:       10.5 * FPS,
+        dir:         undefined,
+        hp:          1
+      }
+    },
+    {
+      character: CHARACTERS.chewbacca,
+      details: {
+        bounceLimit: 0,
+        delay:       15.5 * FPS,
+        dir:         undefined,
+        hp:          1
+      }
+    }
+  ],
+  name: 'Escape',
+  neutrals: [],
   obstacles: [
     {
       type: OBSTACLES.FALCONBIG,
@@ -472,146 +759,253 @@ const escapeFromDeathStar = {
       y: 0
     }
   ],
-  friendlies: [
-    {
-      character: CHARACTERS.hansolo,
-      details: {
-        bounceLimit: 0,
-        delay: 5.5 * FPS,
-        value: 0 - 500
-      }
-    },
-    {
-      character: CHARACTERS.luke,
-      details: {
-        bounceLimit: 0,
-        delay: 10.5 * FPS,
-        value: 0 - 500
-      }
-    },
-    {
-      character: CHARACTERS.chewbacca,
-      details: {
-        bounceLimit: 0,
-        delay: 15.5 * FPS,
-        value: 0 - 500
-      }
-    }
-  ]
+  password: undefined,
+  textColor: 'black'
 };
 
 const battleOfYavin = {
-  name: 'The Battle of Yavin',
-  password: '',
-  // 'cutscene' : []
   bg: 'space',
-  textColor: COLORS.YELLOW,
-  enemyInterval: 16,
-  enemyCount: 3,
+  bosses: [
+    {
+      character: SHIPS.TIE_ADVANCED,
+      details: {
+        bounceLimit: undefined,
+        delay:       0,
+        dir:         undefined,
+        hp:          2
+      }
+    }
+  ],
   character: SHIPS.FALCON,
-  enemy: SHIPS.TIE,
-  boss: SHIPS.TIE_ADVANCED,
-  bossHP: 2,
+  cutscenes: [],
+  enemiesOptional: [],
+  enemiesRequiredTemplate: {
+    bounceLimit:   undefined,
+    character:     SHIPS.TIE,
+    count:         3,
+    delayInterval: 1 * FPS,
+    dir:           CARDINALS.DOWN,
+    hp:            1
+  },
   friendlies: [
     {
       character: SHIPS.XWING,
       details: {
         bounceLimit: 0,
-        delay: 5.5 * FPS,
-        value: 0 - 500,
-        dir: CARDINALS.UP
+        delay:       5 * FPS,
+        dir:         CARDINALS.UP,
+        hp:          1
       }
     },
     {
       character: SHIPS.XWING,
       details: {
         bounceLimit: 0,
-        delay: 5.5 * FPS,
-        value: 0 - 500,
-        dir: CARDINALS.UP
+        delay:       5 * FPS,
+        dir:         CARDINALS.UP,
+        hp:          1
       }
     },
     {
       character: SHIPS.XWING,
       details: {
         bounceLimit: 0,
-        delay: 5.5 * FPS,
-        value: 0 - 500,
-        dir: CARDINALS.UP
+        delay:       5 * FPS,
+        dir:         CARDINALS.UP,
+        hp:          1
       }
     }
-  ]
+  ],
+  name: 'The Battle of Yavin',
+  neutrals: [],
+  obstacles: [],
+  password: undefined,
+  textColor: COLORS.YELLOW
 };
 
 const assaultOnDeathStar = {
-  name: 'Death Star',
-  password: '',
-  // 'cutscene' : []
   bg: 'space',
-  textColor: COLORS.YELLOW,
-  enemyInterval: 32,
-  enemyCount: 0,
+  bosses: [
+    {
+      character: SHIPS.DEATHSTAR,
+      details: {
+        bounceLimit: undefined,
+        delay:       0,
+        dir:         undefined,
+        hp:          10
+      }
+    }
+  ],
   character: SHIPS.XWING,
-  enemy: null,
-  boss: SHIPS.DEATHSTAR,
-  bossHP: 10
+  cutscenes: [],
+  enemiesOptional: [],
+  enemiesRequiredTemplate: {
+    bounceLimit:   undefined,
+    character:     undefined,
+    count:         0,
+    delayInterval: undefined,
+    dir:           undefined,
+    hp:            undefined
+  },
+  friendlies: [],
+  name: 'Death Star',
+  neutrals: [],
+  obstacles: [],
+  password: undefined,
+  textColor: COLORS.YELLOW
 };
 
 //Episode V levels
 const hoth = {
-  name: 'Hoth',
-  password: '',
   bg: 'snow',
-  textColor: 'black',
-  enemyInterval: 32,
-  enemyCount: 10,
+  bosses: [
+    {
+      character: CHARACTERS.mousedroid, // add wampa
+      details: {
+        bounceLimit: undefined,
+        delay:       0,
+        dir:         undefined,
+        hp:          2
+      }
+    }
+  ],
   character: CHARACTERS.luke5,
-  enemy: CHARACTERS.tauntaun,//probedroid
-  boss: CHARACTERS.mousedroid,//wampa
-  bossHP: 2
+  cutscenes: [],
+  enemiesOptional: [],
+  enemiesRequiredTemplate: {
+    bounceLimit:   undefined,
+    character:     CHARACTERS.tauntaun, // add probe droid
+    count:         10,
+    delayInterval: 2 * FPS,
+    dir:           undefined,
+    hp:            1
+  },
+  friendlies: [],
+  name: 'Hoth',
+  neutrals: [],
+  obstacles: [],
+  password: undefined,
+  textColor: 'black',
 };
 
 //Episode VI levels
 const endor = {
-  name: 'Endor',
-  password: '',
   bg: 'grass',
-  textColor: 'black',
-  enemyInterval: 32,
-  enemyCount: 10,
+  bosses: [
+    {
+      character: CHARACTERS.atst,
+      details: {
+        bounceLimit: undefined,
+        delay:       0,
+        dir:         undefined,
+        hp:          2
+      }
+    }
+  ],
   character: CHARACTERS.ewok,
-  enemy: CHARACTERS.stormtrooper,
-  boss: CHARACTERS.darthvader,
-  bossHP: 2
+  cutscenes: [],
+  enemiesOptional: [],
+  enemiesRequiredTemplate: {
+    bounceLimit:   undefined,
+    character:     CHARACTERS.stormtrooper,
+    count:         10,
+    delayInterval: 2 * FPS,
+    dir:           undefined,
+    hp:            1
+  },
+  friendlies: [
+    {
+      character: CHARACTERS.threepio,
+      details: {
+        bounceLimit: 0,
+        delay:       5 * FPS,
+        dir:         undefined,
+        hp:          1
+      }
+    }
+  ],
+  name: 'Endor',
+  neutrals: [],
+  obstacles: [],
+  password: undefined,
+  textColor: 'black',
 };
 
 const test = {
-  name: 'TEST',
-  password: '',
-  bg: 'sand',
-  textColor: 'black',
-  enemyInterval: 16,
-  enemyCount: 1,
-  character: CHARACTERS.luke,
-  enemy: CHARACTERS.ben,
-  boss: CHARACTERS.auntberu,
-  bossHP: 1,
-  obstacles: [
+  bg: 'metal',
+  bosses: [
     {
-      type: OBSTACLES.IGLOO,
-      x: 66,
-      y: 33
-    },
-  ],
-  friendlies: [
-    {
-      character: CHARACTERS.jabba,
+      character: CHARACTERS.darthvader,
       details: {
-        delay: 1 * FPS,
-        value: 0
+        bounceLimit: undefined,
+        delay:       0,
+        dir:         CARDINALS.DOWN,
+        hp:          2
+      }
+    },
+    {
+      character: CHARACTERS.darthvader6,
+      details: {
+        bounceLimit: undefined,
+        delay:       0,
+        dir:         CARDINALS.UP,
+        hp:          3
       }
     }
-  ]
+  ],
+  character: CHARACTERS.artoo,
+  cutscenes: [],
+  enemiesOptional: [
+    {
+      character: CHARACTERS.deathstartrooper,
+      details: {
+        bounceLimit: 1,
+        delay:       5 * FPS,
+        dir:         undefined,
+        hp:          1
+      }
+    }
+  ],
+  enemiesRequiredTemplate: {
+    bounceLimit:   undefined,
+    character:     CHARACTERS.officerblack,
+    count:         3,
+    delayInterval: 2 * FPS,
+    dir:           CARDINALS.LEFT,
+    hp:            1
+  },
+  friendlies: [
+    {
+      character: CHARACTERS.bb8,
+      details: {
+        bounceLimit: undefined,
+        delay:       2 * FPS,
+        dir:         CARDINALS.RIGHT,
+        hp:          2
+      }
+    }
+  ],
+  name: 'Test Kitchen',
+  neutrals: [
+    {
+      character: CHARACTERS.mousedroid,
+      details: {
+        bounceLimit: undefined,
+        delay:       10 * FPS,
+        dir:         undefined,
+        hp:          1
+      }
+    }
+  ],
+  obstacles: [
+    {
+      type: OBSTACLES.DRAGON,
+      x: 50,
+      y: 66
+    }
+  ],
+  password: '',
+  textColor: COLORS.BLACK
 };
 
 export const EPISODES = [
@@ -623,10 +1017,10 @@ export const EPISODES = [
     // ambassador,
     // tatooine,
     // search,
-    // sandcrawler,
-    // moistureFarm,
-    // mosEisley,
-    // dockingBay,
+    sandcrawler,
+    moistureFarm,
+    mosEisley,
+    dockingBay,
     alderaan,
     detention,
     tractorBeam,

@@ -1,6 +1,7 @@
 export const ACTOR_TYPES = {
   ENEMY:    'enemy',
   FRIENDLY: 'friendly',
+  NEUTRAL:  'neutral',
   PLAYER:   'player'
 };
 

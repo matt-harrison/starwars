@@ -1391,7 +1391,7 @@ export const threebee = {
   death: ANIMATIONS.SPRITZ,
   frameHeight: 11 * MAGNIFICATION,
   frameWidth: 8 * MAGNIFICATION,
-  height: 55 * MAGNIFICATION,
+  height: 44 * MAGNIFICATION,
   moveFrameCount: 8,
   name: '3B6-RA-7',
   ship: false,
@@ -1478,24 +1478,24 @@ export const typho = {
 export const uncleowen = {
   code: 'uncleowen',
   death: {
-    frameCount: 10,
+    frameCount:  10,
     frameHeight: 12 * MAGNIFICATION,
-    frameWidth: 10 * MAGNIFICATION,
-    remove: false
+    frameWidth:  10 * MAGNIFICATION,
+    name:        'uncleowendeath',
+    remove:      false
   },
-  frameHeight: 12 * MAGNIFICATION,
-  frameWidth: 10 * MAGNIFICATION,
-  height: 48 * MAGNIFICATION,
+  frameHeight:    12 * MAGNIFICATION,
+  frameWidth:     10 * MAGNIFICATION,
+  height:         48 * MAGNIFICATION,
   moveFrameCount: 8,
-  name: 'Uncle Owen',
-  name: 'uncleowendeath',
-  ship: false,
-  speed: 6,
-  sprite: 'uncleowen',
-  weaponDelay: FPS / 2,
-  weaponOffset: [4, 11],
-  weaponType: WEAPON_TYPES.BOMB,
-  width: 90 * MAGNIFICATION
+  name:           'Uncle Owen',
+  ship:           false,
+  speed:          6,
+  sprite:         'uncleowen',
+  weaponDelay:    FPS / 2,
+  weaponOffset:   [4, 11],
+  weaponType:     WEAPON_TYPES.BOMB,
+  width:          90 * MAGNIFICATION
 };
 
 export const vallorum = {

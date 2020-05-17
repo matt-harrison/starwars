@@ -4,6 +4,7 @@ import * as CHARACTERS          from  '/js/constants/characters.js';
 import {
   ACTOR_TYPES,
   CARDINALS,
+  COLORS,
   MAGNIFICATION,
   MODES
 } from '/js/constants/config.js';
@@ -118,20 +119,20 @@ export const crossPaths = (actor1, actor2) => {
 
 export const getCoords = ({ actor, master }) => {
   if (actor.dir === CARDINALS.LEFT) {
-    actor.x = master.gameWidth;
-    actor.y = getRandom(master.gameHeight - actor.frameHeight);
+    actor.x         = master.gameWidth;
+    actor.y         = getRandom(master.gameHeight - actor.frameHeight);
     actor.spriteRow = 1;
   } else if (actor.dir === CARDINALS.UP) {
-    actor.x = getRandom(master.gameWidth - actor.frameWidth);
-    actor.y = master.gameHeight;
+    actor.x         = getRandom(master.gameWidth - actor.frameWidth);
+    actor.y         = master.gameHeight;
     actor.spriteRow = 3;
   } else if (actor.dir === CARDINALS.RIGHT) {
-    actor.x = 0 - actor.frameWidth;
-    actor.y = getRandom(master.gameHeight - actor.frameHeight);
+    actor.x         = 0 - actor.frameWidth;
+    actor.y         = getRandom(master.gameHeight - actor.frameHeight);
     actor.spriteRow = 0;
   } else if (actor.dir === CARDINALS.DOWN) {
-    actor.x = getRandom(master.gameWidth - actor.frameWidth);
-    actor.y = 0 - actor.frameHeight;
+    actor.x         = getRandom(master.gameWidth - actor.frameWidth);
+    actor.y         = 0 - actor.frameHeight;
     actor.spriteRow = 2;
   }
 }
@@ -213,7 +214,7 @@ export const getPosition = ({ actor, master }) => {
   const actorRight       = actor.x + actor.frameWidth;
   const actorTop         = actor.y;
   const actorBottom      = actor.y + actor.frameHeight;
-  const isBounceLimitMet = typeof(actor.bounceLimit) !== 'undefined' && actor.bounceCount >= actor.bounceCount;
+  const isBounceLimitMet = typeof(actor.bounceLimit) !== 'undefined' && actor.bounceCount >= actor.bounceLimit;
   const isInBounds       = inBounds({ actor, master });
   const isObstructed     = getIsObstructed({
     actor,
@@ -261,7 +262,7 @@ export const getPosition = ({ actor, master }) => {
           actor.dir = CARDINALS.UP;
           actor.y   = master.gameHeight - actor.frameHeight;
 
-          actor.bouceCount++;
+          actor.bounceCount++;
         }
         break;
       case CARDINALS.LEFT:
@@ -272,7 +273,7 @@ export const getPosition = ({ actor, master }) => {
           actor.dir = CARDINALS.RIGHT;
           actor.x   = 0;
 
-          actor.bouceCount++;
+          actor.bounceCount++;
         }
         break;
       case CARDINALS.RIGHT:
@@ -283,7 +284,7 @@ export const getPosition = ({ actor, master }) => {
           actor.dir = CARDINALS.LEFT;
           actor.x   = master.gameWidth - actor.frameWidth;
 
-          actor.bouceCount++;
+          actor.bounceCount++;
         }
         break;
       case CARDINALS.UP:
@@ -294,7 +295,7 @@ export const getPosition = ({ actor, master }) => {
           actor.dir = CARDINALS.DOWN;
           actor.y   = 0;
 
-          actor.bouceCount++;
+          actor.bounceCount++;
         }
         break;
     }
@@ -319,20 +320,83 @@ export const inBounds = ({ actor, master }) => {
   );
 }
 
+export const initEnemies = (master) => {
+  const {
+    enemiesOptional,
+    enemiesRequiredTemplate
+  } = master.dom.stage;
+
+  master.dom.stage.enemies = [];
+
+  enemiesOptional.forEach(enemy => {
+    enemy.details.isOptional = true;
+    enemy.details.type       = ACTOR_TYPES.ENEMY;
+  });
+
+  if (enemiesOptional) {
+    master.dom.stage.enemies.push(...enemiesOptional);
+  }
+
+  if (enemiesRequiredTemplate) {
+    const {
+      bounceLimit,
+      count,
+      character,
+      delayInterval,
+      dir,
+      hp
+    } = enemiesRequiredTemplate;
+
+    for (let i = 0; i < count; i++) {
+      const enemy = {
+        character: character,
+        details: {
+          bounceLimit: bounceLimit,
+          delay:       delayInterval * i,
+          dir:         dir,
+          hp:          hp,
+          isOptional:  false,
+          type:        ACTOR_TYPES.ENEMY
+        }
+      };
+
+      master.dom.stage.enemies.push(enemy);
+    }
+  }
+};
+
 export const preload = (url) => {
   const image = new Image();
   image.src = url;
 }
 
-export const updateScore = ({ hud, points }) => {
-  hud.score += points;
-  hud.scoreText.innerHTML = hud.score;
-}
+export const updateHud = ({ master, victim }) => {
+  const scoreDelta = victim.type === ACTOR_TYPES.FRIENDLY ? 0 - 100 : 100;
+  let   color      = master.dom.stage.textColor;
 
-export const updateVictim = ({ color, hud, victim }) => {
-  hud.victimText.style.color = color;
-  hud.victimText.innerHTML = victim.name;
-  hud.victimCount = 16;
+  switch (victim.type) {
+    case ACTOR_TYPES.NEUTRAL:
+      color = COLORS.BLUE_DARK;
+      break;
+    case ACTOR_TYPES.FRIENDLY:
+      color = COLORS.RED;
+      break;
+    default:
+    case ACTOR_TYPES.ENEMY:
+      color = master.dom.stage.textColor;
+      break;
+  }
+
+  // rename scoreText   to scoreSelector?
+  // rename victimText  to victimSelector?
+  // rename victimCount to victimIdInterval?
+
+  master.dom.hud.score                  = master.dom.hud.score + scoreDelta;
+  master.dom.hud.scoreText.innerHTML    = master.dom.hud.score;
+  master.dom.hud.scoreText.style.color  = color;
+  master.dom.hud.victimCount            = 16;
+  master.dom.hud.victimText.innerHTML   = victim.name;
+  master.dom.hud.victimText.style.color = color;
 }
 
 // Cheats

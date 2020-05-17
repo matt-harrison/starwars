@@ -21,6 +21,5 @@ export const Stage = function({
   master.dom.hud.scoreboard.style.color = this.textColor;
 
   this.enemiesKilled = 0;
-  this.bossReached   = false;
   this.defeated      = false;
 };
