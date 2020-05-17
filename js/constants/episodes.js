@@ -9,7 +9,7 @@ export const ATTRACTION = {
   character: CHARACTERS.rebel,
   cutscenes: [],
   enemiesOptional: [],
-  enemiesRequiredTemplate: {
+  enemiesRequiredData: {
     bounceLimit:   undefined,
     character:     CHARACTERS.stormtrooper,
     count:         3,
@@ -91,7 +91,7 @@ const tantive4 = {
     'episode4-destroyer'
   ],
   enemiesOptional: [],
-  enemiesRequiredTemplate: {
+  enemiesRequiredData: {
     bounceLimit:   undefined,
     character:     CHARACTERS.stormtrooper,
     count:         10,
@@ -144,7 +144,7 @@ const ambassador = {
     'episode4-antilles'
   ],
   enemiesOptional: [],
-  enemiesRequiredTemplate: {
+  enemiesRequiredData: {
     bounceLimit:   undefined,
     character:     CHARACTERS.rebel,
     count:         3,
@@ -188,7 +188,7 @@ const tatooine = {
     'episode4-crash'
   ],
   enemiesOptional: [],
-  enemiesRequiredTemplate: {
+  enemiesRequiredData: {
     bounceLimit:   undefined,
     character:     CHARACTERS.threepio,
     count:         1,
@@ -258,7 +258,7 @@ const search = {
     'episode4-binoculars'
   ],
   enemiesOptional: [],
-  enemiesRequiredTemplate: {
+  enemiesRequiredData: {
     bounceLimit:   undefined,
     character:     CHARACTERS.tusken,
     count:         10,
@@ -317,7 +317,7 @@ const sandcrawler = {
     'episode4-tusken'
   ],
   enemiesOptional: [],
-  enemiesRequiredTemplate: {
+  enemiesRequiredData: {
     bounceLimit:   undefined,
     character:     CHARACTERS.jawa,
     count:         10,
@@ -368,7 +368,7 @@ const moistureFarm = {
   character: CHARACTERS.sandtrooper,
   cutscenes: [],
   enemiesOptional: [],
-  enemiesRequiredTemplate: {
+  enemiesRequiredData: {
     bounceLimit:   undefined,
     character:     CHARACTERS.uncleowen,
     count:         1,
@@ -426,7 +426,7 @@ const mosEisley = {
       }
     }
   ],
-  enemiesRequiredTemplate: {
+  enemiesRequiredData: {
     bounceLimit:   undefined,
     character:     CHARACTERS.sandtrooper,
     count:         10,
@@ -513,7 +513,7 @@ const dockingBay = {
       }
     }
   ],
-  enemiesRequiredTemplate: {
+  enemiesRequiredData: {
     bounceLimit:   undefined,
     character:     CHARACTERS.sandtrooper,
     count:         10,
@@ -554,7 +554,7 @@ const alderaan = {
     'episode4-alderaan'
   ],
   enemiesOptional: [],
-  enemiesRequiredTemplate: {
+  enemiesRequiredData: {
     bounceLimit:   undefined,
     character:     SHIPS.ASTEROID,
     count:         10,
@@ -586,7 +586,7 @@ const detention = {
   character: CHARACTERS.chewbacca,
   cutscenes: [],
   enemiesOptional: [],
-  enemiesRequiredTemplate: {
+  enemiesRequiredData: {
     bounceLimit:   undefined,
     character:     CHARACTERS.deathstartrooper,
     count:         10,
@@ -643,7 +643,7 @@ const tractorBeam = {
   character: CHARACTERS.ben,
   cutscenes: [],
   enemiesOptional: [],
-  enemiesRequiredTemplate: {
+  enemiesRequiredData: {
     bounceLimit:   undefined,
     character:     CHARACTERS.stormtrooper,
     count:         10,
@@ -681,7 +681,7 @@ const showdown4 = {
   character: CHARACTERS.darthvader,
   cutscenes: [],
   enemiesOptional: [],
-  enemiesRequiredTemplate: {
+  enemiesRequiredData: {
     bounceLimit:   undefined,
     character:     undefined,
     count:         0,
@@ -713,7 +713,7 @@ const escapeFromDeathStar = {
   character: CHARACTERS.leia,
   cutscenes: [],
   enemiesOptional: [],
-  enemiesRequiredTemplate: {
+  enemiesRequiredData: {
     bounceLimit:   undefined,
     character:     CHARACTERS.stormtrooper,
     count:         10,
@@ -754,7 +754,7 @@ const escapeFromDeathStar = {
   neutrals: [],
   obstacles: [
     {
-      type: OBSTACLES.FALCONBIG,
+      type: OBSTACLES.FALCON,
       x: 100,
       y: 0
     }
@@ -779,7 +779,7 @@ const battleOfYavin = {
   character: SHIPS.FALCON,
   cutscenes: [],
   enemiesOptional: [],
-  enemiesRequiredTemplate: {
+  enemiesRequiredData: {
     bounceLimit:   undefined,
     character:     SHIPS.TIE,
     count:         3,
@@ -839,7 +839,7 @@ const assaultOnDeathStar = {
   character: SHIPS.XWING,
   cutscenes: [],
   enemiesOptional: [],
-  enemiesRequiredTemplate: {
+  enemiesRequiredData: {
     bounceLimit:   undefined,
     character:     undefined,
     count:         0,
@@ -872,7 +872,7 @@ const hoth = {
   character: CHARACTERS.luke5,
   cutscenes: [],
   enemiesOptional: [],
-  enemiesRequiredTemplate: {
+  enemiesRequiredData: {
     bounceLimit:   undefined,
     character:     CHARACTERS.tauntaun, // add probe droid
     count:         10,
@@ -905,7 +905,7 @@ const endor = {
   character: CHARACTERS.ewok,
   cutscenes: [],
   enemiesOptional: [],
-  enemiesRequiredTemplate: {
+  enemiesRequiredData: {
     bounceLimit:   undefined,
     character:     CHARACTERS.stormtrooper,
     count:         10,
@@ -953,7 +953,7 @@ const test = {
       }
     }
   ],
-  character: CHARACTERS.artoo,
+  character: CHARACTERS.rebel,
   cutscenes: [],
   enemiesOptional: [
     {
@@ -966,7 +966,7 @@ const test = {
       }
     }
   ],
-  enemiesRequiredTemplate: {
+  enemiesRequiredData: {
     bounceLimit:   undefined,
     character:     CHARACTERS.officerblack,
     count:         3,
@@ -988,10 +988,10 @@ const test = {
   name: 'Test Kitchen',
   neutrals: [
     {
-      character: CHARACTERS.mousedroid,
+      character: CHARACTERS.ben,
       details: {
         bounceLimit: undefined,
-        delay:       10 * FPS,
+        delay:       0 * FPS,
         dir:         undefined,
         hp:          1
       }
@@ -1013,10 +1013,10 @@ export const EPISODES = [
   [test],
   [test],
   [
-    // tantive4,
-    // ambassador,
-    // tatooine,
-    // search,
+    tantive4,
+    ambassador,
+    tatooine,
+    search,
     sandcrawler,
     moistureFarm,
     mosEisley,

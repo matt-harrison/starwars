@@ -16,63 +16,63 @@ export const Lightsaber = function({
   this.thrown = isLongRange;
 
   if (this.dir === 'left') {
-    this.frameWidth = 8 * MAGNIFICATION;
     this.frameHeight = 1 * MAGNIFICATION;
-    this.hiltWidth = 2 * MAGNIFICATION;
-    this.hiltHeight = 1 * MAGNIFICATION;
-    this.x = origin.x + (origin.weaponOffsetLeft[0] * MAGNIFICATION) - this.frameWidth;
-    this.y = origin.y + (origin.weaponOffsetLeft[1] * MAGNIFICATION);
-    this.hiltX = this.frameWidth - this.hiltWidth;
-    this.hiltY = 0;
+    this.frameWidth  = 8 * MAGNIFICATION;
+    this.hiltHeight  = 1 * MAGNIFICATION;
+    this.hiltWidth   = 2 * MAGNIFICATION;
+    this.hiltX       = this.frameWidth - this.hiltWidth;
+    this.hiltY       = 0;
+    this.x           = origin.x + (origin.weaponOffsetLeft[0] * MAGNIFICATION) - this.frameWidth;
+    this.y           = origin.y + (origin.weaponOffsetLeft[1] * MAGNIFICATION);
   } else if (this.dir === 'up') {
-    this.frameWidth = 1 * MAGNIFICATION;
     this.frameHeight = 8 * MAGNIFICATION;
-    this.hiltWidth = 1 * MAGNIFICATION;
-    this.hiltHeight = 2 * MAGNIFICATION;
-    this.x = origin.x + (origin.weaponOffsetUp[0] * MAGNIFICATION);
-    this.y = origin.y + (origin.weaponOffsetUp[1] * MAGNIFICATION) - this.frameHeight;
-    this.hiltX = 0;
-    this.hiltY = this.frameHeight - this.hiltHeight;;
+    this.frameWidth  = 1 * MAGNIFICATION;
+    this.hiltHeight  = 2 * MAGNIFICATION;
+    this.hiltWidth   = 1 * MAGNIFICATION;
+    this.hiltX       = 0;
+    this.hiltY       = this.frameHeight - this.hiltHeight;;
+    this.x           = origin.x + (origin.weaponOffsetUp[0] * MAGNIFICATION);
+    this.y           = origin.y + (origin.weaponOffsetUp[1] * MAGNIFICATION) - this.frameHeight;
   } else if (this.dir === 'right') {
-    this.frameWidth = 8 * MAGNIFICATION;
     this.frameHeight = 1 * MAGNIFICATION;
-    this.hiltWidth = 2 * MAGNIFICATION;
-    this.hiltHeight = 1 * MAGNIFICATION;
-    this.x = origin.x + (origin.weaponOffsetRight[0] * MAGNIFICATION);
-    this.y = origin.y + (origin.weaponOffsetRight[1] * MAGNIFICATION);
-    this.hiltX = 0;
-    this.hiltY = 0;
+    this.frameWidth  = 8 * MAGNIFICATION;
+    this.hiltHeight  = 1 * MAGNIFICATION;
+    this.hiltWidth   = 2 * MAGNIFICATION;
+    this.hiltX       = 0;
+    this.hiltY       = 0;
+    this.x           = origin.x + (origin.weaponOffsetRight[0] * MAGNIFICATION);
+    this.y           = origin.y + (origin.weaponOffsetRight[1] * MAGNIFICATION);
   } else if (this.dir === 'down') {
-    this.frameWidth = 1 * MAGNIFICATION;
     this.frameHeight = 8 * MAGNIFICATION;
-    this.hiltWidth = 1 * MAGNIFICATION;
-    this.hiltHeight = 2 * MAGNIFICATION;
-    this.x = origin.x + (origin.weaponOffsetDown[0] * MAGNIFICATION);
-    this.y = origin.y + (origin.weaponOffsetDown[1] * MAGNIFICATION);
-    this.hiltX = 0;
-    this.hiltY = 0;
+    this.frameWidth  = 1 * MAGNIFICATION;
+    this.hiltHeight  = 2 * MAGNIFICATION;
+    this.hiltWidth   = 1 * MAGNIFICATION;
+    this.hiltX       = 0;
+    this.hiltY       = 0;
+    this.x           = origin.x + (origin.weaponOffsetDown[0] * MAGNIFICATION);
+    this.y           = origin.y + (origin.weaponOffsetDown[1] * MAGNIFICATION);
   }
 
-  this.width = this.frameWidth;
   this.height = this.frameHeight;
+  this.width  = this.frameWidth;
 
-  this.selector = document.createElement('div');
-  this.selector.id = `lightsaber${master.actorCount++}`;
-  this.selector.style.position = 'absolute';
-  this.selector.style.left = this.x + 'px';
-  this.selector.style.top = this.y + 'px';
-  this.selector.style.width = this.frameWidth + 'px';
-  this.selector.style.height = this.frameHeight + 'px';
+  this.selector                       = document.createElement('div');
+  this.selector.id                    = `lightsaber${master.actorCount++}`;
   this.selector.style.backgroundColor = this.color;
-  this.selector.style.zIndex = '4';
+  this.selector.style.height          = this.frameHeight + 'px';
+  this.selector.style.left            = this.x + 'px';
+  this.selector.style.position        = 'absolute';
+  this.selector.style.top             = this.y + 'px';
+  this.selector.style.width           = this.frameWidth + 'px';
+  this.selector.style.zIndex          = '4';
 
-  this.hilt = document.createElement('div');
-  this.hilt.style.position = 'relative';
-  this.hilt.style.left = this.hiltX + 'px';
-  this.hilt.style.top = this.hiltY + 'px';
-  this.hilt.style.width = this.hiltWidth + 'px';
-  this.hilt.style.height = this.hiltHeight + 'px';
+  this.hilt                       = document.createElement('div');
   this.hilt.style.backgroundColor = COLORS.GRAY;
+  this.hilt.style.height          = this.hiltHeight + 'px';
+  this.hilt.style.left            = this.hiltX + 'px';
+  this.hilt.style.position        = 'relative';
+  this.hilt.style.top             = this.hiltY + 'px';
+  this.hilt.style.width           = this.hiltWidth + 'px';
 
   master.actors.props.push(this);
   master.dom.stage.selector.appendChild(this.selector);
@@ -95,7 +95,8 @@ export const Lightsaber = function({
 
     master.dom.stage.selector.removeChild(this.selector);
     master.actors.props.splice(position, 1);
-    origin.lightsaber = '';
+
+    origin.lightsaber   = '';
     origin.spriteColumn = 0;
   }
 
@@ -105,6 +106,7 @@ export const Lightsaber = function({
         this.active = true;
       }
     }
+
     if (this.thrown) {
       if (this.dir === 'left') {
         if (this.x - this.speed > 0) {
@@ -141,7 +143,7 @@ export const Lightsaber = function({
   this.draw = function() {
     if (origin.attacking) {
       this.selector.style.left = this.x + 'px';
-      this.selector.style.top = this.y + 'px';
+      this.selector.style.top  = this.y + 'px';
     } else {
       this.kill();
     }

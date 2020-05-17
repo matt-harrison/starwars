@@ -9,38 +9,37 @@ export const Projectile = function({
 
   origin.weaponReady = false;
 
-  this.type = origin.projectile;
-  this.origin = origin;
-  this.dir = origin.dir;
-  this.active = false;
-  this.dead = false;
+  this.active       = false;
+  this.dead         = false;
+  this.dir          = origin.dir;
+  this.origin       = origin;
   this.spriteColumn = 0;
+  this.type         = origin.projectile;
 
-  this.selector = document.createElement('div');
-  this.selector.id = `projectile${master.actorCount++}`;
+  this.selector                = document.createElement('div');
+  this.selector.id             = `projectile${master.actorCount++}`;
   this.selector.style.position = 'absolute';
 
   if (origin.projectile === PROJECTILES.LASER) {
     this.selector.style.backgroundColor = origin.weaponColor;
 
     if (this.dir === 'left' || this.dir === 'right') {
-      this.width = 2 * MAGNIFICATION;
       this.height = 1 * MAGNIFICATION;
+      this.width  = 2 * MAGNIFICATION;
     } else if (this.dir === 'up' || this.dir === 'down') {
-      this.width = 1 * MAGNIFICATION;
       this.height = 2 * MAGNIFICATION;
+      this.width  = 1 * MAGNIFICATION;
     }
 
-    this.frameWidth = this.width;
     this.frameHeight = this.height;
-    this.speed = 30;
+    this.frameWidth  = this.width;
+    this.speed       = 30;
   } else {
     this.selector.style.backgroundImage = "url('img/projectiles/" + this.name + ".png')";
   }
 
   this.selector.style.backgroundSize = this.width + 'px ' + this.height + 'px';
-
-  this.speed = this.speed * (MAGNIFICATION / 5);
+  this.speed                         = this.speed * (MAGNIFICATION / 5);
 
   if (this.dir === 'left') {
     this.x = origin.x + (origin.weaponOffsetLeft[0] * MAGNIFICATION) - this.frameWidth;
@@ -56,8 +55,8 @@ export const Projectile = function({
     this.y = origin.y + (origin.weaponOffsetDown[1] * MAGNIFICATION);
   }
 
-  this.selector.style.width = this.frameWidth + 'px';
   this.selector.style.height = this.frameHeight + 'px';
+  this.selector.style.width  = this.frameWidth + 'px';
   this.selector.style.zIndex = '4';
 
   master.actors.props.push(this);
@@ -112,9 +111,9 @@ export const Projectile = function({
     if (this.dead) {
       this.kill();
     } else {
-      this.selector.style.left = this.x + 'px';
-      this.selector.style.top = this.y + 'px';
-      this.selector.style.backgroundPosition = (0 - this.spriteColumn * this.frameWidth) + 'px 0';
+      this.selector.style.backgroundPosition = `${0 - this.spriteColumn * this.frameWidth}px 0`;
+      this.selector.style.left               = `${this.x}px`;
+      this.selector.style.top                = `${this.y}px`;
     }
   };
 

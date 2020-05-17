@@ -1,38 +1,94 @@
 import { MAGNIFICATION } from '/js/constants/config.js';
 
+const DEATH_ARFIVE = {
+  frameCount : 6,
+  frameHeight: 9 * MAGNIFICATION,
+  frameWidth : 5 * MAGNIFICATION,
+  name       : 'arfivedeath',
+  remove     : false
+}
+
+const DEATH_AUNT_BERU = {
+  frameCount : 10,
+  frameHeight: 12 * MAGNIFICATION,
+  frameWidth : 10 * MAGNIFICATION,
+  name       : 'auntberudeath',
+  remove     : false
+};
+
+const DEATH_BEN = {
+  frameCount : 6,
+  frameHeight: 12 * MAGNIFICATION,
+  frameWidth : 10 * MAGNIFICATION,
+  name       : 'bendeath',
+  remove     : false
+};
+
+const DEATH_DARTH_VADER6 = {
+  frameCount : 12,
+  frameHeight: 12 * MAGNIFICATION,
+  frameWidth : 10 * MAGNIFICATION,
+  name       : 'darthvader6death',
+  remove     : false
+};
+
+const DEATH_TIE_ADVANCED = {
+  frameCount : 8,
+  frameHeight: 7 * MAGNIFICATION,
+  frameWidth : 7 * MAGNIFICATION,
+  name       : 'vadertiedeath',
+  remove     : true
+};
+
+const DEATH_UNCLE_OWEN = {
+  frameCount:  10,
+  frameHeight: 12 * MAGNIFICATION,
+  frameWidth:  10 * MAGNIFICATION,
+  name:        'uncleowendeath',
+  remove:      false
+};
+
 const DETONATION = {
-  name: 'detonation',
-  frameWidth: 9 * MAGNIFICATION,
+  frameCount : 5,
   frameHeight: 5 * MAGNIFICATION,
-  frameCount: 5,
-  remove: true
+  frameWidth : 9 * MAGNIFICATION,
+  name       : 'detonation',
+  remove     : true
 };
 
 const EXPLOSION = {
-  name: 'explosion',
-  frameWidth: 10 * MAGNIFICATION,
+  frameCount : 9,
   frameHeight: 12 * MAGNIFICATION,
-  frameCount: 9,
-  remove: true
+  frameWidth : 10 * MAGNIFICATION,
+  name       : 'explosion',
+  remove     : true
 };
 
 const EXPLOSION_SMALL = {
-  name: 'explosionsmall',
-  frameWidth: 10 * MAGNIFICATION,
+  frameCount : 7,
   frameHeight: 10 * MAGNIFICATION,
-  frameCount: 7,
-  remove: true
+  frameWidth : 10 * MAGNIFICATION,
+  name       : 'explosionsmall',
+  remove     : true
 };
 
 const SPRITZ = {
-  name: 'spritz',
-  frameWidth: 10 * MAGNIFICATION,
+  frameCount : 5,
   frameHeight: 12 * MAGNIFICATION,
-  frameCount: 5,
-  remove: true
+  frameWidth : 10 * MAGNIFICATION,
+  name       : 'spritz',
+  remove     : true
 };
 
 export const ANIMATIONS = {
+  DEATHS: {
+    ARFIVE      : DEATH_ARFIVE,
+    AUNT_BERU   : DEATH_AUNT_BERU,
+    BEN         : DEATH_BEN,
+    DARTH_VADER6: DEATH_DARTH_VADER6,
+    TIE_ADVANCED: DEATH_TIE_ADVANCED,
+    UNCLE_OWEN  : DEATH_UNCLE_OWEN
+  },
   DETONATION,
   EXPLOSION,
   EXPLOSION_SMALL,

@@ -1,33 +1,33 @@
 import { MAGNIFICATION } from '/js/constants/config.js';
 
 const GUNGAN_BALL = {
-  name: 'gunganBall',
-  width: 30 * MAGNIFICATION,
-  height: 6 * MAGNIFICATION,
-  frameWidth: 6 * MAGNIFICATION,
+  frameCount : 5,
   frameHeight: 6 * MAGNIFICATION,
-  frameCount: 5,
-  speed: 20
+  frameWidth : 6 * MAGNIFICATION,
+  height     : 6 * MAGNIFICATION,
+  name       : 'gunganBall',
+  speed      : 20,
+  width      : 30 * MAGNIFICATION
 };
 
 const ROCK = {
-  name: 'rock',
-  width: 20 * MAGNIFICATION,
-  height: 5 * MAGNIFICATION,
-  frameWidth: 5 * MAGNIFICATION,
+  frameCount : 4,
   frameHeight: 5 * MAGNIFICATION,
-  frameCount: 4,
-  speed: 20
+  frameWidth : 5 * MAGNIFICATION,
+  height     : 5 * MAGNIFICATION,
+  name       : 'rock',
+  speed      : 20,
+  width      : 20 * MAGNIFICATION
 };
 
 const STUN = {
-  name: 'stun',
-  width: 60 * MAGNIFICATION,
-  height: 10 * MAGNIFICATION,
-  frameWidth: 10 * MAGNIFICATION,
+  frameCount : 6,
   frameHeight: 10 * MAGNIFICATION,
-  frameCount: 6,
-  speed: 20
+  frameWidth : 10 * MAGNIFICATION,
+  height     : 10 * MAGNIFICATION,
+  name       : 'stun',
+  speed      : 20,
+  width      : 60 * MAGNIFICATION
 };
 
 export const PROJECTILES = {
@@ -38,8 +38,8 @@ export const PROJECTILES = {
 };
 
 export const WEAPON_TYPES = {
-  ATTACK: 'attack',
-  BOMB: 'bomb',
+  ATTACK    : 'attack',
+  BOMB      : 'bomb',
   LIGHTSABER: 'lightsaber',
   PROJECTILE: 'projectile'
 };

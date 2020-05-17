@@ -323,7 +323,7 @@ export const inBounds = ({ actor, master }) => {
 export const initEnemies = (master) => {
   const {
     enemiesOptional,
-    enemiesRequiredTemplate
+    enemiesRequiredData
   } = master.dom.stage;
 
   master.dom.stage.enemies = [];
@@ -337,7 +337,7 @@ export const initEnemies = (master) => {
     master.dom.stage.enemies.push(...enemiesOptional);
   }
 
-  if (enemiesRequiredTemplate) {
+  if (enemiesRequiredData) {
     const {
       bounceLimit,
       count,
@@ -345,7 +345,7 @@ export const initEnemies = (master) => {
       delayInterval,
       dir,
       hp
-    } = enemiesRequiredTemplate;
+    } = enemiesRequiredData;
 
     for (let i = 0; i < count; i++) {
       const enemy = {

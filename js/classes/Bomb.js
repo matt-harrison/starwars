@@ -19,15 +19,15 @@ export const Bomb = function({
   this.x            = origin.x + (origin.weaponOffset[0] * MAGNIFICATION);
   this.y            = origin.y + (origin.weaponOffset[1] * MAGNIFICATION);
 
-  this.selector = document.createElement('div');
-  this.selector.id = `bomb${master.actorCount++}`;
-  this.selector.style.position = 'absolute';
-  this.selector.style.left = this.x + 'px';
-  this.selector.style.top = this.y + 'px';
-  this.selector.style.width = this.frameWidth + 'px';
-  this.selector.style.height = this.frameHeight + 'px';
+  this.selector                       = document.createElement('div');
+  this.selector.id                    = `bomb${master.actorCount++}`;
+  this.selector.style.position        = 'absolute';
+  this.selector.style.left            = this.x + 'px';
+  this.selector.style.top             = this.y + 'px';
+  this.selector.style.width           = this.frameWidth + 'px';
+  this.selector.style.height          = this.frameHeight + 'px';
   this.selector.style.backgroundColor = COLORS.BLACK;
-  this.selector.style.zIndex = '2';
+  this.selector.style.zIndex          = '2';
 
   master.actors.props.push(this);
   master.dom.stage.selector.appendChild(this.selector);

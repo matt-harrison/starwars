@@ -2,15 +2,12 @@ import { MAGNIFICATION } from '/js/constants/config.js';
 
 export const Obstacle = function({
   data,
-  master,
-  x,
-  y
+  master
 }) {
   Object.assign(this, data);
 
-  this.speed = this.speed * (MAGNIFICATION / 5);
-  this.leftPercent = x;
-  this.topPercent = y;
+  this.leftPercent = this.x;
+  this.topPercent  = this.y;
 
   if (this.leftPercent === 0) {
     this.x = 0;
@@ -28,15 +25,15 @@ export const Obstacle = function({
     this.y = master.gameHeight * (this.topPercent / 100) - (this.frameHeight / 2);
   }
 
-  this.selector = document.createElement('div');
-  this.selector.id = `obstacle${master.actorCount++}`;
-  this.selector.style.position = 'absolute';
-  this.selector.style.left = this.x + 'px';
-  this.selector.style.top = this.y + 'px';
-  this.selector.style.width = this.frameWidth + 'px';
-  this.selector.style.height = this.frameHeight + 'px';
-  this.selector.style.backgroundImage = "url('img/obstacles/" + this.img + ".png')";
-  this.selector.style.backgroundSize = this.width + 'px ' + this.height + 'px';
+  this.selector                       = document.createElement('div');
+  this.selector.id                    = `obstacle${master.actorCount++}`;
+  this.selector.style.backgroundImage = `url('img/obstacles/${this.img}.png')`;
+  this.selector.style.backgroundSize  = `${this.width}px ${this.height}px`;
+  this.selector.style.height          = this.frameHeight + 'px';
+  this.selector.style.left            = this.x + 'px';
+  this.selector.style.position        = 'absolute';
+  this.selector.style.top             = this.y + 'px';
+  this.selector.style.width           = this.frameWidth + 'px';
 
   master.actors.obstacles.push(this);
   master.dom.stage.selector.appendChild(this.selector);
@@ -52,8 +49,8 @@ export const Obstacle = function({
   }
 
   this.draw = function() {
-    this.selector.style.left = this.x + 'px';
-    this.selector.style.top = this.y + 'px';
     this.selector.style.backgroundPosition = (0 - this.spriteColumn * this.frameWidth) + 'px 0';
+    this.selector.style.left               = this.x + 'px';
+    this.selector.style.top                = this.y + 'px';
   }
 };

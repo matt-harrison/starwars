@@ -6,7 +6,6 @@ REFACTOR:
   * always use full objects even if null?
   * explicitly map all objects (instead of Object.assign) for readability?
   * adapt string concats to template literals
-  * alphabetize args
   * distribute functions to relevant class or move to utils
   * prefix level names for sortability
   * replace typeof () == 'undefined' etc
@@ -14,14 +13,15 @@ REFACTOR:
   * migrate all public vars from classes to master object? (ex. hud.title)
   * migrate all functions from app to utils? (master as arg?)
   * reimplement kill() as a util?
-  * share common logic across friendlies, enemies, and player as utils
+  * share common logic across actor, player, etc as utils
 * performance improvements
   * audit each function
   * audit each class
   * audit each constant
 * move enemy dodge loop out of Player class
-* handle death and remove outside classes from loop?
 * replace references to "dead" property with "active"
+* purge "remove" property from animation objects
+* handle death and remove outside classes from loop?
 * purge always falsy properties from episodes?
 * make enemy projectile rate a property of the level?
   * is weaponReady redundant to low shoot probability?
@@ -47,7 +47,7 @@ FEATURES:
 * npm test?
 
 BUGS:
-* actor placed off edge of stage?
+* actor can turn before crossing fully onto stage
 * trying to remove already removed Projectile: dedupe expiredObjects before looping?
 * character frame sometimes redundant to Lighsaber instance (press Z and d-pad at same time)
 * concurrent boss and player death results in Game Over + next level

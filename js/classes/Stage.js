@@ -16,10 +16,10 @@ export const Stage = function({
 
   master.dom.game.selector.insertBefore(this.selector, master.dom.game.selector.firstChild);
 
-  master.dom.hud.title.style.color      = this.textColor;
   master.dom.hud.directions.style.color = this.textColor;
   master.dom.hud.scoreboard.style.color = this.textColor;
+  master.dom.hud.title.style.color      = this.textColor;
 
-  this.enemiesKilled = 0;
   this.defeated      = false;
+  this.enemiesKilled = 0;
 };

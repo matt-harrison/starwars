@@ -55,15 +55,15 @@ export const Player = function({
   this.selector.style.backgroundImage  = `url('img/characters/${this.sprite}.png')`;
   this.selector.style.backgroundRepeat = 'no-repeat';
   this.selector.style.backgroundSize   = `${this.width}px ${this.height}px`;
-  this.selector.style.height           = this.frameHeight + 'px';
+  this.selector.style.height           = `${this.frameHeight}px`;
   this.selector.style.position         = 'absolute';
-  this.selector.style.width            = this.frameWidth + 'px';
+  this.selector.style.width            = `${this.frameWidth}px`;
   this.selector.style.zIndex           = this.y;
 
   master.dom.stage.selector.appendChild(this.selector);
 
   if (this.death) {
-    preload('img/animations/' + this.death.name + '.png');
+    preload(`img/animations/${this.death.name}.png`);
   }
 
   this.attack = function(key) {
@@ -98,10 +98,9 @@ export const Player = function({
 
         master.keys = [key];
 
-        this.running = false;
-        this.attacking = true;
+        this.running      = false;
+        this.attacking    = true;
         this.spriteColumn = this.moveFrameCount + 1;
-      } else if (this.weaponType === WEAPON_TYPES.ATTACK) {
       }
 
       this.weaponReady = false;

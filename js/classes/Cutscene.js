@@ -14,12 +14,12 @@ export const Cutscene = function({
     parent: master.dom.game.selector,
     styles: {
       backgroundColor: COLORS.BLACK,
-      height:          '100%',
-      left:            0,
-      position:        'absolute',
-      top:             0,
-      width:           '100%',
-      zIndex:          '101'
+      height         : '100%',
+      left           : 0,
+      position       : 'absolute',
+      top            : 0,
+      width          : '100%',
+      zIndex         : '101'
     }
   });
 
@@ -32,13 +32,13 @@ export const Cutscene = function({
     parent: this.selector,
     styles: {
       backgroundImage: `url('img/cutscenes/${img}.png')`,
-      backgroundSize:  `${sideLength}px ${sideLength}px`,
-      height:          `${sideLength}px`,
-      left:            `${(master.gameWidth - sideLength) / 2}px`,
-      position:        'absolute',
-      top:             `${(master.gameHeight - sideLength) / 2}px`,
-      width:           `${sideLength}px`,
-      zIndex:          100
+      backgroundSize : `${sideLength}px ${sideLength}px`,
+      height         : `${sideLength}px`,
+      left           : `${(master.gameWidth - sideLength) / 2}px`,
+      position       : 'absolute',
+      top            : `${(master.gameHeight - sideLength) / 2}px`,
+      width          : `${sideLength}px`,
+      zIndex         : 100
     }
   });
 

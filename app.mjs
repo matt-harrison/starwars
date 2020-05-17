@@ -368,13 +368,13 @@ function initLevel() {
   master.dom.hud.scoreText.style.color = master.dom.stage.textColor;
 
   if (typeof(EPISODES[master.episode][master.level].obstacles) !== 'undefined') {
-    master.dom.stage.obstacles.forEach(obstacle =>{
-      new Obstacle({
-        data: obstacle['type'],
-        master,
-        x: obstacle['x'],
-        y: obstacle['y']
-      });
+    master.dom.stage.obstacles.forEach(obstacle => {
+      const data = Object.assign({
+        x: obstacle.x,
+        y: obstacle.y
+      }, obstacle.type);
+
+      new Obstacle({ data, master });
     });
   }
 
@@ -410,13 +410,13 @@ function initMenu(mode) {
     });
 
     if (typeof(EPISODES[master.episode][master.level].obstacles) !== 'undefined') {
-      master.dom.stage.obstacles?.forEach(obstacle =>{
-        new Obstacle({
-          data: obstacle['type'],
-          master,
-          x: obstacle['x'],
-          y: obstacle['y']
-        });
+      master.dom.stage.obstacles?.forEach(obstacle => {
+        const data = Object.assign({
+          x: obstacle.x,
+          y: obstacle.y
+        }, obstacle.type);
+
+        new Obstacle({ data, master });
       });
     }
 
@@ -543,7 +543,7 @@ function loop() {
         }
       }
 
-      master.actors.enemies.forEach(enemy =>{
+      master.actors.enemies.forEach(enemy => {
         if (prop.origin !== enemy && enemy.active && collision(enemy, prop)) {
           enemy.hit();
 
@@ -553,7 +553,7 @@ function loop() {
         }
       });
 
-      master.actors.friendlies.forEach(friendly =>{
+      master.actors.friendlies.forEach(friendly => {
         if (prop.origin !== friendly && friendly.active && collision(friendly, prop)) {
           friendly.hit();
 
@@ -563,7 +563,7 @@ function loop() {
         }
       });
 
-      master.actors.neutrals.forEach(neutral =>{
+      master.actors.neutrals.forEach(neutral => {
         if (prop.origin !== neutral && neutral.active && collision(neutral, prop)) {
           neutral.hit();
 
