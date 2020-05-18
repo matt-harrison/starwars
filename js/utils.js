@@ -214,7 +214,7 @@ export const getPosition = ({ actor, game }) => {
   const actorRight       = actor.x + actor.frameWidth;
   const actorTop         = actor.y;
   const actorBottom      = actor.y + actor.frameHeight;
-  const isBounceLimitMet = typeof(actor.bounceLimit) !== 'undefined' && actor.bounceCount >= actor.bounceLimit;
+  const isBounceLimitMet = actor.bounceLimit >= 0 && actor.bounceCount >= actor.bounceLimit;
   const isInBounds       = inBounds({ actor, game });
   const isObstructed     = getIsObstructed({
     actor,
@@ -337,7 +337,7 @@ export const initEnemies = (game) => {
 
   if (enemiesRequiredData) {
     const {
-      bounceLimit,
+      bounceLimit = -1,
       count,
       character,
       delayInterval,
@@ -349,12 +349,12 @@ export const initEnemies = (game) => {
       const enemy = {
         character: character,
         details: {
-          bounceLimit: bounceLimit,
-          delay:       delayInterval * i,
-          dir:         dir,
-          hp:          hp,
-          isOptional:  false,
-          type:        ACTOR_TYPES.ENEMY
+          bounceLimit: -1,
+          delay      : delayInterval * i,
+          dir,
+          hp,
+          isOptional : false,
+          type       : ACTOR_TYPES.ENEMY
         }
       };
 

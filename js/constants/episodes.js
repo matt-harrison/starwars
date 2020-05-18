@@ -10,61 +10,60 @@ export const ATTRACTION = {
   cutscenes: [],
   enemiesOptional: [],
   enemiesRequiredData: {
-    bounceLimit:   undefined,
-    character:     CHARACTERS.stormtrooper,
-    count:         3,
+    character    : CHARACTERS.stormtrooper,
+    count        : 3,
     delayInterval: 1 * FPS,
-    dir:           CARDINALS.RIGHT,
-    hp:            1
+    dir          : CARDINALS.RIGHT,
+    hp           : 1
   },
   friendlies: [
     {
       character: CHARACTERS.rebel,
       details: {
-        bounceLimit: undefined,
-        delay:       0.5 * FPS,
-        dir:         CARDINALS.LEFT,
-        hp:          1
+        bounceLimit: -1,
+        delay      : 0.5 * FPS,
+        dir        : CARDINALS.LEFT,
+        hp         : 1
       }
     },
     {
       character: CHARACTERS.rebel,
       details: {
-        bounceLimit: undefined,
-        delay:       1.5 * FPS,
-        dir:         CARDINALS.LEFT,
-        hp:          1
+        bounceLimit: -1,
+        delay      : 1.5 * FPS,
+        dir        : CARDINALS.LEFT,
+        hp         : 1
       }
     },
     {
       character: CHARACTERS.rebel,
       details: {
-        bounceLimit: undefined,
-        delay:       2.5 * FPS,
-        dir:         CARDINALS.LEFT,
-        hp:          1
+        bounceLimit: -1,
+        delay      : 2.5 * FPS,
+        dir        : CARDINALS.LEFT,
+        hp         : 1
       }
     },
     {
       character: CHARACTERS.threepio,
       details: {
         bounceLimit: 0,
-        delay:       2 * FPS,
-        dir:         CARDINALS.DOWN,
-        hp:          1
+        delay      : 2 * FPS,
+        dir        : CARDINALS.DOWN,
+        hp         : 1
       }
     },
     {
       character: CHARACTERS.artoo,
       details: {
         bounceLimit: 0,
-        delay:       4 * FPS,
-        dir:         CARDINALS.DOWN,
-        hp:          1
+        delay      : 4 * FPS,
+        dir        : CARDINALS.DOWN,
+        hp         : 1
       }
     }
   ],
-  name: null,
+  name: 'Star Wars',
   neutrals: [],
   obstacles: [],
   password: undefined,
@@ -78,10 +77,9 @@ const tantive4 = {
     {
       character: CHARACTERS.officerblack,
       details: {
-        bounceLimit: undefined,
-        delay:       0,
-        dir:         undefined,
-        hp:          2
+        delay: 0,
+        dir  : null,
+        hp   : 2
       }
     }
   ],
@@ -92,30 +90,29 @@ const tantive4 = {
   ],
   enemiesOptional: [],
   enemiesRequiredData: {
-    bounceLimit:   undefined,
-    character:     CHARACTERS.stormtrooper,
-    count:         10,
+    character    : CHARACTERS.stormtrooper,
+    count        : 10,
     delayInterval: 2 * FPS,
-    dir:           CARDINALS.RIGHT,
-    hp:            1
+    dir          : CARDINALS.RIGHT,
+    hp           : 1
   },
   friendlies: [
     {
       character: CHARACTERS.threepio,
       details: {
         bounceLimit: 0,
-        delay:       3 * FPS,
-        dir:         CARDINALS.DOWN,
-        hp:          1
+        delay      : 3 * FPS,
+        dir        : CARDINALS.DOWN,
+        hp         : 1
       }
     },
     {
       character: CHARACTERS.artoo,
       details: {
         bounceLimit: 0,
-        delay:       5 * FPS,
-        dir:         CARDINALS.DOWN,
-        hp:          1
+        delay      : 5 * FPS,
+        dir        : CARDINALS.DOWN,
+        hp         : 1
       }
     }
   ],
@@ -132,10 +129,9 @@ const ambassador = {
     {
       character: CHARACTERS.leia,
       details: {
-        bounceLimit: undefined,
-        delay:       0,
-        dir:         undefined,
-        hp:          1
+        delay: 0,
+        dir  : null,
+        hp   : 1
       }
     }
   ],
@@ -145,12 +141,11 @@ const ambassador = {
   ],
   enemiesOptional: [],
   enemiesRequiredData: {
-    bounceLimit:   undefined,
-    character:     CHARACTERS.rebel,
-    count:         3,
+    character    : CHARACTERS.rebel,
+    count        : 3,
     delayInterval: 2 * FPS,
-    dir:           CARDINALS.LEFT,
-    hp:            1
+    dir          : CARDINALS.LEFT,
+    hp           : 1
   },
   friendlies: [],
   name: 'Ambassador',
@@ -159,9 +154,9 @@ const ambassador = {
       character: CHARACTERS.protocolwhite,
       details: {
         bounceLimit: 0,
-        delay:       5.5 * FPS,
-        dir:         CARDINALS.DOWN,
-        hp:          1
+        delay      : 5.5 * FPS,
+        dir        : CARDINALS.DOWN,
+        hp         : 1
       }
     }
   ],
@@ -176,10 +171,9 @@ const tatooine = {
     {
       character: CHARACTERS.artoo,
       details: {
-        bounceLimit: undefined,
-        delay:       0,
-        dir:         undefined,
-        hp:          1
+        delay: 0,
+        dir  : null,
+        hp   : 1
       }
     }  ],
   character: CHARACTERS.jawa,
@@ -189,39 +183,38 @@ const tatooine = {
   ],
   enemiesOptional: [],
   enemiesRequiredData: {
-    bounceLimit:   undefined,
-    character:     CHARACTERS.threepio,
-    count:         1,
+    character    : CHARACTERS.threepio,
+    count        : 1,
     delayInterval: 0,
-    dir:           undefined,
-    hp:            1
+    dir          : null,
+    hp           : 1
   },
   friendlies: [
     {
       character: CHARACTERS.jawa,
       details: {
-        bounceLimit: undefined,
-        delay:       1.5 * FPS,
-        dir:         undefined,
-        hp:          1
+        bounceLimit: -1,
+        delay      : 1.5 * FPS,
+        dir        : null,
+        hp         : 1
       }
     },
     {
       character: CHARACTERS.jawa,
       details: {
-        bounceLimit: undefined,
-        delay:       2.5 * FPS,
-        dir:         undefined,
-        hp:          1
+        bounceLimit: -1,
+        delay      : 2.5 * FPS,
+        dir        : null,
+        hp         : 1
       }
     },
     {
       character: CHARACTERS.jawa,
       details: {
-        bounceLimit: undefined,
-        delay:       3.5 * FPS,
-        dir:         undefined,
-        hp:          1
+        bounceLimit: -1,
+        delay      : 3.5 * FPS,
+        dir        : null,
+        hp         : 1
       }
     }
   ],
@@ -230,8 +223,8 @@ const tatooine = {
   obstacles: [
     {
       type: OBSTACLES.DRAGON,
-      x: 50,
-      y: 66
+      x   : 50,
+      y   : 66
     }
   ],
   password: undefined,
@@ -244,10 +237,9 @@ const search = {
     {
       character: CHARACTERS.bantha,
       details: {
-        bounceLimit: undefined,
-        delay:       0,
-        dir:         undefined,
-        hp:          2
+        delay: 0,
+        dir  : null,
+        hp   : 2
       }
     }
   ],
@@ -259,30 +251,29 @@ const search = {
   ],
   enemiesOptional: [],
   enemiesRequiredData: {
-    bounceLimit:   undefined,
-    character:     CHARACTERS.tusken,
-    count:         10,
+    character    : CHARACTERS.tusken,
+    count        : 10,
     delayInterval: 1.5 * FPS,
-    dir:           CARDINALS.RIGHT,
-    hp:            1
+    dir          : CARDINALS.RIGHT,
+    hp           : 1
   },
   friendlies: [
     {
       character: CHARACTERS.threepio,
       details: {
         bounceLimit: 0,
-        delay:       10.5 * FPS,
-        dir:         CARDINALS.DOWN,
-        hp:          1
+        delay      : 10.5 * FPS,
+        dir        : CARDINALS.DOWN,
+        hp         : 1
       }
     },
     {
       character: CHARACTERS.artoo,
       details: {
         bounceLimit: 0,
-        delay:       12.5 * FPS,
-        dir:         CARDINALS.DOWN,
-        hp:          1
+        delay      : 12.5 * FPS,
+        dir        : CARDINALS.DOWN,
+        hp         : 1
       }
     }
   ],
@@ -305,10 +296,9 @@ const sandcrawler = {
     {
       character: CHARACTERS.threebee,
       details: {
-        bounceLimit: undefined,
-        delay:       0,
-        dir:         undefined,
-        hp:          2
+        delay: 0,
+        dir  : null,
+        hp   : 2
       }
     }
   ],
@@ -318,12 +308,11 @@ const sandcrawler = {
   ],
   enemiesOptional: [],
   enemiesRequiredData: {
-    bounceLimit:   undefined,
-    character:     CHARACTERS.jawa,
-    count:         10,
+    character    : CHARACTERS.jawa,
+    count        : 10,
     delayInterval: 2 * FPS,
-    dir:           undefined,
-    hp:            1
+    dir          : null,
+    hp           : 1
   },
   friendlies: [],
   name: 'Sandcrawler',
@@ -332,18 +321,18 @@ const sandcrawler = {
       character: CHARACTERS.arfive,
       details: {
         bounceLimit: 0,
-        delay:       5.5 * FPS,
-        dir:         undefined,
-        hp:          1
+        delay      : 5.5 * FPS,
+        dir        : null,
+        hp         : 1
       }
     },
     {
       character: CHARACTERS.gonkdroid,
       details: {
         bounceLimit: 0,
-        delay:       10.5 * FPS,
-        dir:         CARDINALS.LEFT,
-        hp:          1
+        delay      : 10.5 * FPS,
+        dir        : CARDINALS.LEFT,
+        hp         : 1
       }
     }
   ],
@@ -358,10 +347,9 @@ const moistureFarm = {
     {
       character: CHARACTERS.auntberu,
       details: {
-        bounceLimit: undefined,
-        delay:       0,
-        dir:         undefined,
-        hp:          1
+        delay: 0,
+        dir  : null,
+        hp   : 1
       }
     }
   ],
@@ -369,31 +357,20 @@ const moistureFarm = {
   cutscenes: [],
   enemiesOptional: [],
   enemiesRequiredData: {
-    bounceLimit:   undefined,
-    character:     CHARACTERS.uncleowen,
-    count:         1,
+    character    : CHARACTERS.uncleowen,
+    count        : 1,
     delayInterval: 0,
-    dir:           undefined,
-    hp:            1
+    dir          : null,
+    hp           : 1
   },
-  friendlies: [
-    {
-      character: undefined,
-      details: {
-        bounceLimit: undefined,
-        delay:       undefined,
-        dir:         undefined,
-        hp:          undefined
-      }
-    }
-  ],
+  friendlies: [],
   name: 'Moisture Farm',
   neutrals: [],
   obstacles: [
     {
       type: OBSTACLES.IGLOO,
-      x: 66,
-      y: 33
+      x   : 66,
+      y   : 33
     }
   ],
   password: undefined,
@@ -406,10 +383,9 @@ const mosEisley = {
     {
       character: CHARACTERS.pondababa,
       details: {
-        bounceLimit: undefined,
-        delay:       0,
-        dir:         undefined,
-        hp:          1
+        delay: 0,
+        dir  : null,
+        hp   : 1
       }
     }
   ],
@@ -420,37 +396,36 @@ const mosEisley = {
       character: CHARACTERS.greedo,
       details: {
         bounceLimit: 0,
-        delay:       30 * FPS,
-        dir:         undefined,
-        hp:          1
+        delay      : 30 * FPS,
+        dir        : null,
+        hp         : 1
       }
     }
   ],
   enemiesRequiredData: {
-    bounceLimit:   undefined,
-    character:     CHARACTERS.sandtrooper,
-    count:         10,
+    character    : CHARACTERS.sandtrooper,
+    count        : 10,
     delayInterval: 2 * FPS,
-    dir:           undefined,
-    hp:            1
+    dir          : null,
+    hp           : 1
   },
   friendlies: [
     {
       character: CHARACTERS.chewbacca,
       details: {
         bounceLimit: 0,
-        delay:       10.5 * FPS,
-        dir:         CARDINALS.LEFT,
-        hp:          1
+        delay      : 10.5 * FPS,
+        dir        : CARDINALS.LEFT,
+        hp         : 1
       }
     },
     {
       character: CHARACTERS.hansolo,
       details: {
         bounceLimit: 0,
-        delay:       10.5 * FPS,
-        dir:         CARDINALS.LEFT,
-        hp:          1
+        delay      : 10.5 * FPS,
+        dir        : CARDINALS.LEFT,
+        hp         : 1
       }
     }
   ],
@@ -459,28 +434,28 @@ const mosEisley = {
   obstacles: [
     {
       type: OBSTACLES.BAR,
-      x: 0,
-      y: 50
+      x   : 0,
+      y   : 50
     },
     {
       type: OBSTACLES.TABLE,
-      x: 33,
-      y: 20
+      x   : 33,
+      y   : 20
     },
     {
       type: OBSTACLES.TABLE,
-      x: 66,
-      y: 20
+      x   : 66,
+      y   : 20
     },
     {
       type: OBSTACLES.TABLE,
-      x: 33,
-      y: 80
+      x   : 33,
+      y   : 80
     },
     {
       type: OBSTACLES.TABLE,
-      x: 66,
-      y: 80
+      x   : 66,
+      y   : 80
     }
   ],
   password: undefined,
@@ -493,10 +468,9 @@ const dockingBay = {
     {
       character: CHARACTERS.garindan,
       details: {
-        bounceLimit: undefined,
-        delay:       0,
-        dir:         undefined,
-        hp:          2
+        delay: 0,
+        dir  : null,
+        hp   : 2
       }
     }
   ],
@@ -506,28 +480,27 @@ const dockingBay = {
     {
       character: CHARACTERS.jabba,
       details: {
-        bounceLimit: undefined,
-        delay:       30 * FPS,
-        dir:         undefined,
-        hp:          5
+        bounceLimit: -1,
+        delay      : 30 * FPS,
+        dir        : null,
+        hp         : 5
       }
     }
   ],
   enemiesRequiredData: {
-    bounceLimit:   undefined,
-    character:     CHARACTERS.sandtrooper,
-    count:         10,
+    character    : CHARACTERS.sandtrooper,
+    count        : 10,
     delayInterval: 2 * FPS,
-    dir:           undefined,
-    hp:            1
+    dir          : null,
+    hp           : 1
   },
   friendlies: [],
   name: 'Docking Bay 94',
   obstacles: [
     {
       type: OBSTACLES.FALCON,
-      x: 100,
-      y: 0
+      x   : 100,
+      y   : 0
     }
   ],
   password: undefined,
@@ -540,10 +513,9 @@ const alderaan = {
     {
       character: SHIPS.TIE,
       details: {
-        bounceLimit: undefined,
-        delay:       0,
-        dir:         undefined,
-        hp:          2
+        delay: 0,
+        dir  : null,
+        hp   : 2
       }
     }
   ],
@@ -555,12 +527,11 @@ const alderaan = {
   ],
   enemiesOptional: [],
   enemiesRequiredData: {
-    bounceLimit:   undefined,
-    character:     SHIPS.ASTEROID,
-    count:         10,
+    character    : SHIPS.ASTEROID,
+    count        : 10,
     delayInterval: 3 * FPS,
-    dir:           undefined,
-    hp:            1
+    dir          : null,
+    hp           : 1
   },
   friendlies: [],
   name: 'Alderaan',
@@ -576,10 +547,9 @@ const detention = {
     {
       character: CHARACTERS.mousedroid,
       details: {
-        bounceLimit: undefined,
-        delay:       0,
-        dir:         undefined,
-        hp:          2
+        delay: 0,
+        dir  : null,
+        hp   : 2
       }
     }
   ],
@@ -587,30 +557,29 @@ const detention = {
   cutscenes: [],
   enemiesOptional: [],
   enemiesRequiredData: {
-    bounceLimit:   undefined,
-    character:     CHARACTERS.deathstartrooper,
-    count:         10,
+    character    : CHARACTERS.deathstartrooper,
+    count        : 10,
     delayInterval: 2 * FPS,
-    dir:           undefined,
-    hp:            1
+    dir          : null,
+    hp           : 1
   },
   friendlies: [
     {
       character: CHARACTERS.stormtrooperhan,
       details: {
         bounceLimit: 0,
-        delay:       1.5 * FPS,
-        dir:         CARDINALS.RIGHT,
-        hp:          1
+        delay      : 1.5 * FPS,
+        dir        : CARDINALS.RIGHT,
+        hp         : 1
       }
     },
     {
       character: CHARACTERS.stormtrooperluke,
       details: {
         bounceLimit: 0,
-        delay:       1.75 * FPS,
-        dir:         CARDINALS.RIGHT,
-        hp:          1
+        delay      : 1.75 * FPS,
+        dir        : CARDINALS.RIGHT,
+        hp         : 1
       }
     }
   ],
@@ -619,8 +588,8 @@ const detention = {
   obstacles: [
     {
       type: OBSTACLES.DESKS,
-      x: 75,
-      y: 50
+      x   : 75,
+      y   : 50
     }
   ],
   password: undefined,
@@ -633,10 +602,9 @@ const tractorBeam = {
     {
       character: CHARACTERS.darthvader,
       details: {
-        bounceLimit: undefined,
-        delay:       0,
-        dir:         undefined,
-        hp:          5
+        delay: 0,
+        dir  : null,
+        hp   : 5
       }
     }
   ],
@@ -644,12 +612,11 @@ const tractorBeam = {
   cutscenes: [],
   enemiesOptional: [],
   enemiesRequiredData: {
-    bounceLimit:   undefined,
-    character:     CHARACTERS.stormtrooper,
-    count:         10,
+    character    : CHARACTERS.stormtrooper,
+    count        : 10,
     delayInterval: 2 * FPS,
-    dir:           CARDINALS.RIGHT,
-    hp:            1
+    dir          : CARDINALS.RIGHT,
+    hp           : 1
   },
   friendlies: [],
   name: 'Tractor Beam',
@@ -657,8 +624,8 @@ const tractorBeam = {
   obstacles: [
     {
       type: OBSTACLES.GENERATOR,
-      x: 50,
-      y: 0
+      x   : 50,
+      y   : 0
     }
   ],
   password: undefined,
@@ -671,10 +638,9 @@ const showdown4 = {
     {
       character: CHARACTERS.ben,
       details: {
-        bounceLimit: undefined,
-        delay:       0,
-        dir:         undefined,
-        hp:          1
+        delay: 0,
+        dir  : null,
+        hp   : 1
       }
     }
   ],
@@ -682,12 +648,11 @@ const showdown4 = {
   cutscenes: [],
   enemiesOptional: [],
   enemiesRequiredData: {
-    bounceLimit:   undefined,
-    character:     undefined,
-    count:         0,
-    delayInterval: undefined,
-    dir:           undefined,
-    hp:            undefined
+    character    : null,
+    count        : 0,
+    delayInterval: null,
+    dir          : null,
+    hp           : null
   },
   friendlies: [],
   name: 'Showdown',
@@ -703,10 +668,9 @@ const escapeFromDeathStar = {
     {
       character: CHARACTERS.tiepilot,
       details: {
-        bounceLimit: undefined,
-        delay:       0,
-        dir:         undefined,
-        hp:          2
+        delay: 0,
+        dir  : null,
+        hp   : 2
       }
     }
   ],
@@ -714,39 +678,38 @@ const escapeFromDeathStar = {
   cutscenes: [],
   enemiesOptional: [],
   enemiesRequiredData: {
-    bounceLimit:   undefined,
-    character:     CHARACTERS.stormtrooper,
-    count:         10,
+    character    : CHARACTERS.stormtrooper,
+    count        : 10,
     delayInterval: 2 * FPS,
-    dir:           undefined,
-    hp:            1
+    dir          : null,
+    hp           : 1
   },
   friendlies: [
     {
       character: CHARACTERS.hansolo,
       details: {
         bounceLimit: 0,
-        delay:       5.5 * FPS,
-        dir:         undefined,
-        hp:          1
+        delay      : 5.5 * FPS,
+        dir        : null,
+        hp         : 1
       }
     },
     {
       character: CHARACTERS.luke,
       details: {
         bounceLimit: 0,
-        delay:       10.5 * FPS,
-        dir:         undefined,
-        hp:          1
+        delay      : 10.5 * FPS,
+        dir        : null,
+        hp         : 1
       }
     },
     {
       character: CHARACTERS.chewbacca,
       details: {
         bounceLimit: 0,
-        delay:       15.5 * FPS,
-        dir:         undefined,
-        hp:          1
+        delay      : 15.5 * FPS,
+        dir        : null,
+        hp         : 1
       }
     }
   ],
@@ -755,8 +718,8 @@ const escapeFromDeathStar = {
   obstacles: [
     {
       type: OBSTACLES.FALCON,
-      x: 100,
-      y: 0
+      x   : 100,
+      y   : 0
     }
   ],
   password: undefined,
@@ -769,10 +732,9 @@ const battleOfYavin = {
     {
       character: SHIPS.TIE_ADVANCED,
       details: {
-        bounceLimit: undefined,
-        delay:       0,
-        dir:         undefined,
-        hp:          5
+        delay: 0,
+        dir  : null,
+        hp   : 5
       }
     }
   ],
@@ -780,39 +742,38 @@ const battleOfYavin = {
   cutscenes: [],
   enemiesOptional: [],
   enemiesRequiredData: {
-    bounceLimit:   undefined,
-    character:     SHIPS.TIE,
-    count:         3,
+    character    : SHIPS.TIE,
+    count        : 3,
     delayInterval: 0.25 * FPS,
-    dir:           CARDINALS.DOWN,
-    hp:            2
+    dir          : CARDINALS.DOWN,
+    hp           : 2
   },
   friendlies: [
     {
       character: SHIPS.XWING,
       details: {
         bounceLimit: 0,
-        delay:       5 * FPS,
-        dir:         CARDINALS.UP,
-        hp:          1
+        delay      : 5 * FPS,
+        dir        : CARDINALS.UP,
+        hp         : 1
       }
     },
     {
       character: SHIPS.XWING,
       details: {
         bounceLimit: 0,
-        delay:       5 * FPS,
-        dir:         CARDINALS.UP,
-        hp:          1
+        delay      : 5 * FPS,
+        dir        : CARDINALS.UP,
+        hp         : 1
       }
     },
     {
       character: SHIPS.XWING,
       details: {
         bounceLimit: 0,
-        delay:       5 * FPS,
-        dir:         CARDINALS.UP,
-        hp:          1
+        delay      : 5 * FPS,
+        dir        : CARDINALS.UP,
+        hp         : 1
       }
     }
   ],
@@ -829,10 +790,9 @@ const assaultOnDeathStar = {
     {
       character: SHIPS.DEATHSTAR,
       details: {
-        bounceLimit: undefined,
-        delay:       0,
-        dir:         undefined,
-        hp:          10
+        delay: 0,
+        dir  : null,
+        hp   : 10
       }
     }
   ],
@@ -840,12 +800,11 @@ const assaultOnDeathStar = {
   cutscenes: [],
   enemiesOptional: [],
   enemiesRequiredData: {
-    bounceLimit:   undefined,
-    character:     undefined,
-    count:         0,
-    delayInterval: undefined,
-    dir:           undefined,
-    hp:            undefined
+    character    : null,
+    count        : 0,
+    delayInterval: null,
+    dir          : null,
+    hp           : null
   },
   friendlies: [],
   name: 'Death Star',
@@ -862,10 +821,9 @@ const hoth = {
     {
       character: CHARACTERS.mousedroid, // add wampa
       details: {
-        bounceLimit: undefined,
-        delay:       0,
-        dir:         undefined,
-        hp:          2
+        delay: 0,
+        dir  : null,
+        hp   : 2
       }
     }
   ],
@@ -873,12 +831,11 @@ const hoth = {
   cutscenes: [],
   enemiesOptional: [],
   enemiesRequiredData: {
-    bounceLimit:   undefined,
-    character:     CHARACTERS.tauntaun, // add probe droid
-    count:         10,
+    character    : CHARACTERS.tauntaun, // add probe droid
+    count        : 10,
     delayInterval: 2 * FPS,
-    dir:           undefined,
-    hp:            1
+    dir          : null,
+    hp           : 1
   },
   friendlies: [],
   name: 'Hoth',
@@ -895,10 +852,9 @@ const endor = {
     {
       character: CHARACTERS.atst,
       details: {
-        bounceLimit: undefined,
-        delay:       0,
-        dir:         undefined,
-        hp:          2
+        delay: 0,
+        dir  : null,
+        hp   : 2
       }
     }
   ],
@@ -906,21 +862,20 @@ const endor = {
   cutscenes: [],
   enemiesOptional: [],
   enemiesRequiredData: {
-    bounceLimit:   undefined,
-    character:     CHARACTERS.stormtrooper,
-    count:         10,
+    character    : CHARACTERS.stormtrooper,
+    count        : 10,
     delayInterval: 2 * FPS,
-    dir:           undefined,
-    hp:            1
+    dir          : null,
+    hp           : 1
   },
   friendlies: [
     {
       character: CHARACTERS.threepio,
       details: {
         bounceLimit: 0,
-        delay:       5 * FPS,
-        dir:         undefined,
-        hp:          1
+        delay      : 5 * FPS,
+        dir        : null,
+        hp         : 1
       }
     }
   ],
@@ -937,19 +892,17 @@ const test = {
     {
       character: CHARACTERS.darthvader,
       details: {
-        bounceLimit: undefined,
-        delay:       0,
-        dir:         CARDINALS.DOWN,
-        hp:          2
+        delay: 0 * FPS,
+        dir  : CARDINALS.DOWN,
+        hp   : 1
       }
     },
     {
       character: CHARACTERS.darthvader6,
       details: {
-        bounceLimit: undefined,
-        delay:       0,
-        dir:         CARDINALS.UP,
-        hp:          3
+        delay: 0 * FPS,
+        dir  : CARDINALS.UP,
+        hp   : 3
       }
     }
   ],
@@ -959,29 +912,28 @@ const test = {
     {
       character: CHARACTERS.deathstartrooper,
       details: {
-        bounceLimit: 1,
-        delay:       5 * FPS,
-        dir:         undefined,
-        hp:          1
+        bounceLimit: 0,
+        delay      : 0 * FPS,
+        dir        : CARDINALS.RIGHT,
+        hp         : 1
       }
     }
   ],
   enemiesRequiredData: {
-    bounceLimit:   undefined,
-    character:     CHARACTERS.officerblack,
-    count:         3,
-    delayInterval: 2 * FPS,
-    dir:           CARDINALS.LEFT,
-    hp:            1
+    character    : CHARACTERS.officerblack,
+    count        : 3,
+    delayInterval: 30 * FPS,
+    dir          : CARDINALS.LEFT,
+    hp           : 1
   },
   friendlies: [
     {
       character: CHARACTERS.bb8,
       details: {
-        bounceLimit: undefined,
-        delay:       2 * FPS,
-        dir:         CARDINALS.RIGHT,
-        hp:          2
+        bounceLimit: 1,
+        delay      : 0 * FPS,
+        dir        : CARDINALS.RIGHT,
+        hp         : 2
       }
     }
   ],
@@ -990,18 +942,18 @@ const test = {
     {
       character: CHARACTERS.ben,
       details: {
-        bounceLimit: undefined,
-        delay:       0 * FPS,
-        dir:         undefined,
-        hp:          1
+        bounceLimit: -1,
+        delay      : 0 * FPS,
+        dir        : CARDINALS.RIGHT,
+        hp         : 1
       }
     }
   ],
   obstacles: [
     {
-      type: OBSTACLES.DRAGON,
-      x: 50,
-      y: 66
+      type: OBSTACLES.TABLE,
+      x   : 75,
+      y   : 75
     }
   ],
   password: '',
