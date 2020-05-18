@@ -3,44 +3,41 @@
 
 REFACTOR:
 * code formatting
-  * always use full objects even if null?
-  * explicitly map all objects (instead of Object.assign) for readability?
-  * adapt string concats to template literals
-  * distribute functions to relevant class or move to utils
-  * prefix level names for sortability
-  * replace typeof () == 'undefined' etc
-  * implement attachNode from classes
   * migrate all public vars from classes to master object? (ex. hud.title)
+  * adapt string concats to template literals
+  * implement attachNode from classes
+  * always use full objects even if null OR explicitly map all objects (instead of Object.assign) for readability?
+    * purge always falsy properties from episodes?
+    * replace typeof () == 'undefined' etc
+  * distribute functions to relevant class or move to utils
   * migrate all functions from app to utils? (master as arg?)
-  * reimplement kill() as a util?
-  * share common logic across actor, player, etc as utils
+  * share common logic across actor, player, etc as utils?
+  * prefix level names for sortability?
 * performance improvements
   * audit each function
   * audit each class
   * audit each constant
 * move enemy dodge loop out of Player class
-* replace references to "dead" property with "active"
-* purge "remove" property from animation objects
 * handle death and remove outside classes from loop?
-* purge always falsy properties from episodes?
 * make enemy projectile rate a property of the level?
   * is weaponReady redundant to low shoot probability?
 
 FEATURES:
+* do not clear score after winning game
 * delay before boss(es)
 * multiple bosses
 * password menu!
 * episode menu...
 * overlapping d-pad buttons to include center in opacity change
 * recolor backgrounds and/or characters not to conflict?
+  * choose tier 1 colors (pure white, pure black) to use in sprites and hud, then never use them (or clashing) in BGs
 * replace low-detail cutscenes
 * cutscenes for every level
 * post-game cutscenes (hallway, medals)
 * how can user win with a character with no attack?
-* do not clear score after winning game
-* add high score board via CRUD, with defensive coding to hide (anticipating legacy issues)
 * bloodless death frame w/ only animated death bloody?
-* neutrals who stand still but can be killed? bartender?
+* neutrals who stand still but can be killed? bartender? han & chewie in mos eisley?
+* obstacles that can take damage?
 * obstacles and/or dead bodies stop projectiles?
 * let player be killed by own bomb after active?
 * make lightsabers bounce off obstacles?
@@ -48,13 +45,11 @@ FEATURES:
 * sliding touch?
 * npm lint?
 * npm test?
+* add high score board via CRUD, with defensive coding to hide (anticipating legacy issues)
 
 BUGS:
 * actor can turn before crossing fully onto stage
-* character frame sometimes redundant to Lighsaber instance (press Z and d-pad at same time)
-* concurrent boss and player death results in Game Over + next level
-* enemies stutter before turning away from obstacle?
-* last boss of last stage doesn't die if no death animation
-* sometimes the boss doesn't spawn once all enemies are dead
+* character frame sometimes redundant to Lightsaber instance (press Z and d-pad at same time)
+* concurrent boss and player death results in game over AND next level
 * projectiles zIndex?
 * directions don't blink when paused bc counter doesn't increment while paused (so that actors don't spawn during pause)...
