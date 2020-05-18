@@ -3,14 +3,15 @@
 
 REFACTOR:
 * code formatting
-  * migrate all public vars from classes to master object? (ex. hud.title)
+  * adapt gameWidth and gameHeight to dimensions.width and dimensions.height?
+  * migrate all public vars from classes to game object? (ex. hud.title)
   * adapt string concats to template literals
   * implement attachNode from classes
   * always use full objects even if null OR explicitly map all objects (instead of Object.assign) for readability?
     * purge always falsy properties from episodes?
     * replace typeof () == 'undefined' etc
   * distribute functions to relevant class or move to utils
-  * migrate all functions from app to utils? (master as arg?)
+  * migrate all functions from app to utils? (game as arg?)
   * share common logic across actor, player, etc as utils?
   * prefix level names for sortability?
 * performance improvements

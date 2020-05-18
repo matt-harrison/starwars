@@ -16,7 +16,7 @@ import { Projectile } from '/js/classes/Projectile.js';
 
 export const Player = function({
   data,
-  master
+  game
 }) {
   Object.assign(this, data);
 
@@ -32,8 +32,8 @@ export const Player = function({
   this.type         = ACTOR_TYPES.PLAYER;
   this.weaponCount  = 0;
   this.weaponReady  = true;
-  this.x            = Math.floor((master.gameWidth - this.frameWidth) / 2);
-  this.y            = Math.floor((master.gameHeight - this.frameHeight) / 2);
+  this.x            = Math.floor((game.gameWidth - this.frameWidth) / 2);
+  this.y            = Math.floor((game.gameHeight - this.frameHeight) / 2);
 
   if (!this.weaponDelay) {
     switch (this.weaponType) {
@@ -59,7 +59,7 @@ export const Player = function({
   this.selector.style.width            = `${this.frameWidth}px`;
   this.selector.style.zIndex           = this.y;
 
-  master.stage.selector.appendChild(this.selector);
+  game.stage.selector.appendChild(this.selector);
 
   if (this.death) {
     preload(`img/animations/${this.death.name}.png`);
@@ -69,21 +69,21 @@ export const Player = function({
     if (this.weaponReady) {
       if (this.weaponType === WEAPON_TYPES.PROJECTILE) {
         new Projectile({
-          master,
+          game,
           origin: this
         });
 
         //As levels progress, enemies will become liklier to dodge projectiles
-        master.enemies.forEach(enemy => {
+        game.enemies.forEach(enemy => {
           if (enemy.active && enemy.sprite !== 'asteroid') {
-            if (getRandom(20 - master.level) === 0) {
-              changeDirection({ actor: enemy, master });
+            if (getRandom(20 - game.level) === 0) {
+              changeDirection({ actor: enemy, game });
             }
           }
         });
       } else if (this.weaponType === WEAPON_TYPES.BOMB) {
         new Bomb({
-          master,
+          game,
           origin: this
         });
       } else if (this.weaponType === WEAPON_TYPES.LIGHTSABER) {
@@ -91,11 +91,11 @@ export const Player = function({
 
         this.lightsaber = new Lightsaber({
           isLongRange,
-          master,
+          game,
           origin: this
         });
 
-        master.keys = [key];
+        game.keys = [key];
 
         this.attacking    = true;
         this.running      = false;
@@ -114,7 +114,7 @@ export const Player = function({
     if (this.death) {
       new Animation({
         data: this.death,
-        master,
+        game,
         origin: this
       });
 
@@ -128,7 +128,7 @@ export const Player = function({
     if (this.active) {
       if (this.running || this.ship) {
         advanceFrame(this);
-        getPosition({ actor: this, master });
+        getPosition({ actor: this, game });
       }
 
       if (!this.weaponReady) {

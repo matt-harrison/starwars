@@ -10,7 +10,7 @@ import { WEAPON_TYPES } from '/js/constants/weapons.js';
 import { Animation } from '/js/classes/Animation.js';
 
 export const Bomb = function({
-  master,
+  game,
   origin
 }) {
   this.active       = false;
@@ -24,7 +24,7 @@ export const Bomb = function({
   this.y            = origin.y + (origin.weaponOffset[1] * MAGNIFICATION);
 
   this.selector                       = document.createElement('div');
-  this.selector.id                    = `bomb${master.props.length}`;
+  this.selector.id                    = `bomb${game.props.length}`;
   this.selector.style.position        = 'absolute';
   this.selector.style.left            = `${this.x}px`;
   this.selector.style.top             = `${this.y}px`;
@@ -33,17 +33,17 @@ export const Bomb = function({
   this.selector.style.backgroundColor = COLORS.BLACK;
   this.selector.style.zIndex          = '2';
 
-  master.props.push(this);
-  master.stage.selector.appendChild(this.selector);
+  game.props.push(this);
+  game.stage.selector.appendChild(this.selector);
 
   this.kill = function() {
     this.active = false;
 
-    master.stage.selector.removeChild(this.selector);
+    game.stage.selector.removeChild(this.selector);
 
     new Animation({
       data: ANIMATIONS.DETONATION,
-      master,
+      game,
       origin: this
     });
   }
@@ -56,7 +56,7 @@ export const Bomb = function({
 
   this.draw = function() {
     if (this.active) {
-      if (master.counter % 2) {
+      if (game.counter % 2) {
         this.selector.style.backgroundColor = COLORS.BLACK;
       } else {
         this.selector.style.backgroundColor = COLORS.RED;

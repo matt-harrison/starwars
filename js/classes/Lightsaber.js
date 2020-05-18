@@ -4,7 +4,7 @@ import { COLORS, MAGNIFICATION } from '/js/constants/config.js';
 
 export const Lightsaber = function({
   isLongRange,
-  master,
+  game,
   origin
 }) {
   this.active = !isLongRange;
@@ -57,7 +57,7 @@ export const Lightsaber = function({
   this.width  = this.frameWidth;
 
   this.selector                       = document.createElement('div');
-  this.selector.id                    = `lightsaber${master.props.length}`;
+  this.selector.id                    = `lightsaber${game.props.length}`;
   this.selector.style.backgroundColor = this.color;
   this.selector.style.height          = this.frameHeight + 'px';
   this.selector.style.left            = this.x + 'px';
@@ -74,8 +74,8 @@ export const Lightsaber = function({
   this.hilt.style.top             = this.hiltY + 'px';
   this.hilt.style.width           = this.hiltWidth + 'px';
 
-  master.props.push(this);
-  master.stage.selector.appendChild(this.selector);
+  game.props.push(this);
+  game.stage.selector.appendChild(this.selector);
   this.selector.appendChild(this.hilt);
 
   this.reverse = function() {
@@ -91,10 +91,10 @@ export const Lightsaber = function({
   }
 
   this.kill = function() {
-    const position = master.props.indexOf(this);
+    const position = game.props.indexOf(this);
 
-    master.stage.selector.removeChild(this.selector);
-    master.props.splice(position, 1);
+    game.stage.selector.removeChild(this.selector);
+    game.props.splice(position, 1);
 
     origin.lightsaber   = '';
     origin.spriteColumn = 0;
@@ -121,17 +121,17 @@ export const Lightsaber = function({
           this.reverse();
         }
       } else if (this.dir === 'right') {
-        if (this.x + this.speed < master.gameWidth - this.width) {
+        if (this.x + this.speed < game.gameWidth - this.width) {
           this.x += this.speed;
         } else {
-          this.x = master.gameWidth - this.frameWidth;
+          this.x = game.gameWidth - this.frameWidth;
           this.reverse();
         }
       } else if (this.dir === 'down') {
-        if (this.y + this.speed < master.gameHeight - this.height) {
+        if (this.y + this.speed < game.gameHeight - this.height) {
           this.y += this.speed;
         } else {
-          this.y = master.gameHeight - this.frameHeight;
+          this.y = game.gameHeight - this.frameHeight;
           this.reverse();
         }
       }

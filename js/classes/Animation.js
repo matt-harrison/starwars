@@ -1,6 +1,6 @@
 export const Animation = function({
   data,
-  master,
+  game,
   origin
 }) {
   Object.assign(this, data);
@@ -13,7 +13,7 @@ export const Animation = function({
   this.y            = Math.floor(origin.y + (origin.frameHeight - this.frameHeight) / 2);
 
   this.selector                       = document.createElement('div');
-  this.selector.id                    = `animtion${master.animations.length}`;
+  this.selector.id                    = `animtion${game.animations.length}`;
   this.selector.style.position        = 'absolute';
   this.selector.style.left            = this.x + 'px';
   this.selector.style.top             = this.y + 'px';
@@ -23,14 +23,14 @@ export const Animation = function({
   this.selector.style.backgroundSize  = `${this.width}px ${this.height}px`;
   this.selector.style.zIndex          = '2';
 
-  master.animations.push(this);
-  master.stage.selector.appendChild(this.selector);
+  game.animations.push(this);
+  game.stage.selector.appendChild(this.selector);
 
   this.kill = function() {
     this.active = false;
 
     if (this.remove) {
-      master.stage.selector.removeChild(this.selector);
+      game.stage.selector.removeChild(this.selector);
     }
   }
 

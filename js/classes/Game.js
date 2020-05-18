@@ -14,4 +14,6 @@ export const Game = function({
   this.selector.style.zIndex   = '1';
 
   document.body.appendChild(this.selector);
+
+  return this.selector;
 };

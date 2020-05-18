@@ -2,7 +2,7 @@ import { MAGNIFICATION } from '/js/constants/config.js';
 
 export const Obstacle = function({
   data,
-  master
+  game
 }) {
   Object.assign(this, data);
 
@@ -12,21 +12,21 @@ export const Obstacle = function({
   if (this.leftPercent === 0) {
     this.x = 0;
   } else if (this.leftPercent === 100) {
-    this.x = master.gameWidth - this.frameWidth;
+    this.x = game.gameWidth - this.frameWidth;
   } else {
-    this.x = master.gameWidth * (this.leftPercent / 100) - (this.frameWidth / 2);
+    this.x = game.gameWidth * (this.leftPercent / 100) - (this.frameWidth / 2);
   }
 
   if (this.topPercent === 0) {
     this.y = 0;
   } else if (this.topPercent === 100) {
-    this.y = master.gameHeight - this.frameHeight;
+    this.y = game.gameHeight - this.frameHeight;
   } else {
-    this.y = master.gameHeight * (this.topPercent / 100) - (this.frameHeight / 2);
+    this.y = game.gameHeight * (this.topPercent / 100) - (this.frameHeight / 2);
   }
 
   this.selector                       = document.createElement('div');
-  this.selector.id                    = `obstacle${master.obstacles.length}`;
+  this.selector.id                    = `obstacle${game.obstacles.length}`;
   this.selector.style.backgroundImage = `url('img/obstacles/${this.img}.png')`;
   this.selector.style.backgroundSize  = `${this.width}px ${this.height}px`;
   this.selector.style.height          = this.frameHeight + 'px';
@@ -35,8 +35,8 @@ export const Obstacle = function({
   this.selector.style.top             = this.y + 'px';
   this.selector.style.width           = this.frameWidth + 'px';
 
-  master.obstacles.push(this);
-  master.stage.selector.appendChild(this.selector);
+  game.obstacles.push(this);
+  game.stage.selector.appendChild(this.selector);
 
   this.update = function() {
     if (this.frameCount > 1) {

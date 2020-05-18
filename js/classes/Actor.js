@@ -16,7 +16,7 @@ import { Animation } from '/js/classes/Animation.js';
 
 export const Actor = function({
   data,
-  master
+  game
 }) {
   Object.assign(this, data.character);
   Object.assign(this, data.details);
@@ -36,11 +36,11 @@ export const Actor = function({
 
   getCoords({
     actor: this,
-    master
+    game
   });
 
   this.selector                        = document.createElement('div');
-  this.selector.id                     = `${this.type}${master.enemies.length}`;
+  this.selector.id                     = `${this.type}${game.enemies.length}`;
   this.selector.style.backgroundImage  = `url('img/characters/${this.sprite}.png')`;
   this.selector.style.backgroundRepeat = 'no-repeat';
   this.selector.style.backgroundSize   = `${this.width}px ${this.height}px`;
@@ -51,17 +51,17 @@ export const Actor = function({
 
   switch (this.type) {
     case ACTOR_TYPES.ENEMY:
-      master.enemies.push(this);
+      game.enemies.push(this);
       break;
     case ACTOR_TYPES.FRIENDLY:
-      master.friendlies.push(this);
+      game.friendlies.push(this);
       break;
     case ACTOR_TYPES.NEUTRAL:
-      master.neutrals.push(this);
+      game.neutrals.push(this);
       break;
   }
 
-  master.stage.selector.appendChild(this.selector);
+  game.stage.selector.appendChild(this.selector);
 
   if (this.death) {
     preload('img/animations/' + this.death.name + '.png');
@@ -81,19 +81,19 @@ export const Actor = function({
         this.blinking   = true;
         this.blinkCount = FPS;
 
-        changeDirection({ actor: this, master });
+        changeDirection({ actor: this, game });
       }
     }
 
     updateHud({
-      master,
+      game,
       victim: this,
     });
   }
 
   this.kill = () => {
     if (this.type === ACTOR_TYPES.ENEMY && !this.isOptional) {
-      master.stage.enemiesKilled++;
+      game.stage.enemiesKilled++;
     }
 
     this.active       = false;
@@ -104,7 +104,7 @@ export const Actor = function({
     if (this.death) {
       new Animation({
         data: this.death,
-        master,
+        game,
         origin: this
       });
     }
@@ -115,7 +115,7 @@ export const Actor = function({
       advanceFrame(this);
 
       if (this.blinking) {
-        if (master.counter % 2 === 0) {
+        if (game.counter % 2 === 0) {
           this.selector.style.display = '';
         } else {
           this.selector.style.display = 'none';
@@ -129,10 +129,10 @@ export const Actor = function({
 
       this.weaponReady = (
         this.type === ACTOR_TYPES.ENEMY &&
-        master.count % this.weaponDelay === 0
+        game.count % this.weaponDelay === 0
       );
 
-      getPosition({ actor: this, master });
+      getPosition({ actor: this, game });
     }
 
     this.tempCount++;

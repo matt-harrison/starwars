@@ -772,7 +772,7 @@ const battleOfYavin = {
         bounceLimit: undefined,
         delay:       0,
         dir:         undefined,
-        hp:          2
+        hp:          5
       }
     }
   ],
@@ -783,9 +783,9 @@ const battleOfYavin = {
     bounceLimit:   undefined,
     character:     SHIPS.TIE,
     count:         3,
-    delayInterval: 1 * FPS,
+    delayInterval: 0.25 * FPS,
     dir:           CARDINALS.DOWN,
-    hp:            1
+    hp:            2
   },
   friendlies: [
     {
@@ -1030,5 +1030,8 @@ export const EPISODES = [
     assaultOnDeathStar
   ],
   [hoth],
-  [endor]
+  [endor],
+  [test],
+  [test],
+  [test]
 ];

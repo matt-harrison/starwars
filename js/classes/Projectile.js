@@ -5,7 +5,7 @@ import {
 import { PROJECTILES, WEAPON_TYPES } from '/js/constants/weapons.js';
 
 export const Projectile = function({
-  master,
+  game,
   origin
 }) {
   Object.assign(this, origin.projectile);
@@ -19,7 +19,7 @@ export const Projectile = function({
   this.type         = origin.projectile;
 
   this.selector                = document.createElement('div');
-  this.selector.id             = `projectile${master.props.length}`;
+  this.selector.id             = `projectile${game.props.length}`;
   this.selector.style.position = 'absolute';
 
   if (origin.projectile === PROJECTILES.LASER) {
@@ -61,13 +61,13 @@ export const Projectile = function({
   this.selector.style.width  = this.frameWidth  + 'px';
   this.selector.style.zIndex = '4';
 
-  master.props.push(this);
-  master.stage.selector.appendChild(this.selector);
+  game.props.push(this);
+  game.stage.selector.appendChild(this.selector);
 
   this.kill = function() {
     this.active = false;
 
-    master.stage.selector.removeChild(this.selector);
+    game.stage.selector.removeChild(this.selector);
   }
 
   this.update = function() {
@@ -91,13 +91,13 @@ export const Projectile = function({
           this.kill();
         }
       } else if (this.dir === CARDINALS.RIGHT) {
-        if (this.x < master.gameWidth) {
+        if (this.x < game.gameWidth) {
           this.x += this.speed;
         } else {
           this.kill();
         }
       } else if (this.dir === CARDINALS.DOWN) {
-        if (this.y < master.gameHeight) {
+        if (this.y < game.gameHeight) {
           this.y += this.speed;
         } else {
           this.kill();

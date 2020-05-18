@@ -1,9 +1,9 @@
 import { BUTTON_NAMES, HUD_OPACITY, IS_MOBILE } from '/js/constants/config.js';
 
 export const Hud = function({
-  master
+  game
 }) {
-  const { promptClick } = master;
+  const { promptClick } = game;
   const directionSize   = IS_MOBILE ? '14px' : '25px';
   const lineHeight      = IS_MOBILE ? '1' : '1.5';
   const titleSize       = IS_MOBILE ? '25px' : '40px';
@@ -15,7 +15,7 @@ export const Hud = function({
   this.selector.style.height   = '100%';
   this.selector.style.zIndex   = '99';
 
-  master.game.selector.appendChild(this.selector);
+  game.selector.appendChild(this.selector);
 
   //Add title text
   this.title                     = document.createElement('h1');
@@ -175,7 +175,7 @@ export const Hud = function({
     this.btnStart.style.backgroundImage = 'url("img/hud/btnStart.png")';
     this.btnStart.style.bottom          = '5px';
     this.btnStart.style.height          = '40px';
-    this.btnStart.style.left            = ((master.gameWidth - 75) / 2) + 'px';
+    this.btnStart.style.left            = ((game.gameWidth - 75) / 2) + 'px';
     this.btnStart.style.opacity         = HUD_OPACITY;
     this.btnStart.style.position        = 'absolute';
     this.btnStart.style.width           = '75px';
@@ -195,7 +195,7 @@ export const Hud = function({
   this.update = () => {};
 
   this.draw = () => {
-    if (master.counter % 8 === 0) {
+    if (game.counter % 8 === 0) {
       this.directions.style.display = this.directions.style.display === 'block' ? 'none' : 'block';
     }
   };
