@@ -72,7 +72,7 @@ export const attachNode = ({
 };
 
 export const changeDirection = ({ actor, master }) => {
-  if (actor !== master.dom.player && inBounds({ actor, master })) {
+  if (actor !== master.player && inBounds({ actor, master })) {
     const cardinals = Object.values(CARDINALS);
     const position = getRandom(cardinals.length);
 
@@ -322,9 +322,9 @@ export const initEnemies = (master) => {
   const {
     enemiesOptional,
     enemiesRequiredData
-  } = master.dom.stage;
+  } = master.stage;
 
-  master.dom.stage.enemies = [];
+  master.stage.enemies = [];
 
   enemiesOptional.forEach(enemy => {
     enemy.details.isOptional = true;
@@ -332,7 +332,7 @@ export const initEnemies = (master) => {
   });
 
   if (enemiesOptional) {
-    master.dom.stage.enemies.push(...enemiesOptional);
+    master.stage.enemies.push(...enemiesOptional);
   }
 
   if (enemiesRequiredData) {
@@ -358,7 +358,7 @@ export const initEnemies = (master) => {
         }
       };
 
-      master.dom.stage.enemies.push(enemy);
+      master.stage.enemies.push(enemy);
     }
   }
 };
@@ -370,7 +370,7 @@ export const preload = (url) => {
 
 export const updateHud = ({ master, victim }) => {
   const scoreDelta = victim.type === ACTOR_TYPES.FRIENDLY ? 0 - 100 : 100;
-  let   color      = master.dom.stage.textColor;
+  let   color      = master.stage.textColor;
 
   switch (victim.type) {
     case ACTOR_TYPES.NEUTRAL:
@@ -381,7 +381,7 @@ export const updateHud = ({ master, victim }) => {
       break;
     default:
     case ACTOR_TYPES.ENEMY:
-      color = master.dom.stage.textColor;
+      color = master.stage.textColor;
       break;
   }
 
@@ -389,12 +389,12 @@ export const updateHud = ({ master, victim }) => {
   // rename victimText  to victimSelector?
   // rename victimCount to victimIdInterval?
 
-  master.dom.hud.score                  = master.dom.hud.score + scoreDelta;
-  master.dom.hud.scoreText.innerHTML    = master.dom.hud.score;
-  master.dom.hud.scoreText.style.color  = color;
-  master.dom.hud.victimCount            = 16;
-  master.dom.hud.victimText.innerHTML   = victim.name;
-  master.dom.hud.victimText.style.color = color;
+  master.hud.score                  = master.hud.score + scoreDelta;
+  master.hud.scoreText.innerHTML    = master.hud.score;
+  master.hud.scoreText.style.color  = color;
+  master.hud.victimCount            = 16;
+  master.hud.victimText.innerHTML   = victim.name;
+  master.hud.victimText.style.color = color;
 }
 
 // Cheats
@@ -403,9 +403,9 @@ const playAs = (character) => {
     window.master.character = character;
 
     if (master.mode === MODES.GAMEPLAY) {
-      window.master.dom.stage.selector.removeChild(window.master.dom.player.selector);
+      window.master.stage.selector.removeChild(window.master.player.selector);
 
-      window.master.dom.player = new Player({
+      window.master.player = new Player({
         data: window.master.character,
         master: window.master
       });
@@ -447,10 +447,10 @@ const playLevel = (level) => {
 }
 
 const useTheForce = () => {
-  window.master.isInvincible                 = true;
-  window.master.isPaused                     = true;
-  window.master.dom.hud.title.innerHTML      = 'Pause';
-  window.master.dom.hud.directions.innerHTML = `May the force be with you.<br/></br/>${window.master.promptStart}`;
+  window.master.isInvincible             = true;
+  window.master.isPaused                 = true;
+  window.master.hud.title.innerHTML      = 'Pause';
+  window.master.hud.directions.innerHTML = `May the force be with you.<br/></br/>${window.master.promptStart}`;
 
   return 'May the force be with you.';
 }

@@ -43,6 +43,8 @@ FEATURES:
 * neutrals who stand still but can be killed? bartender?
 * obstacles and/or dead bodies stop projectiles?
 * let player be killed by own bomb after active?
+* make lightsabers bounce off obstacles?
+* make some enemies chase player?
 * sliding touch?
 * npm lint?
 * npm test?

@@ -36,7 +36,7 @@ export const Obstacle = function({
   this.selector.style.width           = this.frameWidth + 'px';
 
   master.obstacles.push(this);
-  master.dom.stage.selector.appendChild(this.selector);
+  master.stage.selector.appendChild(this.selector);
 
   this.update = function() {
     if (this.frameCount > 1) {

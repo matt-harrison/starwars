@@ -7,13 +7,13 @@ export const Lightsaber = function({
   master,
   origin
 }) {
-  this.type = 'lightsaber';
-  this.origin = origin;
-  this.dir = origin.dir;
-  this.color = origin.weaponColor;
   this.active = !isLongRange;
-  this.speed = isLongRange ? 30 * (MAGNIFICATION / 5) : 0;
+  this.color  = origin.weaponColor;
+  this.dir    = origin.dir;
+  this.origin = origin;
+  this.speed  = isLongRange ? 30 * (MAGNIFICATION / 5) : 0;
   this.thrown = isLongRange;
+  this.type   = 'lightsaber';
 
   if (this.dir === 'left') {
     this.frameHeight = 1 * MAGNIFICATION;
@@ -75,7 +75,7 @@ export const Lightsaber = function({
   this.hilt.style.width           = this.hiltWidth + 'px';
 
   master.props.push(this);
-  master.dom.stage.selector.appendChild(this.selector);
+  master.stage.selector.appendChild(this.selector);
   this.selector.appendChild(this.hilt);
 
   this.reverse = function() {
@@ -93,7 +93,7 @@ export const Lightsaber = function({
   this.kill = function() {
     const position = master.props.indexOf(this);
 
-    master.dom.stage.selector.removeChild(this.selector);
+    master.stage.selector.removeChild(this.selector);
     master.props.splice(position, 1);
 
     origin.lightsaber   = '';
@@ -101,10 +101,8 @@ export const Lightsaber = function({
   }
 
   this.update = function() {
-    if (!this.active) {
-      if (!collision(this, this.origin)) {
-        this.active = true;
-      }
+    if (!this.active && !collision(this, this.origin)) {
+      this.active = true;
     }
 
     if (this.thrown) {

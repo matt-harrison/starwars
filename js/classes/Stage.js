@@ -14,11 +14,11 @@ export const Stage = function({
   this.selector.style.width           = '100%';
   this.selector.style.zIndex          = '1';
 
-  master.dom.game.selector.insertBefore(this.selector, master.dom.game.selector.firstChild);
+  master.game.selector.insertBefore(this.selector, master.game.selector.firstChild);
 
-  master.dom.hud.directions.style.color = this.textColor;
-  master.dom.hud.scoreboard.style.color = this.textColor;
-  master.dom.hud.title.style.color      = this.textColor;
+  master.hud.directions.style.color = this.textColor;
+  master.hud.scoreboard.style.color = this.textColor;
+  master.hud.title.style.color      = this.textColor;
 
   this.defeated      = false;
   this.enemiesKilled = 0;

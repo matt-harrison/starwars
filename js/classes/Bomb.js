@@ -34,12 +34,12 @@ export const Bomb = function({
   this.selector.style.zIndex          = '2';
 
   master.props.push(this);
-  master.dom.stage.selector.appendChild(this.selector);
+  master.stage.selector.appendChild(this.selector);
 
   this.kill = function() {
     this.active = false;
 
-    master.dom.stage.selector.removeChild(this.selector);
+    master.stage.selector.removeChild(this.selector);
 
     new Animation({
       data: ANIMATIONS.DETONATION,

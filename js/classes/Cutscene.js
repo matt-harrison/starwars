@@ -11,7 +11,7 @@ export const Cutscene = function({
       'data-key': 'enter',
       id:         'cutscene-bg'
     },
-    parent: master.dom.game.selector,
+    parent: master.game.selector,
     styles: {
       backgroundColor: COLORS.BLACK,
       height         : '100%',

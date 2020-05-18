@@ -24,13 +24,13 @@ export const Animation = function({
   this.selector.style.zIndex          = '2';
 
   master.animations.push(this);
-  master.dom.stage.selector.appendChild(this.selector);
+  master.stage.selector.appendChild(this.selector);
 
   this.kill = function() {
     this.active = false;
 
     if (this.remove) {
-      master.dom.stage.selector.removeChild(this.selector);
+      master.stage.selector.removeChild(this.selector);
     }
   }
 

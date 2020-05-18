@@ -59,7 +59,7 @@ export const Player = function({
   this.selector.style.width            = `${this.frameWidth}px`;
   this.selector.style.zIndex           = this.y;
 
-  master.dom.stage.selector.appendChild(this.selector);
+  master.stage.selector.appendChild(this.selector);
 
   if (this.death) {
     preload(`img/animations/${this.death.name}.png`);

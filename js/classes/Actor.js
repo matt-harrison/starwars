@@ -61,7 +61,7 @@ export const Actor = function({
       break;
   }
 
-  master.dom.stage.selector.appendChild(this.selector);
+  master.stage.selector.appendChild(this.selector);
 
   if (this.death) {
     preload('img/animations/' + this.death.name + '.png');
@@ -93,7 +93,7 @@ export const Actor = function({
 
   this.kill = () => {
     if (this.type === ACTOR_TYPES.ENEMY && !this.isOptional) {
-      master.dom.stage.enemiesKilled++;
+      master.stage.enemiesKilled++;
     }
 
     this.active       = false;

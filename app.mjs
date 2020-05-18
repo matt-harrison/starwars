@@ -39,17 +39,13 @@ const master = {
   animations   : [],
   counter      : 0,
   cutsceneCount: 0,
-  dom: {
-    game:   null,
-    hud:    null,
-    player: null,
-    stage:  null
-  },
   enemies      : [],
   episode      : 0,
   friendlies   : [],
+  game         : null,
   gameHeight   : IS_MOBILE ? window.innerHeight : 500,
-  gameWidth    : IS_MOBILE ? window.innerWidth : 500,
+  gameWidth    : IS_MOBILE ? window.innerWidth  : 500,
+  hud          : null,
   isGameOver   : false,
   isInvincible : false,
   isPaused     : false,
@@ -58,14 +54,16 @@ const master = {
   mode         : MODES.TITLE,
   neutrals     : [],
   obstacles    : [],
+  player       : null,
   promptClick  : IS_MOBILE ? 'Tap to begin' : 'Press Enter',
   promptStart  : IS_MOBILE ? 'Press Start'  : 'Press Enter',
-  props        : []
+  props        : [],
+  stage        : null
 };
 
 (function() {
-  master.dom.game = new Game(master);
-  master.dom.hud  = new Hud({ master });
+  master.game = new Game(master);
+  master.hud  = new Hud({ master });
 
   initInterface();
   initMenu(MODES.TITLE);
@@ -80,7 +78,7 @@ function advanceStage() {
   if (master.level === master.episode.length) {
     reset();
   } else {
-    if (master.dom.hud.score === 0 || EPISODES[master.episode][master.level].cutscenes.length > 0) {
+    if (master.hud.score === 0 || EPISODES[master.episode][master.level].cutscenes.length > 0) {
       clearStage();
       initLevel();
     } else {
@@ -92,7 +90,7 @@ function advanceStage() {
 
 function buttonPush(key, id) {
   if (master.mode === MODES.GAMEPLAY || master.mode === MODES.RESET) {
-    if (!master.dom.player.attacking) {
+    if (!master.player.attacking) {
       if (master.keys.indexOf(key) === -1) {
         master.keys.push(key);
       }
@@ -124,17 +122,17 @@ function buttonPush(key, id) {
 
 function buttonUpdate(event) {
   Object.values(CARDINALS).forEach(cardinal => {
-    const previousButton = document.querySelector('[data-key="' + master.dom.player.dir + '"]');
+    const previousButton = document.querySelector('[data-key="' + master.player.dir + '"]');
     const button         = document.querySelector('[data-key="' + cardinal + '"]');
     const bounds         = button.getBoundingClientRect();
 
     if (event.changedTouches[0].pageX > bounds.left && event.changedTouches[0].pageX < bounds.right && event.changedTouches[0].pageY > bounds.top && event.changedTouches[0].pageY < bounds.bottom) {
       if (master.keys.indexOf(cardinal) === -1) {
-        buttonRelease(master.dom.player.dir, previousButton.id);
+        buttonRelease(master.player.dir, previousButton.id);
         buttonPush(cardinal, button.id);
       }
     } else if (master.keys.indexOf(cardinal) !== -1) {
-      buttonRelease(master.dom.player.dir, button.id);
+      buttonRelease(master.player.dir, button.id);
     }
   });
 }
@@ -153,7 +151,7 @@ function buttonRelease(key, id) {
       if (++master.cutsceneCount < EPISODES[master.episode][master.level].cutscenes.length) {
         initMenu(MODES.CUTSCENE);
       } else {
-        if (master.dom.stage.defeated) {
+        if (master.stage.defeated) {
           initLevel();
         } else {
           initGame();
@@ -162,7 +160,7 @@ function buttonRelease(key, id) {
     } else if (master.isGameOver) {
       initGame();
       advanceStage();
-    } else if (master.dom.stage.defeated) {
+    } else if (master.stage.defeated) {
       advanceStage();
     } else {
       pause();
@@ -176,11 +174,11 @@ function buttonRelease(key, id) {
 
   if (position !== -1) {
     if (key === 'space') {
-      master.dom.player.attacking = false;
+      master.player.attacking = false;
     } else if (key === 'Z') {
     } else {
-      master.dom.player.running = false;
-      master.dom.player.spriteColumn = 0;
+      master.player.running = false;
+      master.player.spriteColumn = 0;
     }
     master.keys.splice(position, 1);
   }
@@ -191,7 +189,7 @@ function buttonRelease(key, id) {
 }
 
 function clearStage() {
-  master.dom.game.selector.removeChild(master.dom.stage.selector);
+  master.game.selector.removeChild(master.stage.selector);
   master.enemies.splice(0);
   master.friendlies.splice(0);
   master.obstacles.splice(0);
@@ -199,15 +197,15 @@ function clearStage() {
   master.animations.splice(0);
   master.keys.splice(0);
 
-  master.dom.hud.scoreText.innerHTML  = master.dom.hud.score;
-  master.dom.hud.victimText.innerHTML = '';
+  master.hud.scoreText.innerHTML  = master.hud.score;
+  master.hud.victimText.innerHTML = '';
 }
 
 function initGame() {
   master.mode                        = MODES.GAMEPLAY;
   master.isGameOver                  = false;
   master.isPaused                    = false;
-  master.dom.hud.scoreText.innerHTML = master.dom.hud.score;
+  master.hud.scoreText.innerHTML = master.hud.score;
 
   clearStage();
   initLevel();
@@ -238,7 +236,7 @@ function initInterface() {
         const bounds = button.getBoundingClientRect();
 
         if (event.pageX > bounds.left && event.pageX < bounds.right && event.pageY > bounds.top && event.pageY < bounds.bottom) {
-          //buttonRelease(master.dom.player.dir, button.id);
+          //buttonRelease(master.player.dir, button.id);
         }
       });
     }, {passive: false});
@@ -349,22 +347,22 @@ function initInterface() {
 }
 
 function initLevel() {
-  master.dom.stage = new Stage({
+  master.stage = new Stage({
     data: EPISODES[master.episode][master.level],
     master
   });
 
-  master.dom.player = new Player({
-    data: master.character || master.dom.stage.character,
+  master.player = new Player({
+    data: master.character || master.stage.character,
     master
   });
 
   master.bossesReached                 = false;
   master.counter                       = 0;
-  master.dom.hud.scoreText.style.color = master.dom.stage.textColor;
+  master.hud.scoreText.style.color = master.stage.textColor;
 
   if (typeof(EPISODES[master.episode][master.level].obstacles) !== 'undefined') {
-    master.dom.stage.obstacles.forEach(obstacle => {
+    master.stage.obstacles.forEach(obstacle => {
       const data = Object.assign({
         x: obstacle.x,
         y: obstacle.y
@@ -376,11 +374,11 @@ function initLevel() {
 
   initEnemies(master);
 
-  master.dom.hud.selector.setAttribute('data-key', '');
+  master.hud.selector.setAttribute('data-key', '');
 
-  master.dom.hud.title.innerHTML          = '';
-  master.dom.hud.directions.innerHTML     = '';
-  master.dom.hud.scoreboard.style.display = '';
+  master.hud.title.innerHTML          = '';
+  master.hud.directions.innerHTML     = '';
+  master.hud.scoreboard.style.display = '';
 
   if (IS_MOBILE) {
     buttons.style.display = '';
@@ -395,17 +393,17 @@ function initMenu(mode) {
 
   if (master.mode === MODES.TITLE) {
     master.cutsceneCount = 0;
-    master.dom.hud.score = 0;
+    master.hud.score = 0;
     master.episode       = 3;
     master.level         = 0;
 
-    master.dom.stage = new Stage({
+    master.stage = new Stage({
       data: ATTRACTION,
       master
     });
 
     if (typeof(EPISODES[master.episode][master.level].obstacles) !== 'undefined') {
-      master.dom.stage.obstacles?.forEach(obstacle => {
+      master.stage.obstacles?.forEach(obstacle => {
         const data = Object.assign({
           x: obstacle.x,
           y: obstacle.y
@@ -417,18 +415,18 @@ function initMenu(mode) {
 
     initEnemies(master);
 
-    master.dom.hud.selector.setAttribute('data-key', 'enter');
-    master.dom.hud.title.innerHTML = 'Star Wars';
-    master.dom.hud.directions.innerHTML = master.promptClick;
-    master.dom.hud.scoreText.innerHTML = '';
-    master.dom.hud.victimText.innerHTML = '';
+    master.hud.selector.setAttribute('data-key', 'enter');
+    master.hud.title.innerHTML = 'Star Wars';
+    master.hud.directions.innerHTML = master.promptClick;
+    master.hud.scoreText.innerHTML = '';
+    master.hud.victimText.innerHTML = '';
 
     if (IS_MOBILE) {
       buttons.style.display = 'none';
     }
   } else if (master.mode === MODES.CUTSCENE) {
     scoreboard.style.display = 'none';
-    master.dom.hud.selector.setAttribute('data-key', 'enter');
+    master.hud.selector.setAttribute('data-key', 'enter');
     title.innerHTML = '';
     directions.innerHTML = '';
     directions.style.pointerEvents = 'none';
@@ -436,7 +434,7 @@ function initMenu(mode) {
     if (EPISODES[master.episode][master.level].cutscenes.length > 0) {
       clearStage();
 
-      master.dom.stage = new Cutscene({
+      master.stage = new Cutscene({
         img: EPISODES[master.episode][master.level].cutscenes[master.cutsceneCount],
         master
       })
@@ -448,14 +446,14 @@ function initMenu(mode) {
 
 function levelLose() {
   master.isGameOver = true;
-  master.dom.hud.score = 0;
+  master.hud.score = 0;
   title.innerHTML = 'Game Over';
   directions.innerHTML = `${master.promptStart}<br/>to restart level.`;
   master.keys.splice(0);
 }
 
 function levelWin() {
-  master.dom.stage.defeated = true;
+  master.stage.defeated = true;
   directions.innerHTML      = master.promptStart;
 
   if (++master.level === EPISODES[master.episode].length) {
@@ -475,28 +473,28 @@ function loop() {
     master.mode === MODES.RESET
   ) {
     if (master.mode !== MODES.TITLE) {
-      if (master.dom.player.active && !master.dom.player.attacking) {
+      if (master.player.active && !master.player.attacking) {
         master.keys.forEach(key => {
           if (Object.values(CARDINALS).indexOf(key) !== -1) {
-            master.dom.player.dir     = key;
-            master.dom.player.running = true;
+            master.player.dir     = key;
+            master.player.running = true;
           }
 
           if (key === 'space' || key === 'Z') {
-            master.dom.player.attack(key);
+            master.player.attack(key);
           }
         });
       }
 
       master.enemies.forEach(enemy => {
-        if (master.dom.player.active) {
-          if (collision(master.dom.player, enemy)) {
+        if (master.player.active) {
+          if (collision(master.player, enemy)) {
             if (enemy.active && !master.isInvincible) {
-              master.dom.player.kill();
+              master.player.kill();
             }
 
             enemy.collide();
-          } else if (enemy.active && enemy.weaponType === WEAPON_TYPES.PROJECTILE && enemy.weaponReady && crossPaths(enemy, master.dom.player)) {
+          } else if (enemy.active && enemy.weaponType === WEAPON_TYPES.PROJECTILE && enemy.weaponReady && crossPaths(enemy, master.player)) {
             const chance = 500 + EPISODES[master.episode].length - master.level;
             const random = getRandom(chance);
 
@@ -512,9 +510,9 @@ function loop() {
 
       master.friendlies.forEach(friendly => {
         if (friendly.ship) {
-          if (master.dom.player.active && collision(master.dom.player, friendly)) {
+          if (master.player.active && collision(master.player, friendly)) {
             if (!master.isInvincible) {
-              master.dom.player.kill();
+              master.player.kill();
             }
 
             friendly.kill();
@@ -523,15 +521,15 @@ function loop() {
       });
 
       master.props.forEach(prop => {
-        if (master.dom.player.active && collision(master.dom.player, prop)) {
-          if (!master.isInvincible && prop.active && prop.origin !== master.dom.player) {
-            master.dom.player.kill();
+        if (master.player.active && collision(master.player, prop)) {
+          if (!master.isInvincible && prop.active && prop.origin !== master.player) {
+            master.player.kill();
             prop.kill();
           }
 
           if (prop.type === 'lightsaber' && prop.speed > 0) {
             if (prop.active) {
-              master.dom.player.attacking = false;
+              master.player.attacking = false;
             } else {
               prop.active = true;
             }
@@ -574,32 +572,32 @@ function loop() {
 
       //Check for level completion
       if (
-        master.dom.stage.enemiesKilled === add(master.dom.stage.enemies.length - master.dom.stage.enemiesOptional.length, master.dom.stage.bosses.length) &&
-        !master.dom.stage.defeated
+        master.stage.enemiesKilled === add(master.stage.enemies.length - master.stage.enemiesOptional.length, master.stage.bosses.length) &&
+        !master.stage.defeated
       ) {
         levelWin();
       }
 
       //Check for level failure
-      if (!master.dom.player.active) {
+      if (!master.player.active) {
         levelLose();
       }
 
       //Check victim identification interval
-      if (master.dom.hud.victimCount > 0) {
-        master.dom.hud.victimCount--;
+      if (master.hud.victimCount > 0) {
+        master.hud.victimCount--;
       } else {
-        master.dom.hud.victimText.innerHTML = '';
+        master.hud.victimText.innerHTML = '';
       }
 
-      master.dom.player.update();
-      master.dom.player.draw();
+      master.player.update();
+      master.player.draw();
     }
 
     // Add actors.
-    master.dom.stage.bosses?.forEach(boss => {
+    master.stage.bosses?.forEach(boss => {
       if (
-        master.dom.stage.enemiesKilled === master.dom.stage.enemies.length - master.dom.stage.enemiesOptional.length &&
+        master.stage.enemiesKilled === master.stage.enemies.length - master.stage.enemiesOptional.length &&
         !master.bossesReached
       ) {
         const data = Object.assign({}, boss);
@@ -615,7 +613,7 @@ function loop() {
       }
     });
 
-    master.dom.stage.enemies?.forEach(enemy => {
+    master.stage.enemies?.forEach(enemy => {
       if (master.counter === enemy.details.delay) {
         new Actor({
           data: enemy,
@@ -624,7 +622,7 @@ function loop() {
       }
     });
 
-    master.dom.stage.friendlies?.forEach(friendly => {
+    master.stage.friendlies?.forEach(friendly => {
       if (master.counter === friendly.details.delay) {
         const data = Object.assign({}, friendly);
 
@@ -634,7 +632,7 @@ function loop() {
       }
     });
 
-    master.dom.stage.neutrals?.forEach(neutral => {
+    master.stage.neutrals?.forEach(neutral => {
       if (master.counter === neutral.details.delay) {
         const data = Object.assign({}, neutral);
 
@@ -670,8 +668,8 @@ function loop() {
       obstacle.draw();
     });
 
-    master.dom.hud.update();
-    master.dom.hud.draw();
+    master.hud.update();
+    master.hud.draw();
   }
 
   if (!master.isPaused) {
@@ -695,7 +693,7 @@ function reset() {
 function resizeGame(width, height) {
   if (master.mode === MODES.GAMEPLAY) {
     adaptCoords({
-      actor: master.dom.player,
+      actor: master.player,
       master
     });
 
@@ -716,11 +714,11 @@ function resizeGame(width, height) {
 
   master.gameWidth = width;
   master.gameHeight = height;
-  master.dom.game.selector.style.width = master.gameWidth + 'px';
-  master.dom.game.selector.style.height = master.gameHeight + 'px';
+  master.game.selector.style.width = master.gameWidth + 'px';
+  master.game.selector.style.height = master.gameHeight + 'px';
 
   if (master.mode === MODES.CUTSCENE) {
-    master.dom.stage.resize();
+    master.stage.resize();
   }
 
   master.obstacles.forEach(obstacle => {

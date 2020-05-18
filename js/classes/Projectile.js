@@ -62,12 +62,12 @@ export const Projectile = function({
   this.selector.style.zIndex = '4';
 
   master.props.push(this);
-  master.dom.stage.selector.appendChild(this.selector);
+  master.stage.selector.appendChild(this.selector);
 
   this.kill = function() {
     this.active = false;
 
-    master.dom.stage.selector.removeChild(this.selector);
+    master.stage.selector.removeChild(this.selector);
   }
 
   this.update = function() {
