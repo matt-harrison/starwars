@@ -191,4 +191,12 @@ export const Hud = function({
     this.buttons.appendChild(this.btnAttack2);
     this.buttons.appendChild(this.btnStart);
   }
+
+  this.update = () => {};
+
+  this.draw = () => {
+    if (master.counter % 8 === 0) {
+      this.directions.style.display = this.directions.style.display === 'block' ? 'none' : 'block';
+    }
+  };
 };

@@ -39,18 +39,20 @@ FEATURES:
 * how can user win with a character with no attack?
 * do not clear score after winning game
 * add high score board via CRUD, with defensive coding to hide (anticipating legacy issues)
-* make "Press Enter" flash in attraction mode
 * bloodless death frame w/ only animated death bloody?
 * neutrals who stand still but can be killed? bartender?
+* obstacles and/or dead bodies stop projectiles?
+* let player be killed by own bomb after active?
 * sliding touch?
 * npm lint?
 * npm test?
 
 BUGS:
 * actor can turn before crossing fully onto stage
-* trying to remove already removed Projectile: dedupe expiredObjects before looping?
 * character frame sometimes redundant to Lighsaber instance (press Z and d-pad at same time)
 * concurrent boss and player death results in Game Over + next level
 * enemies stutter before turning away from obstacle?
 * last boss of last stage doesn't die if no death animation
 * sometimes the boss doesn't spawn once all enemies are dead
+* projectiles zIndex?
+* directions don't blink when paused bc counter doesn't increment while paused (so that actors don't spawn during pause)...

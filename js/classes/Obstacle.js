@@ -26,7 +26,7 @@ export const Obstacle = function({
   }
 
   this.selector                       = document.createElement('div');
-  this.selector.id                    = `obstacle${master.actorCount++}`;
+  this.selector.id                    = `obstacle${master.actors.obstacles.length}`;
   this.selector.style.backgroundImage = `url('img/obstacles/${this.img}.png')`;
   this.selector.style.backgroundSize  = `${this.width}px ${this.height}px`;
   this.selector.style.height          = this.frameHeight + 'px';

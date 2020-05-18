@@ -44,7 +44,6 @@ const master = {
     obstacles:  [],
     props:      []
   },
-  actorCount: 0,
   counter: 0,
   cutsceneCount: 0,
   dom: {
@@ -94,7 +93,7 @@ function advanceStage() {
 }
 
 function buttonPush(key, id) {
-  if (master.mode === MODES.GAMEPLAY) {
+  if (master.mode === MODES.GAMEPLAY || master.mode === MODES.RESET) {
     if (!master.dom.player.attacking) {
       if (master.keys.indexOf(key) === -1) {
         master.keys.push(key);
@@ -128,8 +127,8 @@ function buttonPush(key, id) {
 function buttonUpdate(event) {
   Object.values(CARDINALS).forEach(cardinal => {
     const previousButton = document.querySelector('[data-key="' + master.dom.player.dir + '"]');
-    const button = document.querySelector('[data-key="' + cardinal + '"]');
-    const bounds = button.getBoundingClientRect();
+    const button         = document.querySelector('[data-key="' + cardinal + '"]');
+    const bounds         = button.getBoundingClientRect();
 
     if (event.changedTouches[0].pageX > bounds.left && event.changedTouches[0].pageX < bounds.right && event.changedTouches[0].pageY > bounds.top && event.changedTouches[0].pageY < bounds.bottom) {
       if (master.keys.indexOf(cardinal) === -1) {
@@ -202,7 +201,6 @@ function clearStage() {
   master.actors.animations.splice(0);
   master.keys.splice(0);
 
-  master.actorCount                   = 0;
   master.dom.hud.scoreText.innerHTML  = master.dom.hud.score;
   master.dom.hud.victimText.innerHTML = '';
 }
@@ -392,7 +390,6 @@ function initLevel() {
 }
 
 function initMenu(mode) {
-  master.actorCount = 0;
   master.counter    = 0;
   master.isGameOver = true;
   master.isPaused   = false;
@@ -461,24 +458,26 @@ function levelLose() {
 
 function levelWin() {
   master.dom.stage.defeated = true;
-  directions.innerHTML = master.promptStart;
+  directions.innerHTML      = master.promptStart;
 
   if (++master.level === EPISODES[master.episode].length) {
-    master.isGameOver = true;
+    master.isGameOver   = true;
     master.isInvincible = false;
-    master.mode = MODES.RESET;
-    title.innerHTML = 'You win!';
+    master.mode         = MODES.RESET;
+    title.innerHTML     = 'You win!';
   } else {
     title.innerHTML = 'Next:<br/>' + EPISODES[master.episode][master.level].name;
   }
 }
 
 function loop() {
-  if (master.mode === MODES.GAMEPLAY && !master.isGameOver && !master.isPaused) {
-    const expiredObjects = [];
-
-    if (master.keys.length > 0) {
-      if (!master.dom.player.attacking) {
+  if (
+    (master.mode === MODES.GAMEPLAY && !master.isPaused) ||
+    master.mode === MODES.TITLE ||
+    master.mode === MODES.RESET
+  ) {
+    if (master.mode !== MODES.TITLE) {
+      if (master.dom.player.active && !master.dom.player.attacking) {
         master.keys.forEach(key => {
           if (Object.values(CARDINALS).indexOf(key) !== -1) {
             master.dom.player.dir     = key;
@@ -490,134 +489,116 @@ function loop() {
           }
         });
       }
-    }
-
-    master.actors.enemies.forEach(enemy => {
-      if (!master.dom.player.dead) {
-        if (collision(master.dom.player, enemy)) {
-          if (enemy.active && !master.isInvincible) {
-            master.dom.player.dead = true;
-          }
-
-          enemy.collide();
-        } else if (enemy.active && enemy.weaponType === WEAPON_TYPES.PROJECTILE && enemy.weaponReady && crossPaths(enemy, master.dom.player)) {
-          const chance = 500 + EPISODES[master.episode].length - master.level;
-          const random = getRandom(chance);
-
-          if (random === 0) {
-            new Projectile({
-              master,
-              origin: enemy
-            });
-          }
-        }
-      }
-    });
-
-    master.actors.friendlies.forEach(friendly => {
-      if (friendly.ship) {
-        if (!master.dom.player.dead && collision(master.dom.player, friendly)) {
-          if (!master.isInvincible) {
-            master.dom.player.dead = true;
-          }
-
-          friendly.kill();
-        }
-      }
-    });
-
-    // TODO
-    master.actors.props.forEach(prop => {
-      if (!master.dom.player.dead && collision(master.dom.player, prop)) {
-        if (!master.isInvincible && prop.active && prop.origin !== master.dom.player) {
-          master.dom.player.dead = true;
-          prop.kill();
-        }
-
-        if (prop.type === 'lightsaber' && prop.speed > 0) {
-          if (prop.active) {
-            master.dom.player.attacking = false;
-          } else {
-            prop.active = true;
-          }
-        }
-      }
 
       master.actors.enemies.forEach(enemy => {
-        if (prop.origin !== enemy && enemy.active && collision(enemy, prop)) {
-          enemy.hit();
+        if (master.dom.player.active) {
+          if (collision(master.dom.player, enemy)) {
+            if (enemy.active && !master.isInvincible) {
+              master.dom.player.kill();
+            }
 
-          if (prop.type !== 'lightsaber') {
-            expiredObjects.push(prop)
+            enemy.collide();
+          } else if (enemy.active && enemy.weaponType === WEAPON_TYPES.PROJECTILE && enemy.weaponReady && crossPaths(enemy, master.dom.player)) {
+            const chance = 500 + EPISODES[master.episode].length - master.level;
+            const random = getRandom(chance);
+
+            if (random === 0) {
+              new Projectile({
+                master,
+                origin: enemy
+              });
+            }
           }
         }
       });
 
       master.actors.friendlies.forEach(friendly => {
-        if (prop.origin !== friendly && friendly.active && collision(friendly, prop)) {
-          friendly.hit();
+        if (friendly.ship) {
+          if (master.dom.player.active && collision(master.dom.player, friendly)) {
+            if (!master.isInvincible) {
+              master.dom.player.kill();
+            }
 
-          if (prop.type !== 'lightsaber') {
-            expiredObjects.push(prop)
+            friendly.kill();
           }
         }
       });
 
-      master.actors.neutrals.forEach(neutral => {
-        if (prop.origin !== neutral && neutral.active && collision(neutral, prop)) {
-          neutral.hit();
+      master.actors.props.forEach(prop => {
+        if (master.dom.player.active && collision(master.dom.player, prop)) {
+          if (!master.isInvincible && prop.active && prop.origin !== master.dom.player) {
+            master.dom.player.kill();
+            prop.kill();
+          }
 
-          if (prop.type !== 'lightsaber') {
-            expiredObjects.push(prop)
+          if (prop.type === 'lightsaber' && prop.speed > 0) {
+            if (prop.active) {
+              master.dom.player.attacking = false;
+            } else {
+              prop.active = true;
+            }
           }
         }
+
+        master.actors.enemies.forEach(enemy => {
+          if (prop.origin !== enemy && enemy.active && collision(enemy, prop)) {
+            enemy.hit();
+
+            if (prop.type !== 'lightsaber') {
+              prop.kill();
+            }
+          }
+        });
+
+        master.actors.friendlies.forEach(friendly => {
+          if (prop.origin !== friendly && friendly.active && collision(friendly, prop)) {
+            friendly.hit();
+
+            if (prop.type !== 'lightsaber') {
+              prop.kill();
+            }
+          }
+        });
+
+        master.actors.neutrals.forEach(neutral => {
+          if (prop.origin !== neutral && neutral.active && collision(neutral, prop)) {
+            neutral.hit();
+
+            if (prop.type !== 'lightsaber') {
+              prop.kill();
+            }
+          }
+        });
+
+        prop.update();
+        prop.draw();
       });
 
-      prop.update();
-      prop.draw();
-    });
-
-    // TODO
-    master.actors.animations.forEach(animation => {
-      animation.update();
-      animation.draw();
-    });
-
-    expiredObjects.forEach(expiredObject => {
-      if (master.dom.stage.selector.contains(expiredObject.selector)) {
-        expiredObject.kill();
+      //Check for level completion
+      if (
+        master.dom.stage.enemiesKilled === add(master.dom.stage.enemies.length - master.dom.stage.enemiesOptional.length, master.dom.stage.bosses.length) &&
+        !master.dom.stage.defeated
+      ) {
+        levelWin();
       }
-    });
 
-    master.dom.player.update();
-    master.dom.player.draw();
+      //Check for level failure
+      if (!master.dom.player.active) {
+        levelLose();
+      }
 
-    //Check for level completion
-    if (
-      master.dom.stage.enemiesKilled === add(master.dom.stage.enemies.length - master.dom.stage.enemiesOptional.length, master.dom.stage.bosses.length) &&
-      master.actors.animations.length === 0 && !master.dom.stage.defeated
-    ) {
-      levelWin();
+      //Check victim identification interval
+      if (master.dom.hud.victimCount > 0) {
+        master.dom.hud.victimCount--;
+      } else {
+        master.dom.hud.victimText.innerHTML = '';
+      }
+
+      master.dom.player.update();
+      master.dom.player.draw();
     }
 
-    //Check for level failure
-    if (!master.dom.player.active && master.actors.animations.length === 0) {
-      levelLose();
-    }
-
-    //Check victim identification interval
-    if (master.dom.hud.victimCount > 0) {
-      master.dom.hud.victimCount--;
-    } else {
-      master.dom.hud.victimText.innerHTML = '';
-    }
-  }
-
-  if (
-    (master.mode === MODES.GAMEPLAY && !master.isGameOver && !master.isPaused) ||
-    (master.mode === MODES.TITLE)
-  ) {
-    // Add bosses.
+    // Add actors.
     master.dom.stage.bosses?.forEach(boss => {
       if (
         master.dom.stage.enemiesKilled === master.dom.stage.enemies.length - master.dom.stage.enemiesOptional.length &&
@@ -636,7 +617,6 @@ function loop() {
       }
     });
 
-    // Add enemies.
     master.dom.stage.enemies?.forEach(enemy => {
       if (master.counter === enemy.details.delay) {
         new Actor({
@@ -646,7 +626,6 @@ function loop() {
       }
     });
 
-    // Add friendlies.
     master.dom.stage.friendlies?.forEach(friendly => {
       if (master.counter === friendly.details.delay) {
         const data = Object.assign({}, friendly);
@@ -657,7 +636,6 @@ function loop() {
       }
     });
 
-    // Add neutrals.
     master.dom.stage.neutrals?.forEach(neutral => {
       if (master.counter === neutral.details.delay) {
         const data = Object.assign({}, neutral);
@@ -666,6 +644,12 @@ function loop() {
 
         new Actor({ data, master });
       }
+    });
+
+    // Update and draw.
+    master.actors.animations.forEach(animation => {
+      animation.update();
+      animation.draw();
     });
 
     master.actors.enemies.forEach(enemy => {
@@ -687,6 +671,9 @@ function loop() {
       obstacle.update();
       obstacle.draw();
     });
+
+    master.dom.hud.update();
+    master.dom.hud.draw();
   }
 
   if (!master.isPaused) {
@@ -697,9 +684,9 @@ function loop() {
 }
 
 function pause() {
-  master.isPaused = !master.isPaused;
-  directions.innerHTML = '';
-  title.innerHTML = master.isPaused ? 'Pause' : '';
+  master.isPaused      = !master.isPaused;
+  directions.innerHTML = master.isPaused ? master.promptStart : '';
+  title.innerHTML      = master.isPaused ? 'Pause'            : '';
 }
 
 function reset() {

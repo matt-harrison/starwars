@@ -23,7 +23,6 @@ export const Player = function({
   this.active       = true;
   this.attacking    = false;
   this.bounceCount  = 0;
-  this.dead         = false;
   this.dir          = 'down';
   this.lightsaber   = '';
   this.running      = false;
@@ -66,7 +65,7 @@ export const Player = function({
     preload(`img/animations/${this.death.name}.png`);
   }
 
-  this.attack = function(key) {
+  this.attack = (key) => {
     if (this.weaponReady) {
       if (this.weaponType === WEAPON_TYPES.PROJECTILE) {
         new Projectile({
@@ -98,8 +97,8 @@ export const Player = function({
 
         master.keys = [key];
 
-        this.running      = false;
         this.attacking    = true;
+        this.running      = false;
         this.spriteColumn = this.moveFrameCount + 1;
       }
 
@@ -107,7 +106,7 @@ export const Player = function({
     }
   }
 
-  this.kill = function() {
+  this.kill = () => {
     this.active       = false;
     this.spriteColumn = 0;
     this.spriteRow    = 4;
@@ -125,27 +124,23 @@ export const Player = function({
     }
   }
 
-  this.update = function() {
-    if (this.dead) {
-      if (this.active) {
-        this.kill();
+  this.update = () => {
+    if (this.active) {
+      if (this.running || this.ship) {
+        advanceFrame(this);
+        getPosition({ actor: this, master });
       }
-    } else {
+
       if (!this.weaponReady) {
         if (this.weaponCount++ === this.weaponDelay) {
           this.weaponReady = true;
           this.weaponCount = 0;
         }
       }
-
-      if (this.running || this.ship) {
-        advanceFrame(this);
-        getPosition({ actor: this, master });
-      }
     }
   }
 
-  this.draw = function() {
+  this.draw = () => {
     this.selector.style.backgroundPosition = `${0 - this.spriteColumn * this.frameWidth}px ${0 - this.spriteRow * this.frameHeight}px`;
     this.selector.style.left               = `${this.x}px`;
     this.selector.style.top                = `${this.y}px`;

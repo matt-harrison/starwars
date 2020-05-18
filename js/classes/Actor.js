@@ -40,7 +40,7 @@ export const Actor = function({
   });
 
   this.selector                        = document.createElement('div');
-  this.selector.id                     = `${this.type}${master.actorCount++}`;
+  this.selector.id                     = `${this.type}${master.actors.enemies.length}`;
   this.selector.style.backgroundImage  = `url('img/characters/${this.sprite}.png')`;
   this.selector.style.backgroundRepeat = 'no-repeat';
   this.selector.style.backgroundSize   = `${this.width}px ${this.height}px`;
@@ -139,12 +139,10 @@ export const Actor = function({
   }
 
   this.draw = () => {
-    if (this.selector) {
-      this.selector.style.backgroundPosition = `${(0 - this.spriteColumn * this.frameWidth)}px ${(0 - this.spriteRow * this.frameHeight)}px`;
-      this.selector.style.left               = `${this.x}px`;
-      this.selector.style.top                = `${this.y}px`;
-      this.selector.style.zIndex             = this.y;
-    }
+    this.selector.style.backgroundPosition = `${(0 - this.spriteColumn * this.frameWidth)}px ${(0 - this.spriteRow * this.frameHeight)}px`;
+    this.selector.style.left               = `${this.x}px`;
+    this.selector.style.top                = `${this.y}px`;
+    this.selector.style.zIndex             = this.y;
   };
 
   this.draw();

@@ -5,7 +5,7 @@ export const Animation = function({
 }) {
   Object.assign(this, data);
 
-  this.dead         = false;
+  this.active       = true;
   this.height       = this.frameHeight;
   this.spriteColumn = 0;
   this.width        = this.frameWidth * this.frameCount;
@@ -13,23 +13,21 @@ export const Animation = function({
   this.y            = Math.floor(origin.y + (origin.frameHeight - this.frameHeight) / 2);
 
   this.selector                       = document.createElement('div');
-  this.selector.id                    = `animtion${master.actorCount++}`;
+  this.selector.id                    = `animtion${master.actors.animations.length}`;
   this.selector.style.position        = 'absolute';
   this.selector.style.left            = this.x + 'px';
   this.selector.style.top             = this.y + 'px';
   this.selector.style.width           = this.frameWidth + 'px';
   this.selector.style.height          = this.frameHeight + 'px';
-  this.selector.style.backgroundImage = "url('img/animations/" + this.name + ".png')";
-  this.selector.style.backgroundSize  = this.width + 'px ' + this.height + 'px';
+  this.selector.style.backgroundImage = `url('img/animations/${this.name}.png')`;
+  this.selector.style.backgroundSize  = `${this.width}px ${this.height}px`;
   this.selector.style.zIndex          = '2';
 
   master.actors.animations.push(this);
   master.dom.stage.selector.appendChild(this.selector);
 
   this.kill = function() {
-    const position = master.actors.animations.indexOf(this);
-
-    master.actors.animations.splice(position, 1);
+    this.active = false;
 
     if (this.remove) {
       master.dom.stage.selector.removeChild(this.selector);
@@ -37,18 +35,18 @@ export const Animation = function({
   }
 
   this.update = function() {
-    if (this.spriteColumn + 1 < this.frameCount) {
-      this.spriteColumn++;
-    } else {
-      this.dead = true;
+    if (this.active) {
+      if (this.spriteColumn + 1 < this.frameCount) {
+        this.spriteColumn++;
+      } else {
+        this.kill();
+      }
     }
   }
 
   this.draw = function() {
-    if (this.dead) {
-      this.kill();
+    if (this.active) {
+      this.selector.style.backgroundPosition = `${0 - this.spriteColumn * this.frameWidth}px 0`;
     }
-
-    this.selector.style.backgroundPosition = (0 - this.spriteColumn * this.frameWidth) + 'px 0';
   }
 };

@@ -440,7 +440,7 @@ const mosEisley = {
       details: {
         bounceLimit: 0,
         delay:       10.5 * FPS,
-        dir:         undefined,
+        dir:         CARDINALS.LEFT,
         hp:          1
       }
     },
@@ -449,7 +449,7 @@ const mosEisley = {
       details: {
         bounceLimit: 0,
         delay:       10.5 * FPS,
-        dir:         undefined,
+        dir:         CARDINALS.LEFT,
         hp:          1
       }
     }
@@ -953,7 +953,7 @@ const test = {
       }
     }
   ],
-  character: CHARACTERS.rebel,
+  character: CHARACTERS.artoo,
   cutscenes: [],
   enemiesOptional: [
     {

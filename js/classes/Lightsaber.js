@@ -57,7 +57,7 @@ export const Lightsaber = function({
   this.width  = this.frameWidth;
 
   this.selector                       = document.createElement('div');
-  this.selector.id                    = `lightsaber${master.actorCount++}`;
+  this.selector.id                    = `lightsaber${master.actors.props.length}`;
   this.selector.style.backgroundColor = this.color;
   this.selector.style.height          = this.frameHeight + 'px';
   this.selector.style.left            = this.x + 'px';

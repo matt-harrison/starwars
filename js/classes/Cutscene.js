@@ -27,7 +27,7 @@ export const Cutscene = function({
   const cutscene   = attachNode({
     attributes: {
       'data-key': 'enter',
-      id:         `cutscene${master.actorCount++}`
+      id:         `cutscene${master.cutsceneCount}`
     },
     parent: this.selector,
     styles: {
