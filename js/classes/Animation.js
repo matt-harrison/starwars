@@ -13,7 +13,7 @@ export const Animation = function({
   this.y            = Math.floor(origin.y + (origin.frameHeight - this.frameHeight) / 2);
 
   this.selector                       = document.createElement('div');
-  this.selector.id                    = `animtion${master.actors.animations.length}`;
+  this.selector.id                    = `animtion${master.animations.length}`;
   this.selector.style.position        = 'absolute';
   this.selector.style.left            = this.x + 'px';
   this.selector.style.top             = this.y + 'px';
@@ -23,7 +23,7 @@ export const Animation = function({
   this.selector.style.backgroundSize  = `${this.width}px ${this.height}px`;
   this.selector.style.zIndex          = '2';
 
-  master.actors.animations.push(this);
+  master.animations.push(this);
   master.dom.stage.selector.appendChild(this.selector);
 
   this.kill = function() {

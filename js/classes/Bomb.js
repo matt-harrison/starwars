@@ -24,7 +24,7 @@ export const Bomb = function({
   this.y            = origin.y + (origin.weaponOffset[1] * MAGNIFICATION);
 
   this.selector                       = document.createElement('div');
-  this.selector.id                    = `bomb${master.actors.props.length}`;
+  this.selector.id                    = `bomb${master.props.length}`;
   this.selector.style.position        = 'absolute';
   this.selector.style.left            = `${this.x}px`;
   this.selector.style.top             = `${this.y}px`;
@@ -33,7 +33,7 @@ export const Bomb = function({
   this.selector.style.backgroundColor = COLORS.BLACK;
   this.selector.style.zIndex          = '2';
 
-  master.actors.props.push(this);
+  master.props.push(this);
   master.dom.stage.selector.appendChild(this.selector);
 
   this.kill = function() {

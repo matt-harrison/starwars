@@ -19,7 +19,7 @@ export const Projectile = function({
   this.type         = origin.projectile;
 
   this.selector                = document.createElement('div');
-  this.selector.id             = `projectile${master.actors.props.length}`;
+  this.selector.id             = `projectile${master.props.length}`;
   this.selector.style.position = 'absolute';
 
   if (origin.projectile === PROJECTILES.LASER) {
@@ -61,7 +61,7 @@ export const Projectile = function({
   this.selector.style.width  = this.frameWidth  + 'px';
   this.selector.style.zIndex = '4';
 
-  master.actors.props.push(this);
+  master.props.push(this);
   master.dom.stage.selector.appendChild(this.selector);
 
   this.kill = function() {

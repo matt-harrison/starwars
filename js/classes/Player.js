@@ -74,7 +74,7 @@ export const Player = function({
         });
 
         //As levels progress, enemies will become liklier to dodge projectiles
-        master.actors.enemies.forEach(enemy => {
+        master.enemies.forEach(enemy => {
           if (enemy.active && enemy.sprite !== 'asteroid') {
             if (getRandom(20 - master.level) === 0) {
               changeDirection({ actor: enemy, master });

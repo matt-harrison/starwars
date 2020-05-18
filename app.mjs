@@ -36,15 +36,8 @@ import { Projectile } from './js/classes/Projectile.js';
 import { Stage }      from './js/classes/Stage.js';
 
 const master = {
-  actors: {
-    animations: [],
-    enemies:    [],
-    friendlies: [],
-    neutrals:   [],
-    obstacles:  [],
-    props:      []
-  },
-  counter: 0,
+  animations   : [],
+  counter      : 0,
   cutsceneCount: 0,
   dom: {
     game:   null,
@@ -52,17 +45,22 @@ const master = {
     player: null,
     stage:  null
   },
-  episode: 0,
-  gameHeight: IS_MOBILE ? window.innerHeight : 500,
-  gameWidth:  IS_MOBILE ? window.innerWidth : 500,
-  isGameOver: false,
-  isInvincible: false,
-  isPaused: false,
-  keys: [],
-  level: 0,
-  mode: MODES.TITLE,
-  promptClick: IS_MOBILE ? 'Tap to begin' : 'Press Enter',
-  promptStart: IS_MOBILE ? 'Press Start'  : 'Press Enter',
+  enemies      : [],
+  episode      : 0,
+  friendlies   : [],
+  gameHeight   : IS_MOBILE ? window.innerHeight : 500,
+  gameWidth    : IS_MOBILE ? window.innerWidth : 500,
+  isGameOver   : false,
+  isInvincible : false,
+  isPaused     : false,
+  keys         : [],
+  level        : 0,
+  mode         : MODES.TITLE,
+  neutrals     : [],
+  obstacles    : [],
+  promptClick  : IS_MOBILE ? 'Tap to begin' : 'Press Enter',
+  promptStart  : IS_MOBILE ? 'Press Start'  : 'Press Enter',
+  props        : []
 };
 
 (function() {
@@ -194,11 +192,11 @@ function buttonRelease(key, id) {
 
 function clearStage() {
   master.dom.game.selector.removeChild(master.dom.stage.selector);
-  master.actors.enemies.splice(0);
-  master.actors.friendlies.splice(0);
-  master.actors.obstacles.splice(0);
-  master.actors.props.splice(0);
-  master.actors.animations.splice(0);
+  master.enemies.splice(0);
+  master.friendlies.splice(0);
+  master.obstacles.splice(0);
+  master.props.splice(0);
+  master.animations.splice(0);
   master.keys.splice(0);
 
   master.dom.hud.scoreText.innerHTML  = master.dom.hud.score;
@@ -490,7 +488,7 @@ function loop() {
         });
       }
 
-      master.actors.enemies.forEach(enemy => {
+      master.enemies.forEach(enemy => {
         if (master.dom.player.active) {
           if (collision(master.dom.player, enemy)) {
             if (enemy.active && !master.isInvincible) {
@@ -512,7 +510,7 @@ function loop() {
         }
       });
 
-      master.actors.friendlies.forEach(friendly => {
+      master.friendlies.forEach(friendly => {
         if (friendly.ship) {
           if (master.dom.player.active && collision(master.dom.player, friendly)) {
             if (!master.isInvincible) {
@@ -524,7 +522,7 @@ function loop() {
         }
       });
 
-      master.actors.props.forEach(prop => {
+      master.props.forEach(prop => {
         if (master.dom.player.active && collision(master.dom.player, prop)) {
           if (!master.isInvincible && prop.active && prop.origin !== master.dom.player) {
             master.dom.player.kill();
@@ -540,7 +538,7 @@ function loop() {
           }
         }
 
-        master.actors.enemies.forEach(enemy => {
+        master.enemies.forEach(enemy => {
           if (prop.origin !== enemy && enemy.active && collision(enemy, prop)) {
             enemy.hit();
 
@@ -550,7 +548,7 @@ function loop() {
           }
         });
 
-        master.actors.friendlies.forEach(friendly => {
+        master.friendlies.forEach(friendly => {
           if (prop.origin !== friendly && friendly.active && collision(friendly, prop)) {
             friendly.hit();
 
@@ -560,7 +558,7 @@ function loop() {
           }
         });
 
-        master.actors.neutrals.forEach(neutral => {
+        master.neutrals.forEach(neutral => {
           if (prop.origin !== neutral && neutral.active && collision(neutral, prop)) {
             neutral.hit();
 
@@ -647,27 +645,27 @@ function loop() {
     });
 
     // Update and draw.
-    master.actors.animations.forEach(animation => {
+    master.animations.forEach(animation => {
       animation.update();
       animation.draw();
     });
 
-    master.actors.enemies.forEach(enemy => {
+    master.enemies.forEach(enemy => {
       enemy.update();
       enemy.draw();
     });
 
-    master.actors.friendlies.forEach(friendly => {
+    master.friendlies.forEach(friendly => {
       friendly.update();
       friendly.draw();
     });
 
-    master.actors.neutrals.forEach(neutral => {
+    master.neutrals.forEach(neutral => {
       neutral.update();
       neutral.draw();
     });
 
-    master.actors.obstacles.forEach(obstacle => {
+    master.obstacles.forEach(obstacle => {
       obstacle.update();
       obstacle.draw();
     });
@@ -701,16 +699,16 @@ function resizeGame(width, height) {
       master
     });
 
-    master.actors.enemies.forEach(enemy => {
+    master.enemies.forEach(enemy => {
       adaptCoords({
         actor: enemy,
         master
       });
     });
 
-    master.actors.props.forEach(prop => {
+    master.props.forEach(prop => {
       adaptCoords({
-        actor: master.actors.props,
+        actor: master.props,
         master
       });
     });
@@ -725,7 +723,7 @@ function resizeGame(width, height) {
     master.dom.stage.resize();
   }
 
-  master.actors.obstacles.forEach(obstacle => {
+  master.obstacles.forEach(obstacle => {
     adaptCoords({
       actor: obstacle,
       master

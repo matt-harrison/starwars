@@ -26,7 +26,7 @@ export const Obstacle = function({
   }
 
   this.selector                       = document.createElement('div');
-  this.selector.id                    = `obstacle${master.actors.obstacles.length}`;
+  this.selector.id                    = `obstacle${master.obstacles.length}`;
   this.selector.style.backgroundImage = `url('img/obstacles/${this.img}.png')`;
   this.selector.style.backgroundSize  = `${this.width}px ${this.height}px`;
   this.selector.style.height          = this.frameHeight + 'px';
@@ -35,7 +35,7 @@ export const Obstacle = function({
   this.selector.style.top             = this.y + 'px';
   this.selector.style.width           = this.frameWidth + 'px';
 
-  master.actors.obstacles.push(this);
+  master.obstacles.push(this);
   master.dom.stage.selector.appendChild(this.selector);
 
   this.update = function() {

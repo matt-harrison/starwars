@@ -218,7 +218,7 @@ export const getPosition = ({ actor, master }) => {
   const isInBounds       = inBounds({ actor, master });
   const isObstructed     = getIsObstructed({
     actor,
-    obstacles: master.actors.obstacles
+    obstacles: master.obstacles
   });
 
   let hasClearedStage = false;

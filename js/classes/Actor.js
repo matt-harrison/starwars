@@ -40,7 +40,7 @@ export const Actor = function({
   });
 
   this.selector                        = document.createElement('div');
-  this.selector.id                     = `${this.type}${master.actors.enemies.length}`;
+  this.selector.id                     = `${this.type}${master.enemies.length}`;
   this.selector.style.backgroundImage  = `url('img/characters/${this.sprite}.png')`;
   this.selector.style.backgroundRepeat = 'no-repeat';
   this.selector.style.backgroundSize   = `${this.width}px ${this.height}px`;
@@ -51,13 +51,13 @@ export const Actor = function({
 
   switch (this.type) {
     case ACTOR_TYPES.ENEMY:
-      master.actors.enemies.push(this);
+      master.enemies.push(this);
       break;
     case ACTOR_TYPES.FRIENDLY:
-      master.actors.friendlies.push(this);
+      master.friendlies.push(this);
       break;
     case ACTOR_TYPES.NEUTRAL:
-      master.actors.neutrals.push(this);
+      master.neutrals.push(this);
       break;
   }
 
