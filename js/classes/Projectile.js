@@ -9,8 +9,6 @@ export const Projectile = function({
 
   origin.weaponReady = false;
 
-  this.active       = false;
-  this.dead         = false;
   this.dir          = origin.dir;
   this.origin       = origin;
   this.spriteColumn = 0;
@@ -63,54 +61,45 @@ export const Projectile = function({
   master.dom.stage.selector.appendChild(this.selector);
 
   this.kill = function() {
-    const position = master.actors.props.indexOf(this);
-
-    master.actors.props.splice(position, 1);
     master.dom.stage.selector.removeChild(this.selector);
   }
 
   this.update = function() {
-    if (this.active) {
-      if (this.frameCount > 1) {
-        if (++this.spriteColumn > this.frameCount) {
-          this.spriteColumn = 0;
-        }
+    if (this.frameCount > 1) {
+      if (++this.spriteColumn > this.frameCount) {
+        this.spriteColumn = 0;
       }
+    }
 
-      if (this.dir === 'left') {
-        if (this.x > 0 - this.frameWidth) {
-          this.x -= this.speed;
-        } else {
-          this.dead = true;
-        }
-      } else if (this.dir === 'up') {
-        if (this.y > 0 - this.frameHeight) {
-          this.y -= this.speed;
-        } else {
-          this.dead = true;
-        }
-      } else if (this.dir === 'right') {
-        if (this.x < master.gameWidth) {
-          this.x += this.speed;
-        } else {
-          this.dead = true;
-        }
-      } else if (this.dir === 'down') {
-        if (this.y < master.gameHeight) {
-          this.y += this.speed;
-        } else {
-          this.dead = true;
-        }
+    if (this.dir === 'left') {
+      if (this.x > 0 - this.frameWidth) {
+        this.x -= this.speed;
+      } else {
+      this.kill();
       }
-    } else {
-      this.active = true;
+    } else if (this.dir === 'up') {
+      if (this.y > 0 - this.frameHeight) {
+        this.y -= this.speed;
+      } else {
+      this.kill();
+      }
+    } else if (this.dir === 'right') {
+      if (this.x < master.gameWidth) {
+        this.x += this.speed;
+      } else {
+      this.kill();
+      }
+    } else if (this.dir === 'down') {
+      if (this.y < master.gameHeight) {
+        this.y += this.speed;
+      } else {
+      this.kill();
+      }
     }
   }
 
   this.draw = function() {
-    if (this.dead) {
-      this.kill();
-    } else {
+    if (this.selector) {
       this.selector.style.backgroundPosition = `${0 - this.spriteColumn * this.frameWidth}px 0`;
       this.selector.style.left               = `${this.x}px`;
       this.selector.style.top                = `${this.y}px`;

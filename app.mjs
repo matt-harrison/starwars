@@ -531,7 +531,7 @@ function loop() {
       if (!master.dom.player.dead && collision(master.dom.player, prop)) {
         if (!master.isInvincible && prop.active && prop.origin !== master.dom.player) {
           master.dom.player.dead = true;
-          prop.dead = true;
+          prop.kill();
         }
 
         if (prop.type === 'lightsaber' && prop.speed > 0) {
