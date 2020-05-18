@@ -439,24 +439,39 @@ const mosEisley = {
     },
     {
       type: OBSTACLES.TABLE,
-      x   : 33,
-      y   : 20
+      x   : 25,
+      y   : 25
     },
     {
       type: OBSTACLES.TABLE,
-      x   : 66,
-      y   : 20
+      x   : 50,
+      y   : 25
     },
     {
       type: OBSTACLES.TABLE,
-      x   : 33,
-      y   : 80
+      x   : 75,
+      y   : 25
     },
     {
       type: OBSTACLES.TABLE,
-      x   : 66,
-      y   : 80
-    }
+      x   : 75,
+      y   : 50
+    },
+    {
+      type: OBSTACLES.TABLE,
+      x   : 25,
+      y   : 75
+    },
+    {
+      type: OBSTACLES.TABLE,
+      x   : 50,
+      y   : 75
+    },
+    {
+      type: OBSTACLES.TABLE,
+      x   : 75,
+      y   : 75
+    },
   ],
   password: undefined,
   textColor: COLORS.BLACK

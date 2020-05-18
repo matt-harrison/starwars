@@ -121,17 +121,17 @@ export const Lightsaber = function({
           this.reverse();
         }
       } else if (this.dir === 'right') {
-        if (this.x + this.speed < game.gameWidth - this.width) {
+        if (this.x + this.speed < game.width - this.width) {
           this.x += this.speed;
         } else {
-          this.x = game.gameWidth - this.frameWidth;
+          this.x = game.width - this.frameWidth;
           this.reverse();
         }
       } else if (this.dir === 'down') {
-        if (this.y + this.speed < game.gameHeight - this.height) {
+        if (this.y + this.speed < game.height - this.height) {
           this.y += this.speed;
         } else {
-          this.y = game.gameHeight - this.frameHeight;
+          this.y = game.height - this.frameHeight;
           this.reverse();
         }
       }

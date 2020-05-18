@@ -32,8 +32,8 @@ export const Player = function({
   this.type         = ACTOR_TYPES.PLAYER;
   this.weaponCount  = 0;
   this.weaponReady  = true;
-  this.x            = Math.floor((game.gameWidth - this.frameWidth) / 2);
-  this.y            = Math.floor((game.gameHeight - this.frameHeight) / 2);
+  this.x            = Math.floor((game.width - this.frameWidth) / 2);
+  this.y            = Math.floor((game.height - this.frameHeight) / 2);
 
   if (!this.weaponDelay) {
     switch (this.weaponType) {

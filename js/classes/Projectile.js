@@ -91,13 +91,13 @@ export const Projectile = function({
           this.kill();
         }
       } else if (this.dir === CARDINALS.RIGHT) {
-        if (this.x < game.gameWidth) {
+        if (this.x < game.width) {
           this.x += this.speed;
         } else {
           this.kill();
         }
       } else if (this.dir === CARDINALS.DOWN) {
-        if (this.y < game.gameHeight) {
+        if (this.y < game.height) {
           this.y += this.speed;
         } else {
           this.kill();

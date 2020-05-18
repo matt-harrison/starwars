@@ -34,9 +34,9 @@ export const Cutscene = function({
       backgroundImage: `url('img/cutscenes/${img}.png')`,
       backgroundSize : `${sideLength}px ${sideLength}px`,
       height         : `${sideLength}px`,
-      left           : `${(game.gameWidth - sideLength) / 2}px`,
+      left           : `${(game.width - sideLength) / 2}px`,
       position       : 'absolute',
-      top            : `${(game.gameHeight - sideLength) / 2}px`,
+      top            : `${(game.height - sideLength) / 2}px`,
       width          : `${sideLength}px`,
       zIndex         : 100
     }
@@ -46,11 +46,11 @@ export const Cutscene = function({
     const sideLength = getSideLength(game);
 
     cutscene.style.backgroundSize = `${sideLength}px ${sideLength}px`;
-    cutscene.style.left           = `${(game.gameWidth - sideLength) / 2}px`;
-    cutscene.style.top            = `${(game.gameHeight - sideLength) / 2}px`;
+    cutscene.style.left           = `${(game.width - sideLength) / 2}px`;
+    cutscene.style.top            = `${(game.height - sideLength) / 2}px`;
   }
 };
 
 const getSideLength = (game) => {
-  return game.gameWidth <= game.gameHeight ? game.gameWidth : game.gameHeight;
+  return game.width <= game.height ? game.width : game.height;
 };

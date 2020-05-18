@@ -12,17 +12,17 @@ export const Obstacle = function({
   if (this.leftPercent === 0) {
     this.x = 0;
   } else if (this.leftPercent === 100) {
-    this.x = game.gameWidth - this.frameWidth;
+    this.x = game.width - this.frameWidth;
   } else {
-    this.x = game.gameWidth * (this.leftPercent / 100) - (this.frameWidth / 2);
+    this.x = game.width * (this.leftPercent / 100) - (this.frameWidth / 2);
   }
 
   if (this.topPercent === 0) {
     this.y = 0;
   } else if (this.topPercent === 100) {
-    this.y = game.gameHeight - this.frameHeight;
+    this.y = game.height - this.frameHeight;
   } else {
-    this.y = game.gameHeight * (this.topPercent / 100) - (this.frameHeight / 2);
+    this.y = game.height * (this.topPercent / 100) - (this.frameHeight / 2);
   }
 
   this.selector                       = document.createElement('div');

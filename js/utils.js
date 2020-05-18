@@ -1,6 +1,6 @@
 import { Player } from '/js/classes/Player.js';
 
-import * as CHARACTERS          from  '/js/constants/characters.js';
+import * as CHARACTERS from '/js/constants/characters.js';
 import {
   ACTOR_TYPES,
   CARDINALS,
@@ -8,28 +8,29 @@ import {
   MAGNIFICATION,
   MODES
 } from '/js/constants/config.js';
-import { EPISODES }             from '/js/constants/episodes.js';
+import { EPISODES } from '/js/constants/episodes.js';
 
 export const adaptCoords = ({ actor, game }) => {
-  if (typeof(actor.leftPercent) !== 'undefined' && typeof(actor.topPercent) !== 'undefined') {
+  if (typeof actor.leftPercent === 'number' && typeof actor.topPercent === 'number') {
     if (actor.leftPercent === 0) {
       actor.x = 0;
     } else if (actor.leftPercent === 100) {
-      actor.x = game.gameWidth - actor.frameWidth;
+      actor.x = game.width - actor.frameWidth;
     } else {
-      actor.x = Math.floor(game.gameWidth * (actor.leftPercent / 100) - (actor.frameWidth / 2));
+      actor.x = Math.floor(game.width * (actor.leftPercent / 100) - (actor.frameWidth / 2));
     }
 
     if (actor.topPercent === 0) {
       actor.y = 0;
     } else if (actor.leftPercent === 100) {
-      actor.y = game.gameHeight - actor.frameHeight;
+      actor.y = game.height - actor.frameHeight;
     } else {
-      actor.y = Math.floor(game.gameHeight * (actor.topPercent / 100) - (actor.frameHeight / 2));
+      actor.y = Math.floor(game.height * (actor.topPercent / 100) - (actor.frameHeight / 2));
     }
+
   } else {
-    const offsetX = actor.x / (game.gameWidth - actor.frameWidth);
-    const offsetY = actor.y / (game.gameHeight - actor.frameHeight);
+    const offsetX = actor.x / (game.width - actor.frameWidth);
+    const offsetY = actor.y / (game.height - actor.frameHeight);
 
     actor.x = Math.floor((window.innerWidth - actor.frameWidth) * offsetX);
     actor.y = Math.floor((window.innerHeight - actor.frameHeight) * offsetY);
@@ -119,19 +120,19 @@ export const crossPaths = (actor1, actor2) => {
 
 export const getCoords = ({ actor, game }) => {
   if (actor.dir === CARDINALS.LEFT) {
-    actor.x         = game.gameWidth;
-    actor.y         = getRandom(game.gameHeight - actor.frameHeight);
+    actor.x         = game.width;
+    actor.y         = getRandom(game.height - actor.frameHeight);
     actor.spriteRow = 1;
   } else if (actor.dir === CARDINALS.UP) {
-    actor.x         = getRandom(game.gameWidth - actor.frameWidth);
-    actor.y         = game.gameHeight;
+    actor.x         = getRandom(game.width - actor.frameWidth);
+    actor.y         = game.height;
     actor.spriteRow = 3;
   } else if (actor.dir === CARDINALS.RIGHT) {
     actor.x         = 0 - actor.frameWidth;
-    actor.y         = getRandom(game.gameHeight - actor.frameHeight);
+    actor.y         = getRandom(game.height - actor.frameHeight);
     actor.spriteRow = 0;
   } else if (actor.dir === CARDINALS.DOWN) {
-    actor.x         = getRandom(game.gameWidth - actor.frameWidth);
+    actor.x         = getRandom(game.width - actor.frameWidth);
     actor.y         = 0 - actor.frameHeight;
     actor.spriteRow = 2;
   }
@@ -225,7 +226,7 @@ export const getPosition = ({ actor, game }) => {
 
   switch (actor.dir) {
     case CARDINALS.DOWN:
-      if (actorTop + actor.speed >= game.gameHeight) {
+      if (actorTop + actor.speed >= game.height) {
         hasClearedStage = true;
       }
       break;
@@ -235,7 +236,7 @@ export const getPosition = ({ actor, game }) => {
       }
       break;
     case CARDINALS.RIGHT:
-      if (actorLeft + actor.speed >= game.gameWidth) {
+      if (actorLeft + actor.speed >= game.width) {
         hasClearedStage = true;
       }
       break;
@@ -253,12 +254,12 @@ export const getPosition = ({ actor, game }) => {
   } else {
     switch (actor.dir) {
       case CARDINALS.DOWN:
-        if (isBounceLimitMet || actorBottom + actor.speed < game.gameHeight) {
+        if (isBounceLimitMet || actorBottom + actor.speed < game.height) {
           actor.spriteRow = 2;
           actor.y        += actor.speed;
         } else {
           actor.dir = CARDINALS.UP;
-          actor.y   = game.gameHeight - actor.frameHeight;
+          actor.y   = game.height - actor.frameHeight;
 
           actor.bounceCount++;
         }
@@ -275,12 +276,12 @@ export const getPosition = ({ actor, game }) => {
         }
         break;
       case CARDINALS.RIGHT:
-        if (isBounceLimitMet || actorRight + actor.speed < game.gameWidth) {
+        if (isBounceLimitMet || actorRight + actor.speed < game.width) {
           actor.spriteRow = 0;
           actor.x        += actor.speed;
         } else {
           actor.dir = CARDINALS.LEFT;
-          actor.x   = game.gameWidth - actor.frameWidth;
+          actor.x   = game.width - actor.frameWidth;
 
           actor.bounceCount++;
         }
@@ -313,8 +314,8 @@ export const inBounds = ({ actor, game }) => {
   return (
     actorRight  > 0 &&
     actorBottom > 0 &&
-    actorLeft   < game.gameWidth &&
-    actorTop    < game.gameHeight
+    actorLeft   < game.width &&
+    actorTop    < game.height
   );
 }
 

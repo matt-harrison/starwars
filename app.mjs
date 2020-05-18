@@ -40,11 +40,9 @@ const game = {
   counter      : 0,
   cutsceneCount: 0,
   enemies      : [],
-  episode      : 0,
+  episode      : 3,
   friendlies   : [],
-  game         : null,
-  gameHeight   : IS_MOBILE ? window.innerHeight : 500,
-  gameWidth    : IS_MOBILE ? window.innerWidth  : 500,
+  height       : IS_MOBILE ? window.innerHeight : 500,
   hud          : null,
   isGameOver   : false,
   isInvincible : false,
@@ -59,7 +57,8 @@ const game = {
   promptStart  : IS_MOBILE ? 'Press Start'  : 'Press Enter',
   props        : [],
   selector     : null,
-  stage        : null
+  stage        : null,
+  width        : IS_MOBILE ? window.innerWidth  : 500
 };
 
 (function() {
@@ -143,8 +142,9 @@ function buttonRelease(key, id) {
     if (game.mode === MODES.RESET) {
       reset();
     } else if (game.mode === MODES.TITLE) {
-      game.level = 0;
+      game.level         = 0;
       game.cutsceneCount = 0;
+
       initMenu(MODES.CUTSCENE);
     } else if (game.mode === MODES.CUTSCENE) {
       game.mode = MODES.GAMEPLAY;
@@ -362,7 +362,7 @@ function initLevel() {
   game.counter                       = 0;
   game.hud.scoreText.style.color = game.stage.textColor;
 
-  if (typeof(EPISODES[game.episode][game.level].obstacles) !== 'undefined') {
+  if (EPISODES[game.episode][game.level].obstacles.length > 0) {
     game.stage.obstacles.forEach(obstacle => {
       const data = Object.assign({
         x: obstacle.x,
@@ -394,16 +394,14 @@ function initMenu(mode) {
 
   if (game.mode === MODES.TITLE) {
     game.cutsceneCount = 0;
-    game.hud.score = 0;
-    game.episode       = 3;
-    game.level         = 0;
+    game.hud.score     = 0;
 
     game.stage = new Stage({
       data: ATTRACTION,
       game
     });
 
-    if (typeof(EPISODES[game.episode][game.level].obstacles) !== 'undefined') {
+    if (EPISODES[game.episode][game.level].obstacles.length > 0) {
       game.stage.obstacles?.forEach(obstacle => {
         const data = Object.assign({
           x: obstacle.x,
@@ -494,7 +492,7 @@ function loop() {
               game.player.kill();
             }
 
-            enemy.collide();
+            enemy.kill();
           } else if (enemy.active && enemy.weaponType === WEAPON_TYPES.PROJECTILE && enemy.weaponReady && crossPaths(enemy, game.player)) {
             const chance = 500 + EPISODES[game.episode].length - game.level;
             const random = getRandom(chance);
@@ -713,10 +711,10 @@ function resizeGame(width, height) {
     });
   }
 
-  game.gameWidth = width;
-  game.gameHeight = height;
-  game.selector.style.width = game.gameWidth + 'px';
-  game.selector.style.height = game.gameHeight + 'px';
+  game.width                 = width;
+  game.height                = height;
+  game.selector.style.width  = game.width + 'px';
+  game.selector.style.height = game.height + 'px';
 
   if (game.mode === MODES.CUTSCENE) {
     game.stage.resize();
@@ -729,5 +727,5 @@ function resizeGame(width, height) {
     });
   });
 
-  btnStart.style.left = ((game.gameWidth - 75) / 2) + 'px';
+  btnStart.style.left = ((game.width - 75) / 2) + 'px';
 }

@@ -67,12 +67,6 @@ export const Actor = function({
     preload('img/animations/' + this.death.name + '.png');
   }
 
-  this.collide = () => {
-    if (this.active && this.ship) {
-      this.kill();
-    }
-  }
-
   this.hit = () => {
     if (!this.blinking) {
       if (--this.hp === 0) {
