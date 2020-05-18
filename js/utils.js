@@ -248,10 +248,8 @@ export const getPosition = ({ actor, master }) => {
 
   if (isObstructed) {
     if (!isInBounds) {
-      actor.respawn();
+      getCoords({ actor, master });
     }
-  } else if (isBounceLimitMet && hasClearedStage) {
-    actor.remove();
   } else {
     switch (actor.dir) {
       case CARDINALS.DOWN:

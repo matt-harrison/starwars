@@ -202,7 +202,7 @@ function clearStage() {
   master.actors.animations.splice(0);
   master.keys.splice(0);
 
-  master.actorCount               = 0;
+  master.actorCount                   = 0;
   master.dom.hud.scoreText.innerHTML  = master.dom.hud.score;
   master.dom.hud.victimText.innerHTML = '';
 }

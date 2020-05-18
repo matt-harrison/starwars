@@ -32,6 +32,8 @@ export const Actor = function({
   this.weaponDelay  = FPS;
   this.weaponReady  = true;
 
+  this.tempCount = 0;
+
   getCoords({
     actor: this,
     master
@@ -107,39 +109,6 @@ export const Actor = function({
       });
     }
   }
-  this.remove = () => {
-    switch (this.type) {
-      case ACTOR_TYPES.ENEMY:
-        master.actors.enemies.splice(
-          master.actors.enemies.indexOf(this),
-          1
-        );
-        break;
-      case ACTOR_TYPES.FRIENDLY:
-        master.actors.friendlies.splice(
-          master.actors.friendlies.indexOf(this),
-          1
-        );
-        break;
-      case ACTOR_TYPES.NEUTRAL:
-        master.actors.neutrals.splice(
-          master.actors.neutrals.indexOf(this),
-          1
-        );
-        break;
-    }
-
-    master.dom.stage.selector.removeChild(this.selector);
-  };
-
-  this.respawn = () => {
-    this.remove();
-
-    new Actor({
-      data,
-      master
-    });
-  }
 
   this.update = () => {
     if (this.active) {
@@ -165,6 +134,8 @@ export const Actor = function({
 
       getPosition({ actor: this, master });
     }
+
+    this.tempCount++;
   }
 
   this.draw = () => {
