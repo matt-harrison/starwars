@@ -44,9 +44,9 @@ export const Actor = function({
   this.selector.style.backgroundImage  = `url('img/characters/${this.sprite}.png')`;
   this.selector.style.backgroundRepeat = 'no-repeat';
   this.selector.style.backgroundSize   = `${this.width}px ${this.height}px`;
-  this.selector.style.height           = this.frameHeight + 'px';
+  this.selector.style.height           = `${this.frameHeight}px`;
   this.selector.style.position         = 'absolute';
-  this.selector.style.width            = this.frameWidth + 'px';
+  this.selector.style.width            = `${this.frameWidth}px`;
   this.selector.style.zIndex           = add(this.y, this.frameHeight);
 
   switch (this.type) {
@@ -64,7 +64,7 @@ export const Actor = function({
   game.stage.selector.appendChild(this.selector);
 
   if (this.death) {
-    preload('img/animations/' + this.death.name + '.png');
+    preload(`img/animations/${this.death.name}.png`);
   }
 
   this.hit = () => {

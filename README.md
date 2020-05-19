@@ -3,7 +3,6 @@
 
 REFACTOR:
 * code formatting
-  * adapt string concats to template literals
   * convert functions to arrow functions
   * adapt all booleans to use isBoolean naming convention
   * import all constants from /js/constants/index.js manifest?

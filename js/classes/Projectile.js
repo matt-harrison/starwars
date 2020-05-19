@@ -57,8 +57,8 @@ export const Projectile = function({
     this.y = origin.y + (origin.weaponOffsetDown[1] * MAGNIFICATION);
   }
 
-  this.selector.style.height = this.frameHeight + 'px';
-  this.selector.style.width  = this.frameWidth  + 'px';
+  this.selector.style.height = `${this.frameHeight}px`;
+  this.selector.style.width  = `${this.frameWidth}px`;
   this.selector.style.zIndex = '4';
 
   game.props.push(this);

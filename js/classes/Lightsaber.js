@@ -59,20 +59,20 @@ export const Lightsaber = function({
   this.selector                       = document.createElement('div');
   this.selector.id                    = `lightsaber${game.props.length}`;
   this.selector.style.backgroundColor = this.color;
-  this.selector.style.height          = this.frameHeight + 'px';
-  this.selector.style.left            = this.x + 'px';
+  this.selector.style.height          = `${this.frameHeight}px`;
+  this.selector.style.left            = `${this.x}px`;
   this.selector.style.position        = 'absolute';
-  this.selector.style.top             = this.y + 'px';
-  this.selector.style.width           = this.frameWidth + 'px';
+  this.selector.style.top             = `${this.y}px`;
+  this.selector.style.width           = `${this.frameWidth}px`;
   this.selector.style.zIndex          = '4';
 
   this.hilt                       = document.createElement('div');
   this.hilt.style.backgroundColor = COLORS.GRAY;
-  this.hilt.style.height          = this.hiltHeight + 'px';
-  this.hilt.style.left            = this.hiltX + 'px';
+  this.hilt.style.height          = `${this.hiltHeight}px`;
+  this.hilt.style.left            = `${this.hiltX}px`;
   this.hilt.style.position        = 'relative';
-  this.hilt.style.top             = this.hiltY + 'px';
-  this.hilt.style.width           = this.hiltWidth + 'px';
+  this.hilt.style.top             = `${this.hiltY}px`;
+  this.hilt.style.width           = `${this.hiltWidth}px`;
 
   game.props.push(this);
   game.stage.selector.appendChild(this.selector);
@@ -140,8 +140,8 @@ export const Lightsaber = function({
 
   this.draw = function() {
     if (origin.attacking) {
-      this.selector.style.left = this.x + 'px';
-      this.selector.style.top  = this.y + 'px';
+      this.selector.style.left = `${this.x}px`;
+      this.selector.style.top  = `${this.y}px`;
     } else {
       this.kill();
     }

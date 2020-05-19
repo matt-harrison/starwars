@@ -97,7 +97,7 @@ function buttonPush(key, id) {
     }
   } else if (game.mode === MODES.EPISODE && Object.values(CARDINALS).indexOf(key) !== -1) {
     NUMERALS.forEach(numeral => {
-      document.getElementById('btnEpisode' + numeral).style.color = COLORS.BLACK;
+      document.getElementById(`btnEpisode${numeral}`).style.color = COLORS.BLACK;
     });
 
     if (key === 'left') {
@@ -112,7 +112,7 @@ function buttonPush(key, id) {
 
     game.episode = (game.episode < 0) ? 6 + game.episode : (game.episode % 6);
 
-    document.getElementById('btnEpisode' + NUMERALS[game.episode]).style.color = COLORS.WHITE;
+    document.getElementById(`btnEpisode${NUMERALS[game.episode]}`).style.color = COLORS.WHITE;
   }
 
   if (Object.values(BUTTON_NAMES).indexOf(id) > -1) {
@@ -122,8 +122,8 @@ function buttonPush(key, id) {
 
 function buttonUpdate(event) {
   Object.values(CARDINALS).forEach(cardinal => {
-    const previousButton = document.querySelector('[data-key="' + game.player.dir + '"]');
-    const button         = document.querySelector('[data-key="' + cardinal + '"]');
+    const previousButton = document.querySelector(`[data-key="${game.player.dir}"]`);
+    const button         = document.querySelector(`[data-key="${cardinal}"]`);
     const bounds         = button.getBoundingClientRect();
 
     if (event.changedTouches[0].pageX > bounds.left && event.changedTouches[0].pageX < bounds.right && event.changedTouches[0].pageY > bounds.top && event.changedTouches[0].pageY < bounds.bottom) {
@@ -230,7 +230,7 @@ function initInterface() {
 
       //Check if touch was released over different d-pad button
       Object.values(CARDINALS).forEach(cardinal => {
-        const button = document.querySelector('[data-key="' + cardinal + '"]');
+        const button = document.querySelector(`[data-key="${cardinal}"]`);
         const bounds = button.getBoundingClientRect();
 
         if (event.pageX > bounds.left && event.pageX < bounds.right && event.pageY > bounds.top && event.pageY < bounds.bottom) {
@@ -460,7 +460,7 @@ function levelWin() {
     game.mode         = MODES.RESET;
     title.innerHTML   = 'You win!';
   } else {
-    title.innerHTML = 'Next:<br/>' + EPISODES[game.episode][game.level].name;
+    title.innerHTML = `Next:<br/>${EPISODES[game.episode][game.level].name}`;
   }
 }
 
@@ -714,8 +714,8 @@ function resizeGame(width, height) {
 
   game.width                 = width;
   game.height                = height;
-  game.selector.style.width  = game.width + 'px';
-  game.selector.style.height = game.height + 'px';
+  game.selector.style.width  = `${game.width}px`;
+  game.selector.style.height = `${game.height}px`;
 
   if (game.mode === MODES.CUTSCENE) {
     game.stage.resize();
@@ -728,5 +728,5 @@ function resizeGame(width, height) {
     });
   });
 
-  btnStart.style.left = ((game.width - 75) / 2) + 'px';
+  btnStart.style.left = `${(game.width - 75) / 2}px`;
 }

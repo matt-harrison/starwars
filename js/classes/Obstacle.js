@@ -29,11 +29,11 @@ export const Obstacle = function({
   this.selector.id                    = `obstacle${game.obstacles.length}`;
   this.selector.style.backgroundImage = `url('img/obstacles/${this.img}.png')`;
   this.selector.style.backgroundSize  = `${this.width}px ${this.height}px`;
-  this.selector.style.height          = this.frameHeight + 'px';
-  this.selector.style.left            = this.x + 'px';
+  this.selector.style.height          = `${this.frameHeight}px`;
+  this.selector.style.left            = `${this.x}px`;
   this.selector.style.position        = 'absolute';
-  this.selector.style.top             = this.y + 'px';
-  this.selector.style.width           = this.frameWidth + 'px';
+  this.selector.style.top             = `${this.y}px`;
+  this.selector.style.width           = `${this.frameWidth}px`;
 
   game.obstacles.push(this);
   game.stage.selector.appendChild(this.selector);
@@ -49,8 +49,8 @@ export const Obstacle = function({
   }
 
   this.draw = function() {
-    this.selector.style.backgroundPosition = (0 - this.spriteColumn * this.frameWidth) + 'px 0';
-    this.selector.style.left               = this.x + 'px';
-    this.selector.style.top                = this.y + 'px';
+    this.selector.style.backgroundPosition = `${0 - this.spriteColumn * this.frameWidth}px 0`;
+    this.selector.style.left               = `${this.x}px`;
+    this.selector.style.top                = `${this.y}px`;
   }
 };
