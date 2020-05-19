@@ -126,7 +126,7 @@ export const Player = function({
 
   this.update = () => {
     if (this.active) {
-      if (this.running || this.ship) {
+      if (this.running || this.isShip) {
         advanceFrame(this);
         getPosition({ actor: this, game });
       }

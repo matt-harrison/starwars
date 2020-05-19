@@ -5,6 +5,7 @@ REFACTOR:
 * code formatting
   * adapt string concats to template literals
   * convert functions to arrow functions
+  * adapt all booleans to use isBoolean naming convention
   * import all constants from /js/constants/index.js manifest?
   * migrate all public vars from classes to game object? (ex. hud.title)
   * implement attachNode from classes
@@ -53,4 +54,5 @@ BUGS:
 * concurrent boss and player death results in game over AND next level
 * projectiles zIndex?
 * directions don't blink when paused bc counter doesn't increment while paused (so that actors don't spawn during pause)...
+* fix playLevel() cheat
 * mobile magnification

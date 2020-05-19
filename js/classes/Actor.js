@@ -68,7 +68,7 @@ export const Actor = function({
   }
 
   this.hit = () => {
-    if (!this.blinking) {
+    if (this.active && !this.blinking) {
       if (--this.hp === 0) {
         this.kill();
       } else {

@@ -142,9 +142,6 @@ function buttonRelease(key, id) {
     if (game.mode === MODES.RESET) {
       reset();
     } else if (game.mode === MODES.TITLE) {
-      game.level         = 0;
-      game.cutsceneCount = 0;
-
       initMenu(MODES.CUTSCENE);
     } else if (game.mode === MODES.CUTSCENE) {
       game.mode = MODES.GAMEPLAY;
@@ -394,14 +391,16 @@ function initMenu(mode) {
 
   if (game.mode === MODES.TITLE) {
     game.cutsceneCount = 0;
+    game.episode       = 3;
     game.hud.score     = 0;
+    game.level         = 0;
 
     game.stage = new Stage({
       data: ATTRACTION,
       game
     });
 
-    if (EPISODES[game.episode][game.level].obstacles.length > 0) {
+    if (game.stage.obstacles.length > 0) {
       game.stage.obstacles?.forEach(obstacle => {
         const data = Object.assign({
           x: obstacle.x,
@@ -459,7 +458,7 @@ function levelWin() {
     game.isGameOver   = true;
     game.isInvincible = false;
     game.mode         = MODES.RESET;
-    title.innerHTML     = 'You win!';
+    title.innerHTML   = 'You win!';
   } else {
     title.innerHTML = 'Next:<br/>' + EPISODES[game.episode][game.level].name;
   }
@@ -492,7 +491,9 @@ function loop() {
               game.player.kill();
             }
 
-            enemy.kill();
+            if (enemy.active && enemy.isShip) {
+              enemy.kill();
+            }
           } else if (enemy.active && enemy.weaponType === WEAPON_TYPES.PROJECTILE && enemy.weaponReady && crossPaths(enemy, game.player)) {
             const chance = 500 + EPISODES[game.episode].length - game.level;
             const random = getRandom(chance);
@@ -508,7 +509,7 @@ function loop() {
       });
 
       game.friendlies.forEach(friendly => {
-        if (friendly.ship) {
+        if (friendly.active && friendly.isShip) {
           if (game.player.active && collision(game.player, friendly)) {
             if (!game.isInvincible) {
               game.player.kill();
@@ -536,7 +537,7 @@ function loop() {
         }
 
         game.enemies.forEach(enemy => {
-          if (prop.origin !== enemy && enemy.active && collision(enemy, prop)) {
+          if (enemy.active && prop.origin !== enemy && collision(enemy, prop)) {
             enemy.hit();
 
             if (prop.type !== 'lightsaber') {
@@ -546,7 +547,7 @@ function loop() {
         });
 
         game.friendlies.forEach(friendly => {
-          if (prop.origin !== friendly && friendly.active && collision(friendly, prop)) {
+          if (friendly.active && prop.origin !== friendly && collision(friendly, prop)) {
             friendly.hit();
 
             if (prop.type !== 'lightsaber') {
@@ -556,7 +557,7 @@ function loop() {
         });
 
         game.neutrals.forEach(neutral => {
-          if (prop.origin !== neutral && neutral.active && collision(neutral, prop)) {
+          if (neutral.active && prop.origin !== neutral && collision(neutral, prop)) {
             neutral.hit();
 
             if (prop.type !== 'lightsaber') {
