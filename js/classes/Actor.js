@@ -2,11 +2,11 @@ import {
   advanceFrame,
   add,
   changeDirection,
-  getCoords,
-  getPosition,
   getRandom,
   inBounds,
   preload,
+  setCoordinates,
+  setPosition,
   updateHud
 } from '/js/utils.js';
 
@@ -21,20 +21,18 @@ export const Actor = function({
   Object.assign(this, data.character);
   Object.assign(this, data.details);
 
-  this.active       = true;
-  this.blinkCount   = 0;
-  this.blinking     = false;
-  this.bounceCount  = 0;
-  this.dir          = this.dir ? this.dir :  Object.values(CARDINALS)[getRandom(Object.values(CARDINALS).length)]
-  this.hp           = this.hp ? this.hp : 1;
-  this.speed        = this.speed * (MAGNIFICATION / 5);
-  this.spriteColumn = 1;
-  this.weaponDelay  = FPS;
-  this.weaponReady  = true;
+  this.blinkCount    = 0;
+  this.bounceCount   = 0;
+  this.dir           = this.dir ? this.dir :  Object.values(CARDINALS)[getRandom(Object.values(CARDINALS).length)]
+  this.hp            = this.hp ? this.hp : 1;
+  this.isActive      = true;
+  this.isBlinking    = false;
+  this.isWeaponReady = true;
+  this.speed         = this.speed * (MAGNIFICATION / 5);
+  this.spriteColumn  = 1;
+  this.weaponDelay   = FPS;
 
-  this.tempCount = 0;
-
-  getCoords({
+  setCoordinates({
     actor: this,
     game
   });
@@ -68,11 +66,11 @@ export const Actor = function({
   }
 
   this.hit = () => {
-    if (this.active && !this.blinking) {
+    if (this.isActive && !this.isBlinking) {
       if (--this.hp === 0) {
         this.kill();
       } else {
-        this.blinking   = true;
+        this.isBlinking   = true;
         this.blinkCount = FPS;
 
         changeDirection({ actor: this, game });
@@ -90,8 +88,8 @@ export const Actor = function({
       game.stage.enemiesKilled++;
     }
 
-    this.active       = false;
-    this.blinking     = false;
+    this.isActive     = false;
+    this.isBlinking   = false;
     this.spriteColumn = 0;
     this.spriteRow    = 4;
 
@@ -105,10 +103,10 @@ export const Actor = function({
   }
 
   this.update = () => {
-    if (this.active) {
+    if (this.isActive) {
       advanceFrame(this);
 
-      if (this.blinking) {
+      if (this.isBlinking) {
         if (game.counter % 2 === 0) {
           this.selector.style.display = '';
         } else {
@@ -116,20 +114,18 @@ export const Actor = function({
         }
 
         if (--this.blinkCount === 0) {
-          this.blinking = false;
+          this.isBlinking = false;
           this.selector.style.display = '';
         }
       }
 
-      this.weaponReady = (
+      this.isWeaponReady = (
         this.type === ACTOR_TYPES.ENEMY &&
         game.count % this.weaponDelay === 0
       );
 
-      getPosition({ actor: this, game });
+      setPosition({ actor: this, game });
     }
-
-    this.tempCount++;
   }
 
   this.draw = () => {

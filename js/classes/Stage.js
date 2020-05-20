@@ -20,6 +20,6 @@ export const Stage = function({
   game.hud.scoreboard.style.color = this.textColor;
   game.hud.title.style.color      = this.textColor;
 
-  this.defeated      = false;
   this.enemiesKilled = 0;
+  this.isDefeated    = false;
 };

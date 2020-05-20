@@ -5,7 +5,7 @@ const DEATH_ARFIVE = {
   frameHeight: 9 * MAGNIFICATION,
   frameWidth : 5 * MAGNIFICATION,
   name       : 'arfivedeath',
-  remove     : false
+  isRemove   : false
 }
 
 const DEATH_AUNT_BERU = {
@@ -13,7 +13,7 @@ const DEATH_AUNT_BERU = {
   frameHeight: 12 * MAGNIFICATION,
   frameWidth : 10 * MAGNIFICATION,
   name       : 'auntberudeath',
-  remove     : false
+  isRemove   : false
 };
 
 const DEATH_BEN = {
@@ -21,7 +21,7 @@ const DEATH_BEN = {
   frameHeight: 12 * MAGNIFICATION,
   frameWidth : 10 * MAGNIFICATION,
   name       : 'bendeath',
-  remove     : false
+  isRemove   : false
 };
 
 const DEATH_DARTH_VADER6 = {
@@ -29,7 +29,7 @@ const DEATH_DARTH_VADER6 = {
   frameHeight: 12 * MAGNIFICATION,
   frameWidth : 10 * MAGNIFICATION,
   name       : 'darthvader6death',
-  remove     : false
+  isRemove   : false
 };
 
 const DEATH_TIE_ADVANCED = {
@@ -37,7 +37,7 @@ const DEATH_TIE_ADVANCED = {
   frameHeight: 7 * MAGNIFICATION,
   frameWidth : 7 * MAGNIFICATION,
   name       : 'vadertiedeath',
-  remove     : true
+  isRemove   : true
 };
 
 const DEATH_UNCLE_OWEN = {
@@ -45,7 +45,7 @@ const DEATH_UNCLE_OWEN = {
   frameHeight: 12 * MAGNIFICATION,
   frameWidth:  10 * MAGNIFICATION,
   name:        'uncleowendeath',
-  remove:      false
+  isRemove:    false
 };
 
 const DETONATION = {
@@ -53,7 +53,7 @@ const DETONATION = {
   frameHeight: 5 * MAGNIFICATION,
   frameWidth : 9 * MAGNIFICATION,
   name       : 'detonation',
-  remove     : true
+  isRemove   : true
 };
 
 const EXPLOSION = {
@@ -61,7 +61,7 @@ const EXPLOSION = {
   frameHeight: 12 * MAGNIFICATION,
   frameWidth : 10 * MAGNIFICATION,
   name       : 'explosion',
-  remove     : true
+  isRemove   : true
 };
 
 const EXPLOSION_SMALL = {
@@ -69,7 +69,7 @@ const EXPLOSION_SMALL = {
   frameHeight: 10 * MAGNIFICATION,
   frameWidth : 10 * MAGNIFICATION,
   name       : 'explosionsmall',
-  remove     : true
+  isRemove   : true
 };
 
 const SPRITZ = {
@@ -77,7 +77,7 @@ const SPRITZ = {
   frameHeight: 12 * MAGNIFICATION,
   frameWidth : 10 * MAGNIFICATION,
   name       : 'spritz',
-  remove     : true
+  isRemove   : true
 };
 
 export const ANIMATIONS = {

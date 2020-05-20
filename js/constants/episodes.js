@@ -1,7 +1,14 @@
-import { CARDINALS, COLORS, FPS } from '/js/constants/config.js';
-import * as CHARACTERS            from '/js/constants/characters.js';
-import { OBSTACLES }              from '/js/constants/obstacles.js';
-import { SHIPS }                  from '/js/constants/ships.js';
+import {
+  CARDINALS,
+  COLORS,
+  FPS,
+  INFINITY
+} from '/js/constants/config.js';
+import * as CHARACTERS from '/js/constants/characters.js';
+import { OBSTACLES }   from '/js/constants/obstacles.js';
+import { SHIPS }       from '/js/constants/ships.js';
+
+const isQuickTest = false;
 
 export const ATTRACTION = {
   bg: 'metal',
@@ -11,37 +18,37 @@ export const ATTRACTION = {
   enemiesOptional: [],
   enemiesRequiredData: {
     character    : CHARACTERS.stormtrooper,
-    count        : 3,
+    count        : isQuickTest ? 1 : 3,
     delayInterval: 1 * FPS,
     dir          : CARDINALS.RIGHT,
-    hp           : 1
+    hp           : isQuickTest ? 1 : 1
   },
   friendlies: [
     {
       character: CHARACTERS.rebel,
       details: {
-        bounceLimit: -1,
+        bounceLimit: INFINITY,
         delay      : 0.5 * FPS,
         dir        : CARDINALS.LEFT,
-        hp         : 1
+        hp         : isQuickTest ? 1 : 1
       }
     },
     {
       character: CHARACTERS.rebel,
       details: {
-        bounceLimit: -1,
+        bounceLimit: INFINITY,
         delay      : 1.5 * FPS,
         dir        : CARDINALS.LEFT,
-        hp         : 1
+        hp         : isQuickTest ? 1 : 1
       }
     },
     {
       character: CHARACTERS.rebel,
       details: {
-        bounceLimit: -1,
+        bounceLimit: INFINITY,
         delay      : 2.5 * FPS,
         dir        : CARDINALS.LEFT,
-        hp         : 1
+        hp         : isQuickTest ? 1 : 1
       }
     },
     {
@@ -50,7 +57,7 @@ export const ATTRACTION = {
         bounceLimit: 0,
         delay      : 2 * FPS,
         dir        : CARDINALS.DOWN,
-        hp         : 1
+        hp         : isQuickTest ? 1 : 1
       }
     },
     {
@@ -59,7 +66,7 @@ export const ATTRACTION = {
         bounceLimit: 0,
         delay      : 4 * FPS,
         dir        : CARDINALS.DOWN,
-        hp         : 1
+        hp         : isQuickTest ? 1 : 1
       }
     }
   ],
@@ -79,7 +86,7 @@ const tantive4 = {
       details: {
         delay: 0,
         dir  : null,
-        hp   : 2
+        hp   : isQuickTest ? 1 : 2
       }
     }
   ],
@@ -91,10 +98,10 @@ const tantive4 = {
   enemiesOptional: [],
   enemiesRequiredData: {
     character    : CHARACTERS.stormtrooper,
-    count        : 10,
+    count        : isQuickTest ? 1 : 10,
     delayInterval: 2 * FPS,
     dir          : CARDINALS.RIGHT,
-    hp           : 1
+    hp           : isQuickTest ? 1 : 1
   },
   friendlies: [
     {
@@ -103,7 +110,7 @@ const tantive4 = {
         bounceLimit: 0,
         delay      : 3 * FPS,
         dir        : CARDINALS.DOWN,
-        hp         : 1
+        hp         : isQuickTest ? 1 : 1
       }
     },
     {
@@ -112,7 +119,7 @@ const tantive4 = {
         bounceLimit: 0,
         delay      : 5 * FPS,
         dir        : CARDINALS.DOWN,
-        hp         : 1
+        hp         : isQuickTest ? 1 : 1
       }
     }
   ],
@@ -131,7 +138,7 @@ const ambassador = {
       details: {
         delay: 0,
         dir  : null,
-        hp   : 1
+        hp   : isQuickTest ? 1 : 1
       }
     }
   ],
@@ -142,10 +149,10 @@ const ambassador = {
   enemiesOptional: [],
   enemiesRequiredData: {
     character    : CHARACTERS.rebel,
-    count        : 3,
+    count        : isQuickTest ? 1 : 3,
     delayInterval: 2 * FPS,
     dir          : CARDINALS.LEFT,
-    hp           : 1
+    hp           : isQuickTest ? 1 : 1
   },
   friendlies: [],
   name: 'Ambassador',
@@ -156,7 +163,7 @@ const ambassador = {
         bounceLimit: 0,
         delay      : 5.5 * FPS,
         dir        : CARDINALS.DOWN,
-        hp         : 1
+        hp         : isQuickTest ? 1 : 1
       }
     }
   ],
@@ -173,7 +180,7 @@ const tatooine = {
       details: {
         delay: 0,
         dir  : null,
-        hp   : 1
+        hp   : isQuickTest ? 1 : 1
       }
     }  ],
   character: CHARACTERS.jawa,
@@ -184,37 +191,37 @@ const tatooine = {
   enemiesOptional: [],
   enemiesRequiredData: {
     character    : CHARACTERS.threepio,
-    count        : 1,
+    count        : isQuickTest ? 1 : 1,
     delayInterval: 0,
     dir          : null,
-    hp           : 1
+    hp           : isQuickTest ? 1 : 1
   },
   friendlies: [
     {
       character: CHARACTERS.jawa,
       details: {
-        bounceLimit: -1,
+        bounceLimit: INFINITY,
         delay      : 1.5 * FPS,
         dir        : null,
-        hp         : 1
+        hp         : isQuickTest ? 1 : 1
       }
     },
     {
       character: CHARACTERS.jawa,
       details: {
-        bounceLimit: -1,
+        bounceLimit: INFINITY,
         delay      : 2.5 * FPS,
         dir        : null,
-        hp         : 1
+        hp         : isQuickTest ? 1 : 1
       }
     },
     {
       character: CHARACTERS.jawa,
       details: {
-        bounceLimit: -1,
+        bounceLimit: INFINITY,
         delay      : 3.5 * FPS,
         dir        : null,
-        hp         : 1
+        hp         : isQuickTest ? 1 : 1
       }
     }
   ],
@@ -239,7 +246,7 @@ const search = {
       details: {
         delay: 0,
         dir  : null,
-        hp   : 2
+        hp   : isQuickTest ? 1 : 2
       }
     }
   ],
@@ -252,10 +259,10 @@ const search = {
   enemiesOptional: [],
   enemiesRequiredData: {
     character    : CHARACTERS.tusken,
-    count        : 10,
+    count        : isQuickTest ? 1 : 10,
     delayInterval: 1.5 * FPS,
     dir          : CARDINALS.RIGHT,
-    hp           : 1
+    hp           : isQuickTest ? 1 : 1
   },
   friendlies: [
     {
@@ -264,7 +271,7 @@ const search = {
         bounceLimit: 0,
         delay      : 10.5 * FPS,
         dir        : CARDINALS.DOWN,
-        hp         : 1
+        hp         : isQuickTest ? 1 : 1
       }
     },
     {
@@ -273,7 +280,7 @@ const search = {
         bounceLimit: 0,
         delay      : 12.5 * FPS,
         dir        : CARDINALS.DOWN,
-        hp         : 1
+        hp         : isQuickTest ? 1 : 1
       }
     }
   ],
@@ -298,7 +305,7 @@ const sandcrawler = {
       details: {
         delay: 0,
         dir  : null,
-        hp   : 2
+        hp   : isQuickTest ? 1 : 2
       }
     }
   ],
@@ -309,10 +316,10 @@ const sandcrawler = {
   enemiesOptional: [],
   enemiesRequiredData: {
     character    : CHARACTERS.jawa,
-    count        : 10,
+    count        : isQuickTest ? 1 : 10,
     delayInterval: 2 * FPS,
     dir          : null,
-    hp           : 1
+    hp           : isQuickTest ? 1 : 1
   },
   friendlies: [],
   name: 'Sandcrawler',
@@ -323,7 +330,7 @@ const sandcrawler = {
         bounceLimit: 0,
         delay      : 5.5 * FPS,
         dir        : null,
-        hp         : 1
+        hp         : isQuickTest ? 1 : 1
       }
     },
     {
@@ -332,7 +339,7 @@ const sandcrawler = {
         bounceLimit: 0,
         delay      : 10.5 * FPS,
         dir        : CARDINALS.LEFT,
-        hp         : 1
+        hp         : isQuickTest ? 1 : 1
       }
     }
   ],
@@ -349,7 +356,7 @@ const moistureFarm = {
       details: {
         delay: 0,
         dir  : null,
-        hp   : 1
+        hp   : isQuickTest ? 1 : 1
       }
     }
   ],
@@ -358,10 +365,10 @@ const moistureFarm = {
   enemiesOptional: [],
   enemiesRequiredData: {
     character    : CHARACTERS.uncleowen,
-    count        : 1,
+    count        : isQuickTest ? 1 : 1,
     delayInterval: 0,
     dir          : null,
-    hp           : 1
+    hp           : isQuickTest ? 1 : 1
   },
   friendlies: [],
   name: 'Moisture Farm',
@@ -385,7 +392,7 @@ const mosEisley = {
       details: {
         delay: 0,
         dir  : null,
-        hp   : 1
+        hp   : isQuickTest ? 1 : 1
       }
     }
   ],
@@ -398,16 +405,16 @@ const mosEisley = {
         bounceLimit: 0,
         delay      : 30 * FPS,
         dir        : null,
-        hp         : 1
+        hp         : isQuickTest ? 1 : 1
       }
     }
   ],
   enemiesRequiredData: {
     character    : CHARACTERS.sandtrooper,
-    count        : 10,
+    count        : isQuickTest ? 1 : 10,
     delayInterval: 2 * FPS,
     dir          : null,
-    hp           : 1
+    hp           : isQuickTest ? 1 : 1
   },
   friendlies: [
     {
@@ -416,7 +423,7 @@ const mosEisley = {
         bounceLimit: 0,
         delay      : 10.5 * FPS,
         dir        : CARDINALS.LEFT,
-        hp         : 1
+        hp         : isQuickTest ? 1 : 1
       }
     },
     {
@@ -425,7 +432,7 @@ const mosEisley = {
         bounceLimit: 0,
         delay      : 10.5 * FPS,
         dir        : CARDINALS.LEFT,
-        hp         : 1
+        hp         : isQuickTest ? 1 : 1
       }
     }
   ],
@@ -485,7 +492,7 @@ const dockingBay = {
       details: {
         delay: 0,
         dir  : null,
-        hp   : 2
+        hp   : isQuickTest ? 1 : 2
       }
     }
   ],
@@ -495,19 +502,19 @@ const dockingBay = {
     {
       character: CHARACTERS.jabba,
       details: {
-        bounceLimit: -1,
+        bounceLimit: INFINITY,
         delay      : 30 * FPS,
         dir        : null,
-        hp         : 5
+        hp         : isQuickTest ? 1 : 5
       }
     }
   ],
   enemiesRequiredData: {
     character    : CHARACTERS.sandtrooper,
-    count        : 10,
+    count        : isQuickTest ? 1 : 10,
     delayInterval: 2 * FPS,
     dir          : null,
-    hp           : 1
+    hp           : isQuickTest ? 1 : 1
   },
   friendlies: [],
   name: 'Docking Bay 94',
@@ -530,7 +537,7 @@ const alderaan = {
       details: {
         delay: 0,
         dir  : null,
-        hp   : 2
+        hp   : isQuickTest ? 1 : 2
       }
     }
   ],
@@ -543,10 +550,10 @@ const alderaan = {
   enemiesOptional: [],
   enemiesRequiredData: {
     character    : SHIPS.ASTEROID,
-    count        : 10,
+    count        : isQuickTest ? 1 : 10,
     delayInterval: 3 * FPS,
     dir          : null,
-    hp           : 1
+    hp           : isQuickTest ? 1 : 1
   },
   friendlies: [],
   name: 'Alderaan',
@@ -564,7 +571,7 @@ const detention = {
       details: {
         delay: 0,
         dir  : null,
-        hp   : 2
+        hp   : isQuickTest ? 1 : 2
       }
     }
   ],
@@ -573,10 +580,10 @@ const detention = {
   enemiesOptional: [],
   enemiesRequiredData: {
     character    : CHARACTERS.deathstartrooper,
-    count        : 10,
+    count        : isQuickTest ? 1 : 10,
     delayInterval: 2 * FPS,
     dir          : null,
-    hp           : 1
+    hp           : isQuickTest ? 1 : 1
   },
   friendlies: [
     {
@@ -585,7 +592,7 @@ const detention = {
         bounceLimit: 0,
         delay      : 1.5 * FPS,
         dir        : CARDINALS.RIGHT,
-        hp         : 1
+        hp         : isQuickTest ? 1 : 1
       }
     },
     {
@@ -594,7 +601,7 @@ const detention = {
         bounceLimit: 0,
         delay      : 1.75 * FPS,
         dir        : CARDINALS.RIGHT,
-        hp         : 1
+        hp         : isQuickTest ? 1 : 1
       }
     }
   ],
@@ -619,7 +626,7 @@ const tractorBeam = {
       details: {
         delay: 0,
         dir  : null,
-        hp   : 5
+        hp   : isQuickTest ? 1 : 5
       }
     }
   ],
@@ -628,10 +635,10 @@ const tractorBeam = {
   enemiesOptional: [],
   enemiesRequiredData: {
     character    : CHARACTERS.stormtrooper,
-    count        : 10,
+    count        : isQuickTest ? 1 : 10,
     delayInterval: 2 * FPS,
     dir          : CARDINALS.RIGHT,
-    hp           : 1
+    hp           : isQuickTest ? 1 : 1
   },
   friendlies: [],
   name: 'Tractor Beam',
@@ -655,7 +662,7 @@ const showdown4 = {
       details: {
         delay: 0,
         dir  : null,
-        hp   : 1
+        hp   : isQuickTest ? 1 : 1
       }
     }
   ],
@@ -685,7 +692,7 @@ const escapeFromDeathStar = {
       details: {
         delay: 0,
         dir  : null,
-        hp   : 2
+        hp   : isQuickTest ? 1 : 2
       }
     }
   ],
@@ -694,10 +701,10 @@ const escapeFromDeathStar = {
   enemiesOptional: [],
   enemiesRequiredData: {
     character    : CHARACTERS.stormtrooper,
-    count        : 10,
+    count        : isQuickTest ? 1 : 10,
     delayInterval: 2 * FPS,
     dir          : null,
-    hp           : 1
+    hp           : isQuickTest ? 1 : 1
   },
   friendlies: [
     {
@@ -706,7 +713,7 @@ const escapeFromDeathStar = {
         bounceLimit: 0,
         delay      : 5.5 * FPS,
         dir        : null,
-        hp         : 1
+        hp         : isQuickTest ? 1 : 1
       }
     },
     {
@@ -715,7 +722,7 @@ const escapeFromDeathStar = {
         bounceLimit: 0,
         delay      : 10.5 * FPS,
         dir        : null,
-        hp         : 1
+        hp         : isQuickTest ? 1 : 1
       }
     },
     {
@@ -724,7 +731,7 @@ const escapeFromDeathStar = {
         bounceLimit: 0,
         delay      : 15.5 * FPS,
         dir        : null,
-        hp         : 1
+        hp         : isQuickTest ? 1 : 1
       }
     }
   ],
@@ -749,7 +756,7 @@ const battleOfYavin = {
       details: {
         delay: 0,
         dir  : null,
-        hp   : 5
+        hp   : isQuickTest ? 1 : 5
       }
     }
   ],
@@ -758,10 +765,10 @@ const battleOfYavin = {
   enemiesOptional: [],
   enemiesRequiredData: {
     character    : SHIPS.TIE,
-    count        : 3,
+    count        : isQuickTest ? 1 : 3,
     delayInterval: 0.25 * FPS,
     dir          : CARDINALS.DOWN,
-    hp           : 2
+    hp           : isQuickTest ? 1 : 2
   },
   friendlies: [
     {
@@ -770,7 +777,7 @@ const battleOfYavin = {
         bounceLimit: 0,
         delay      : 5 * FPS,
         dir        : CARDINALS.UP,
-        hp         : 1
+        hp         : isQuickTest ? 1 : 1
       }
     },
     {
@@ -779,7 +786,7 @@ const battleOfYavin = {
         bounceLimit: 0,
         delay      : 5 * FPS,
         dir        : CARDINALS.UP,
-        hp         : 1
+        hp         : isQuickTest ? 1 : 1
       }
     },
     {
@@ -788,7 +795,7 @@ const battleOfYavin = {
         bounceLimit: 0,
         delay      : 5 * FPS,
         dir        : CARDINALS.UP,
-        hp         : 1
+        hp         : isQuickTest ? 1 : 1
       }
     }
   ],
@@ -807,7 +814,7 @@ const assaultOnDeathStar = {
       details: {
         delay: 0,
         dir  : null,
-        hp   : 10
+        hp   : isQuickTest ? 1 : 10
       }
     }
   ],
@@ -838,7 +845,7 @@ const hoth = {
       details: {
         delay: 0,
         dir  : null,
-        hp   : 2
+        hp   : isQuickTest ? 1 : 2
       }
     }
   ],
@@ -847,10 +854,10 @@ const hoth = {
   enemiesOptional: [],
   enemiesRequiredData: {
     character    : CHARACTERS.tauntaun, // add probe droid
-    count        : 10,
+    count        : isQuickTest ? 1 : 10,
     delayInterval: 2 * FPS,
     dir          : null,
-    hp           : 1
+    hp           : isQuickTest ? 1 : 1
   },
   friendlies: [],
   name: 'Hoth',
@@ -869,7 +876,7 @@ const endor = {
       details: {
         delay: 0,
         dir  : null,
-        hp   : 2
+        hp   : isQuickTest ? 1 : 2
       }
     }
   ],
@@ -878,10 +885,10 @@ const endor = {
   enemiesOptional: [],
   enemiesRequiredData: {
     character    : CHARACTERS.stormtrooper,
-    count        : 10,
+    count        : isQuickTest ? 1 : 10,
     delayInterval: 2 * FPS,
     dir          : null,
-    hp           : 1
+    hp           : isQuickTest ? 1 : 1
   },
   friendlies: [
     {
@@ -890,7 +897,7 @@ const endor = {
         bounceLimit: 0,
         delay      : 5 * FPS,
         dir        : null,
-        hp         : 1
+        hp         : isQuickTest ? 1 : 1
       }
     }
   ],
@@ -904,63 +911,117 @@ const endor = {
 const test = {
   bg: 'metal',
   bosses: [
+    // {
+    //   character: CHARACTERS.darthvader,
+    //   details: {
+    //     delay: 0 * FPS,
+    //     dir  : CARDINALS.DOWN,
+    //     hp   : isQuickTest ? 1 : 1
+    //   }
+    // },
+    // {
+    //   character: CHARACTERS.darthvader6,
+    //   details: {
+    //     delay: 0 * FPS,
+    //     dir  : CARDINALS.UP,
+    //     hp   : isQuickTest ? 1 : 3
+    //   }
+    // }
+  ],
+  character: CHARACTERS.artoo,
+  cutscenes: [],
+  enemiesOptional: [
+    // {
+    //   character: CHARACTERS.deathstartrooper,
+    //   details: {
+    //     bounceLimit: 0,
+    //     delay      : 0 * FPS,
+    //     dir        : CARDINALS.RIGHT,
+    //     hp         : isQuickTest ? 1 : 1
+    //   }
+    // }
+  ],
+  enemiesRequiredData: {
+    character    : CHARACTERS.officerblack,
+    count        : isQuickTest ? 1 : 1,
+    delayInterval: 30 * FPS,
+    dir          : CARDINALS.LEFT,
+    hp           : isQuickTest ? 1 : 1
+  },
+  friendlies: [
+    // {
+    //   character: CHARACTERS.bb8,
+    //   details: {
+    //     bounceLimit: 1,
+    //     delay      : 0 * FPS,
+    //     dir        : CARDINALS.RIGHT,
+    //     hp         : isQuickTest ? 1 : 2
+    //   }
+    // }
+  ],
+  name: 'Test Kitchen',
+  neutrals: [
     {
-      character: CHARACTERS.darthvader,
+      character: CHARACTERS.arfive,
       details: {
-        delay: 0 * FPS,
-        dir  : CARDINALS.DOWN,
-        hp   : 1
+        bounceLimit: INFINITY,
+        delay      : 0 * FPS,
+        dir        : null,
+        hp         : isQuickTest ? 1 : 1
+      }
+    },
+    {
+      character: CHARACTERS.auntberu,
+      details: {
+        bounceLimit: INFINITY,
+        delay      : 0 * FPS,
+        dir        : null,
+        hp         : isQuickTest ? 1 : 1
+      }
+    },
+    {
+      character: CHARACTERS.ben,
+      details: {
+        bounceLimit: INFINITY,
+        delay      : 0 * FPS,
+        dir        : null,
+        hp         : isQuickTest ? 1 : 1
       }
     },
     {
       character: CHARACTERS.darthvader6,
       details: {
-        delay: 0 * FPS,
-        dir  : CARDINALS.UP,
-        hp   : 3
-      }
-    }
-  ],
-  character: CHARACTERS.artoo,
-  cutscenes: [],
-  enemiesOptional: [
-    {
-      character: CHARACTERS.deathstartrooper,
-      details: {
-        bounceLimit: 0,
+        bounceLimit: INFINITY,
         delay      : 0 * FPS,
-        dir        : CARDINALS.RIGHT,
-        hp         : 1
+        dir        : null,
+        hp         : isQuickTest ? 1 : 1
       }
-    }
-  ],
-  enemiesRequiredData: {
-    character    : CHARACTERS.officerblack,
-    count        : 3,
-    delayInterval: 30 * FPS,
-    dir          : CARDINALS.LEFT,
-    hp           : 1
-  },
-  friendlies: [
+    },
     {
-      character: CHARACTERS.bb8,
+      character: CHARACTERS.uncleowen,
       details: {
-        bounceLimit: 1,
+        bounceLimit: INFINITY,
         delay      : 0 * FPS,
-        dir        : CARDINALS.RIGHT,
-        hp         : 2
+        dir        : null,
+        hp         : isQuickTest ? 1 : 1
       }
-    }
-  ],
-  name: 'Test Kitchen',
-  neutrals: [
+    },
     {
-      character: CHARACTERS.ben,
+      character: CHARACTERS.threebee,
       details: {
-        bounceLimit: -1,
+        bounceLimit: INFINITY,
         delay      : 0 * FPS,
-        dir        : CARDINALS.RIGHT,
-        hp         : 1
+        dir        : null,
+        hp         : isQuickTest ? 1 : 1
+      }
+    },
+    {
+      character: SHIPS.DEATHSTAR,
+      details: {
+        bounceLimit: INFINITY,
+        delay      : 0 * FPS,
+        dir        : null,
+        hp         : isQuickTest ? 1 : 1
       }
     }
   ],

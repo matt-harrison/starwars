@@ -13,10 +13,10 @@ export const Bomb = function({
   game,
   origin
 }) {
-  this.active       = false;
   this.frameCount   = 5;
   this.frameHeight  = 1 * MAGNIFICATION;
   this.frameWidth   = 1 * MAGNIFICATION;
+  this.isActive     = false;
   this.origin       = origin;
   this.spriteColumn = 0;
   this.type         = WEAPON_TYPES.BOMB;
@@ -37,7 +37,7 @@ export const Bomb = function({
   game.stage.selector.appendChild(this.selector);
 
   this.kill = function() {
-    this.active = false;
+    this.isActive = false;
 
     game.stage.selector.removeChild(this.selector);
 
@@ -49,13 +49,13 @@ export const Bomb = function({
   }
 
   this.update = function() {
-    if (!this.active && !collision(this, this.origin)) {
-      this.active = true;
+    if (!this.isActive && !collision(this, this.origin)) {
+      this.isActive = true;
     }
   }
 
   this.draw = function() {
-    if (this.active) {
+    if (this.isActive) {
       if (game.counter % 2) {
         this.selector.style.backgroundColor = COLORS.BLACK;
       } else {

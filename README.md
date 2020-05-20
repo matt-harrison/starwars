@@ -3,7 +3,12 @@
 
 REFACTOR:
 * code formatting
-  * adapt all booleans to use isBoolean naming convention
+  * rename scoreText   to scoreSelector?
+  * rename victimText  to victimSelector?
+  * rename victimCount to victimIdInterval?
+  * make KEYS constants
+  * replace strings redundant to constants
+  * move ship graphics to separate directory
   * import all constants from /js/constants/index.js manifest?
   * migrate all public vars from classes to game object? (ex. hud.title)
   * implement attachNode from classes
@@ -18,8 +23,9 @@ REFACTOR:
   * audit each constant
 * move enemy dodge loop out of Player class
 * make enemy projectile rate a property of the level?
-  * is weaponReady redundant to low shoot probability?
-  * (weaponReady also used for player max shoot rate)
+  * weaponCount redundant to game.count?
+  * isWeaponReady redundant to low shoot probability?
+  * (isWeaponReady also used for player max shoot rate)
 
 FEATURES:
 * do not clear score after winning game
@@ -27,6 +33,7 @@ FEATURES:
 * multiple bosses
 * password menu!
 * episode menu...
+* reward menu: reveal password for random character
 * how can user win with a character with no attack?
 * neutrals who stand still but can be killed? bartender? han & chewie in mos eisley?
 * obstacles that can take damage?
@@ -53,4 +60,5 @@ BUGS:
 * projectiles (and lightsaber attacks) zIndex?
 * directions don't blink when paused bc counter doesn't increment while paused (so that actors don't spawn during pause)...
 * fix playLevel() cheat
+* duplicate IDs on actors spawned with same delay
 * mobile magnification

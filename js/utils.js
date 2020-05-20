@@ -5,6 +5,7 @@ import {
   ACTOR_TYPES,
   CARDINALS,
   COLORS,
+  INFINITY,
   MAGNIFICATION,
   MODES
 } from '/js/constants/config.js';
@@ -75,7 +76,7 @@ export const attachNode = ({
 export const changeDirection = ({ actor, game }) => {
   if (actor !== game.player && inBounds({ actor, game })) {
     const cardinals = Object.values(CARDINALS);
-    const position = getRandom(cardinals.length);
+    const position  = getRandom(cardinals.length);
 
     if (cardinals[position] === actor.dir) {
       changeDirection({ actor, game });
@@ -87,55 +88,35 @@ export const changeDirection = ({ actor, game }) => {
 }
 
 export const collision = (actor1, actor2) => {
-  const rect1 = actor1.selector.getBoundingClientRect();
-  const rect2 = actor2.selector.getBoundingClientRect();
+  const rectangle1 = actor1.selector.getBoundingClientRect();
+  const rectangle2 = actor2.selector.getBoundingClientRect();
 
   return (
-    (rect1.right > rect2.left && rect1.left < rect2.right) &&
-    (rect1.bottom > rect2.top && rect1.top < rect2.bottom)
+    (rectangle1.right > rectangle2.left && rectangle1.left < rectangle2.right) &&
+    (rectangle1.bottom > rectangle2.top && rectangle1.top < rectangle2.bottom)
   );
 }
 
-export const crossPaths = (actor1, actor2) => {
-  let cross = false;
-  const rect1 = actor1.selector.getBoundingClientRect();
-  const rect2 = actor2.selector.getBoundingClientRect();
+export const getIsCrossing = (actor1, actor2) => {
+  let isCrossing = false;
+  const rectangle1 = actor1.selector.getBoundingClientRect();
+  const rectangle2 = actor2.selector.getBoundingClientRect();
 
-  if (rect1.right > rect2.left && rect1.left < rect2.right) {
-    if (rect2.bottom < rect1.top && actor1.dir === CARDINALS.UP) {
-      cross = true;
-    } else if (rect2.top > rect1.bottom && actor1.dir === CARDINALS.DOWN) {
-      cross = true;
+  if (rectangle1.right > rectangle2.left && rectangle1.left < rectangle2.right) {
+    if (rectangle2.bottom < rectangle1.top && actor1.dir === CARDINALS.UP) {
+      isCrossing = true;
+    } else if (rectangle2.top > rectangle1.bottom && actor1.dir === CARDINALS.DOWN) {
+      isCrossing = true;
     }
-  } else if ((rect1.bottom > rect2.top && rect1.top < rect2.bottom)) {
-    if (rect2.right < rect1.left && actor1.dir === CARDINALS.LEFT) {
-      cross = true;
-    } else if (rect2.left > rect1.right && actor1.dir === CARDINALS.RIGHT) {
-      cross = true;
+  } else if ((rectangle1.bottom > rectangle2.top && rectangle1.top < rectangle2.bottom)) {
+    if (rectangle2.right < rectangle1.left && actor1.dir === CARDINALS.LEFT) {
+      isCrossing = true;
+    } else if (rectangle2.left > rectangle1.right && actor1.dir === CARDINALS.RIGHT) {
+      isCrossing = true;
     }
   }
 
-  return cross;
-}
-
-export const getCoords = ({ actor, game }) => {
-  if (actor.dir === CARDINALS.LEFT) {
-    actor.x         = game.width;
-    actor.y         = getRandom(game.height - actor.frameHeight);
-    actor.spriteRow = 1;
-  } else if (actor.dir === CARDINALS.UP) {
-    actor.x         = getRandom(game.width - actor.frameWidth);
-    actor.y         = game.height;
-    actor.spriteRow = 3;
-  } else if (actor.dir === CARDINALS.RIGHT) {
-    actor.x         = 0 - actor.frameWidth;
-    actor.y         = getRandom(game.height - actor.frameHeight);
-    actor.spriteRow = 0;
-  } else if (actor.dir === CARDINALS.DOWN) {
-    actor.x         = getRandom(game.width - actor.frameWidth);
-    actor.y         = 0 - actor.frameHeight;
-    actor.spriteRow = 2;
-  }
+  return isCrossing;
 }
 
 export const getIsObstructed = ({ actor, obstacles }) => {
@@ -210,12 +191,100 @@ export const getIsObstructed = ({ actor, obstacles }) => {
   return isObstructed;
 }
 
-export const getPosition = ({ actor, game }) => {
+export const getRandom = (max) => {
+  return Math.floor(Math.random() * max);
+}
+
+export const inBounds = ({ actor, game }) => {
+  const actorBottom = actor.y + actor.frameHeight;
+  const actorLeft   = actor.x;
+  const actorRight  = actor.x + actor.frameWidth;
+  const actorTop    = actor.y;
+
+  return (
+    actorRight  > 0 &&
+    actorBottom > 0 &&
+    actorLeft   < game.width &&
+    actorTop    < game.height
+  );
+}
+
+export const initEnemies = (game) => {
+  const {
+    enemiesOptional,
+    enemiesRequiredData
+  } = game.stage;
+
+  game.stage.enemies = [];
+
+  enemiesOptional.forEach(enemy => {
+    enemy.details.isOptional = true;
+    enemy.details.type       = ACTOR_TYPES.ENEMY;
+  });
+
+  if (enemiesOptional) {
+    game.stage.enemies.push(...enemiesOptional);
+  }
+
+  if (enemiesRequiredData) {
+    const {
+      bounceLimit = INFINITY,
+      count,
+      character,
+      delayInterval,
+      dir,
+      hp
+    } = enemiesRequiredData;
+
+    for (let i = 0; i < count; i++) {
+      const enemy = {
+        character: character,
+        details: {
+          bounceLimit: INFINITY,
+          delay      : delayInterval * i,
+          dir,
+          hp,
+          isOptional : false,
+          type       : ACTOR_TYPES.ENEMY
+        }
+      };
+
+      game.stage.enemies.push(enemy);
+    }
+  }
+};
+
+export const preload = (url) => {
+  const image = new Image();
+  image.src = url;
+}
+
+export const setCoordinates = ({ actor, game }) => {
+  if (actor.dir === CARDINALS.LEFT) {
+    actor.x         = game.width;
+    actor.y         = getRandom(game.height - actor.frameHeight);
+    actor.spriteRow = 1;
+  } else if (actor.dir === CARDINALS.UP) {
+    actor.x         = getRandom(game.width - actor.frameWidth);
+    actor.y         = game.height;
+    actor.spriteRow = 3;
+  } else if (actor.dir === CARDINALS.RIGHT) {
+    actor.x         = 0 - actor.frameWidth;
+    actor.y         = getRandom(game.height - actor.frameHeight);
+    actor.spriteRow = 0;
+  } else if (actor.dir === CARDINALS.DOWN) {
+    actor.x         = getRandom(game.width - actor.frameWidth);
+    actor.y         = 0 - actor.frameHeight;
+    actor.spriteRow = 2;
+  }
+}
+
+export const setPosition = ({ actor, game }) => {
+  const actorBottom      = actor.y + actor.frameHeight;
   const actorLeft        = actor.x;
   const actorRight       = actor.x + actor.frameWidth;
   const actorTop         = actor.y;
-  const actorBottom      = actor.y + actor.frameHeight;
-  const isBounceLimitMet = actor.bounceLimit >= 0 && actor.bounceCount >= actor.bounceLimit;
+  const isBounceLimitMet = actor.bounceLimit !== INFINITY && actor.bounceCount >= actor.bounceLimit;
   const isInBounds       = inBounds({ actor, game });
   const isObstructed     = getIsObstructed({
     actor,
@@ -249,7 +318,7 @@ export const getPosition = ({ actor, game }) => {
 
   if (isObstructed) {
     if (!isInBounds) {
-      getCoords({ actor, game });
+      setCoordinates({ actor, game });
     }
   } else {
     switch (actor.dir) {
@@ -301,74 +370,6 @@ export const getPosition = ({ actor, game }) => {
   }
 }
 
-export const getRandom = (max) => {
-  return Math.floor(Math.random() * max);
-}
-
-export const inBounds = ({ actor, game }) => {
-  const actorLeft   = actor.x;
-  const actorRight  = actor.x + actor.frameWidth;
-  const actorTop    = actor.y;
-  const actorBottom = actor.y + actor.frameHeight;
-
-  return (
-    actorRight  > 0 &&
-    actorBottom > 0 &&
-    actorLeft   < game.width &&
-    actorTop    < game.height
-  );
-}
-
-export const initEnemies = (game) => {
-  const {
-    enemiesOptional,
-    enemiesRequiredData
-  } = game.stage;
-
-  game.stage.enemies = [];
-
-  enemiesOptional.forEach(enemy => {
-    enemy.details.isOptional = true;
-    enemy.details.type       = ACTOR_TYPES.ENEMY;
-  });
-
-  if (enemiesOptional) {
-    game.stage.enemies.push(...enemiesOptional);
-  }
-
-  if (enemiesRequiredData) {
-    const {
-      bounceLimit = -1,
-      count,
-      character,
-      delayInterval,
-      dir,
-      hp
-    } = enemiesRequiredData;
-
-    for (let i = 0; i < count; i++) {
-      const enemy = {
-        character: character,
-        details: {
-          bounceLimit: -1,
-          delay      : delayInterval * i,
-          dir,
-          hp,
-          isOptional : false,
-          type       : ACTOR_TYPES.ENEMY
-        }
-      };
-
-      game.stage.enemies.push(enemy);
-    }
-  }
-};
-
-export const preload = (url) => {
-  const image = new Image();
-  image.src = url;
-}
-
 export const updateHud = ({ game, victim }) => {
   const scoreDelta = victim.type === ACTOR_TYPES.FRIENDLY ? 0 - 100 : 100;
   let   color      = game.stage.textColor;
@@ -385,10 +386,6 @@ export const updateHud = ({ game, victim }) => {
       color = game.stage.textColor;
       break;
   }
-
-  // rename scoreText   to scoreSelector?
-  // rename victimText  to victimSelector?
-  // rename victimCount to victimIdInterval?
 
   game.hud.score                  = game.hud.score + scoreDelta;
   game.hud.scoreText.innerHTML    = game.hud.score;

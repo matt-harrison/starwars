@@ -7,13 +7,13 @@ export const Lightsaber = function({
   game,
   origin
 }) {
-  this.active = !isLongRange;
-  this.color  = origin.weaponColor;
-  this.dir    = origin.dir;
-  this.origin = origin;
-  this.speed  = isLongRange ? 30 * (MAGNIFICATION / 5) : 0;
-  this.thrown = isLongRange;
-  this.type   = 'lightsaber';
+  this.color    = origin.weaponColor;
+  this.dir      = origin.dir;
+  this.isActive = !isLongRange;
+  this.origin   = origin;
+  this.speed    = isLongRange ? 30 * (MAGNIFICATION / 5) : 0;
+  this.thrown   = isLongRange;
+  this.type     = 'lightsaber';
 
   if (this.dir === 'left') {
     this.frameHeight = 1 * MAGNIFICATION;
@@ -101,8 +101,8 @@ export const Lightsaber = function({
   }
 
   this.update = function() {
-    if (!this.active && !collision(this, this.origin)) {
-      this.active = true;
+    if (!this.isActive && !collision(this, this.origin)) {
+      this.isActive = true;
     }
 
     if (this.thrown) {
@@ -139,7 +139,7 @@ export const Lightsaber = function({
   }
 
   this.draw = function() {
-    if (origin.attacking) {
+    if (origin.isAttacking) {
       this.selector.style.left = `${this.x}px`;
       this.selector.style.top  = `${this.y}px`;
     } else {

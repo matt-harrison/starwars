@@ -1,9 +1,9 @@
 import {
   advanceFrame,
   changeDirection,
-  getPosition,
   getRandom,
-  preload
+  preload,
+  setPosition
 } from '/js/utils.js';
 
 import { ACTOR_TYPES, FPS, MAGNIFICATION } from '/js/constants/config.js';
@@ -20,20 +20,20 @@ export const Player = function({
 }) {
   Object.assign(this, data);
 
-  this.active       = true;
-  this.attacking    = false;
-  this.bounceCount  = 0;
-  this.dir          = 'down';
-  this.lightsaber   = '';
-  this.running      = false;
-  this.speed        = this.speed * (MAGNIFICATION / 5);
-  this.spriteColumn = 0;
-  this.spriteRow    = 2;
-  this.type         = ACTOR_TYPES.PLAYER;
-  this.weaponCount  = 0;
-  this.weaponReady  = true;
-  this.x            = Math.floor((game.width - this.frameWidth) / 2);
-  this.y            = Math.floor((game.height - this.frameHeight) / 2);
+  this.bounceCount   = 0;
+  this.dir           = 'down';
+  this.isActive      = true;
+  this.isAttacking   = false;
+  this.isWeaponReady = true;
+  this.lightsaber    = '';
+  this.isRunning     = false;
+  this.speed         = this.speed * (MAGNIFICATION / 5);
+  this.spriteColumn  = 0;
+  this.spriteRow     = 2;
+  this.type          = ACTOR_TYPES.PLAYER;
+  this.weaponCount   = 0;
+  this.x             = Math.floor((game.width - this.frameWidth) / 2);
+  this.y             = Math.floor((game.height - this.frameHeight) / 2);
 
   if (!this.weaponDelay) {
     switch (this.weaponType) {
@@ -66,7 +66,7 @@ export const Player = function({
   }
 
   this.attack = (key) => {
-    if (this.weaponReady) {
+    if (this.isWeaponReady) {
       if (this.weaponType === WEAPON_TYPES.PROJECTILE) {
         new Projectile({
           game,
@@ -75,7 +75,7 @@ export const Player = function({
 
         //As levels progress, enemies will become liklier to dodge projectiles
         game.enemies.forEach(enemy => {
-          if (enemy.active && enemy.sprite !== 'asteroid') {
+          if (enemy.isActive && enemy.sprite !== 'asteroid') {
             if (getRandom(20 - game.level) === 0) {
               changeDirection({ actor: enemy, game });
             }
@@ -97,17 +97,17 @@ export const Player = function({
 
         game.keys = [key];
 
-        this.attacking    = true;
-        this.running      = false;
+        this.isAttacking  = true;
+        this.isRunning    = false;
         this.spriteColumn = this.moveFrameCount + 1;
       }
 
-      this.weaponReady = false;
+      this.isWeaponReady = false;
     }
   }
 
   this.kill = () => {
-    this.active       = false;
+    this.isActive     = false;
     this.spriteColumn = 0;
     this.spriteRow    = 4;
 
@@ -125,16 +125,16 @@ export const Player = function({
   }
 
   this.update = () => {
-    if (this.active) {
-      if (this.running || this.isShip) {
+    if (this.isActive) {
+      if (this.isRunning || this.isShip) {
         advanceFrame(this);
-        getPosition({ actor: this, game });
+        setPosition({ actor: this, game });
       }
 
-      if (!this.weaponReady) {
+      if (!this.isWeaponReady) {
         if (this.weaponCount++ === this.weaponDelay) {
-          this.weaponReady = true;
-          this.weaponCount = 0;
+          this.isWeaponReady = true;
+          this.weaponCount   = 0;
         }
       }
     }

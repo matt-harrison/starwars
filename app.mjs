@@ -2,7 +2,7 @@ import {
   adaptCoords,
   add,
   collision,
-  crossPaths,
+  getIsCrossing,
   getRandom,
   initEnemies,
   preload
@@ -77,7 +77,7 @@ const advanceStage = () => {
 
 const buttonPush = (key, id) => {
   if (game.mode === MODES.GAMEPLAY || game.mode === MODES.RESET) {
-    if (!game.player.attacking) {
+    if (!game.player.isAttacking) {
       if (game.keys.indexOf(key) === -1) {
         game.keys.push(key);
       }
@@ -136,7 +136,7 @@ const buttonRelease = (key, id) => {
       if (++game.cutsceneCount < EPISODES[game.episode][game.level].cutscenes.length) {
         initMenu(MODES.CUTSCENE);
       } else {
-        if (game.stage.defeated) {
+        if (game.stage.isDefeated) {
           initLevel();
         } else {
           initGame();
@@ -145,7 +145,7 @@ const buttonRelease = (key, id) => {
     } else if (game.isGameOver) {
       initGame();
       advanceStage();
-    } else if (game.stage.defeated) {
+    } else if (game.stage.isDefeated) {
       advanceStage();
     } else {
       pause();
@@ -159,12 +159,13 @@ const buttonRelease = (key, id) => {
 
   if (position !== -1) {
     if (key === 'space') {
-      game.player.attacking = false;
+      game.player.isAttacking = false;
     } else if (key === 'Z') {
     } else {
-      game.player.running = false;
+      game.player.isRunning    = false;
       game.player.spriteColumn = 0;
     }
+
     game.keys.splice(position, 1);
   }
 
@@ -342,9 +343,9 @@ const initLevel = () => {
     game
   });
 
-  game.bossesReached                 = false;
-  game.counter                       = 0;
+  game.counter                   = 0;
   game.hud.scoreText.style.color = game.stage.textColor;
+  game.isBossesReached           = false;
 
   if (EPISODES[game.episode][game.level].obstacles.length > 0) {
     game.stage.obstacles.forEach(obstacle => {
@@ -438,8 +439,8 @@ const levelLose = () => {
 }
 
 const levelWin = () => {
-  game.stage.defeated = true;
-  directions.innerHTML      = game.promptStart;
+  directions.innerHTML  = game.promptStart;
+  game.stage.isDefeated = true;
 
   if (++game.level === EPISODES[game.episode].length) {
     game.isGameOver   = true;
@@ -458,11 +459,11 @@ const loop = () => {
     game.mode === MODES.RESET
   ) {
     if (game.mode !== MODES.TITLE) {
-      if (game.player.active && !game.player.attacking) {
+      if (game.player.isActive && !game.player.isAttacking) {
         game.keys.forEach(key => {
           if (Object.values(CARDINALS).indexOf(key) !== -1) {
-            game.player.dir     = key;
-            game.player.running = true;
+            game.player.dir       = key;
+            game.player.isRunning = true;
           }
 
           if (key === 'space' || key === 'Z') {
@@ -472,16 +473,16 @@ const loop = () => {
       }
 
       game.enemies.forEach(enemy => {
-        if (game.player.active) {
+        if (game.player.isActive) {
           if (collision(game.player, enemy)) {
-            if (enemy.active && !game.isInvincible) {
+            if (enemy.isActive && !game.isInvincible) {
               game.player.kill();
             }
 
-            if (enemy.active && enemy.isShip) {
+            if (enemy.isActive && enemy.isShip) {
               enemy.kill();
             }
-          } else if (enemy.active && enemy.weaponType === WEAPON_TYPES.PROJECTILE && enemy.weaponReady && crossPaths(enemy, game.player)) {
+          } else if (enemy.isActive && enemy.weaponType === WEAPON_TYPES.PROJECTILE && enemy.isWeaponReady && getIsCrossing(enemy, game.player)) {
             const chance = 500 + EPISODES[game.episode].length - game.level;
             const random = getRandom(chance);
 
@@ -496,8 +497,8 @@ const loop = () => {
       });
 
       game.friendlies.forEach(friendly => {
-        if (friendly.active && friendly.isShip) {
-          if (game.player.active && collision(game.player, friendly)) {
+        if (friendly.isActive && friendly.isShip) {
+          if (game.player.isActive && collision(game.player, friendly)) {
             if (!game.isInvincible) {
               game.player.kill();
             }
@@ -508,23 +509,23 @@ const loop = () => {
       });
 
       game.props.forEach(prop => {
-        if (game.player.active && collision(game.player, prop)) {
-          if (!game.isInvincible && prop.active && prop.origin !== game.player) {
+        if (game.player.isActive && collision(game.player, prop)) {
+          if (!game.isInvincible && prop.isActive && prop.origin !== game.player) {
             game.player.kill();
             prop.kill();
           }
 
           if (prop.type === 'lightsaber' && prop.speed > 0) {
-            if (prop.active) {
-              game.player.attacking = false;
+            if (prop.isActive) {
+              game.player.isAttacking = false;
             } else {
-              prop.active = true;
+              prop.isActive = true;
             }
           }
         }
 
         game.enemies.forEach(enemy => {
-          if (enemy.active && prop.origin !== enemy && collision(enemy, prop)) {
+          if (enemy.isActive && prop.origin !== enemy && collision(enemy, prop)) {
             enemy.hit();
 
             if (prop.type !== 'lightsaber') {
@@ -534,7 +535,7 @@ const loop = () => {
         });
 
         game.friendlies.forEach(friendly => {
-          if (friendly.active && prop.origin !== friendly && collision(friendly, prop)) {
+          if (friendly.isActive && prop.origin !== friendly && collision(friendly, prop)) {
             friendly.hit();
 
             if (prop.type !== 'lightsaber') {
@@ -544,7 +545,7 @@ const loop = () => {
         });
 
         game.neutrals.forEach(neutral => {
-          if (neutral.active && prop.origin !== neutral && collision(neutral, prop)) {
+          if (neutral.isActive && prop.origin !== neutral && collision(neutral, prop)) {
             neutral.hit();
 
             if (prop.type !== 'lightsaber') {
@@ -560,13 +561,13 @@ const loop = () => {
       //Check for level completion
       if (
         game.stage.enemiesKilled === add(game.stage.enemies.length - game.stage.enemiesOptional.length, game.stage.bosses.length) &&
-        !game.stage.defeated
+        !game.stage.isDefeated
       ) {
         levelWin();
       }
 
       //Check for level failure
-      if (!game.player.active) {
+      if (!game.player.isActive) {
         levelLose();
       }
 
@@ -585,7 +586,7 @@ const loop = () => {
     game.stage.bosses?.forEach(boss => {
       if (
         game.stage.enemiesKilled === game.stage.enemies.length - game.stage.enemiesOptional.length &&
-        !game.bossesReached
+        !game.isBossesReached
       ) {
         const data = Object.assign({}, boss);
 
@@ -596,7 +597,7 @@ const loop = () => {
           game
         });
 
-        game.bossesReached = true;
+        game.isBossesReached = true;
       }
     });
 

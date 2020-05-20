@@ -10,10 +10,10 @@ export const Projectile = function({
 }) {
   Object.assign(this, origin.projectile);
 
-  origin.weaponReady = false;
+  origin.isWeaponReady = false;
 
-  this.active       = true;
   this.dir          = origin.dir;
+  this.isActive     = true;
   this.origin       = origin;
   this.spriteColumn = 0;
   this.type         = origin.projectile;
@@ -65,13 +65,13 @@ export const Projectile = function({
   game.stage.selector.appendChild(this.selector);
 
   this.kill = function() {
-    this.active = false;
+    this.isActive = false;
 
     game.stage.selector.removeChild(this.selector);
   }
 
   this.update = function() {
-    if (this.active) {
+    if (this.isActive) {
       if (this.frameCount > 1) {
         if (++this.spriteColumn > this.frameCount) {
           this.spriteColumn = 0;
@@ -107,7 +107,7 @@ export const Projectile = function({
   }
 
   this.draw = function() {
-    if (this.active) {
+    if (this.isActive) {
       this.selector.style.backgroundPosition = `${0 - this.spriteColumn * this.frameWidth}px 0`;
       this.selector.style.left               = `${this.x}px`;
       this.selector.style.top                = `${this.y}px`;

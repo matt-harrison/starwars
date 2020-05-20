@@ -38,6 +38,8 @@ export const FPS = 16;
 
 export const HUD_OPACITY = '0.5';
 
+export const INFINITY = 'infinity';
+
 export const IS_MOBILE = (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/).test(navigator.userAgent);
 
 export const MAGNIFICATION = IS_MOBILE ? Math.floor(window.innerWidth / 100) : 5;

@@ -1,3 +1,5 @@
+import { INFINITY } from '/js/constants/config.js';
+
 export const Animation = function({
   data,
   game,
@@ -5,8 +7,8 @@ export const Animation = function({
 }) {
   Object.assign(this, data);
 
-  this.active       = true;
   this.height       = this.frameHeight;
+  this.isActive     = true;
   this.spriteColumn = 0;
   this.width        = this.frameWidth * this.frameCount;
   this.x            = Math.floor(origin.x + (origin.frameWidth - this.frameWidth) / 2);
@@ -27,15 +29,15 @@ export const Animation = function({
   game.stage.selector.appendChild(this.selector);
 
   this.kill = function() {
-    this.active = false;
+    this.isActive = false;
 
-    if (this.remove) {
+    if (this.isRemove) {
       game.stage.selector.removeChild(this.selector);
     }
   }
 
   this.update = function() {
-    if (this.active) {
+    if (this.isActive) {
       if (this.spriteColumn + 1 < this.frameCount) {
         this.spriteColumn++;
       } else {
@@ -45,7 +47,7 @@ export const Animation = function({
   }
 
   this.draw = function() {
-    if (this.active) {
+    if (this.isActive) {
       this.selector.style.backgroundPosition = `${0 - this.spriteColumn * this.frameWidth}px 0`;
     }
   }
