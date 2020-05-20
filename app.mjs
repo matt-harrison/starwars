@@ -61,20 +61,7 @@ const game = {
   width        : IS_MOBILE ? window.innerWidth  : 500
 };
 
-(function() {
-  game.selector = new Game(game);
-  game.hud      = new Hud({ game });
-
-  initInterface();
-  initMenu(MODES.TITLE);
-
-  loop();
-})();
-
-// Temporarily expose game object to the global scope to make cheats accessible from console.
-window.game = game;
-
-function advanceStage() {
+const advanceStage = () => {
   if (game.level === game.episode.length) {
     reset();
   } else {
@@ -88,7 +75,7 @@ function advanceStage() {
   }
 }
 
-function buttonPush(key, id) {
+const buttonPush = (key, id) => {
   if (game.mode === MODES.GAMEPLAY || game.mode === MODES.RESET) {
     if (!game.player.attacking) {
       if (game.keys.indexOf(key) === -1) {
@@ -120,7 +107,7 @@ function buttonPush(key, id) {
   }
 }
 
-function buttonUpdate(event) {
+const buttonUpdate = (event) => {
   Object.values(CARDINALS).forEach(cardinal => {
     const previousButton = document.querySelector(`[data-key="${game.player.dir}"]`);
     const button         = document.querySelector(`[data-key="${cardinal}"]`);
@@ -137,7 +124,7 @@ function buttonUpdate(event) {
   });
 }
 
-function buttonRelease(key, id) {
+const buttonRelease = (key, id) => {
   if (key === 'enter') {
     if (game.mode === MODES.RESET) {
       reset();
@@ -186,7 +173,7 @@ function buttonRelease(key, id) {
   }
 }
 
-function clearStage() {
+const clearStage = () => {
   game.selector.removeChild(game.stage.selector);
   game.enemies.splice(0);
   game.friendlies.splice(0);
@@ -199,7 +186,7 @@ function clearStage() {
   game.hud.victimText.innerHTML = '';
 }
 
-function initGame() {
+const initGame = () => {
   game.mode                        = MODES.GAMEPLAY;
   game.isGameOver                  = false;
   game.isPaused                    = false;
@@ -209,7 +196,7 @@ function initGame() {
   initLevel();
 }
 
-function initInterface() {
+const initInterface = () => {
   if (IS_MOBILE) {
     //Init touchscreen controls
     window.addEventListener('touchstart', function(event) {
@@ -344,7 +331,7 @@ function initInterface() {
   }
 }
 
-function initLevel() {
+const initLevel = () => {
   game.stage = new Stage({
     data: EPISODES[game.episode][game.level],
     game
@@ -383,7 +370,7 @@ function initLevel() {
   }
 }
 
-function initMenu(mode) {
+const initMenu = (mode) => {
   game.counter    = 0;
   game.isGameOver = true;
   game.isPaused   = false;
@@ -442,7 +429,7 @@ function initMenu(mode) {
   }
 }
 
-function levelLose() {
+const levelLose = () => {
   game.isGameOver = true;
   game.hud.score = 0;
   title.innerHTML = 'Game Over';
@@ -450,7 +437,7 @@ function levelLose() {
   game.keys.splice(0);
 }
 
-function levelWin() {
+const levelWin = () => {
   game.stage.defeated = true;
   directions.innerHTML      = game.promptStart;
 
@@ -464,7 +451,7 @@ function levelWin() {
   }
 }
 
-function loop() {
+const loop = () => {
   if (
     (game.mode === MODES.GAMEPLAY && !game.isPaused) ||
     game.mode === MODES.TITLE ||
@@ -679,18 +666,18 @@ function loop() {
   setTimeout(loop, 1000 / FPS);
 }
 
-function pause() {
+const pause = () => {
   game.isPaused      = !game.isPaused;
   directions.innerHTML = game.isPaused ? game.promptStart : '';
   title.innerHTML      = game.isPaused ? 'Pause'            : '';
 }
 
-function reset() {
+const reset = () => {
   clearStage();
   initMenu(MODES.TITLE);
 }
 
-function resizeGame(width, height) {
+const resizeGame = (width, height) => {
   if (game.mode === MODES.GAMEPLAY) {
     adaptCoords({
       actor: game.player,
@@ -730,3 +717,16 @@ function resizeGame(width, height) {
 
   btnStart.style.left = `${(game.width - 75) / 2}px`;
 }
+
+(function() {
+  game.selector = new Game(game);
+  game.hud      = new Hud({ game });
+
+  initInterface();
+  initMenu(MODES.TITLE);
+
+  loop();
+})();
+
+// Temporarily expose game object to the global scope to make cheats accessible from console.
+window.game = game;
