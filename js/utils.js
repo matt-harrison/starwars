@@ -430,7 +430,7 @@ const playLevel = (level) => {
 
   if (typeof(skipToLevel) === 'number') {
     if (game.mode !== MODES.GAMEPLAY) {
-      initGame();
+      initMode(MODES.GAMEPLAY);
     }
 
     window.game.level = skipToLevel;

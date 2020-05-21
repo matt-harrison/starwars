@@ -179,7 +179,7 @@ const tatooine = {
       character: CHARACTERS.artoo,
       details: {
         delay: 0,
-        dir  : null,
+        dir  : CARDINALS.UP,
         hp   : isQuickTest ? 1 : 1
       }
     }  ],
@@ -193,7 +193,7 @@ const tatooine = {
     character    : CHARACTERS.threepio,
     count        : isQuickTest ? 1 : 1,
     delayInterval: 0,
-    dir          : null,
+    dir          : CARDINALS.DOWN,
     hp           : isQuickTest ? 1 : 1
   },
   friendlies: [

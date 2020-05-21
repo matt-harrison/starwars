@@ -66,13 +66,10 @@ const game = {
 const advanceLevel = () => {
   if (game.level === game.episode.length) {
     reset();
+  } else if (game.cutsceneCount < EPISODES[game.episode][game.level].cutscenes.length) {
+    initMode(MODES.CUTSCENE);
   } else {
-    if (game.hud.score === 0 || EPISODES[game.episode][game.level].cutscenes.length > 0) {
-      initLevel();
-    } else {
-      game.cutsceneCount = 0;
-      initMenu(MODES.CUTSCENE);
-    }
+    initLevel();
   }
 }
 
@@ -130,27 +127,23 @@ const buttonRelease = (key, id) => {
     if (game.mode === MODES.RESET) {
       reset();
     } else if (game.mode === MODES.TITLE) {
-      initMenu(MODES.CUTSCENE);
+      initMode(MODES.CUTSCENE);
     } else if (game.mode === MODES.CUTSCENE) {
-      game.mode = MODES.GAMEPLAY;
-
       if (++game.cutsceneCount < EPISODES[game.episode][game.level].cutscenes.length) {
-        initMenu(MODES.CUTSCENE);
+        initMode(MODES.CUTSCENE);
       } else {
-        if (game.isStageDefeated) {
-          initLevel();
-        } else {
-          initGame();
-        }
+        initMode(MODES.GAMEPLAY);
       }
-    } else if (game.isGameOver) {
-      initGame();
-      advanceLevel();
-    } else if (game.isStageDefeated) {
-      advanceLevel();
-    } else {
-      pause();
+    } else if (game.mode === MODES.GAMEPLAY) {
+      if (game.isGameOver) {
+        initLevel();
+      } else if (game.isStageDefeated) {
+        advanceLevel();
+      } else {
+        pause();
+      }
     }
+
     game.keys.splice(0);
   } else if (key === 'escape') {
     reset();
@@ -176,6 +169,8 @@ const buttonRelease = (key, id) => {
 }
 
 const clearStage = () => {
+  game.isStageDefeated = false;
+
   game.selector.removeChild(game.stage.selector);
   game.enemies.splice(0);
   game.friendlies.splice(0);
@@ -186,15 +181,6 @@ const clearStage = () => {
 
   game.hud.scoreText.innerHTML  = game.hud.score;
   game.hud.victimText.innerHTML = '';
-}
-
-const initGame = () => {
-  game.mode                    = MODES.GAMEPLAY;
-  game.isGameOver              = false;
-  game.isPaused                = false;
-  game.hud.scoreText.innerHTML = game.hud.score;
-
-  initLevel();
 }
 
 const initInterface = () => {
@@ -346,10 +332,11 @@ const initLevel = () => {
   });
 
   game.counter                   = 0;
+  game.cutsceneCount             = 0;
   game.enemiesKilled             = 0;
   game.hud.scoreText.style.color = game.stage.textColor;
   game.isBossesReached           = false;
-  game.isStageDefeated           = false;
+  game.isGameOver                = false;
 
   if (EPISODES[game.episode][game.level].obstacles.length > 0) {
     game.stage.obstacles.forEach(obstacle => {
@@ -375,16 +362,16 @@ const initLevel = () => {
   }
 }
 
-const initMenu = (mode) => {
-  game.counter    = 0;
-  game.isGameOver = true;
-  game.isPaused   = false;
-  game.mode       = mode;
+const initMode = (mode) => {
+  game.mode = mode;
 
   if (game.mode === MODES.TITLE) {
+    game.counter       = 0;
     game.cutsceneCount = 0;
     game.episode       = 3;
     game.hud.score     = 0;
+    game.isGameOver    = true;
+    game.isPaused      = false;
     game.level         = 0;
 
     game.stage = new Stage({
@@ -415,6 +402,10 @@ const initMenu = (mode) => {
       buttons.style.display = 'none';
     }
   } else if (game.mode === MODES.CUTSCENE) {
+    game.counter    = 0;
+    game.isGameOver = true;
+    game.isPaused   = false;
+
     directions.innerHTML           = '';
     directions.style.pointerEvents = 'none';
     game.hud.selector.setAttribute('data-key', 'enter');
@@ -429,8 +420,15 @@ const initMenu = (mode) => {
         game
       })
     } else {
-      initGame();
+      initMode(MODES.GAMEPLAY);
     }
+  } else if (game.mode === MODES.GAMEPLAY) {
+    game.mode                    = MODES.GAMEPLAY;
+    game.isGameOver              = false;
+    game.isPaused                = false;
+    game.hud.scoreText.innerHTML = game.hud.score;
+
+    initLevel();
   }
 }
 
@@ -443,7 +441,7 @@ const levelLose = () => {
 }
 
 const levelWin = () => {
-  directions.innerHTML  = game.promptStart;
+  directions.innerHTML = game.promptStart;
   game.isStageDefeated = true;
 
   if (++game.level === EPISODES[game.episode].length) {
@@ -679,7 +677,7 @@ const pause = () => {
 
 const reset = () => {
   clearStage();
-  initMenu(MODES.TITLE);
+  initMode(MODES.TITLE);
 }
 
 const resizeGame = (width, height) => {
@@ -728,10 +726,10 @@ const resizeGame = (width, height) => {
   game.hud      = new Hud({ game });
 
   initInterface();
-  initMenu(MODES.TITLE);
+  initMode(MODES.TITLE);
 
   loop();
 })();
 
-// Temporarily expose game object to the global scope to make cheats accessible from console.
+// Temporarily expose game object to the global scope to enable debugging from browser console.
 window.game = game;
