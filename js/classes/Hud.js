@@ -1,4 +1,9 @@
-import { BUTTON_NAMES, HUD_OPACITY, IS_MOBILE } from '/js/constants/config.js';
+import {
+  BUTTON_NAMES,
+  HUD_OPACITY,
+  IS_MOBILE,
+  KEYS
+} from '/js/constants/config.js';
 
 export const Hud = function({
   game
@@ -113,7 +118,7 @@ export const Hud = function({
     this.btnLeft.style.opacity         = HUD_OPACITY;
     this.btnLeft.style.position        = 'absolute';
     this.btnLeft.style.width           = '45px';
-    this.btnLeft.setAttribute('data-key', 'left');
+    this.btnLeft.setAttribute('data-key', CARDINALS.LEFT);
 
     this.btnUp                       = document.createElement('div');
     this.btnUp.id                    = BUTTON_NAMES.UP;
@@ -124,7 +129,7 @@ export const Hud = function({
     this.btnUp.style.opacity         = HUD_OPACITY;
     this.btnUp.style.position        = 'absolute';
     this.btnUp.style.width           = '55px';
-    this.btnUp.setAttribute('data-key', 'up');
+    this.btnUp.setAttribute('data-key', CARDINALS.UP);
 
     this.btnRight                       = document.createElement('div');
     this.btnRight.id                    = BUTTON_NAMES.RIGHT;
@@ -135,7 +140,7 @@ export const Hud = function({
     this.btnRight.style.opacity         = HUD_OPACITY;
     this.btnRight.style.position        = 'absolute';
     this.btnRight.style.width           = '45px';
-    this.btnRight.setAttribute('data-key', 'right');
+    this.btnRight.setAttribute('data-key', CARDINALS.RIGHT);
 
     this.btnDown                       = document.createElement('div');
     this.btnDown.id                    = BUTTON_NAMES.DOWN;
@@ -146,7 +151,7 @@ export const Hud = function({
     this.btnDown.style.opacity         = HUD_OPACITY;
     this.btnDown.style.position        = 'absolute';
     this.btnDown.style.width           = '55px';
-    this.btnDown.setAttribute('data-key', 'down');
+    this.btnDown.setAttribute('data-key', CARDINALS.DOWN);
 
     this.btnAttack                       = document.createElement('div');
     this.btnAttack.id                    = BUTTON_NAMES.ATTACK;
@@ -157,7 +162,7 @@ export const Hud = function({
     this.btnAttack.style.position        = 'absolute';
     this.btnAttack.style.right           = '5px';
     this.btnAttack.style.width           = '65px';
-    this.btnAttack.setAttribute('data-key', 'space');
+    this.btnAttack.setAttribute('data-key', KEYS.SPACE);
 
     this.btnAttack2                       = document.createElement('div');
     this.btnAttack2.id                    = BUTTON_NAMES.ATTACK2;
@@ -168,7 +173,7 @@ export const Hud = function({
     this.btnAttack2.style.position        = 'absolute';
     this.btnAttack2.style.right           = '75px';
     this.btnAttack2.style.width           = '65px';
-    this.btnAttack2.setAttribute('data-key', 'Z');
+    this.btnAttack2.setAttribute('data-key', KEYS.Z);
 
     this.btnStart                       = document.createElement('div');
     this.btnStart.id                    = BUTTON_NAMES.START;
@@ -179,7 +184,7 @@ export const Hud = function({
     this.btnStart.style.opacity         = HUD_OPACITY;
     this.btnStart.style.position        = 'absolute';
     this.btnStart.style.width           = '75px';
-    this.btnStart.setAttribute('data-key', 'enter');
+    this.btnStart.setAttribute('data-key', KEYS.ENTER);
 
     this.selector.appendChild(this.buttons);
     this.buttons.appendChild(this.dpad);

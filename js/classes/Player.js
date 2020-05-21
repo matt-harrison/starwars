@@ -6,8 +6,8 @@ import {
   setPosition
 } from '/js/utils.js';
 
-import { ACTOR_TYPES, FPS, MAGNIFICATION } from '/js/constants/config.js';
-import { PROJECTILES, WEAPON_TYPES }       from '/js/constants/weapons.js';
+import { ACTOR_TYPES, FPS, KEYS, MAGNIFICATION } from '/js/constants/config.js';
+import { PROJECTILES, WEAPON_TYPES } from '/js/constants/weapons.js';
 
 import { Animation }  from '/js/classes/Animation.js';
 import { Bomb }       from '/js/classes/Bomb.js';
@@ -87,7 +87,7 @@ export const Player = function({
           origin: this
         });
       } else if (this.weaponType === WEAPON_TYPES.LIGHTSABER) {
-        const isLongRange = (key === 'Z');
+        const isLongRange = (key === KEYS.Z);
 
         this.lightsaber = new Lightsaber({
           isLongRange,

@@ -42,6 +42,13 @@ export const INFINITY = 'infinity';
 
 export const IS_MOBILE = (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/).test(navigator.userAgent);
 
+export const KEYS = {
+  ENTER : 'enter',
+  ESCAPE: 'escape',
+  SPACE : 'space',
+  Z     : 'z'
+};
+
 export const MAGNIFICATION = IS_MOBILE ? Math.floor(window.innerWidth / 100) : 5;
 
 export const MODES = {

@@ -1,6 +1,6 @@
 import { attachNode } from '/js/utils.js';
 
-import { COLORS } from '/js/constants/config.js';
+import { COLORS, KEYS } from '/js/constants/config.js';
 
 export const Cutscene = function({
   img,
@@ -8,7 +8,7 @@ export const Cutscene = function({
 }) {
   this.selector = attachNode({
     attributes: {
-      'data-key': 'enter',
+      'data-key': KEYS.ENTER,
       id:         'cutscene-bg'
     },
     parent: game.selector,
@@ -26,7 +26,7 @@ export const Cutscene = function({
   const sideLength = getSideLength(game);
   const cutscene   = attachNode({
     attributes: {
-      'data-key': 'enter',
+      'data-key': KEYS.ENTER,
       id:         `cutscene${game.cutsceneCount}`
     },
     parent: this.selector,

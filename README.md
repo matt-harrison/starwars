@@ -6,8 +6,6 @@ REFACTOR:
   * rename scoreText   to scoreSelector?
   * rename victimText  to victimSelector?
   * rename victimCount to victimIdInterval?
-  * make KEYS constants
-  * replace strings redundant to constants
   * move ship graphics to separate directory
   * import all constants from /js/constants/index.js manifest?
   * migrate all public vars from classes to game object? (ex. hud.title)

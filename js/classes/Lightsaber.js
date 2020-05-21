@@ -1,6 +1,6 @@
 import { collision } from '/js/utils.js';
 
-import { COLORS, MAGNIFICATION } from '/js/constants/config.js';
+import { CARDINALS, COLORS, MAGNIFICATION } from '/js/constants/config.js';
 
 export const Lightsaber = function({
   isLongRange,
@@ -15,7 +15,7 @@ export const Lightsaber = function({
   this.thrown   = isLongRange;
   this.type     = 'lightsaber';
 
-  if (this.dir === 'left') {
+  if (this.dir === CARDINALS.LEFT) {
     this.frameHeight = 1 * MAGNIFICATION;
     this.frameWidth  = 8 * MAGNIFICATION;
     this.hiltHeight  = 1 * MAGNIFICATION;
@@ -24,7 +24,7 @@ export const Lightsaber = function({
     this.hiltY       = 0;
     this.x           = origin.x + (origin.weaponOffsetLeft[0] * MAGNIFICATION) - this.frameWidth;
     this.y           = origin.y + (origin.weaponOffsetLeft[1] * MAGNIFICATION);
-  } else if (this.dir === 'up') {
+  } else if (this.dir === CARDINALS.UP) {
     this.frameHeight = 8 * MAGNIFICATION;
     this.frameWidth  = 1 * MAGNIFICATION;
     this.hiltHeight  = 2 * MAGNIFICATION;
@@ -33,7 +33,7 @@ export const Lightsaber = function({
     this.hiltY       = this.frameHeight - this.hiltHeight;;
     this.x           = origin.x + (origin.weaponOffsetUp[0] * MAGNIFICATION);
     this.y           = origin.y + (origin.weaponOffsetUp[1] * MAGNIFICATION) - this.frameHeight;
-  } else if (this.dir === 'right') {
+  } else if (this.dir === CARDINALS.RIGHT) {
     this.frameHeight = 1 * MAGNIFICATION;
     this.frameWidth  = 8 * MAGNIFICATION;
     this.hiltHeight  = 1 * MAGNIFICATION;
@@ -42,7 +42,7 @@ export const Lightsaber = function({
     this.hiltY       = 0;
     this.x           = origin.x + (origin.weaponOffsetRight[0] * MAGNIFICATION);
     this.y           = origin.y + (origin.weaponOffsetRight[1] * MAGNIFICATION);
-  } else if (this.dir === 'down') {
+  } else if (this.dir === CARDINALS.DOWN) {
     this.frameHeight = 8 * MAGNIFICATION;
     this.frameWidth  = 1 * MAGNIFICATION;
     this.hiltHeight  = 2 * MAGNIFICATION;
@@ -79,14 +79,14 @@ export const Lightsaber = function({
   this.selector.appendChild(this.hilt);
 
   this.reverse = function() {
-    if (this.dir === 'left') {
-      this.dir = 'right';
-    } else if (this.dir === 'up') {
-      this.dir = 'down';
-    } else if (this.dir === 'right') {
-      this.dir = 'left';
-    } else if (this.dir === 'down') {
-      this.dir = 'up';
+    if (this.dir === CARDINALS.LEFT) {
+      this.dir = CARDINALS.RIGHT;
+    } else if (this.dir === CARDINALS.UP) {
+      this.dir = CARDINALS.DOWN;
+    } else if (this.dir === CARDINALS.RIGHT) {
+      this.dir = CARDINALS.LEFT;
+    } else if (this.dir === CARDINALS.DOWN) {
+      this.dir = CARDINALS.UP;
     }
   }
 
@@ -106,28 +106,28 @@ export const Lightsaber = function({
     }
 
     if (this.thrown) {
-      if (this.dir === 'left') {
+      if (this.dir === CARDINALS.LEFT) {
         if (this.x - this.speed > 0) {
           this.x -= this.speed;
         } else {
           this.x = 0;
           this.reverse();
         }
-      } else if (this.dir === 'up') {
+      } else if (this.dir === CARDINALS.UP) {
         if (this.y - this.speed > 0) {
           this.y -= this.speed;
         } else {
           this.y = 0;
           this.reverse();
         }
-      } else if (this.dir === 'right') {
+      } else if (this.dir === CARDINALS.RIGHT) {
         if (this.x + this.speed < game.width - this.width) {
           this.x += this.speed;
         } else {
           this.x = game.width - this.frameWidth;
           this.reverse();
         }
-      } else if (this.dir === 'down') {
+      } else if (this.dir === CARDINALS.DOWN) {
         if (this.y + this.speed < game.height - this.height) {
           this.y += this.speed;
         } else {

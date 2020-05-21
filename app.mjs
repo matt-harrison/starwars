@@ -19,6 +19,7 @@ import {
   FPS,
   HUD_OPACITY,
   IS_MOBILE,
+  KEYS,
   MODES,
   NUMERALS
 } from './js/constants/config.js';
@@ -85,13 +86,13 @@ const buttonPush = (key, id) => {
       document.getElementById(`btnEpisode${numeral}`).style.color = COLORS.BLACK;
     });
 
-    if (key === 'left') {
+    if (key === CARDINALS.LEFT) {
       game.episode -= 1;
-    } else if (key === 'right') {
+    } else if (key === CARDINALS.RIGHT) {
       game.episode += 1;
-    } else if (key === 'up') {
+    } else if (key === CARDINALS.UP) {
       game.episode -= 3;
-    } else if (key === 'down') {
+    } else if (key === CARDINALS.DOWN) {
       game.episode += 3;
     }
 
@@ -123,7 +124,7 @@ const buttonUpdate = (event) => {
 }
 
 const buttonRelease = (key, id) => {
-  if (key === 'enter') {
+  if (key === KEYS.ENTER) {
     if (game.mode === MODES.RESET) {
       reset();
     } else if (game.mode === MODES.TITLE) {
@@ -145,16 +146,16 @@ const buttonRelease = (key, id) => {
     }
 
     game.keys.splice(0);
-  } else if (key === 'escape') {
+  } else if (key === KEYS.ESCAPE) {
     reset();
   }
 
   const position = game.keys.indexOf(key);
 
   if (position !== -1) {
-    if (key === 'space') {
+    if (key === KEYS.SPACE) {
       game.player.isAttacking = false;
-    } else if (key === 'Z') {
+    } else if (key === KEYS.Z) {
     } else {
       game.player.isRunning    = false;
       game.player.spriteColumn = 0;
@@ -229,29 +230,29 @@ const initInterface = () => {
       if (!game.isPaused) {
         switch (event.keyCode) {
           case 37:
-            key = 'left';
+            key = CARDINALS.LEFT;
             break;
           case 38:
-            key = 'up';
+            key = CARDINALS.UP;
             break;
           case 39:
-            key = 'right';
+            key = CARDINALS.RIGHT;
             break;
           case 40:
-            key = 'down';
+            key = CARDINALS.DOWN;
             break;
           case 90:
-            key = 'Z';
+            key = KEYS.Z;
             break;
         }
       }
 
       switch (event.keyCode) {
         case 13:
-          key = 'enter';
+          key = KEYS.ENTER;
           break;
         case 27:
-          key = 'escape';
+          key = KEYS.ESCAPE;
           break;
         default:
           break;
@@ -266,7 +267,7 @@ const initInterface = () => {
       let key = '';
 
       if (event.charCode === 32) {
-        key = 'space';
+        key = KEYS.SPACE;
       }
 
       if (key !== '') {
@@ -280,32 +281,32 @@ const initInterface = () => {
       if (!game.isPaused) {
         switch (event.keyCode) {
           case 37:
-            key = 'left';
+            key = CARDINALS.LEFT;
             break;
           case 38:
-            key = 'up';
+            key = CARDINALS.UP;
             break;
           case 39:
-            key = 'right';
+            key = CARDINALS.RIGHT;
             break;
           case 40:
-            key = 'down';
+            key = CARDINALS.DOWN;
             break;
           case 32:
-            key = 'space';
+            key = KEYS.SPACE;
             break;
           case 90:
-            key = 'Z';
+            key = KEYS.Z;
             break;
         }
       }
 
       switch (event.keyCode) {
         case 13:
-          key = 'enter';
+          key = KEYS.ENTER;
           break;
         case 27:
-          key = 'escape';
+          key = KEYS.ESCAPE;
           break;
         default:
           break;
@@ -394,7 +395,7 @@ const initMode = (mode) => {
 
     game.hud.directions.innerHTML = game.promptClick;
     game.hud.scoreText.innerHTML  = '';
-    game.hud.selector.setAttribute('data-key', 'enter');
+    game.hud.selector.setAttribute('data-key', KEYS.ENTER);
     game.hud.title.innerHTML      = 'Star Wars';
     game.hud.victimText.innerHTML = '';
 
@@ -408,7 +409,7 @@ const initMode = (mode) => {
 
     directions.innerHTML           = '';
     directions.style.pointerEvents = 'none';
-    game.hud.selector.setAttribute('data-key', 'enter');
+    game.hud.selector.setAttribute('data-key', KEYS.ENTER);
     scoreboard.style.display       = 'none';
     title.innerHTML                = '';
 
@@ -468,7 +469,7 @@ const loop = () => {
             game.player.isRunning = true;
           }
 
-          if (key === 'space' || key === 'Z') {
+          if (key === KEYS.SPACE || key === KEYS.Z) {
             game.player.attack(key);
           }
         });

@@ -8,7 +8,7 @@ import * as CHARACTERS from '/js/constants/characters.js';
 import { OBSTACLES }   from '/js/constants/obstacles.js';
 import { SHIPS }       from '/js/constants/ships.js';
 
-const isQuickTest = false;
+const isQuickTest = true;
 
 export const ATTRACTION = {
   bg: 'metal',
@@ -127,7 +127,7 @@ const tantive4 = {
   neutrals: [],
   obstacles: [],
   password: undefined,
-  textColor: 'black'
+  textColor: COLORS.BLACK
 };
 
 const ambassador = {
@@ -169,7 +169,7 @@ const ambassador = {
   ],
   obstacles: [],
   password: undefined,
-  textColor: 'black'
+  textColor: COLORS.BLACK
 };
 
 const tatooine = {
@@ -235,7 +235,7 @@ const tatooine = {
     }
   ],
   password: undefined,
-  textColor: 'black'
+  textColor: COLORS.BLACK
 };
 
 const search = {
@@ -294,7 +294,7 @@ const search = {
     }
   ],
   password: undefined,
-  textColor: 'black'
+  textColor: COLORS.BLACK
 };
 
 const sandcrawler = {
@@ -526,7 +526,7 @@ const dockingBay = {
     }
   ],
   password: undefined,
-  textColor: 'black'
+  textColor: COLORS.BLACK
 };
 
 const alderaan = {
@@ -615,7 +615,7 @@ const detention = {
     }
   ],
   password: undefined,
-  textColor: 'black'
+  textColor: COLORS.BLACK
 };
 
 const tractorBeam = {
@@ -651,7 +651,7 @@ const tractorBeam = {
     }
   ],
   password: undefined,
-  textColor: 'black'
+  textColor: COLORS.BLACK
 };
 
 const showdown4 = {
@@ -681,7 +681,7 @@ const showdown4 = {
   neutrals: [],
   obstacles: [],
   password: undefined,
-  textColor: 'black'
+  textColor: COLORS.BLACK
 };
 
 const escapeFromDeathStar = {
@@ -745,7 +745,7 @@ const escapeFromDeathStar = {
     }
   ],
   password: undefined,
-  textColor: 'black'
+  textColor: COLORS.BLACK
 };
 
 const battleOfYavin = {
@@ -864,7 +864,7 @@ const hoth = {
   neutrals: [],
   obstacles: [],
   password: undefined,
-  textColor: 'black',
+  textColor: COLORS.BLACK
 };
 
 //Episode VI levels
@@ -905,7 +905,7 @@ const endor = {
   neutrals: [],
   obstacles: [],
   password: undefined,
-  textColor: 'black',
+  textColor: COLORS.BLACK
 };
 
 const test = {
