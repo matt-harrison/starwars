@@ -18,10 +18,10 @@ export const ATTRACTION = {
   enemiesOptional: [],
   enemiesRequiredData: {
     character    : CHARACTERS.stormtrooper,
-    count        : isQuickTest ? 1 : 3,
+    count        : 3,
     delayInterval: 1 * FPS,
     dir          : CARDINALS.RIGHT,
-    hp           : isQuickTest ? 1 : 1
+    hp           : 1
   },
   friendlies: [
     {
@@ -30,7 +30,7 @@ export const ATTRACTION = {
         bounceLimit: INFINITY,
         delay      : 0.5 * FPS,
         dir        : CARDINALS.LEFT,
-        hp         : isQuickTest ? 1 : 1
+        hp         : 1
       }
     },
     {
@@ -39,7 +39,7 @@ export const ATTRACTION = {
         bounceLimit: INFINITY,
         delay      : 1.5 * FPS,
         dir        : CARDINALS.LEFT,
-        hp         : isQuickTest ? 1 : 1
+        hp         : 1
       }
     },
     {
@@ -48,7 +48,7 @@ export const ATTRACTION = {
         bounceLimit: INFINITY,
         delay      : 2.5 * FPS,
         dir        : CARDINALS.LEFT,
-        hp         : isQuickTest ? 1 : 1
+        hp         : 1
       }
     },
     {
@@ -57,7 +57,7 @@ export const ATTRACTION = {
         bounceLimit: 0,
         delay      : 2 * FPS,
         dir        : CARDINALS.DOWN,
-        hp         : isQuickTest ? 1 : 1
+        hp         : 1
       }
     },
     {
@@ -66,7 +66,7 @@ export const ATTRACTION = {
         bounceLimit: 0,
         delay      : 4 * FPS,
         dir        : CARDINALS.DOWN,
-        hp         : isQuickTest ? 1 : 1
+        hp         : 1
       }
     }
   ],

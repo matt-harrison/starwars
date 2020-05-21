@@ -19,7 +19,4 @@ export const Stage = function({
   game.hud.directions.style.color = this.textColor;
   game.hud.scoreboard.style.color = this.textColor;
   game.hud.title.style.color      = this.textColor;
-
-  this.enemiesKilled = 0;
-  this.isDefeated    = false;
 };

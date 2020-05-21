@@ -36,37 +36,38 @@ import { Projectile } from './js/classes/Projectile.js';
 import { Stage }      from './js/classes/Stage.js';
 
 const game = {
-  animations   : [],
-  counter      : 0,
-  cutsceneCount: 0,
-  enemies      : [],
-  episode      : 3,
-  friendlies   : [],
-  height       : IS_MOBILE ? window.innerHeight : 500,
-  hud          : null,
-  isGameOver   : false,
-  isInvincible : false,
-  isPaused     : false,
-  keys         : [],
-  level        : 0,
-  mode         : MODES.TITLE,
-  neutrals     : [],
-  obstacles    : [],
-  player       : null,
-  promptClick  : IS_MOBILE ? 'Tap to begin' : 'Press Enter',
-  promptStart  : IS_MOBILE ? 'Press Start'  : 'Press Enter',
-  props        : [],
-  selector     : null,
-  stage        : null,
-  width        : IS_MOBILE ? window.innerWidth  : 500
+  animations     : [],
+  counter        : 0,
+  cutsceneCount  : 0,
+  enemies        : [],
+  enemiesKilled  : 0,
+  episode        : 3,
+  friendlies     : [],
+  height         : IS_MOBILE ? window.innerHeight : 500,
+  hud            : null,
+  isGameOver     : false,
+  isInvincible   : false,
+  isPaused       : false,
+  isStageDefeated: false,
+  keys           : [],
+  level          : 0,
+  mode           : MODES.TITLE,
+  neutrals       : [],
+  obstacles      : [],
+  player         : null,
+  promptClick    : IS_MOBILE ? 'Tap to begin' : 'Press Enter',
+  promptStart    : IS_MOBILE ? 'Press Start'  : 'Press Enter',
+  props          : [],
+  selector       : null,
+  stage          : null,
+  width          : IS_MOBILE ? window.innerWidth : 500
 };
 
-const advanceStage = () => {
+const advanceLevel = () => {
   if (game.level === game.episode.length) {
     reset();
   } else {
     if (game.hud.score === 0 || EPISODES[game.episode][game.level].cutscenes.length > 0) {
-      clearStage();
       initLevel();
     } else {
       game.cutsceneCount = 0;
@@ -136,7 +137,7 @@ const buttonRelease = (key, id) => {
       if (++game.cutsceneCount < EPISODES[game.episode][game.level].cutscenes.length) {
         initMenu(MODES.CUTSCENE);
       } else {
-        if (game.stage.isDefeated) {
+        if (game.isStageDefeated) {
           initLevel();
         } else {
           initGame();
@@ -144,9 +145,9 @@ const buttonRelease = (key, id) => {
       }
     } else if (game.isGameOver) {
       initGame();
-      advanceStage();
-    } else if (game.stage.isDefeated) {
-      advanceStage();
+      advanceLevel();
+    } else if (game.isStageDefeated) {
+      advanceLevel();
     } else {
       pause();
     }
@@ -188,12 +189,11 @@ const clearStage = () => {
 }
 
 const initGame = () => {
-  game.mode                        = MODES.GAMEPLAY;
-  game.isGameOver                  = false;
-  game.isPaused                    = false;
+  game.mode                    = MODES.GAMEPLAY;
+  game.isGameOver              = false;
+  game.isPaused                = false;
   game.hud.scoreText.innerHTML = game.hud.score;
 
-  clearStage();
   initLevel();
 }
 
@@ -333,6 +333,8 @@ const initInterface = () => {
 }
 
 const initLevel = () => {
+  clearStage();
+
   game.stage = new Stage({
     data: EPISODES[game.episode][game.level],
     game
@@ -344,8 +346,10 @@ const initLevel = () => {
   });
 
   game.counter                   = 0;
+  game.enemiesKilled             = 0;
   game.hud.scoreText.style.color = game.stage.textColor;
   game.isBossesReached           = false;
+  game.isStageDefeated           = false;
 
   if (EPISODES[game.episode][game.level].obstacles.length > 0) {
     game.stage.obstacles.forEach(obstacle => {
@@ -401,21 +405,21 @@ const initMenu = (mode) => {
 
     initEnemies(game);
 
-    game.hud.selector.setAttribute('data-key', 'enter');
-    game.hud.title.innerHTML = 'Star Wars';
     game.hud.directions.innerHTML = game.promptClick;
-    game.hud.scoreText.innerHTML = '';
+    game.hud.scoreText.innerHTML  = '';
+    game.hud.selector.setAttribute('data-key', 'enter');
+    game.hud.title.innerHTML      = 'Star Wars';
     game.hud.victimText.innerHTML = '';
 
     if (IS_MOBILE) {
       buttons.style.display = 'none';
     }
   } else if (game.mode === MODES.CUTSCENE) {
-    scoreboard.style.display = 'none';
-    game.hud.selector.setAttribute('data-key', 'enter');
-    title.innerHTML = '';
-    directions.innerHTML = '';
+    directions.innerHTML           = '';
     directions.style.pointerEvents = 'none';
+    game.hud.selector.setAttribute('data-key', 'enter');
+    scoreboard.style.display       = 'none';
+    title.innerHTML                = '';
 
     if (EPISODES[game.episode][game.level].cutscenes.length > 0) {
       clearStage();
@@ -440,7 +444,7 @@ const levelLose = () => {
 
 const levelWin = () => {
   directions.innerHTML  = game.promptStart;
-  game.stage.isDefeated = true;
+  game.isStageDefeated = true;
 
   if (++game.level === EPISODES[game.episode].length) {
     game.isGameOver   = true;
@@ -560,8 +564,8 @@ const loop = () => {
 
       //Check for level completion
       if (
-        game.stage.enemiesKilled === add(game.stage.enemies.length - game.stage.enemiesOptional.length, game.stage.bosses.length) &&
-        !game.stage.isDefeated
+        game.enemiesKilled === add(game.stage.enemies.length - game.stage.enemiesOptional.length, game.stage.bosses.length) &&
+        !game.isStageDefeated
       ) {
         levelWin();
       }
@@ -585,7 +589,7 @@ const loop = () => {
     // Add actors.
     game.stage.bosses?.forEach(boss => {
       if (
-        game.stage.enemiesKilled === game.stage.enemies.length - game.stage.enemiesOptional.length &&
+        game.enemiesKilled === game.stage.enemies.length - game.stage.enemiesOptional.length &&
         !game.isBossesReached
       ) {
         const data = Object.assign({}, boss);

@@ -85,7 +85,7 @@ export const Actor = function({
 
   this.kill = () => {
     if (this.type === ACTOR_TYPES.ENEMY && !this.isOptional) {
-      game.stage.enemiesKilled++;
+      game.enemiesKilled++;
     }
 
     this.isActive     = false;

@@ -434,7 +434,6 @@ const playLevel = (level) => {
     }
 
     window.game.level = skipToLevel;
-    clearStage();
     initLevel();
 
     window.game.isPaused = false;
