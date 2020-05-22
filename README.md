@@ -3,7 +3,6 @@
 
 REFACTOR:
 * code formatting
-  * implement attachNode from classes
   * explicitly map all objects (instead of Object.assign) for readability?
   * distribute functions to relevant class or move to utils
   * migrate all functions from app to utils? (game as arg?)
@@ -42,6 +41,7 @@ FEATURES:
 * cutscenes for every level
 * post-game cutscenes (hallway, medals)
 * bloodless death frame w/ only animated death bloody?
+* gunganBall projectile splat animation
 * recolor backgrounds and/or characters not to conflict?
   * choose tier 1 colors (pure white, pure black) to use in sprites and hud, then never use them (or clashing) in BGs
 
@@ -54,4 +54,5 @@ BUGS:
 * fix playLevel() cheat
 * duplicate IDs on actors spawned with same delay
 * prevent friendly ship crash after isLevelDefeated.
+* adaptCoords(laser) bug
 * mobile magnification

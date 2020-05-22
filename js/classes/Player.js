@@ -1,5 +1,6 @@
 import {
   advanceFrame,
+  attachNode,
   changeDirection,
   getRandom,
   preload,
@@ -55,17 +56,21 @@ export const Player = function({
     }
   }
 
-  this.selector                        = document.createElement('div');
-  this.selector.id                     = 'player';
-  this.selector.style.backgroundImage  = `url('img/${this.sprite}.png')`;
-  this.selector.style.backgroundRepeat = 'no-repeat';
-  this.selector.style.backgroundSize   = `${this.width}px ${this.height}px`;
-  this.selector.style.height           = `${this.frameHeight}px`;
-  this.selector.style.position         = 'absolute';
-  this.selector.style.width            = `${this.frameWidth}px`;
-  this.selector.style.zIndex           = this.y;
-
-  game.stage.selector.appendChild(this.selector);
+  this.selector = attachNode({
+    attributes: {
+      id: 'player'
+    },
+    parent: game.stage.selector,
+    styles: {
+      backgroundImage : `url('img/${this.sprite}.png')`,
+      backgroundRepeat: 'no-repeat',
+      backgroundSize  : `${this.width}px ${this.height}px`,
+      height          : `${this.frameHeight}px`,
+      position        : 'absolute',
+      width           : `${this.frameWidth}px`,
+      zIndex          : this.y,
+    }
+  });
 
   if (this.death) {
     preload(`img/animations/${this.death.name}.png`);

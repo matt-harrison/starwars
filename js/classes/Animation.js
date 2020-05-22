@@ -1,4 +1,5 @@
 import { INFINITY } from '/js/constants/index.js';
+import { attachNode } from '/js/utils.js';
 
 export const Animation = function({
   data,
@@ -14,19 +15,24 @@ export const Animation = function({
   this.x            = Math.floor(origin.x + (origin.frameWidth - this.frameWidth) / 2);
   this.y            = Math.floor(origin.y + (origin.frameHeight - this.frameHeight) / 2);
 
-  this.selector                       = document.createElement('div');
-  this.selector.id                    = `animtion${game.animations.length}`;
-  this.selector.style.position        = 'absolute';
-  this.selector.style.left            = `${this.x}px`;
-  this.selector.style.top             = `${this.y}px`;
-  this.selector.style.width           = `${this.frameWidth}px`;
-  this.selector.style.height          = `${this.frameHeight}px`;
-  this.selector.style.backgroundImage = `url('img/animations/${this.name}.png')`;
-  this.selector.style.backgroundSize  = `${this.width}px ${this.height}px`;
-  this.selector.style.zIndex          = '2';
+  this.selector = attachNode({
+    attributes: {
+      id: `animation${game.animations.length}`
+    },
+    parent: game.stage.selector,
+    styles: {
+      backgroundImage: `url('img/animations/${this.name}.png')`,
+      backgroundSize : `${this.width}px ${this.height}px`,
+      height         : `${this.frameHeight}px`,
+      left           : `${this.x}px`,
+      position       : 'absolute',
+      top            : `${this.y}px`,
+      width          : `${this.frameWidth}px`,
+      zIndex         : '2'
+    }
+  });
 
   game.animations.push(this);
-  game.stage.selector.appendChild(this.selector);
 
   this.kill = function() {
     this.isActive = false;

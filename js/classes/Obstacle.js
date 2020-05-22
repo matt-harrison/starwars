@@ -1,4 +1,5 @@
 import { MAGNIFICATION } from '/js/constants/index.js';
+import { attachNode } from '/js/utils.js';
 
 export const Obstacle = function({
   data,
@@ -25,18 +26,23 @@ export const Obstacle = function({
     this.y = game.height * (this.topPercent / 100) - (this.frameHeight / 2);
   }
 
-  this.selector                       = document.createElement('div');
-  this.selector.id                    = `obstacle${game.obstacles.length}`;
-  this.selector.style.backgroundImage = `url('img/obstacles/${this.img}.png')`;
-  this.selector.style.backgroundSize  = `${this.width}px ${this.height}px`;
-  this.selector.style.height          = `${this.frameHeight}px`;
-  this.selector.style.left            = `${this.x}px`;
-  this.selector.style.position        = 'absolute';
-  this.selector.style.top             = `${this.y}px`;
-  this.selector.style.width           = `${this.frameWidth}px`;
+  this.selector = attachNode({
+    attributes: {
+      id: `obstacle${game.obstacles.length}`
+    },
+    parent: game.stage.selector,
+    styles: {
+      backgroundImage: `url('img/obstacles/${this.img}.png')`,
+      backgroundSize : `${this.width}px ${this.height}px`,
+      height         : `${this.frameHeight}px`,
+      left           : `${this.x}px`,
+      position       : 'absolute',
+      top            : `${this.y}px`,
+      width          : `${this.frameWidth}px`
+    }
+  });
 
   game.obstacles.push(this);
-  game.stage.selector.appendChild(this.selector);
 
   this.update = function() {
     if (this.frameCount > 1) {

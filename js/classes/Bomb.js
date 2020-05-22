@@ -1,4 +1,4 @@
-import { collision } from '/js/utils.js';
+import { attachNode, collision } from '/js/utils.js';
 
 import {
   ANIMATIONS,
@@ -23,18 +23,23 @@ export const Bomb = function({
   this.x            = origin.x + (origin.weaponOffset[0] * MAGNIFICATION);
   this.y            = origin.y + (origin.weaponOffset[1] * MAGNIFICATION);
 
-  this.selector                       = document.createElement('div');
-  this.selector.id                    = `bomb${game.props.length}`;
-  this.selector.style.position        = 'absolute';
-  this.selector.style.left            = `${this.x}px`;
-  this.selector.style.top             = `${this.y}px`;
-  this.selector.style.width           = `${this.frameWidth}px`;
-  this.selector.style.height          = `${this.frameHeight}px`;
-  this.selector.style.backgroundColor = COLORS.BLACK;
-  this.selector.style.zIndex          = '2';
+  this.selector = attachNode({
+    attributes: {
+      id: `bomb${game.props.length}`
+    },
+    parent: game.stage.selector,
+    styles: {
+      backgroundColor: COLORS.BLACK,
+      height         : `${this.frameHeight}px`,
+      left           : `${this.x}px`,
+      position       : 'absolute',
+      top            : `${this.y}px`,
+      width          : `${this.frameWidth}px`,
+      zIndex         : '2'
+    }
+  });
 
   game.props.push(this);
-  game.stage.selector.appendChild(this.selector);
 
   this.kill = function() {
     this.isActive = false;

@@ -4,6 +4,7 @@ import {
   PROJECTILES,
   WEAPON_TYPES,
 } from '/js/constants/index.js';
+import { attachNode } from '/js/utils.js';
 
 export const Projectile = function({
   game,
@@ -19,13 +20,7 @@ export const Projectile = function({
   this.spriteColumn = 0;
   this.type         = origin.projectile;
 
-  this.selector                = document.createElement('div');
-  this.selector.id             = `projectile${game.props.length}`;
-  this.selector.style.position = 'absolute';
-
   if (origin.projectile === PROJECTILES.LASER) {
-    this.selector.style.backgroundColor = origin.weaponColor;
-
     if (this.dir === CARDINALS.LEFT || this.dir === CARDINALS.RIGHT) {
       this.height = 1 * MAGNIFICATION;
       this.width  = 2 * MAGNIFICATION;
@@ -37,12 +32,9 @@ export const Projectile = function({
     this.frameHeight = this.height;
     this.frameWidth  = this.width;
     this.speed       = 30;
-  } else {
-    this.selector.style.backgroundImage = `url('img/projectiles/${this.name}.png')`;
   }
 
-  this.selector.style.backgroundSize = `${this.width}px ${this.height}px`;
-  this.speed                         = this.speed * (MAGNIFICATION / 5);
+  this.speed = this.speed * (MAGNIFICATION / 5);
 
   if (this.dir === CARDINALS.LEFT) {
     this.x = origin.x + (origin.weaponOffsetLeft[0] * MAGNIFICATION) - this.frameWidth;
@@ -58,12 +50,27 @@ export const Projectile = function({
     this.y = origin.y + (origin.weaponOffsetDown[1] * MAGNIFICATION);
   }
 
-  this.selector.style.height = `${this.frameHeight}px`;
-  this.selector.style.width  = `${this.frameWidth}px`;
-  this.selector.style.zIndex = '4';
+  this.selector = attachNode({
+    attributes: {
+      id: `projectile${game.props.length}`
+    },
+    parent: game.stage.selector,
+    styles: {
+      backgroundSize: `${this.width}px ${this.height}px`,
+      height        : `${this.frameHeight}px`,
+      position      : 'absolute',
+      width         : `${this.frameWidth}px`,
+      zIndex        : '4'
+    }
+  });
+
+  if (origin.projectile === PROJECTILES.LASER) {
+    this.selector.style.backgroundColor = origin.weaponColor;
+  } else {
+    this.selector.style.backgroundImage = `url('img/projectiles/${this.name}.png')`;
+  }
 
   game.props.push(this);
-  game.stage.selector.appendChild(this.selector);
 
   this.kill = function() {
     this.isActive = false;

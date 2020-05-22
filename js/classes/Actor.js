@@ -1,6 +1,7 @@
 import {
   advanceFrame,
   add,
+  attachNode,
   changeDirection,
   getRandom,
   inBounds,
@@ -42,15 +43,21 @@ export const Actor = function({
     game
   });
 
-  this.selector                        = document.createElement('div');
-  this.selector.id                     = `${this.type}${game.enemies.length}`;
-  this.selector.style.backgroundImage  = `url('img/${this.sprite}.png')`;
-  this.selector.style.backgroundRepeat = 'no-repeat';
-  this.selector.style.backgroundSize   = `${this.width}px ${this.height}px`;
-  this.selector.style.height           = `${this.frameHeight}px`;
-  this.selector.style.position         = 'absolute';
-  this.selector.style.width            = `${this.frameWidth}px`;
-  this.selector.style.zIndex           = add(this.y, this.frameHeight);
+  this.selector = attachNode({
+    attributes: {
+      id: `${this.type}${game.enemies.length}`
+    },
+    parent: game.stage.selector,
+    styles: {
+      backgroundImage : `url('img/${this.sprite}.png')`,
+      backgroundRepeat: 'no-repeat',
+      backgroundSize  : `${this.width}px ${this.height}px`,
+      height          : `${this.frameHeight}px`,
+      position        : 'absolute',
+      width           : `${this.frameWidth}px`,
+      zIndex          : add(this.y, this.frameHeight)
+    }
+  });
 
   switch (this.type) {
     case ACTOR_TYPES.ENEMY:
@@ -63,8 +70,6 @@ export const Actor = function({
       game.neutrals.push(this);
       break;
   }
-
-  game.stage.selector.appendChild(this.selector);
 
   if (this.death) {
     preload(`img/animations/${this.death.name}.png`);

@@ -1,4 +1,4 @@
-import { collision } from '/js/utils.js';
+import { attachNode, collision } from '/js/utils.js';
 
 import { CARDINALS, COLORS, MAGNIFICATION } from '/js/constants/index.js';
 
@@ -56,27 +56,38 @@ export const Lightsaber = function({
   this.height = this.frameHeight;
   this.width  = this.frameWidth;
 
-  this.selector                       = document.createElement('div');
-  this.selector.id                    = `lightsaber${game.props.length}`;
-  this.selector.style.backgroundColor = this.color;
-  this.selector.style.height          = `${this.frameHeight}px`;
-  this.selector.style.left            = `${this.x}px`;
-  this.selector.style.position        = 'absolute';
-  this.selector.style.top             = `${this.y}px`;
-  this.selector.style.width           = `${this.frameWidth}px`;
-  this.selector.style.zIndex          = '4';
+  this.selector = attachNode({
+    attributes: {
+      id: `lightsaber${game.props.length}`
+    },
+    parent: game.stage.selector,
+    styles: {
+      backgroundColor: this.color,
+      height         : `${this.frameHeight}px`,
+      left           : `${this.x}px`,
+      position       : 'absolute',
+      top            : `${this.y}px`,
+      width          : `${this.frameWidth}px`,
+      zIndex         : '4',
+    }
+  });
 
-  this.hilt                       = document.createElement('div');
-  this.hilt.style.backgroundColor = COLORS.GRAY;
-  this.hilt.style.height          = `${this.hiltHeight}px`;
-  this.hilt.style.left            = `${this.hiltX}px`;
-  this.hilt.style.position        = 'relative';
-  this.hilt.style.top             = `${this.hiltY}px`;
-  this.hilt.style.width           = `${this.hiltWidth}px`;
+  this.hilt = attachNode({
+    attributes: {
+      id: 'hilt'
+    },
+    parent: this.selector,
+    styles: {
+      backgroundColor: COLORS.GRAY,
+      height         : `${this.hiltHeight}px`,
+      left           : `${this.hiltX}px`,
+      position       : 'relative',
+      top            : `${this.hiltY}px`,
+      width          : `${this.hiltWidth}px`
+    }
+  });
 
   game.props.push(this);
-  game.stage.selector.appendChild(this.selector);
-  this.selector.appendChild(this.hilt);
 
   this.reverse = function() {
     if (this.dir === CARDINALS.LEFT) {
