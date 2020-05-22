@@ -51,7 +51,7 @@ export const Player = function({
 
   this.selector                        = document.createElement('div');
   this.selector.id                     = 'player';
-  this.selector.style.backgroundImage  = `url('img/${this.isShip ? 'ships' : 'characters'}/${this.sprite}.png')`;
+  this.selector.style.backgroundImage  = `url('img/${this.sprite}.png')`;
   this.selector.style.backgroundRepeat = 'no-repeat';
   this.selector.style.backgroundSize   = `${this.width}px ${this.height}px`;
   this.selector.style.height           = `${this.frameHeight}px`;
@@ -126,7 +126,7 @@ export const Player = function({
 
   this.update = () => {
     if (this.isActive) {
-      if (this.isRunning || this.isShip) {
+      if (this.isRunning || this.isPropulsive) {
         advanceFrame(this);
         setPosition({ actor: this, game });
       }

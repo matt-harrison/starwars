@@ -479,7 +479,7 @@ const loop = () => {
               game.player.kill();
             }
 
-            if (enemy.isActive && enemy.isShip) {
+            if (enemy.isActive && enemy.isPropulsive) {
               enemy.kill();
             }
           } else if (enemy.isActive && enemy.weaponType === WEAPON_TYPES.PROJECTILE && enemy.isWeaponReady && getIsCrossing(enemy, game.player)) {
@@ -497,7 +497,7 @@ const loop = () => {
       });
 
       game.friendlies.forEach(friendly => {
-        if (friendly.isActive && friendly.isShip) {
+        if (friendly.isActive && friendly.isPropulsive) {
           if (game.player.isActive && collision(game.player, friendly)) {
             if (!game.isInvincible) {
               game.player.kill();
