@@ -14,9 +14,8 @@ export const Stage = function({
   this.selector.style.width           = '100%';
   this.selector.style.zIndex          = '1';
 
-  game.selector.insertBefore(this.selector, game.selector.firstChild);
+  game.selector.appendChild(this.selector, game.selector.firstChild);
 
-  game.hud.directions.style.color = this.textColor;
-  game.hud.scoreboard.style.color = this.textColor;
-  game.hud.title.style.color      = this.textColor;
+  game.hud.textColor   = this.textColor;
+  game.hud.victimColor = this.textColor;
 };

@@ -387,12 +387,10 @@ export const updateHud = ({ game, victim }) => {
       break;
   }
 
-  game.hud.score                  = game.hud.score + scoreDelta;
-  game.hud.scoreText.innerHTML    = game.hud.score;
-  game.hud.scoreText.style.color  = color;
-  game.hud.victimCount            = 16;
-  game.hud.victimText.innerHTML   = victim.name;
-  game.hud.victimText.style.color = color;
+  game.hud.score          = game.hud.score + scoreDelta;
+  game.hud.victimColor    = color;
+  game.hud.victimInterval = game.counter + 16;
+  game.hud.victimName     = victim.name;
 }
 
 // Cheats
@@ -444,10 +442,10 @@ const playLevel = (level) => {
 }
 
 const useTheForce = () => {
-  window.game.isInvincible             = true;
-  window.game.isPaused                 = true;
-  window.game.hud.title.innerHTML      = 'Pause';
-  window.game.hud.directions.innerHTML = `May the force be with you.<br/></br/>${window.game.promptStart}`;
+  window.game.isInvincible   = true;
+  window.game.isPaused       = true;
+  window.game.hud.title      = 'Pause';
+  window.game.hud.directions = `May the force be with you.<br/></br/>${window.game.promptStart}`;
 
   return 'May the force be with you.';
 }

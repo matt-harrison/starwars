@@ -3,12 +3,8 @@
 
 REFACTOR:
 * code formatting
-  * rename scoreText   to scoreSelector?
-  * rename victimText  to victimSelector?
-  * rename victimCount to victimIdInterval?
   * move ship graphics to separate directory
   * import all constants from /js/constants/index.js manifest?
-  * migrate all public vars from classes to game object? (ex. hud.title)
   * implement attachNode from classes
   * explicitly map all objects (instead of Object.assign) for readability?
   * distribute functions to relevant class or move to utils
@@ -59,4 +55,5 @@ BUGS:
 * directions don't blink when paused bc counter doesn't increment while paused (so that actors don't spawn during pause)...
 * fix playLevel() cheat
 * duplicate IDs on actors spawned with same delay
+* prevent friendly ship crash after isLevelDefeated.
 * mobile magnification

@@ -1,5 +1,6 @@
 import {
   BUTTON_NAMES,
+  COLORS,
   HUD_OPACITY,
   IS_MOBILE,
   KEYS
@@ -8,6 +9,16 @@ import {
 export const Hud = function({
   game
 }) {
+  this.counter        = 0;
+  this.directions     = '';
+  this.flashingStatus = 'display';
+  this.score          = 0;
+  this.textColor      = COLORS.BLACK;
+  this.title          = '';
+  this.victimColor    = COLORS.BLACK;
+  this.victimInterval = null;
+  this.victimName     = '';
+
   const { promptClick } = game;
   const directionSize   = IS_MOBILE ? '14px' : '25px';
   const lineHeight      = IS_MOBILE ? '1' : '1.5';
@@ -22,63 +33,57 @@ export const Hud = function({
 
   game.selector.appendChild(this.selector);
 
-  //Add title text
-  this.title                     = document.createElement('h1');
-  this.title.id                  = 'title';
-  this.title.innerHTML           = 'Star Wars';
-  this.title.style.fontSize      = titleSize;
-  this.title.style.margin        = '0';
-  this.title.style.pointerEvents = 'none';
-  this.title.style.position      = 'absolute';
-  this.title.style.textAlign     = 'center';
-  this.title.style.top           = '30%';
-  this.title.style.width         = '100%';
-  this.title.style.zIndex        = '10';
+  this.txtTitle                     = document.createElement('h1');
+  this.txtTitle.id                  = 'title';
+  this.txtTitle.innerHTML           = 'Star Wars';
+  this.txtTitle.style.fontSize      = titleSize;
+  this.txtTitle.style.margin        = '0';
+  this.txtTitle.style.pointerEvents = 'none';
+  this.txtTitle.style.position      = 'absolute';
+  this.txtTitle.style.textAlign     = 'center';
+  this.txtTitle.style.top           = '30%';
+  this.txtTitle.style.width         = '100%';
+  this.txtTitle.style.zIndex        = '10';
 
-  //Add directions text
-  this.directions                     = document.createElement('h2');
-  this.directions.id                  = 'directions';
-  this.directions.innerHTML           = promptClick;
-  this.directions.style.bottom        = '30%';
-  this.directions.style.fontSize      = directionSize;
-  this.directions.style.lineHeight    = lineHeight;
-  this.directions.style.margin        = '0';
-  this.directions.style.pointerEvents = 'none';
-  this.directions.style.position      = 'absolute';
-  this.directions.style.textAlign     = 'center';
-  this.directions.style.width         = '100%';
-  this.directions.style.zIndex        = '10';
+  this.txtDirections                     = document.createElement('h2');
+  this.txtDirections.id                  = 'directions';
+  this.txtDirections.innerHTML           = promptClick;
+  this.txtDirections.style.bottom        = '30%';
+  this.txtDirections.style.fontSize      = directionSize;
+  this.txtDirections.style.lineHeight    = lineHeight;
+  this.txtDirections.style.margin        = '0';
+  this.txtDirections.style.pointerEvents = 'none';
+  this.txtDirections.style.position      = 'absolute';
+  this.txtDirections.style.textAlign     = 'center';
+  this.txtDirections.style.width         = '100%';
+  this.txtDirections.style.zIndex        = '10';
 
-  //Add score
-  this.scoreboard                 = document.createElement('h2');
-  this.scoreboard.id              = 'scoreboard';
-  this.scoreboard.innerHTML       = '';
-  this.scoreboard.style.boxSizing = 'border-box';
-  this.scoreboard.style.margin    = '0';
-  this.scoreboard.style.padding   = '5px';
-  this.scoreboard.style.position  = 'absolute';
-  this.scoreboard.style.width     = '100%';
-  this.scoreboard.style.zIndex    = '10';
+  this.txtScore                 = document.createElement('h2');
+  this.txtScore.id              = 'score';
+  this.txtScore.innerHTML       = '';
+  this.txtScore.style.boxSizing = 'border-box';
+  this.txtScore.style.margin    = '0';
+  this.txtScore.style.padding   = '5px';
+  this.txtScore.style.position  = 'absolute';
+  this.txtScore.style.textAlign = 'left';
+  this.txtScore.style.width     = '100%';
+  this.txtScore.style.zIndex    = '10';
 
-  //Add score
-  this.score                    = 0;
-  this.scoreText                = document.createElement('span');
-  this.scoreText.id             = 'score';
-  this.scoreText.innerHTML      = '';
-  this.scoreText.style.cssFloat = 'left';
+  this.txtVictim                 = document.createElement('h2');
+  this.txtVictim.id              = 'victim';
+  this.txtVictim.innerHTML       = '';
+  this.txtVictim.style.boxSizing = 'border-box';
+  this.txtVictim.style.margin    = '0';
+  this.txtVictim.style.padding   = '5px';
+  this.txtVictim.style.position  = 'absolute';
+  this.txtVictim.style.textAlign = 'right';
+  this.txtVictim.style.width     = '100%';
+  this.txtVictim.style.zIndex    = '10';
 
-  //Add victim id
-  this.victimCount               = 0;
-  this.victimText                = document.createElement('span');
-  this.victimText.id             = 'victim';
-  this.victimText.innerHTML      = '';
-  this.victimText.style.cssFloat = 'right';
-
-  this.selector.appendChild(this.title);
-  this.selector.appendChild(this.directions);
-  this.selector.appendChild(this.scoreboard);
-  this.scoreboard.appendChild(this.scoreText);
-  this.scoreboard.appendChild(this.victimText);
+  this.selector.appendChild(this.txtTitle);
+  this.selector.appendChild(this.txtDirections);
+  this.selector.appendChild(this.txtScore);
+  this.selector.appendChild(this.txtVictim);
 
   if (IS_MOBILE) {
     //Disable swipe to bounce.
@@ -197,11 +202,25 @@ export const Hud = function({
     this.buttons.appendChild(this.btnStart);
   }
 
-  this.update = () => {};
+  this.update = () => {
+    if (game.counter >= this.victimInterval) {
+      this.victimName = null;
+    }
+
+    this.flashingStatus = this.counter > 8 ? 'none' : 'block';
+
+    this.counter = this.counter === 16 ? 0 : this.counter + 1;
+  };
 
   this.draw = () => {
-    if (game.counter % 8 === 0) {
-      this.directions.style.display = this.directions.style.display === 'block' ? 'none' : 'block';
-    }
+    this.txtDirections.innerHTML     = this.directions;
+    this.txtDirections.style.color   = this.textColor;
+    this.txtDirections.style.display = this.flashingStatus;
+    this.txtScore.innerHTML          = this.score;
+    this.txtScore.style.color        = this.victimColor;
+    this.txtTitle.innerHTML          = this.title;
+    this.txtTitle.style.color        = this.textColor;
+    this.txtVictim.innerHTML         = this.victimName;
+    this.txtVictim.style.color       = this.victimColor;
   };
 };

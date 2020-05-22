@@ -8,7 +8,7 @@ import * as CHARACTERS from '/js/constants/characters.js';
 import { OBSTACLES }   from '/js/constants/obstacles.js';
 import { SHIPS }       from '/js/constants/ships.js';
 
-const isQuickTest = true;
+const isQuickTest = false;
 
 export const ATTRACTION = {
   bg: 'metal',

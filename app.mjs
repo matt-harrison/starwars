@@ -49,7 +49,7 @@ const game = {
   isGameOver     : false,
   isInvincible   : false,
   isPaused       : false,
-  isStageDefeated: false,
+  isLevelDefeated: false,
   keys           : [],
   level          : 0,
   mode           : MODES.TITLE,
@@ -138,7 +138,7 @@ const buttonRelease = (key, id) => {
     } else if (game.mode === MODES.GAMEPLAY) {
       if (game.isGameOver) {
         initLevel();
-      } else if (game.isStageDefeated) {
+      } else if (game.isLevelDefeated) {
         advanceLevel();
       } else {
         pause();
@@ -170,7 +170,7 @@ const buttonRelease = (key, id) => {
 }
 
 const clearStage = () => {
-  game.isStageDefeated = false;
+  game.isLevelDefeated = false;
 
   game.selector.removeChild(game.stage.selector);
   game.enemies.splice(0);
@@ -180,8 +180,11 @@ const clearStage = () => {
   game.animations.splice(0);
   game.keys.splice(0);
 
-  game.hud.scoreText.innerHTML  = game.hud.score;
-  game.hud.victimText.innerHTML = '';
+  game.hud.directions = '';
+  game.hud.title      = '';
+  game.hud.victimName = '';
+
+  game.hud.selector.setAttribute('data-key', '');
 }
 
 const initInterface = () => {
@@ -332,12 +335,12 @@ const initLevel = () => {
     game
   });
 
-  game.counter                   = 0;
-  game.cutsceneCount             = 0;
-  game.enemiesKilled             = 0;
-  game.hud.scoreText.style.color = game.stage.textColor;
-  game.isBossesReached           = false;
-  game.isGameOver                = false;
+  game.counter                  = 0;
+  game.cutsceneCount            = 0;
+  game.enemiesKilled            = 0;
+  game.hud.txtScore.style.color = game.stage.textColor;
+  game.isBossesReached          = false;
+  game.isGameOver               = false;
 
   if (EPISODES[game.episode][game.level].obstacles.length > 0) {
     game.stage.obstacles.forEach(obstacle => {
@@ -351,12 +354,6 @@ const initLevel = () => {
   }
 
   initEnemies(game);
-
-  game.hud.selector.setAttribute('data-key', '');
-
-  game.hud.title.innerHTML          = '';
-  game.hud.directions.innerHTML     = '';
-  game.hud.scoreboard.style.display = '';
 
   if (IS_MOBILE) {
     buttons.style.display = '';
@@ -393,11 +390,11 @@ const initMode = (mode) => {
 
     initEnemies(game);
 
-    game.hud.directions.innerHTML = game.promptClick;
-    game.hud.scoreText.innerHTML  = '';
+    game.hud.directions = game.promptClick;
+    game.hud.title      = 'Star Wars';
+    game.hud.victimName = '';
+
     game.hud.selector.setAttribute('data-key', KEYS.ENTER);
-    game.hud.title.innerHTML      = 'Star Wars';
-    game.hud.victimText.innerHTML = '';
 
     if (IS_MOBILE) {
       buttons.style.display = 'none';
@@ -407,11 +404,10 @@ const initMode = (mode) => {
     game.isGameOver = true;
     game.isPaused   = false;
 
-    directions.innerHTML           = '';
-    directions.style.pointerEvents = 'none';
+    game.hud.directions = '';
+    game.hud.title      = '';
+
     game.hud.selector.setAttribute('data-key', KEYS.ENTER);
-    scoreboard.style.display       = 'none';
-    title.innerHTML                = '';
 
     if (EPISODES[game.episode][game.level].cutscenes.length > 0) {
       clearStage();
@@ -424,34 +420,35 @@ const initMode = (mode) => {
       initMode(MODES.GAMEPLAY);
     }
   } else if (game.mode === MODES.GAMEPLAY) {
-    game.mode                    = MODES.GAMEPLAY;
-    game.isGameOver              = false;
-    game.isPaused                = false;
-    game.hud.scoreText.innerHTML = game.hud.score;
+    game.isGameOver = false;
+    game.isPaused   = false;
+    game.mode       = MODES.GAMEPLAY;
 
     initLevel();
   }
 }
 
 const levelLose = () => {
-  game.isGameOver = true;
-  game.hud.score = 0;
-  title.innerHTML = 'Game Over';
-  directions.innerHTML = `${game.promptStart}<br/>to restart level.`;
+  game.hud.counter    = 0;
+  game.hud.directions = `${game.promptStart}<br/>to restart level.`;
+  game.hud.score      = 0;
+  game.hud.title      = 'Game Over';
+  game.isGameOver     = true;
+
   game.keys.splice(0);
 }
 
 const levelWin = () => {
-  directions.innerHTML = game.promptStart;
-  game.isStageDefeated = true;
+  game.hud.directions  = game.promptStart;
+  game.isLevelDefeated = true;
 
   if (++game.level === EPISODES[game.episode].length) {
+    game.hud.title    = 'You win!';
     game.isGameOver   = true;
     game.isInvincible = false;
     game.mode         = MODES.RESET;
-    title.innerHTML   = 'You win!';
   } else {
-    title.innerHTML = `Next:<br/>${EPISODES[game.episode][game.level].name}`;
+    game.hud.title = `Next:<br/>${EPISODES[game.episode][game.level].name}`;
   }
 }
 
@@ -564,21 +561,14 @@ const loop = () => {
       //Check for level completion
       if (
         game.enemiesKilled === add(game.stage.enemies.length - game.stage.enemiesOptional.length, game.stage.bosses.length) &&
-        !game.isStageDefeated
+        !game.isLevelDefeated
       ) {
         levelWin();
       }
 
       //Check for level failure
-      if (!game.player.isActive) {
+      if (!game.player.isActive && !game.isGameOver) {
         levelLose();
-      }
-
-      //Check victim identification interval
-      if (game.hud.victimCount > 0) {
-        game.hud.victimCount--;
-      } else {
-        game.hud.victimText.innerHTML = '';
       }
 
       game.player.update();
@@ -658,10 +648,10 @@ const loop = () => {
       obstacle.update();
       obstacle.draw();
     });
-
-    game.hud.update();
-    game.hud.draw();
   }
+
+  game.hud.update();
+  game.hud.draw();
 
   if (!game.isPaused) {
     game.counter++;
@@ -671,9 +661,11 @@ const loop = () => {
 }
 
 const pause = () => {
-  game.isPaused      = !game.isPaused;
-  directions.innerHTML = game.isPaused ? game.promptStart : '';
-  title.innerHTML      = game.isPaused ? 'Pause'            : '';
+  game.isPaused = !game.isPaused;
+
+  game.hud.counter    = 0;
+  game.hud.directions = game.isPaused ? game.promptStart : '';
+  game.hud.title      = game.isPaused ? 'Pause' : '';
 }
 
 const reset = () => {
