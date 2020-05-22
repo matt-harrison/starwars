@@ -8,7 +8,7 @@ import * as CHARACTERS from '/js/constants/characters.js';
 import { OBSTACLES }   from '/js/constants/obstacles.js';
 import { SHIPS }       from '/js/constants/ships.js';
 
-const isQuickTest = false;
+const isQuickTest = true;
 
 export const ATTRACTION = {
   bg: 'metal',
@@ -1041,14 +1041,14 @@ export const EPISODES = [
   [test],
   [test],
   [
-    tantive4,
-    ambassador,
-    tatooine,
-    search,
-    sandcrawler,
-    moistureFarm,
-    mosEisley,
-    dockingBay,
+    // tantive4,
+    // ambassador,
+    // tatooine,
+    // search,
+    // sandcrawler,
+    // moistureFarm,
+    // mosEisley,
+    // dockingBay,
     alderaan,
     detention,
     tractorBeam,
