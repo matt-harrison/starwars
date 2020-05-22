@@ -4,7 +4,7 @@ import {
   HUD_OPACITY,
   IS_MOBILE,
   KEYS
-} from '/js/constants/config.js';
+} from '/js/constants/index.js';
 
 export const Hud = function({
   game

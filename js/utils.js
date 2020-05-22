@@ -1,15 +1,15 @@
 import { Player } from '/js/classes/Player.js';
 
-import * as CHARACTERS from '/js/constants/characters.js';
 import {
   ACTOR_TYPES,
   CARDINALS,
+  CHARACTERS,
   COLORS,
+  EPISODES,
   INFINITY,
   MAGNIFICATION,
-  MODES
-} from '/js/constants/config.js';
-import { EPISODES } from '/js/constants/episodes.js';
+  MODES,
+} from '/js/constants/index.js';
 
 export const adaptCoords = ({ actor, game }) => {
   if (typeof actor.leftPercent === 'number' && typeof actor.topPercent === 'number') {

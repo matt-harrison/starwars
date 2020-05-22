@@ -1,12 +1,12 @@
+import * as CHARACTERS from './characters.js';
 import {
   CARDINALS,
   COLORS,
   FPS,
   INFINITY
 } from '/js/constants/config.js';
-import * as CHARACTERS from '/js/constants/characters.js';
-import { OBSTACLES }   from '/js/constants/obstacles.js';
-import { SHIPS }       from '/js/constants/ships.js';
+import { OBSTACLES } from './obstacles.js';
+import { SHIPS } from './ships.js';
 
 const isQuickTest = false;
 

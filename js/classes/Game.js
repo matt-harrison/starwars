@@ -1,4 +1,4 @@
-import { IS_MOBILE } from '/js/constants/config.js';
+import { IS_MOBILE } from '/js/constants/index.js';
 
 export const Game = function({
   height,

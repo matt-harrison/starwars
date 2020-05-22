@@ -6,8 +6,14 @@ import {
   setPosition
 } from '/js/utils.js';
 
-import { ACTOR_TYPES, FPS, KEYS, MAGNIFICATION } from '/js/constants/config.js';
-import { PROJECTILES, WEAPON_TYPES } from '/js/constants/weapons.js';
+import {
+  ACTOR_TYPES,
+  FPS,
+  KEYS,
+  MAGNIFICATION,
+  PROJECTILES,
+  WEAPON_TYPES
+} from '/js/constants/index.js';
 
 import { Animation }  from '/js/classes/Animation.js';
 import { Bomb }       from '/js/classes/Bomb.js';

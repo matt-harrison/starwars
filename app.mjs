@@ -8,21 +8,22 @@ import {
   preload
 } from './js/utils.js';
 
-import * as CHARACTERS          from './js/constants/characters.js';
-import { ATTRACTION, EPISODES } from './js/constants/episodes.js';
-import { WEAPON_TYPES }         from './js/constants/weapons.js';
 import {
   ACTOR_TYPES,
+  ATTRACTION,
   BUTTON_NAMES,
   CARDINALS,
+  CHARACTERS,
   COLORS,
+  EPISODES,
   FPS,
   HUD_OPACITY,
   IS_MOBILE,
   KEYS,
   MODES,
-  NUMERALS
-} from './js/constants/config.js';
+  NUMERALS,
+  WEAPON_TYPES
+} from './js/constants/index.js';
 
 import { Actor }      from './js/classes/Actor.js';
 import { Animation }  from './js/classes/Animation.js';

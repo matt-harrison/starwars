@@ -1,4 +1,4 @@
-import { INFINITY } from '/js/constants/config.js';
+import { INFINITY } from '/js/constants/index.js';
 
 export const Animation = function({
   data,

@@ -3,7 +3,6 @@
 
 REFACTOR:
 * code formatting
-  * import all constants from /js/constants/index.js manifest?
   * implement attachNode from classes
   * explicitly map all objects (instead of Object.assign) for readability?
   * distribute functions to relevant class or move to utils

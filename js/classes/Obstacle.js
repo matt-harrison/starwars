@@ -1,4 +1,4 @@
-import { MAGNIFICATION } from '/js/constants/config.js';
+import { MAGNIFICATION } from '/js/constants/index.js';
 
 export const Obstacle = function({
   data,

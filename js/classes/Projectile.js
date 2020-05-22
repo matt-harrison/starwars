@@ -1,8 +1,9 @@
 import {
   CARDINALS,
-  MAGNIFICATION
-} from '/js/constants/config.js';
-import { PROJECTILES, WEAPON_TYPES } from '/js/constants/weapons.js';
+  MAGNIFICATION,
+  PROJECTILES,
+  WEAPON_TYPES,
+} from '/js/constants/index.js';
 
 export const Projectile = function({
   game,

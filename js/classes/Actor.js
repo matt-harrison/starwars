@@ -10,7 +10,12 @@ import {
   updateHud
 } from '/js/utils.js';
 
-import { ACTOR_TYPES, CARDINALS, FPS, MAGNIFICATION } from '/js/constants/config.js';
+import {
+  ACTOR_TYPES,
+  CARDINALS,
+  FPS,
+  MAGNIFICATION
+} from '/js/constants/index.js';
 
 import { Animation } from '/js/classes/Animation.js';
 

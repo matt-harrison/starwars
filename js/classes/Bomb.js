@@ -1,11 +1,11 @@
 import { collision } from '/js/utils.js';
 
-import { ANIMATIONS } from '/js/constants/animations.js';
 import {
+  ANIMATIONS,
   COLORS,
-  MAGNIFICATION
-} from '/js/constants/config.js';
-import { WEAPON_TYPES } from '/js/constants/weapons.js';
+  MAGNIFICATION,
+  WEAPON_TYPES
+} from '/js/constants/index.js';
 
 import { Animation } from '/js/classes/Animation.js';
 

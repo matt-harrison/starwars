@@ -1,6 +1,6 @@
 import { collision } from '/js/utils.js';
 
-import { CARDINALS, COLORS, MAGNIFICATION } from '/js/constants/config.js';
+import { CARDINALS, COLORS, MAGNIFICATION } from '/js/constants/index.js';
 
 export const Lightsaber = function({
   isLongRange,
