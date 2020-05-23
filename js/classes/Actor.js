@@ -27,16 +27,14 @@ export const Actor = function({
   Object.assign(this, data.character);
   Object.assign(this, data.details);
 
-  this.blinkCount    = 0;
-  this.bounceCount   = 0;
-  this.dir           = this.dir ? this.dir :  Object.values(CARDINALS)[getRandom(Object.values(CARDINALS).length)]
-  this.hp            = this.hp ? this.hp : 1;
-  this.isActive      = true;
-  this.isBlinking    = false;
-  this.isWeaponReady = true;
-  this.speed         = this.speed * (MAGNIFICATION / 5);
-  this.spriteColumn  = 1;
-  this.weaponDelay   = FPS;
+  this.blinkCount   = 0;
+  this.bounceCount  = 0;
+  this.dir          = this.dir ? this.dir :  Object.values(CARDINALS)[getRandom(Object.values(CARDINALS).length)]
+  this.hp           = this.hp ? this.hp : 1;
+  this.isActive     = true;
+  this.isBlinking   = false;
+  this.speed        = this.speed * (MAGNIFICATION / 5);
+  this.spriteColumn = 1;
 
   setCoordinates({
     actor: this,
@@ -128,11 +126,6 @@ export const Actor = function({
           this.selector.style.display = '';
         }
       }
-
-      this.isWeaponReady = (
-        this.type === ACTOR_TYPES.ENEMY &&
-        game.count % this.weaponDelay === 0
-      );
 
       setPosition({ actor: this, game });
     }

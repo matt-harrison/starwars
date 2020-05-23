@@ -2,16 +2,11 @@
 # http-server .
 
 REFACTOR:
-* make enemy projectile rate a property of the level?
-  * weaponCount redundant to game.count?
-  * isWeaponReady redundant to low shoot probability?
-  * (isWeaponReady also used for player max shoot rate)
 * code formatting
   * explicitly map all objects (instead of Object.assign) for readability?
   * distribute functions to relevant class or move to utils
   * migrate all functions from app to utils? (game as arg?)
   * share common logic across actor, player, etc as utils?
-  * 1. prefix level names for sortability?
 * performance improvements
   * audit each function
   * audit each class
@@ -19,12 +14,13 @@ REFACTOR:
 
 FEATURES:
 * do not clear score after winning game
+* add increasing chance of enemies turning toward player as levels progress?
 * delay before boss(es)
 * multiple bosses
 * password menu!
 * episode menu...
 * reward menu: reveal password for random character
-* how can user win with a character with no attack?
+* how can user win with a character lacking any attack?
 * neutrals who stand still but can be killed? bartender? han & chewie in mos eisley?
 * obstacles that can take damage?
 * obstacles and/or dead bodies stop projectiles?

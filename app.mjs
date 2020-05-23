@@ -484,11 +484,8 @@ const loop = () => {
             if (enemy.isActive && enemy.isPropulsive) {
               enemy.kill();
             }
-          } else if (enemy.isActive && enemy.weaponType === WEAPON_TYPES.PROJECTILE && enemy.isWeaponReady && getIsCrossing(enemy, game.player)) {
-            const chance = 500 + EPISODES[game.episode].length - game.level;
-            const random = getRandom(chance);
-
-            if (random === 0) {
+          } else if (enemy.isActive && enemy.weaponType === WEAPON_TYPES.PROJECTILE && getIsCrossing(enemy, game.player) && game.counter % FPS === 0) {
+            if (getRandom(EPISODES[game.episode].length - game.level) === 0) {
               new Projectile({
                 game,
                 origin: enemy

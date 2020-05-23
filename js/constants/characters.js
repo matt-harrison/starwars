@@ -523,7 +523,6 @@ export const ewok = {
   isPropulsive     : false,
   speed            : 8,
   sprite           : 'characters/ewok',
-  weaponDelay      : FPS / 2,
   weaponOffsetDown : [3, 10],
   weaponOffsetLeft : [0, 4],
   weaponOffsetRight: [10, 4],
@@ -576,7 +575,6 @@ export const gonkdroid = {
   isPropulsive  : false,
   speed         : 4,
   sprite        : 'characters/gonkdroid',
-  weaponDelay   : FPS / 2,
   weaponOffset  : [4, 11],
   weaponType    : WEAPON_TYPES.BOMB,
   width         : 90 * MAGNIFICATION
@@ -1314,7 +1312,7 @@ export const stormtrooperluke = {
 };
 
 export const stuntrooper = {
-  code             : 'stormtrooper',
+  code             : 'stuntrooper',
   frameHeight      : 11 * MAGNIFICATION,
   frameWidth       : 10 * MAGNIFICATION,
   height           : 55 * MAGNIFICATION,
@@ -1324,7 +1322,6 @@ export const stuntrooper = {
   isPropulsive     : false,
   speed            : 8,
   sprite           : 'characters/stormtrooper',
-  weaponDelay      : 2,
   weaponOffsetDown : [0, 6],
   weaponOffsetLeft : [4, 0],
   weaponOffsetRight: [6, 0],
@@ -1462,7 +1459,6 @@ export const uncleowen = {
   isPropulsive  : false,
   speed         : 6,
   sprite        : 'characters/uncleowen',
-  weaponDelay   : FPS / 2,
   weaponOffset  : [4, 11],
   weaponType    : WEAPON_TYPES.BOMB,
   width         : 90 * MAGNIFICATION

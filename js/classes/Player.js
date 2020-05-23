@@ -38,22 +38,31 @@ export const Player = function({
   this.spriteColumn  = 0;
   this.spriteRow     = 2;
   this.type          = ACTOR_TYPES.PLAYER;
-  this.weaponCount   = 0;
+  this.weaponCounter = 0;
   this.x             = Math.floor((game.width - this.frameWidth) / 2);
   this.y             = Math.floor((game.height - this.frameHeight) / 2);
 
-  if (!this.weaponDelay) {
-    switch (this.weaponType) {
-      case WEAPON_TYPES.BOMB:
-        this.weaponDelay = 8;
-        break;
-      case WEAPON_TYPES.LIGHTSABER:
-        this.weaponDelay = 2;
-        break;
-      case WEAPON_TYPES.PROJECTILE:
-        this.weaponDelay = this.projectile === PROJECTILES.LASER ? FPS / 4 :  FPS / 2;
-        break;
-    }
+  switch (this.weaponType) {
+    case WEAPON_TYPES.BOMB:
+      this.weaponDelay = FPS / 2;
+      break;
+    case WEAPON_TYPES.STUN:
+    case WEAPON_TYPES.LIGHTSABER:
+      this.weaponDelay = FPS / 8;
+      break;
+    case WEAPON_TYPES.PROJECTILE:
+      switch (this.projectile) {
+        case PROJECTILES.LASER:
+          this.weaponDelay = FPS / 4;
+          break
+        case PROJECTILES.STUN:
+          this.weaponDelay = FPS / 8;
+          break
+        default:
+          this.weaponDelay = FPS / 2;
+          break;
+      }
+      break;
   }
 
   this.selector = attachNode({
@@ -134,9 +143,9 @@ export const Player = function({
       }
 
       if (!this.isWeaponReady) {
-        if (this.weaponCount++ === this.weaponDelay) {
+        if (this.weaponCounter++ === this.weaponDelay) {
           this.isWeaponReady = true;
-          this.weaponCount   = 0;
+          this.weaponCounter = 0;
         }
       }
     }
