@@ -2,7 +2,6 @@
 # http-server .
 
 REFACTOR:
-* move enemy dodge loop out of Player class
 * make enemy projectile rate a property of the level?
   * weaponCount redundant to game.count?
   * isWeaponReady redundant to low shoot probability?

@@ -83,15 +83,6 @@ export const Player = function({
           game,
           origin: this
         });
-
-        //As levels progress, enemies will become liklier to dodge projectiles
-        game.enemies.forEach(enemy => {
-          if (enemy.isActive && enemy.sprite !== 'asteroid') {
-            if (getRandom(20 - game.level) === 0) {
-              changeDirection({ actor: enemy, game });
-            }
-          }
-        });
       } else if (this.weaponType === WEAPON_TYPES.BOMB) {
         new Bomb({
           game,

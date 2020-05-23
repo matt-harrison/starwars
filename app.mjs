@@ -1,6 +1,7 @@
 import {
   adaptCoords,
   add,
+  changeDirection,
   collision,
   getIsCrossing,
   getRandom,
@@ -526,6 +527,14 @@ const loop = () => {
         }
 
         game.enemies.forEach(enemy => {
+          if (enemy.isActive && enemy.code !== 'asteroid') {
+            if (getIsCrossing(prop, enemy) && game.counter % (FPS / 2) === 0) {
+              if (getRandom(EPISODES[game.episode].length - game.level) === 0) {
+                changeDirection({ actor: enemy, game });
+              }
+            }
+          }
+
           if (enemy.isActive && prop.origin !== enemy && collision(enemy, prop)) {
             enemy.hit();
 
