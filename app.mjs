@@ -149,6 +149,7 @@ const buttonRelease = (key, id) => {
 
     game.keys.splice(0);
   } else if (key === KEYS.ESCAPE) {
+    game.hud.score = 0;
     reset();
   }
 
@@ -185,6 +186,10 @@ const clearStage = () => {
   game.hud.directions = '';
   game.hud.title      = '';
   game.hud.victimName = '';
+
+  if (game.isGameOver) {
+    game.hud.score = 0;
+  }
 
   game.hud.selector.setAttribute('data-key', '');
 }
@@ -369,7 +374,6 @@ const initMode = (mode) => {
     game.counter       = 0;
     game.cutsceneCount = 0;
     game.episode       = 3;
-    game.hud.score     = 0;
     game.isGameOver    = true;
     game.isPaused      = false;
     game.level         = 0;
@@ -433,7 +437,6 @@ const initMode = (mode) => {
 const levelLose = () => {
   game.hud.counter    = 0;
   game.hud.directions = `${game.promptStart}<br/>to restart level.`;
-  game.hud.score      = 0;
   game.hud.title      = 'Game Over';
   game.isGameOver     = true;
 
@@ -446,7 +449,6 @@ const levelWin = () => {
 
   if (++game.level === EPISODES[game.episode].length) {
     game.hud.title    = 'You win!';
-    game.isGameOver   = true;
     game.isInvincible = false;
     game.mode         = MODES.RESET;
   } else {
@@ -568,6 +570,7 @@ const loop = () => {
       //Check for level completion
       if (
         game.enemiesKilled === add(game.stage.enemies.length - game.stage.enemiesOptional.length, game.stage.bosses.length) &&
+        game.player.isActive &&
         !game.isLevelDefeated
       ) {
         levelWin();
