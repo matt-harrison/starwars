@@ -2,21 +2,21 @@
 # http-server .
 
 REFACTOR:
-* code formatting
-  * explicitly map all objects (instead of Object.assign) for readability?
-  * distribute functions to relevant class or move to utils
-  * migrate all functions from app to utils? (game as arg?)
-  * share common logic across actor, player, etc as utils?
-  * prefix level names for sortability?
-* performance improvements
-  * audit each function
-  * audit each class
-  * audit each constant
 * move enemy dodge loop out of Player class
 * make enemy projectile rate a property of the level?
   * weaponCount redundant to game.count?
   * isWeaponReady redundant to low shoot probability?
   * (isWeaponReady also used for player max shoot rate)
+* code formatting
+  * explicitly map all objects (instead of Object.assign) for readability?
+  * distribute functions to relevant class or move to utils
+  * migrate all functions from app to utils? (game as arg?)
+  * share common logic across actor, player, etc as utils?
+  * 1. prefix level names for sortability?
+* performance improvements
+  * audit each function
+  * audit each class
+  * audit each constant
 
 FEATURES:
 * do not clear score after winning game

@@ -78,7 +78,7 @@ export const ATTRACTION = {
 };
 
 //Episode IV levels
-const tantive4 = {
+const IV_01_TANTIVE_IV = {
   bg: 'metal',
   bosses: [
     {
@@ -130,7 +130,7 @@ const tantive4 = {
   textColor: COLORS.BLACK
 };
 
-const ambassador = {
+const IV_02_AMBASSADOR = {
   bg: 'metal',
   bosses: [
     {
@@ -172,7 +172,7 @@ const ambassador = {
   textColor: COLORS.BLACK
 };
 
-const tatooine = {
+const IV_03_TATOOINE = {
   bg: 'sand',
   bosses: [
     {
@@ -238,7 +238,7 @@ const tatooine = {
   textColor: COLORS.BLACK
 };
 
-const search = {
+const IV_04_SEARCH = {
   bg: 'sand',
   bosses: [
     {
@@ -297,7 +297,7 @@ const search = {
   textColor: COLORS.BLACK
 };
 
-const sandcrawler = {
+const IV_05_SANDCRAWLER = {
   bg: 'rust',
   bosses: [
     {
@@ -348,7 +348,7 @@ const sandcrawler = {
   textColor: COLORS.BLACK
 };
 
-const moistureFarm = {
+const IV_06_MOISTURE_FARM = {
   bg: 'sand',
   bosses: [
     {
@@ -384,7 +384,7 @@ const moistureFarm = {
   textColor: COLORS.BLACK
 };
 
-const mosEisley = {
+const IV_07_MOS_EISLEY = {
   bg: 'marble',
   bosses: [
     {
@@ -484,7 +484,7 @@ const mosEisley = {
   textColor: COLORS.BLACK
 };
 
-const dockingBay = {
+const IV_08_DOCKING_BAY = {
   bg: 'dust',
   bosses: [
     {
@@ -529,7 +529,7 @@ const dockingBay = {
   textColor: COLORS.BLACK
 };
 
-const alderaan = {
+const IV_09_ALDERAAN = {
   bg: 'space',
   bosses: [
     {
@@ -563,7 +563,7 @@ const alderaan = {
   textColor: COLORS.YELLOW
 };
 
-const detention = {
+const IV_10_DETENTION = {
   bg: 'dark',
   bosses: [
     {
@@ -618,7 +618,7 @@ const detention = {
   textColor: COLORS.BLACK
 };
 
-const tractorBeam = {
+const IV_11_TRACTOR_BEAM = {
   bg: 'dark',
   bosses: [
     {
@@ -654,7 +654,7 @@ const tractorBeam = {
   textColor: COLORS.BLACK
 };
 
-const showdown4 = {
+const IV_12_SHOWDOWN = {
   bg: 'dark',
   bosses: [
     {
@@ -684,7 +684,7 @@ const showdown4 = {
   textColor: COLORS.BLACK
 };
 
-const escapeFromDeathStar = {
+const IV_13_ESCAPE_FROM_DEATH_STAR = {
   bg: 'dark',
   bosses: [
     {
@@ -748,7 +748,7 @@ const escapeFromDeathStar = {
   textColor: COLORS.BLACK
 };
 
-const battleOfYavin = {
+const IV_14_BATTLE_OF_YAVIN = {
   bg: 'space',
   bosses: [
     {
@@ -806,7 +806,7 @@ const battleOfYavin = {
   textColor: COLORS.YELLOW
 };
 
-const assaultOnDeathStar = {
+const IV_15_ASSAULT_ON_DEATH_STAR = {
   bg: 'space',
   bosses: [
     {
@@ -837,7 +837,7 @@ const assaultOnDeathStar = {
 };
 
 //Episode V levels
-const hoth = {
+const HOTH = {
   bg: 'snow',
   bosses: [
     {
@@ -868,7 +868,7 @@ const hoth = {
 };
 
 //Episode VI levels
-const endor = {
+const ENDOR = {
   bg: 'grass',
   bosses: [
     {
@@ -908,7 +908,7 @@ const endor = {
   textColor: COLORS.BLACK
 };
 
-const test = {
+const TEST = {
   bg: 'metal',
   bosses: [
     // {
@@ -1037,29 +1037,29 @@ const test = {
 };
 
 export const EPISODES = [
-  [test],
-  [test],
-  [test],
+  [TEST],
+  [TEST],
+  [TEST],
   [
-    tantive4,
-    ambassador,
-    tatooine,
-    search,
-    sandcrawler,
-    moistureFarm,
-    mosEisley,
-    dockingBay,
-    alderaan,
-    detention,
-    tractorBeam,
-    showdown4,
-    escapeFromDeathStar,
-    battleOfYavin,
-    assaultOnDeathStar
+    IV_01_TANTIVE_IV,
+    IV_02_AMBASSADOR,
+    IV_03_TATOOINE,
+    IV_04_SEARCH,
+    IV_05_SANDCRAWLER,
+    IV_06_MOISTURE_FARM,
+    IV_07_MOS_EISLEY,
+    IV_08_DOCKING_BAY,
+    IV_09_ALDERAAN,
+    IV_10_DETENTION,
+    IV_11_TRACTOR_BEAM,
+    IV_12_SHOWDOWN,
+    IV_13_ESCAPE_FROM_DEATH_STAR,
+    IV_14_BATTLE_OF_YAVIN,
+    IV_15_ASSAULT_ON_DEATH_STAR
   ],
-  [hoth],
-  [endor],
-  [test],
-  [test],
-  [test]
+  [HOTH],
+  [ENDOR],
+  [TEST],
+  [TEST],
+  [TEST]
 ];
