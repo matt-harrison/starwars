@@ -74,7 +74,7 @@ export const attachNode = ({
 };
 
 export const changeDirection = ({ actor, game }) => {
-  if (actor !== game.player && inBounds({ actor, game })) {
+  if (actor !== game.player && getIsOnStage({ actor, game })) {
     const cardinals = Object.values(CARDINALS);
     const position  = getRandom(cardinals.length);
 
@@ -191,22 +191,36 @@ export const getIsObstructed = ({ actor, obstacles }) => {
   return isObstructed;
 }
 
-export const getRandom = (max) => {
-  return Math.floor(Math.random() * max);
-}
-
-export const inBounds = ({ actor, game }) => {
+export const getIsOffStage = ({ actor, game }) => {
   const actorBottom = actor.y + actor.frameHeight;
   const actorLeft   = actor.x;
   const actorRight  = actor.x + actor.frameWidth;
   const actorTop    = actor.y;
 
   return (
-    actorRight  > 0 &&
-    actorBottom > 0 &&
-    actorLeft   < game.width &&
-    actorTop    < game.height
+    actorRight  <= 0 ||
+    actorBottom <= 0 ||
+    actorLeft   >= game.width ||
+    actorTop    >= game.height
   );
+}
+
+export const getIsOnStage = ({ actor, game }) => {
+  const actorBottom = actor.y + actor.frameHeight;
+  const actorLeft   = actor.x;
+  const actorRight  = actor.x + actor.frameWidth;
+  const actorTop    = actor.y;
+
+  return (
+    actorLeft   > 0 &&
+    actorTop    > 0 &&
+    actorRight  < game.width &&
+    actorBottom < game.height
+  );
+}
+
+export const getRandom = (max) => {
+  return Math.floor(Math.random() * max);
 }
 
 export const initEnemies = (game) => {
@@ -285,7 +299,7 @@ export const setPosition = ({ actor, game }) => {
   const actorRight       = actor.x + actor.frameWidth;
   const actorTop         = actor.y;
   const isBounceLimitMet = actor.bounceLimit !== INFINITY && actor.bounceCount >= actor.bounceLimit;
-  const isInBounds       = inBounds({ actor, game });
+  const isOffStage       = getIsOffStage({ actor, game });
   const isObstructed     = getIsObstructed({
     actor,
     obstacles: game.obstacles
@@ -317,7 +331,7 @@ export const setPosition = ({ actor, game }) => {
   }
 
   if (isObstructed) {
-    if (!isInBounds) {
+    if (isOffStage) {
       setCoordinates({ actor, game });
     }
   } else {

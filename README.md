@@ -40,7 +40,6 @@ FEATURES:
   * choose tier 1 colors (pure white, pure black) to use in sprites and hud, then never use them (or clashing) in BGs
 
 BUGS:
-* actor can turn before crossing fully onto stage
 * character frame sometimes redundant to Lightsaber instance (press Z and d-pad at same time)
 * projectiles (and lightsaber attacks) zIndex?
 * directions don't blink when paused bc counter doesn't increment while paused (so that actors don't spawn during pause)...

@@ -4,6 +4,7 @@ import {
   changeDirection,
   collision,
   getIsCrossing,
+  getIsOnStage,
   getRandom,
   initEnemies,
   preload
@@ -374,7 +375,6 @@ const initMode = (mode) => {
     game.counter       = 0;
     game.cutsceneCount = 0;
     game.episode       = 3;
-    game.isGameOver    = true;
     game.isPaused      = false;
     game.level         = 0;
 
@@ -406,9 +406,8 @@ const initMode = (mode) => {
       buttons.style.display = 'none';
     }
   } else if (game.mode === MODES.CUTSCENE) {
-    game.counter    = 0;
-    game.isGameOver = true;
-    game.isPaused   = false;
+    game.counter  = 0;
+    game.isPaused = false;
 
     game.hud.directions = '';
     game.hud.title      = '';
@@ -486,7 +485,13 @@ const loop = () => {
             if (enemy.isActive && enemy.isPropulsive) {
               enemy.kill();
             }
-          } else if (enemy.isActive && enemy.weaponType === WEAPON_TYPES.PROJECTILE && getIsCrossing(enemy, game.player) && game.counter % FPS === 0) {
+          } else if (
+            enemy.isActive &&
+            game.counter % FPS === 0 &&
+            enemy.weaponType === WEAPON_TYPES.PROJECTILE &&
+            getIsCrossing(enemy, game.player) &&
+            getIsOnStage({ actor: enemy, game })
+          ) {
             if (getRandom(EPISODES[game.episode].length - game.level) === 0) {
               new Projectile({
                 game,
@@ -526,12 +531,14 @@ const loop = () => {
         }
 
         game.enemies.forEach(enemy => {
-          if (enemy.isActive && enemy.code !== 'asteroid') {
-            if (getIsCrossing(prop, enemy) && game.counter % (FPS / 2) === 0) {
-              if (getRandom(EPISODES[game.episode].length - game.level) === 0) {
-                changeDirection({ actor: enemy, game });
-              }
-            }
+          if (
+            enemy.isActive &&
+            enemy.code !== 'asteroid' &&
+            game.counter % (FPS / 2) === 0 &&
+            getIsCrossing(prop, enemy) &&
+            getRandom(EPISODES[game.episode].length - game.level) === 0
+          ) {
+            changeDirection({ actor: enemy, game });
           }
 
           if (enemy.isActive && prop.origin !== enemy && collision(enemy, prop)) {
@@ -734,5 +741,5 @@ const resizeGame = (width, height) => {
   loop();
 })();
 
-// Temporarily expose game object to the global scope to enable debugging from browser console.
+// Temporarily expose game object to the global scope to enable debugging from browser.
 window.game = game;

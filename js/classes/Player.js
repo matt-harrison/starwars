@@ -1,7 +1,6 @@
 import {
   advanceFrame,
   attachNode,
-  changeDirection,
   getRandom,
   preload,
   setPosition

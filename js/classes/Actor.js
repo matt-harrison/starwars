@@ -4,7 +4,6 @@ import {
   attachNode,
   changeDirection,
   getRandom,
-  inBounds,
   preload,
   setCoordinates,
   setPosition,

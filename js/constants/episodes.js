@@ -305,7 +305,7 @@ const IV_05_SANDCRAWLER = {
       details: {
         delay: 0,
         dir  : null,
-        hp   : isQuickTest ? 1 : 2
+        hp   : isQuickTest ? 1 : 1
       }
     }
   ],
@@ -712,7 +712,7 @@ const IV_13_ESCAPE_FROM_DEATH_STAR = {
       details: {
         bounceLimit: 0,
         delay      : 5.5 * FPS,
-        dir        : null,
+        dir        : CARDINALS.RIGHT,
         hp         : isQuickTest ? 1 : 1
       }
     },
@@ -721,7 +721,7 @@ const IV_13_ESCAPE_FROM_DEATH_STAR = {
       details: {
         bounceLimit: 0,
         delay      : 10.5 * FPS,
-        dir        : null,
+        dir        : CARDINALS.RIGHT,
         hp         : isQuickTest ? 1 : 1
       }
     },
@@ -730,7 +730,7 @@ const IV_13_ESCAPE_FROM_DEATH_STAR = {
       details: {
         bounceLimit: 0,
         delay      : 15.5 * FPS,
-        dir        : null,
+        dir        : CARDINALS.RIGHT,
         hp         : isQuickTest ? 1 : 1
       }
     }
