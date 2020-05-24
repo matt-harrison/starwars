@@ -14,11 +14,13 @@ export const Projectile = function({
 
   origin.isWeaponReady = false;
 
-  this.dir          = origin.dir;
-  this.isActive     = true;
-  this.origin       = origin;
-  this.spriteColumn = 0;
-  this.type         = origin.projectile;
+  this.dir              = origin.dir;
+  this.isActive         = true;
+  this.isLastFrame      = false;
+  this.isLastFrameDrawn = false;
+  this.origin           = origin;
+  this.spriteColumn     = 0;
+  this.type             = origin.projectile;
 
   if (origin.projectile === PROJECTILES.LASER) {
     if (this.dir === CARDINALS.LEFT || this.dir === CARDINALS.RIGHT) {
@@ -73,13 +75,11 @@ export const Projectile = function({
   game.props.push(this);
 
   this.kill = function() {
-    this.isActive = false;
-
-    game.stage.selector.removeChild(this.selector);
+    this.isLastFrame = true;
   }
 
   this.update = function() {
-    if (this.isActive) {
+    if (this.isActive && !this.isLastFrame) {
       if (this.frameCount > 1) {
         if (++this.spriteColumn > this.frameCount) {
           this.spriteColumn = 0;
@@ -112,6 +112,12 @@ export const Projectile = function({
         }
       }
     }
+
+    if (this.isActive && this.isLastFrameDrawn) {
+      this.isActive = false;
+
+      game.stage.selector.removeChild(this.selector);
+    }
   }
 
   this.draw = function() {
@@ -119,6 +125,10 @@ export const Projectile = function({
       this.selector.style.backgroundPosition = `${0 - this.spriteColumn * this.frameWidth}px 0`;
       this.selector.style.left               = `${this.x}px`;
       this.selector.style.top                = `${this.y}px`;
+    }
+
+    if (this.isLastFrame) {
+      this.isLastFrameDrawn = true;
     }
   };
 

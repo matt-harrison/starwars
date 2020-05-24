@@ -13,7 +13,6 @@ REFACTOR:
   * audit each constant
 
 CODE FEATURES:
-* projectiles last one extra frame before being removed
 * how can user win with a character lacking any attack?
 * add optional X or Y percentage-based coordinate for actors to spawn (like obstacles)?
 * add increasing chance of enemies turning toward player as levels progress?
