@@ -42,7 +42,7 @@ export const Actor = function({
 
   this.selector = attachNode({
     attributes: {
-      id: `${this.type}${game.enemies.length}`
+      id: this.id
     },
     parent: game.stage.selector,
     styles: {

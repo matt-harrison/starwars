@@ -615,7 +615,7 @@ const loop = () => {
     }
 
     // Add actors.
-    game.stage.bosses?.forEach(boss => {
+    game.stage.bosses?.forEach((boss, index) => {
       if (game.isBossesReached) {
       }
 
@@ -623,6 +623,7 @@ const loop = () => {
         const data = Object.assign({}, boss);
 
         data.details.type = ACTOR_TYPES.ENEMY;
+        data.details.id   = `boss${index}`;
 
         new Actor({
           data,
@@ -631,8 +632,12 @@ const loop = () => {
       }
     });
 
-    game.stage.enemies?.forEach(enemy => {
+    game.stage.enemies?.forEach((enemy, index) => {
       if (game.counter === enemy.details.spawnFrame) {
+        const data = Object.assign({}, enemy);
+
+        data.details.id = `enemy${index}`;
+
         new Actor({
           data: enemy,
           game
@@ -640,21 +645,23 @@ const loop = () => {
       }
     });
 
-    game.stage.friendlies?.forEach(friendly => {
+    game.stage.friendlies?.forEach((friendly, index) => {
       if (game.counter === friendly.details.spawnFrame) {
         const data = Object.assign({}, friendly);
 
         data.details.type = ACTOR_TYPES.FRIENDLY;
+        data.details.id   = `friendly${index}`;
 
         new Actor({ data, game });
       }
     });
 
-    game.stage.neutrals?.forEach(neutral => {
+    game.stage.neutrals?.forEach((neutral, index) => {
       if (game.counter === neutral.details.spawnFrame) {
         const data = Object.assign({}, neutral);
 
         data.details.type = ACTOR_TYPES.NEUTRAL;
+        data.details.id   = `neutral${index}`;
 
         new Actor({ data, game });
       }

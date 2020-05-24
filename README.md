@@ -42,6 +42,5 @@ SPRITE FEATURES:
 * add high score board via CRUD, with defensive coding to hide (anticipating legacy issues)
 
 BUGS:
-* duplicate IDs on actors spawned with same delay
 * adaptCoords(laser) bug
 * mobile magnification
