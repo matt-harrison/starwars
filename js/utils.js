@@ -276,18 +276,18 @@ export const preload = (url) => {
 export const setCoordinates = ({ actor, game }) => {
   if (actor.dir === CARDINALS.LEFT) {
     actor.x         = game.width;
-    actor.y         = getRandom(game.height - actor.frameHeight);
+    actor.y         = 10 + getRandom(game.height - 20 - actor.frameHeight);
     actor.spriteRow = 1;
   } else if (actor.dir === CARDINALS.UP) {
-    actor.x         = getRandom(game.width - actor.frameWidth);
+    actor.x         = 10 + getRandom(game.width - 20 - actor.frameWidth);
     actor.y         = game.height;
     actor.spriteRow = 3;
   } else if (actor.dir === CARDINALS.RIGHT) {
     actor.x         = 0 - actor.frameWidth;
-    actor.y         = getRandom(game.height - actor.frameHeight);
+    actor.y         = 10 + getRandom(game.height - 20 - actor.frameHeight);
     actor.spriteRow = 0;
   } else if (actor.dir === CARDINALS.DOWN) {
-    actor.x         = getRandom(game.width - actor.frameWidth);
+    actor.x         = 10 + getRandom(game.width - 20 - actor.frameWidth);
     actor.y         = 0 - actor.frameHeight;
     actor.spriteRow = 2;
   }

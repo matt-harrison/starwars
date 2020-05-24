@@ -625,7 +625,7 @@ const IV_11_TRACTOR_BEAM = {
       character: CHARACTERS.darthvader,
       details: {
         dir       : null,
-        hp        : isQuickTest ? 1 : 5,
+        hp        : isQuickTest ? 1 : 3,
         spawnDelay: 1 * FPS
       }
     }
@@ -771,7 +771,7 @@ const IV_14_BATTLE_OF_YAVIN = {
       character: SHIPS.TIE_ADVANCED,
       details: {
         dir       : CARDINALS.DOWN,
-        hp        : isQuickTest ? 1 : 5,
+        hp        : isQuickTest ? 1 : 3,
         spawnDelay: 2.25 * FPS
       }
     }

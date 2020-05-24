@@ -13,7 +13,6 @@ REFACTOR:
   * audit each constant
 
 FEATURES:
-* add a margin around the stage so enemies won't spawn all the way against walls.
 * let player be killed by own bomb after active?
 * how can user win with a character lacking any attack?
 * add optional X or Y percentage-based coordinate for actors to spawn (like obstacles)?
