@@ -507,11 +507,13 @@ const loop = () => {
       game.friendlies.forEach(friendly => {
         if (friendly.isActive && friendly.isPropulsive) {
           if (game.player.isActive && collision(game.player, friendly)) {
-            if (!game.isInvincible) {
-              game.player.kill();
-            }
+            if (!game.isLevelDefeated) {
+              if (!game.isInvincible) {
+                game.player.kill();
+              }
 
-            friendly.kill();
+              friendly.kill();
+            }
           }
         }
       });

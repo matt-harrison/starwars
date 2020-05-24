@@ -41,6 +41,5 @@ FEATURES:
 BUGS:
 * projectiles (and lightsaber attacks) zIndex?
 * duplicate IDs on actors spawned with same delay
-* prevent friendly ship crash after isLevelDefeated.
 * adaptCoords(laser) bug
 * mobile magnification
