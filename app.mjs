@@ -79,10 +79,12 @@ const advanceLevel = () => {
 
 const buttonPush = (key, id) => {
   if (game.mode === MODES.GAMEPLAY || game.mode === MODES.RESET) {
-    if (!game.player.isAttacking) {
-      if (game.keys.indexOf(key) === -1) {
-        game.keys.push(key);
-      }
+    if (
+      !game.player.isAttacking &&
+      game.keys.indexOf(key) === -1 &&
+      !game.keys.includes(KEYS.Z)
+    ) {
+      game.keys.push(key);
     }
   } else if (game.mode === MODES.EPISODE && Object.values(CARDINALS).indexOf(key) !== -1) {
     NUMERALS.forEach(numeral => {
