@@ -199,7 +199,7 @@ const clearStage = () => {
 
 const initInterface = () => {
   if (IS_MOBILE) {
-    //Init touchscreen controls
+    // Init touchscreen controls
     window.addEventListener('touchstart', function(event) {
       if (typeof(event.target.getAttribute('data-key')) !== 'undefined') {
         buttonPush(event.target.getAttribute('data-key'), event.target.id);
@@ -216,7 +216,7 @@ const initInterface = () => {
         buttonRelease(event.target.getAttribute('data-key'), event.target.id);
       }
 
-      //Check if touch was released over different d-pad button
+      // Check if touch was released over different d-pad button
       Object.values(CARDINALS).forEach(cardinal => {
         const button = document.querySelector(`[data-key="${cardinal}"]`);
         const bounds = button.getBoundingClientRect();
@@ -235,7 +235,7 @@ const initInterface = () => {
       resizeGame(window.innerWidth, window.innerHeight);
     });
   } else {
-    //Init desktop controls
+    // Init desktop controls
     window.addEventListener('keydown', function(event) {
       let key = '';
       let id = '';
@@ -576,7 +576,7 @@ const loop = () => {
         prop.draw();
       });
 
-      //Check for level completion
+      // Check for level completion
       if (
         game.enemiesKilled === add(game.stage.enemies.length - game.stage.enemiesOptional.length, game.stage.bosses.length) &&
         game.player.isActive &&
@@ -585,9 +585,21 @@ const loop = () => {
         levelWin();
       }
 
-      //Check for level failure
+      // Check for level failure
       if (!game.player.isActive && !game.isGameOver) {
         levelLose();
+      }
+
+      // Check for bosses reached
+      if (
+        game.enemiesKilled === game.stage.enemies.length - game.stage.enemiesOptional.length &&
+        !game.isBossesReached
+      ) {
+        game.isBossesReached = true;
+
+        game.stage.bosses.forEach(boss => {
+          boss.details.spawnFrame = game.counter + boss.details.spawnDelay;
+        });
       }
 
       game.player.update();
@@ -596,10 +608,10 @@ const loop = () => {
 
     // Add actors.
     game.stage.bosses?.forEach(boss => {
-      if (
-        game.enemiesKilled === game.stage.enemies.length - game.stage.enemiesOptional.length &&
-        !game.isBossesReached
-      ) {
+      if (game.isBossesReached) {
+      }
+
+      if (game.isBossesReached && game.counter === boss.details.spawnFrame) {
         const data = Object.assign({}, boss);
 
         data.details.type = ACTOR_TYPES.ENEMY;
@@ -608,13 +620,11 @@ const loop = () => {
           data,
           game
         });
-
-        game.isBossesReached = true;
       }
     });
 
     game.stage.enemies?.forEach(enemy => {
-      if (game.counter === enemy.details.delay) {
+      if (game.counter === enemy.details.spawnFrame) {
         new Actor({
           data: enemy,
           game
@@ -623,7 +633,7 @@ const loop = () => {
     });
 
     game.stage.friendlies?.forEach(friendly => {
-      if (game.counter === friendly.details.delay) {
+      if (game.counter === friendly.details.spawnFrame) {
         const data = Object.assign({}, friendly);
 
         data.details.type = ACTOR_TYPES.FRIENDLY;
@@ -633,7 +643,7 @@ const loop = () => {
     });
 
     game.stage.neutrals?.forEach(neutral => {
-      if (game.counter === neutral.details.delay) {
+      if (game.counter === neutral.details.spawnFrame) {
         const data = Object.assign({}, neutral);
 
         data.details.type = ACTOR_TYPES.NEUTRAL;

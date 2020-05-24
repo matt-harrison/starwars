@@ -245,9 +245,9 @@ export const initEnemies = (game) => {
       bounceLimit = INFINITY,
       count,
       character,
-      delayInterval,
       dir,
-      hp
+      hp,
+      spawnInterval
     } = enemiesRequiredData;
 
     for (let i = 0; i < count; i++) {
@@ -255,10 +255,10 @@ export const initEnemies = (game) => {
         character: character,
         details: {
           bounceLimit: INFINITY,
-          delay      : delayInterval * i,
           dir,
           hp,
           isOptional : false,
+          spawnFrame : spawnInterval * i,
           type       : ACTOR_TYPES.ENEMY
         }
       };
