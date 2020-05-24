@@ -520,12 +520,18 @@ const loop = () => {
 
       game.props.forEach(prop => {
         if (game.player.isActive && collision(game.player, prop)) {
-          if (!game.isInvincible && prop.isActive && prop.origin !== game.player) {
+          if (
+            !game.isInvincible &&
+            prop.isActive && (
+              prop.origin !== game.player ||
+              (prop.type === WEAPON_TYPES.BOMB && prop.isActive)
+            )
+          ) {
             game.player.kill();
             prop.kill();
           }
 
-          if (prop.type === 'lightsaber' && prop.speed > 0) {
+          if (prop.type === WEAPON_TYPES.LIGHTSABER && prop.speed > 0) {
             if (prop.isActive) {
               game.player.isAttacking = false;
             } else {
@@ -548,7 +554,7 @@ const loop = () => {
           if (enemy.isActive && prop.origin !== enemy && collision(enemy, prop)) {
             enemy.hit();
 
-            if (prop.type !== 'lightsaber') {
+            if (prop.type !== WEAPON_TYPES.LIGHTSABER) {
               prop.kill();
             }
           }
@@ -558,7 +564,7 @@ const loop = () => {
           if (friendly.isActive && prop.origin !== friendly && collision(friendly, prop)) {
             friendly.hit();
 
-            if (prop.type !== 'lightsaber') {
+            if (prop.type !== WEAPON_TYPES.LIGHTSABER) {
               prop.kill();
             }
           }
@@ -568,7 +574,7 @@ const loop = () => {
           if (neutral.isActive && prop.origin !== neutral && collision(neutral, prop)) {
             neutral.hit();
 
-            if (prop.type !== 'lightsaber') {
+            if (prop.type !== WEAPON_TYPES.LIGHTSABER) {
               prop.kill();
             }
           }

@@ -944,7 +944,7 @@ const TEST = {
       }
     }
   ],
-  character: CHARACTERS.rebel,
+  character: CHARACTERS.artoo,
   cutscenes: [],
   enemiesOptional: [
     // {
@@ -958,11 +958,11 @@ const TEST = {
     // }
   ],
   enemiesRequiredData: {
-    character    : CHARACTERS.trooper,
+    character    : CHARACTERS.stormtrooper,
     count        : isQuickTest ? 1 : 1,
     dir          : CARDINALS.LEFT,
     hp           : isQuickTest ? 1 : 1,
-    spawnInterval: 30 * FPS
+    spawnInterval: 1 * FPS
   },
   friendlies: [
     // {
