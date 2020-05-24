@@ -40,6 +40,21 @@ export const Hud = function({
     }
   });
 
+  this.scoreboard = attachNode({
+    attributes: {
+      id: 'scoreboard'
+    },
+    nodeType: 'h2',
+    parent: this.selector,
+    styles: {
+      boxSizing: 'border-box',
+      margin   : '0',
+      padding  : '5px',
+      position : 'absolute',
+      width    : '100%'
+    }
+  });
+
   this.txtTitle = attachNode({
     attributes: {
       id: 'title',
@@ -81,15 +96,10 @@ export const Hud = function({
     attributes: {
       id: 'score'
     },
-    nodeType: 'h2',
-    parent: this.selector,
+    nodeType: 'span',
+    parent: this.scoreboard,
     styles: {
-      boxSizing: 'border-box',
-      margin   : '0',
-      padding  : '5px',
-      position : 'absolute',
-      textAlign: 'left',
-      width    : '100%'
+      cssFloat: 'left'
     }
   });
 
@@ -97,15 +107,10 @@ export const Hud = function({
     attributes: {
       id: 'victim'
     },
-    nodeType: 'h2',
-    parent: this.selector,
+    nodeType: 'span',
+    parent: this.scoreboard,
     styles: {
-      boxSizing: 'border-box',
-      margin   : '0',
-      padding  : '5px',
-      position : 'absolute',
-      textAlign: 'right',
-      width    : '100%'
+      cssFloat: 'right'
     }
   });
 
