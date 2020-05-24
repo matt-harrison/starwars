@@ -36,7 +36,7 @@ export const Hud = function({
       height  : '100%',
       position: 'absolute',
       width   : '100%',
-      zIndex  : '99'
+      zIndex  : 900
     }
   });
 
@@ -54,8 +54,7 @@ export const Hud = function({
       position     : 'absolute',
       textAlign    : 'center',
       top          : '30%',
-      width        : '100%',
-      zIndex       : '10',
+      width        : '100%'
     }
   });
 
@@ -74,8 +73,7 @@ export const Hud = function({
       pointerEvents: 'none',
       position     : 'absolute',
       textAlign    : 'center',
-      width        : '100%',
-      zIndex       : '10'
+      width        : '100%'
     }
   });
 
@@ -91,8 +89,7 @@ export const Hud = function({
       padding  : '5px',
       position : 'absolute',
       textAlign: 'left',
-      width    : '100%',
-      zIndex   : '10'
+      width    : '100%'
     }
   });
 
@@ -108,8 +105,7 @@ export const Hud = function({
       padding  : '5px',
       position : 'absolute',
       textAlign: 'right',
-      width    : '100%',
-      zIndex   : '10'
+      width    : '100%'
     }
   });
 
@@ -131,8 +127,7 @@ export const Hud = function({
         height  : '165px',
         left    : '0',
         position: 'absolute',
-        width   : '100%',
-        zIndex  : '100'
+        width   : '100%'
       }
     });
 

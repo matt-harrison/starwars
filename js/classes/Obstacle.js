@@ -38,7 +38,8 @@ export const Obstacle = function({
       left           : `${this.x}px`,
       position       : 'absolute',
       top            : `${this.y}px`,
-      width          : `${this.frameWidth}px`
+      width          : `${this.frameWidth}px`,
+      zIndex         : this.y
     }
   });
 

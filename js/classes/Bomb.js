@@ -1,4 +1,4 @@
-import { attachNode, collision } from '/js/utils.js';
+import { add, attachNode, collision } from '/js/utils.js';
 
 import {
   ANIMATIONS,
@@ -35,7 +35,7 @@ export const Bomb = function({
       position       : 'absolute',
       top            : `${this.y}px`,
       width          : `${this.frameWidth}px`,
-      zIndex         : '2'
+      zIndex         : add(this.y, this.frameHeight)
     }
   });
 

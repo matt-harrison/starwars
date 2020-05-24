@@ -18,7 +18,7 @@ export const Stage = function({
       position       : 'absolute',
       top            : 0,
       width          : '100%',
-      zIndex         : '1'
+      zIndex         : 2
     }
   });
 

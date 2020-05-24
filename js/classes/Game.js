@@ -16,7 +16,7 @@ export const Game = function({
       overflow: 'hidden',
       position: 'relative',
       width   : `${width}px`,
-      zIndex  : '1'
+      zIndex  : 1
     }
   });
 

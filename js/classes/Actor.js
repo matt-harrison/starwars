@@ -134,7 +134,7 @@ export const Actor = function({
     this.selector.style.backgroundPosition = `${(0 - this.spriteColumn * this.frameWidth)}px ${(0 - this.spriteRow * this.frameHeight)}px`;
     this.selector.style.left               = `${this.x}px`;
     this.selector.style.top                = `${this.y}px`;
-    this.selector.style.zIndex             = this.y;
+    this.selector.style.zIndex             = add(this.y, this.frameHeight);
   };
 
   this.draw();

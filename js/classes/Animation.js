@@ -1,5 +1,5 @@
 import { INFINITY } from '/js/constants/index.js';
-import { attachNode } from '/js/utils.js';
+import { add, attachNode } from '/js/utils.js';
 
 export const Animation = function({
   data,
@@ -28,7 +28,7 @@ export const Animation = function({
       position       : 'absolute',
       top            : `${this.y}px`,
       width          : `${this.frameWidth}px`,
-      zIndex         : '2'
+      zIndex         : add(this.y, this.frameHeight)
     }
   });
 

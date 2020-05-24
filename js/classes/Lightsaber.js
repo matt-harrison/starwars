@@ -68,7 +68,7 @@ export const Lightsaber = function({
       position       : 'absolute',
       top            : `${this.y}px`,
       width          : `${this.frameWidth}px`,
-      zIndex         : '4',
+      zIndex         : 700,
     }
   });
 

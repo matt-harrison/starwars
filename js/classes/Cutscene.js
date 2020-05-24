@@ -19,7 +19,7 @@ export const Cutscene = function({
       position       : 'absolute',
       top            : 0,
       width          : '100%',
-      zIndex         : '101'
+      zIndex         : 1000
     }
   });
 
@@ -37,8 +37,7 @@ export const Cutscene = function({
       left           : `${(game.width - sideLength) / 2}px`,
       position       : 'absolute',
       top            : `${(game.height - sideLength) / 2}px`,
-      width          : `${sideLength}px`,
-      zIndex         : 100
+      width          : `${sideLength}px`
     }
   });
 

@@ -60,7 +60,7 @@ export const Projectile = function({
       height        : `${this.frameHeight}px`,
       position      : 'absolute',
       width         : `${this.frameWidth}px`,
-      zIndex        : '4'
+      zIndex        : 600
     }
   });
 
