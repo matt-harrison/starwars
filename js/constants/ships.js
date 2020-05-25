@@ -1,6 +1,6 @@
-import { ANIMATIONS }                from '/js/constants/animations.js';
-import { COLORS, MAGNIFICATION }     from '/js/constants/config.js';
-import { PROJECTILES, WEAPON_TYPES } from '/js/constants/weapons.js';
+import { ANIMATIONS }            from '/js/constants/animations.js';
+import { COLORS, MAGNIFICATION } from '/js/constants/config.js';
+import { WEAPONS }          from '/js/constants/weapons.js';
 
 const ASTEROID = {
   code          : 'asteroid',
@@ -13,7 +13,7 @@ const ASTEROID = {
   name          : 'Asteroid',
   speed         : 4,
   sprite        : 'ships/asteroid',
-  weaponType    : null,
+  weapon        : null,
   width         : 14 * MAGNIFICATION
 };
 
@@ -26,15 +26,14 @@ const DEATHSTAR = {
   isPropulsive     : true,
   moveFrameCount   : 8,
   name             : 'Death Star',
-  projectile       : PROJECTILES.LASER,
   speed            : 4,
   sprite           : 'ships/deathstar',
+  weapon           : WEAPONS.LASER,
   weaponColor      : COLORS.GREEN,
   weaponOffsetDown : [3, 5],
   weaponOffsetLeft : [2, 3],
   weaponOffsetRight: [5, 3],
   weaponOffsetUp   : [3, 0],
-  weaponType       : WEAPON_TYPES.PROJECTILE,
   width            : 90 * MAGNIFICATION
 };
 
@@ -47,15 +46,14 @@ const DEATHSTAR6 = {
   isPropulsive     : true,
   moveFrameCount   : 8,
   name             : 'Death Star II',
-  projectile       : PROJECTILES.LASER,
   speed            : 4,
   sprite           : 'ships/deathstar6',
+  weapon           : WEAPONS.LASER,
   weaponColor      : COLORS.GREEN,
   weaponOffsetDown : [3, 5],
   weaponOffsetLeft : [2, 3],
   weaponOffsetRight: [5, 3],
   weaponOffsetUp   : [3, 0],
-  weaponType       : WEAPON_TYPES.PROJECTILE,
   width            : 90 * MAGNIFICATION
 };
 
@@ -68,15 +66,14 @@ const DESTROYER = {
   isPropulsive     : true,
   moveFrameCount   : 1,
   name             : 'Star Destroyer',
-  projectile       : PROJECTILES.LASER,
   speed            : 1,
   sprite           : 'ships/destroyer',
+  weapon           : WEAPONS.LASER,
   weaponColor      : COLORS.RED,
   weaponOffsetDown : [15, 12],
   weaponOffsetLeft : [16, 14],
   weaponOffsetRight: [12, 15 ],
   weaponOffsetUp   : [15, 16],
-  weaponType       : WEAPON_TYPES.PROJECTILE,
   width            : 60 * MAGNIFICATION
 };
 
@@ -89,15 +86,14 @@ const FALCON = {
   isPropulsive     : true,
   moveFrameCount   : 4,
   name             : 'Millenium Falcon',
-  projectile       : PROJECTILES.LASER,
   speed            : 8,
   sprite           : 'ships/falcon',
+  weapon           : WEAPONS.LASER,
   weaponColor      : COLORS.GREEN,
   weaponOffsetDown : [7, 8],
   weaponOffsetLeft : [5, 7],
   weaponOffsetRight: [8, 7],
   weaponOffsetUp   : [7, 6],
-  weaponType       : WEAPON_TYPES.PROJECTILE,
   width            : 75 * MAGNIFICATION
 };
 
@@ -110,15 +106,14 @@ const TIE = {
   isPropulsive     : true,
   moveFrameCount   : 4,
   name             : 'TIE Fighter',
-  projectile       : PROJECTILES.LASER,
   speed            : 16,
   sprite           : 'ships/tie',
+  weapon           : WEAPONS.LASER,
   weaponColor      : COLORS.RED,
   weaponOffsetDown : [3, 5],
   weaponOffsetLeft : [0, 3],
   weaponOffsetRight: [5, 3],
   weaponOffsetUp   : [3, 0],
-  weaponType       : WEAPON_TYPES.PROJECTILE,
   width            : 35 * MAGNIFICATION
 };
 
@@ -131,15 +126,14 @@ const TIE_ADVANCED = {
   isPropulsive     : true,
   moveFrameCount   : 4,
   name             : 'Darth Vader',
-  projectile       : PROJECTILES.LASER,
   speed            : 16,
   sprite           : 'ships/vadertie',
+  weapon           : WEAPONS.LASER,
   weaponColor      : COLORS.RED,
   weaponOffsetDown : [3, 5],
   weaponOffsetLeft : [0, 3],
   weaponOffsetRight: [5, 3],
   weaponOffsetUp   : [3, 0],
-  weaponType       : WEAPON_TYPES.PROJECTILE,
   width            : 35 * MAGNIFICATION
 };
 
@@ -152,15 +146,14 @@ const XWING = {
   isPropulsive     : true,
   moveFrameCount   : 4,
   name             : 'X-wing',
-  projectile       : PROJECTILES.LASER,
   speed            : 8,
   sprite           : 'ships/xwing',
+  weapon           : WEAPONS.LASER,
   weaponColor      : COLORS.GREEN,
   weaponOffsetDown : [4, 8],
   weaponOffsetLeft : [1, 4],
   weaponOffsetRight: [8, 4],
   weaponOffsetUp   : [4, 1],
-  weaponType       : WEAPON_TYPES.PROJECTILE,
   width            : 45 * MAGNIFICATION
 };
 

@@ -490,7 +490,7 @@ const loop = () => {
           } else if (
             enemy.isActive &&
             game.counter % FPS === 0 &&
-            enemy.weaponType === WEAPON_TYPES.PROJECTILE &&
+            enemy.weapon?.type === WEAPON_TYPES.PROJECTILE &&
             getIsCrossing(enemy, game.player) &&
             getIsOnStage({ actor: enemy, game })
           ) {
@@ -528,7 +528,7 @@ const loop = () => {
             )
           ) {
             game.player.kill();
-            prop.setLastFrame();
+            prop.kill();
           }
 
           if (prop.type === WEAPON_TYPES.LIGHTSABER && prop.speed > 0) {
@@ -555,7 +555,7 @@ const loop = () => {
             enemy.hit();
 
             if (prop.type !== WEAPON_TYPES.LIGHTSABER) {
-              prop.setLastFrame();
+              prop.kill();
             }
           }
         });
@@ -565,7 +565,7 @@ const loop = () => {
             friendly.hit();
 
             if (prop.type !== WEAPON_TYPES.LIGHTSABER) {
-              prop.setLastFrame();
+              prop.kill();
             }
           }
         });
@@ -575,7 +575,7 @@ const loop = () => {
             neutral.hit();
 
             if (prop.type !== WEAPON_TYPES.LIGHTSABER) {
-              prop.setLastFrame();
+              prop.kill();
             }
           }
         });

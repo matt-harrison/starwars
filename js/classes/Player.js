@@ -12,8 +12,8 @@ import {
   FPS,
   KEYS,
   MAGNIFICATION,
-  PROJECTILES,
-  WEAPON_TYPES
+  WEAPON_TYPES,
+  WEAPONS
 } from '/js/constants/index.js';
 
 import { Animation }  from '/js/classes/Animation.js';
@@ -42,26 +42,21 @@ export const Player = function({
   this.x             = Math.floor((game.width - this.frameWidth) / 2);
   this.y             = Math.floor((game.height - this.frameHeight) / 2);
 
-  switch (this.weaponType) {
-    case WEAPON_TYPES.BOMB:
+  switch (this.weapon) {
+    case WEAPONS.BOMB:
       this.weaponDelay = FPS / 2;
       break;
-    case WEAPON_TYPES.STUN:
-    case WEAPON_TYPES.LIGHTSABER:
+    case WEAPONS.LASER:
+      this.weaponDelay = FPS / 4;
+      break
+    case WEAPONS.LIGHTSABER:
+    case WEAPONS.STUN:
       this.weaponDelay = FPS / 8;
       break;
-    case WEAPON_TYPES.PROJECTILE:
-      switch (this.projectile) {
-        case PROJECTILES.LASER:
-          this.weaponDelay = FPS / 4;
-          break
-        case PROJECTILES.STUN:
-          this.weaponDelay = FPS / 8;
-          break
-        default:
-          this.weaponDelay = FPS / 2;
-          break;
-      }
+    case WEAPONS.GUNGAN_BALL:
+    case WEAPONS.ROCK:
+    default:
+      this.weaponDelay = FPS / 2;
       break;
   }
 
@@ -87,17 +82,17 @@ export const Player = function({
 
   this.attack = (key) => {
     if (this.isWeaponReady) {
-      if (this.weaponType === WEAPON_TYPES.PROJECTILE) {
+      if (this.weapon.type === WEAPON_TYPES.PROJECTILE) {
         new Projectile({
           game,
           origin: this
         });
-      } else if (this.weaponType === WEAPON_TYPES.BOMB) {
+      } else if (this.weapon.type === WEAPON_TYPES.BOMB) {
         new Bomb({
           game,
           origin: this
         });
-      } else if (this.weaponType === WEAPON_TYPES.LIGHTSABER) {
+      } else if (this.weapon.type === WEAPON_TYPES.LIGHTSABER) {
         const isLongRange = (key === KEYS.Z);
 
         this.lightsaber = new Lightsaber({

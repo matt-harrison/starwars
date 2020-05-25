@@ -2,6 +2,7 @@ import { add, attachNode, collision } from '/js/utils.js';
 
 import {
   ANIMATIONS,
+  CARDINALS,
   COLORS,
   MAGNIFICATION,
   WEAPON_TYPES
@@ -20,8 +21,25 @@ export const Bomb = function({
   this.origin       = origin;
   this.spriteColumn = 0;
   this.type         = WEAPON_TYPES.BOMB;
-  this.x            = origin.x + (origin.weaponOffset[0] * MAGNIFICATION);
-  this.y            = origin.y + (origin.weaponOffset[1] * MAGNIFICATION);
+
+  switch (origin.dir) {
+    case CARDINALS.DOWN:
+      this.x = origin.x + origin.frameWidth / 2;
+      this.y = origin.y + origin.frameHeight - (2 * MAGNIFICATION);
+      break;
+    case CARDINALS.LEFT:
+      this.x = origin.x + origin.frameWidth;
+      this.y = origin.y + origin.frameHeight - MAGNIFICATION;
+      break;
+    case CARDINALS.RIGHT:
+      this.x = origin.x;
+      this.y = origin.y + origin.frameHeight - MAGNIFICATION;
+      break;
+    case CARDINALS.UP:
+      this.x = origin.x + origin.frameWidth / 2;
+      this.y = origin.y + origin.frameHeight;
+      break;
+  }
 
   this.selector = attachNode({
     attributes: {

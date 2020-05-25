@@ -14,26 +14,29 @@ REFACTOR:
 * mobile magnification
 
 CODE FEATURES:
-* how can user win with a character lacking any attack?
 * add optional X or Y percentage-based coordinate for actors to spawn (like obstacles)?
 * add increasing chance of enemies turning toward player as levels progress?
   * make some enemies chase player?
 * obstacles and/or dead bodies stop projectiles?
+* password menu!
+* episode menu...
+* reward menu: reveal password for random character
 * npm lint?
 * npm test?
 * sliding touch?
 
 SPRITE FEATURES:
-* password menu!
-* episode menu...
-* reward menu: reveal password for random character
 * neutrals who stand still but can be killed? bartender? han & chewie in mos eisley?
 * obstacles that can take damage?
 * make lightsabers bounce off obstacles?
 * add shadow under falcon obstacle (like speeder).
 * overlapping d-pad buttons to include center in opacity change
-* gunganBall projectile splat animation
 * bloodless death frame w/ only animated death bloody?
+  * artoo: add death animation and trim whitespace in sprite
+  * add more frame to gungan ball
+* gunganBall projectile splat animation
+* blood splat animation? hidden?
+* add optional bantha shit sprite to Bomb class?
 * replace low-detail cutscenes
 * cutscenes for every level
 * post-game cutscenes (hallway, medals)?
@@ -42,4 +45,4 @@ SPRITE FEATURES:
 * add high score board via CRUD, with defensive coding to hide (anticipating legacy issues)
 
 BUGS:
-* ???
+* only delay projectile.remove() if first frame is ALSO last frame

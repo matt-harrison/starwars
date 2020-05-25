@@ -20,10 +20,7 @@ import {
 } from './episodes.js';
 import { OBSTACLES } from './obstacles.js';
 import { SHIPS } from './ships.js';
-import {
-  PROJECTILES,
-  WEAPON_TYPES
-} from './weapons.js';
+import { WEAPON_TYPES, WEAPONS } from './weapons.js';
 
 export {
   ACTOR_TYPES,
@@ -43,7 +40,7 @@ export {
   MODES,
   NUMERALS,
   OBSTACLES,
-  PROJECTILES,
   SHIPS,
-  WEAPON_TYPES
+  WEAPON_TYPES,
+  WEAPONS
 };

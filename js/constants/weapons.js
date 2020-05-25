@@ -1,13 +1,37 @@
 import { MAGNIFICATION } from '/js/constants/config.js';
 
+export const WEAPON_TYPES = {
+  BOMB      : 'bomb',
+  PROJECTILE: 'projectile',
+  LIGHTSABER: 'lightsaber'
+};
+
+const BOMB = {
+  name: 'bomb',
+  type: WEAPON_TYPES.BOMB
+};
+
 const GUNGAN_BALL = {
   frameCount : 5,
   frameHeight: 6 * MAGNIFICATION,
   frameWidth : 6 * MAGNIFICATION,
   height     : 6 * MAGNIFICATION,
   name       : 'gunganBall',
-  speed      : 20,
+  type       : WEAPON_TYPES.PROJECTILE,
+  speed      : 10,
   width      : 30 * MAGNIFICATION
+};
+
+const LASER = {
+  name : 'laser',
+  speed: 30,
+  type : WEAPON_TYPES.PROJECTILE
+};
+
+const LIGHTSABER = {
+  name : 'lightsaber',
+  speed: 30,
+  type : WEAPON_TYPES.LIGHTSABER
 };
 
 const ROCK = {
@@ -16,7 +40,8 @@ const ROCK = {
   frameWidth : 5 * MAGNIFICATION,
   height     : 5 * MAGNIFICATION,
   name       : 'rock',
-  speed      : 20,
+  type       : WEAPON_TYPES.PROJECTILE,
+  speed      : 10,
   width      : 20 * MAGNIFICATION
 };
 
@@ -26,20 +51,16 @@ const STUN = {
   frameWidth : 10 * MAGNIFICATION,
   height     : 10 * MAGNIFICATION,
   name       : 'stun',
+  type       : WEAPON_TYPES.PROJECTILE,
   speed      : 20,
   width      : 60 * MAGNIFICATION
 };
 
-export const PROJECTILES = {
+export const WEAPONS = {
+  BOMB,
   GUNGAN_BALL,
-  LASER: 'laser',
+  LASER,
+  LIGHTSABER,
   ROCK,
   STUN
-};
-
-export const WEAPON_TYPES = {
-  ATTACK    : 'attack',
-  BOMB      : 'bomb',
-  LIGHTSABER: 'lightsaber',
-  PROJECTILE: 'projectile'
 };

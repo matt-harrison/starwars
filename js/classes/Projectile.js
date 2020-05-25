@@ -1,8 +1,8 @@
 import {
   CARDINALS,
   MAGNIFICATION,
-  PROJECTILES,
   WEAPON_TYPES,
+  WEAPONS
 } from '/js/constants/index.js';
 import { attachNode } from '/js/utils.js';
 
@@ -10,9 +10,7 @@ export const Projectile = function({
   game,
   origin
 }) {
-  if (typeof origin.projectile == 'object') {
-    Object.assign(this, origin.projectile);
-  }
+  Object.assign(this, origin.weapon);
 
   origin.isWeaponReady = false;
 
@@ -22,9 +20,8 @@ export const Projectile = function({
   this.isLastFrameDrawn = false;
   this.origin           = origin;
   this.spriteColumn     = 0;
-  this.type             = origin.projectile;
 
-  if (origin.projectile === PROJECTILES.LASER) {
+  if (this.name === WEAPONS.LASER.name) {
     if (this.dir === CARDINALS.LEFT || this.dir === CARDINALS.RIGHT) {
       this.height = 1 * MAGNIFICATION;
       this.width  = 2 * MAGNIFICATION;
@@ -68,7 +65,7 @@ export const Projectile = function({
     }
   });
 
-  if (origin.projectile === PROJECTILES.LASER) {
+  if (this.name === WEAPONS.LASER.name) {
     this.selector.style.backgroundColor = origin.weaponColor;
   } else {
     this.selector.style.backgroundImage = `url('img/projectiles/${this.name}.png')`;
@@ -76,11 +73,11 @@ export const Projectile = function({
 
   game.props.push(this);
 
-  this.setLastFrame = () => {
-    this.isLastFrame = true;
-  };
-
   this.kill = () => {
+    this.isLastFrame = true;
+  }
+
+  this.remove = () => {
     this.isActive = false;
 
     game.stage.selector.removeChild(this.selector);
@@ -98,31 +95,31 @@ export const Projectile = function({
         if (this.x > 0 - this.frameWidth) {
           this.x -= this.speed;
         } else {
-          this.kill();
+          this.remove();
         }
       } else if (this.dir === CARDINALS.UP) {
         if (this.y > 0 - this.frameHeight) {
           this.y -= this.speed;
         } else {
-          this.kill();
+          this.remove();
         }
       } else if (this.dir === CARDINALS.RIGHT) {
         if (this.x < game.width) {
           this.x += this.speed;
         } else {
-          this.kill();
+          this.remove();
         }
       } else if (this.dir === CARDINALS.DOWN) {
         if (this.y < game.height) {
           this.y += this.speed;
         } else {
-          this.kill();
+          this.remove();
         }
       }
     }
 
     if (this.isActive && this.isLastFrameDrawn) {
-      this.kill();
+      this.remove();
     }
   }
 
