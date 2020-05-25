@@ -34,7 +34,7 @@ export const Animation = function({
 
   game.animations.push(this);
 
-  this.kill = function() {
+  this.kill = () => {
     this.isActive = false;
 
     if (this.isRemove) {
@@ -42,7 +42,7 @@ export const Animation = function({
     }
   }
 
-  this.update = function() {
+  this.update = () => {
     if (this.isActive) {
       if (this.spriteColumn + 1 < this.frameCount) {
         this.spriteColumn++;
@@ -52,7 +52,7 @@ export const Animation = function({
     }
   }
 
-  this.draw = function() {
+  this.draw = () => {
     if (this.isActive) {
       this.selector.style.backgroundPosition = `${0 - this.spriteColumn * this.frameWidth}px 0`;
     }

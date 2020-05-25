@@ -227,7 +227,7 @@ const initInterface = () => {
       });
     }, {passive: false});
 
-    window.addEventListener('resize', function() {
+    window.addEventListener('resize', () => {
       if (game.mode === MODES.GAMEPLAY && !game.isGameOver && !game.isPaused) {
         pause();
       }
@@ -756,7 +756,7 @@ const resizeGame = (width, height) => {
   }
 }
 
-(function() {
+(() => {
   game.selector = new Game(game);
   game.hud      = new Hud({ game });
 

@@ -90,7 +90,7 @@ const IV_01_TANTIVE_IV = {
       }
     }
   ],
-  character: CHARACTERS.jarjar,
+  character: CHARACTERS.rebel,
   cutscenes: [
     'preface',
     'episode4-destroyer'

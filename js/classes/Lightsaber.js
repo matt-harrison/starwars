@@ -89,7 +89,7 @@ export const Lightsaber = function({
 
   game.props.push(this);
 
-  this.reverse = function() {
+  this.reverse = () => {
     if (this.dir === CARDINALS.LEFT) {
       this.dir = CARDINALS.RIGHT;
     } else if (this.dir === CARDINALS.UP) {
@@ -101,7 +101,7 @@ export const Lightsaber = function({
     }
   }
 
-  this.kill = function() {
+  this.kill = () => {
     const position = game.props.indexOf(this);
 
     game.stage.selector.removeChild(this.selector);
@@ -111,7 +111,7 @@ export const Lightsaber = function({
     origin.spriteColumn = 0;
   }
 
-  this.update = function() {
+  this.update = () => {
     if (!this.isActive && !collision(this, this.origin)) {
       this.isActive = true;
     }
@@ -149,7 +149,7 @@ export const Lightsaber = function({
     }
   }
 
-  this.draw = function() {
+  this.draw = () => {
     if (origin.isAttacking) {
       this.selector.style.left = `${this.x}px`;
       this.selector.style.top  = `${this.y}px`;

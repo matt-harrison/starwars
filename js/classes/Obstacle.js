@@ -45,7 +45,7 @@ export const Obstacle = function({
 
   game.obstacles.push(this);
 
-  this.update = function() {
+  this.update = () => {
     if (this.frameCount > 1) {
       if (this.spriteColumn + 1 < this.frameCount) {
         this.spriteColumn++;
@@ -55,7 +55,7 @@ export const Obstacle = function({
     }
   }
 
-  this.draw = function() {
+  this.draw = () => {
     this.selector.style.backgroundPosition = `${0 - this.spriteColumn * this.frameWidth}px 0`;
     this.selector.style.left               = `${this.x}px`;
     this.selector.style.top                = `${this.y}px`;

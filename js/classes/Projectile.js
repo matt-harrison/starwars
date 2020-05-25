@@ -80,13 +80,13 @@ export const Projectile = function({
     this.isLastFrame = true;
   };
 
-  this.kill = function() {
+  this.kill = () => {
     this.isActive = false;
 
     game.stage.selector.removeChild(this.selector);
   }
 
-  this.update = function() {
+  this.update = () => {
     if (this.isActive && !this.isLastFrame) {
       if (this.frameCount > 1) {
         if (++this.spriteColumn > this.frameCount) {
@@ -126,7 +126,7 @@ export const Projectile = function({
     }
   }
 
-  this.draw = function() {
+  this.draw = () => {
     if (this.isActive) {
       this.selector.style.backgroundPosition = `${0 - this.spriteColumn * this.frameWidth}px 0`;
       this.selector.style.left               = `${this.x}px`;

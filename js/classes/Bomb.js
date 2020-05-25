@@ -41,7 +41,7 @@ export const Bomb = function({
 
   game.props.push(this);
 
-  this.kill = function() {
+  this.kill = () => {
     this.isActive = false;
 
     game.stage.selector.removeChild(this.selector);
@@ -53,13 +53,13 @@ export const Bomb = function({
     });
   }
 
-  this.update = function() {
+  this.update = () => {
     if (!this.isActive && !collision(this, this.origin)) {
       this.isActive = true;
     }
   }
 
-  this.draw = function() {
+  this.draw = () => {
     if (this.isActive) {
       if (game.counter % 2) {
         this.selector.style.backgroundColor = COLORS.BLACK;

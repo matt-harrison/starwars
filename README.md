@@ -3,7 +3,6 @@
 
 REFACTOR:
 * code formatting
-  * use arrow functions within classes.
   * explicitly map all objects (instead of Object.assign) for readability?
   * distribute functions to relevant class or move to utils
   * migrate all functions from app to utils? (game as arg?)
