@@ -528,7 +528,7 @@ const loop = () => {
             )
           ) {
             game.player.kill();
-            prop.kill();
+            prop.setLastFrame();
           }
 
           if (prop.type === WEAPON_TYPES.LIGHTSABER && prop.speed > 0) {
@@ -555,7 +555,7 @@ const loop = () => {
             enemy.hit();
 
             if (prop.type !== WEAPON_TYPES.LIGHTSABER) {
-              prop.kill();
+              prop.setLastFrame();
             }
           }
         });
@@ -565,7 +565,7 @@ const loop = () => {
             friendly.hit();
 
             if (prop.type !== WEAPON_TYPES.LIGHTSABER) {
-              prop.kill();
+              prop.setLastFrame();
             }
           }
         });
@@ -575,7 +575,7 @@ const loop = () => {
             neutral.hit();
 
             if (prop.type !== WEAPON_TYPES.LIGHTSABER) {
-              prop.kill();
+              prop.setLastFrame();
             }
           }
         });
@@ -718,35 +718,19 @@ const reset = () => {
 }
 
 const resizeGame = (width, height) => {
-  if (game.mode === MODES.GAMEPLAY) {
+  if (game.player) {
     adaptCoords({
       actor: game.player,
       game
     });
-
-    game.enemies.forEach(enemy => {
-      adaptCoords({
-        actor: enemy,
-        game
-      });
-    });
-
-    game.props.forEach(prop => {
-      adaptCoords({
-        actor: game.props,
-        game
-      });
-    });
   }
 
-  game.width                 = width;
-  game.height                = height;
-  game.selector.style.width  = `${game.width}px`;
-  game.selector.style.height = `${game.height}px`;
-
-  if (game.mode === MODES.CUTSCENE) {
-    game.stage.resize();
-  }
+  game.enemies.forEach(enemy => {
+    adaptCoords({
+      actor: enemy,
+      game
+    });
+  });
 
   game.obstacles.forEach(obstacle => {
     adaptCoords({
@@ -755,7 +739,21 @@ const resizeGame = (width, height) => {
     });
   });
 
-  btnStart.style.left = `${(game.width - 75) / 2}px`;
+  game.props.forEach(prop => {
+    prop.kill();
+  });
+
+  game.width                   = width;
+  game.height                  = height;
+  game.hud.btnStart.style.left = `${(game.width - 75) / 2}px`;
+  game.selector.style.width    = `${game.width}px`;
+  game.selector.style.height   = `${game.height}px`;
+
+  game.props.splice(0);
+
+  if (game.mode === MODES.CUTSCENE) {
+    game.stage.resize();
+  }
 }
 
 (function() {

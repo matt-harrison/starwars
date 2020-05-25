@@ -3,6 +3,7 @@
 
 REFACTOR:
 * code formatting
+  * use arrow functions within classes.
   * explicitly map all objects (instead of Object.assign) for readability?
   * distribute functions to relevant class or move to utils
   * migrate all functions from app to utils? (game as arg?)
@@ -11,6 +12,7 @@ REFACTOR:
   * audit each function
   * audit each class
   * audit each constant
+* mobile magnification
 
 CODE FEATURES:
 * how can user win with a character lacking any attack?
@@ -41,5 +43,4 @@ SPRITE FEATURES:
 * add high score board via CRUD, with defensive coding to hide (anticipating legacy issues)
 
 BUGS:
-* adaptCoords(laser) bug
-* mobile magnification
+* ???

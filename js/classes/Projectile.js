@@ -10,7 +10,9 @@ export const Projectile = function({
   game,
   origin
 }) {
-  Object.assign(this, origin.projectile);
+  if (typeof origin.projectile == 'object') {
+    Object.assign(this, origin.projectile);
+  }
 
   origin.isWeaponReady = false;
 
@@ -74,8 +76,14 @@ export const Projectile = function({
 
   game.props.push(this);
 
-  this.kill = function() {
+  this.setLastFrame = () => {
     this.isLastFrame = true;
+  };
+
+  this.kill = function() {
+    this.isActive = false;
+
+    game.stage.selector.removeChild(this.selector);
   }
 
   this.update = function() {
@@ -114,9 +122,7 @@ export const Projectile = function({
     }
 
     if (this.isActive && this.isLastFrameDrawn) {
-      this.isActive = false;
-
-      game.stage.selector.removeChild(this.selector);
+      this.kill();
     }
   }
 
