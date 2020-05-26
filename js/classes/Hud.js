@@ -9,9 +9,7 @@ import {
 } from '/js/constants/index.js';
 import { attachNode } from '/js/utils.js';
 
-export const Hud = function({
-  game
-}) {
+export const Hud = function({ game }) {
   this.counter              = 0;
   this.directions           = '';
   this.directionsVisibility = 'display';

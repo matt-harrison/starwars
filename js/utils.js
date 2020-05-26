@@ -11,35 +11,6 @@ import {
   MODES,
 } from '/js/constants/index.js';
 
-export const adaptCoords = ({ actor, game }) => {
-  if (typeof actor.leftPercent === 'number' && typeof actor.topPercent === 'number') {
-    if (actor.leftPercent === 0) {
-      actor.x = 0;
-    } else if (actor.leftPercent === 100) {
-      actor.x = game.width - actor.frameWidth;
-    } else {
-      actor.x = Math.floor(game.width * (actor.leftPercent / 100) - (actor.frameWidth / 2));
-    }
-
-    if (actor.topPercent === 0) {
-      actor.y = 0;
-    } else if (actor.leftPercent === 100) {
-      actor.y = game.height - actor.frameHeight;
-    } else {
-      actor.y = Math.floor(game.height * (actor.topPercent / 100) - (actor.frameHeight / 2));
-    }
-
-  } else {
-    const offsetX = actor.x / (game.width - actor.frameWidth);
-    const offsetY = actor.y / (game.height - actor.frameHeight);
-
-    actor.x = Math.floor((window.innerWidth - actor.frameWidth) * offsetX);
-    actor.y = Math.floor((window.innerHeight - actor.frameHeight) * offsetY);
-  }
-
-  actor.draw();
-}
-
 export const add = (num1, num2) => {
   return Number(num1) + Number(num2);
 }
@@ -223,51 +194,6 @@ export const getRandom = (max) => {
   return Math.floor(Math.random() * max);
 }
 
-export const initEnemies = (game) => {
-  const {
-    enemiesOptional,
-    enemiesRequiredData
-  } = game.stage;
-
-  game.stage.enemies = [];
-
-  enemiesOptional.forEach(enemy => {
-    enemy.details.isOptional = true;
-    enemy.details.type       = ACTOR_TYPES.ENEMY;
-  });
-
-  if (enemiesOptional) {
-    game.stage.enemies.push(...enemiesOptional);
-  }
-
-  if (enemiesRequiredData) {
-    const {
-      bounceLimit = INFINITY,
-      count,
-      character,
-      dir,
-      hp,
-      spawnInterval
-    } = enemiesRequiredData;
-
-    for (let i = 0; i < count; i++) {
-      const enemy = {
-        character: character,
-        details: {
-          bounceLimit: INFINITY,
-          dir,
-          hp,
-          isOptional : false,
-          spawnFrame : spawnInterval * i,
-          type       : ACTOR_TYPES.ENEMY
-        }
-      };
-
-      game.stage.enemies.push(enemy);
-    }
-  }
-};
-
 export const preload = (url) => {
   const image = new Image();
   image.src = url;
@@ -406,67 +332,3 @@ export const updateHud = ({ game, victim }) => {
   game.hud.victimInterval = game.counter + 16;
   game.hud.victimName     = victim.name;
 }
-
-// Cheats
-const playAs = (character) => {
-  if (character) {
-    window.game.character = character;
-
-    if (game.mode === MODES.GAMEPLAY) {
-      window.game.stage.selector.removeChild(window.game.player.selector);
-
-      window.game.player = new Player({
-        data: window.game.character,
-        game: window.game
-      });
-    }
-
-    return `Welcome, ${character.name}.`;
-  }
-}
-
-const playLevel = (level) => {
-  let skipToLevel;
-
-  if (typeof(level) === 'number') {
-    if (level > 0 && level < EPISODES[3].length) {
-      skipToLevel = level;
-    }
-  } else {
-    for (const i = 0; i < EPISODES[3].length; i++) {
-      if (level === EPISODES[3][i]) {
-        skipToLevel = i;
-      }
-    }
-  }
-
-  if (typeof(skipToLevel) === 'number') {
-    if (game.mode !== MODES.GAMEPLAY) {
-      initMode(MODES.GAMEPLAY);
-    }
-
-    window.game.level = skipToLevel;
-    initLevel();
-
-    window.game.isPaused = false;
-    pause();
-  }
-
-  return `Greetings from ${EPISODES[3][skipToLevel]}.`;
-}
-
-const useTheForce = () => {
-  window.game.isInvincible   = true;
-  window.game.isPaused       = true;
-  window.game.hud.title      = 'Pause';
-  window.game.hud.directions = `May the force be with you.<br/></br/>${window.game.promptStart}`;
-
-  return 'May the force be with you.';
-}
-
-Object.values(CHARACTERS).forEach(character => {
-  window[character.code] = character;
-});
-
-window.playAs      = playAs;
-window.useTheForce = useTheForce;
