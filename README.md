@@ -36,7 +36,6 @@ SPRITE FEATURES:
 * neutrals who stand still but can be killed? bartender? han & chewie in mos eisley?
 * obstacles that can take damage?
 * add high score board via CRUD, with defensive coding to hide (anticipating legacy issues)
-* overlapping d-pad buttons to include center in opacity change
 
 BUGS:
 * only delay projectile.remove() if first frame is ALSO last frame

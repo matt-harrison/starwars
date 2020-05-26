@@ -140,13 +140,11 @@ export const Hud = function({ game }) {
       },
       parent: this.buttons,
       styles: {
-        backgroundImage: 'url("img/hud/middle.png")',
-        bottom         : '50px',
-        height         : '65px',
-        left           : '50px',
-        opacity        : HUD_OPACITY,
+        bottom         : '5px',
+        height         : '155px',
+        left           : '5px',
         position       : 'absolute',
-        width          : '65px'
+        width          : '155px'
       }
     });
 
@@ -186,12 +184,12 @@ export const Hud = function({ game }) {
       attributes: {
         id: BUTTON_NAMES.DOWN
       },
-      parent: this.buttons,
+      parent: this.dpad,
       styles: {
         backgroundImage: 'url("img/hud/btnDown.png")',
-        bottom         : '5px',
-        height         : '45px',
-        left           : '55px',
+        bottom         : '0',
+        height         : '70px',
+        left           : '50px',
         opacity        : HUD_OPACITY,
         position       : 'absolute',
         width          : '55px'
@@ -202,15 +200,15 @@ export const Hud = function({ game }) {
       attributes: {
         id: BUTTON_NAMES.LEFT
       },
-      parent: this.buttons,
+      parent: this.dpad,
       styles: {
         backgroundImage: 'url("img/hud/btnLeft.png")',
-        bottom         : '55px',
+        bottom         : '50px',
         height         : '55px',
         left           : '5px',
         opacity        : HUD_OPACITY,
         position       : 'absolute',
-        width          : '45px'
+        width          : '70px'
       }
     });
 
@@ -218,15 +216,15 @@ export const Hud = function({ game }) {
       attributes: {
         id: BUTTON_NAMES.RIGHT
       },
-      parent: this.buttons,
+      parent: this.dpad,
       styles: {
         backgroundImage: 'url("img/hud/btnRight.png")',
-        bottom         : '55px',
+        bottom         : '50px',
         height         : '55px',
-        left           : '115px',
+        right          : '5px',
         opacity        : HUD_OPACITY,
         position       : 'absolute',
-        width          : '45px'
+        width          : '70px'
       }
     });
 
@@ -234,15 +232,15 @@ export const Hud = function({ game }) {
       attributes: {
         id: BUTTON_NAMES.UP
       },
-      parent: this.buttons,
+      parent: this.dpad,
       styles: {
         backgroundImage: 'url("img/hud/btnUp.png")',
-        bottom         : '115px',
-        height         : '45px',
-        left           : '55px',
-        opacity        : HUD_OPACITY,
-        position       : 'absolute',
-        width          : '55px'
+        height  : '70px',
+        left    : '50px',
+        opacity : HUD_OPACITY,
+        position: 'absolute',
+        top     : '0',
+        width   : '55px'
       }
     });
 
