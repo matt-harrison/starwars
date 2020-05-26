@@ -792,24 +792,15 @@ const reset = () => {
 
 const resizeGame = (width, height) => {
   if (game.player) {
-    adaptCoords({
-      actor: game.player,
-      game
-    });
+    adaptCoords(game.player);
   }
 
   game.enemies.forEach(enemy => {
-    adaptCoords({
-      actor: enemy,
-      game
-    });
+    adaptCoords(enemy);
   });
 
   game.obstacles.forEach(obstacle => {
-    adaptCoords({
-      actor: obstacle,
-      game
-    });
+    adaptCoords(obstacle);
   });
 
   game.props.forEach(prop => {

@@ -6,18 +6,14 @@ REFACTOR:
   * audit each function
   * audit each class
   * audit each constant
-* mobile magnification
 
 CODE FEATURES:
-* add optional X or Y percentage-based coordinate for actors to spawn (like obstacles)?
-* add increasing chance of enemies turning toward player as levels progress?
-  * make some enemies chase player?
+* add optional X or Y percentage-based coordinate for actors to spawn (like obstacles).
 * make obstacles and/or dead bodies stop projectiles?
-* make lightsabers bounce off obstacles?
 *
 * password menu!
 * episode menu...
-* reward menu: reveal password for random character
+* reward menu: reveal password for random character?
 * npm lint?
 * npm test?
 * sliding touch?

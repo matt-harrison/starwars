@@ -49,7 +49,9 @@ export const KEYS = {
   Z     : 'z'
 };
 
-export const MAGNIFICATION = IS_MOBILE ? Math.floor(window.innerWidth / 100) : 5;
+const shorterScreenSide = window.innerWidth > window.innerHeight ? window.innerHeight : window.innerWidth;
+
+export const MAGNIFICATION = IS_MOBILE ? Math.floor(shorterScreenSide / 500 * 5) : 5;
 
 export const MODES = {
   CUTSCENE: 'cutscene',
