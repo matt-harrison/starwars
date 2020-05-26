@@ -4,7 +4,20 @@ export const Stage = function({
   data,
   game
 }) {
-  Object.assign(this, data);
+  Object.assign(this, {
+    bg                 : data.bg,
+    bosses             : data.bosses,
+    character          : data.character,
+    cutscenes          : data.cutscenes,
+    enemiesOptional    : data.enemiesOptional,
+    enemiesRequiredData: data.enemiesRequiredData,
+    friendlies         : data.friendlies,
+    name               : data.name,
+    neutrals           : data.neutrals,
+    obstacles          : data.obstacles,
+    password           : data.password,
+    textColor          : data.textColor
+  });
 
   this.selector = attachNode({
     attributes: {

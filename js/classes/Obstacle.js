@@ -5,10 +5,16 @@ export const Obstacle = function({
   data,
   game
 }) {
-  Object.assign(this, data);
-
-  this.leftPercent = this.x;
-  this.topPercent  = this.y;
+  Object.assign(this, {
+    frameCount : data.frameCount,
+    frameHeight: data.frameHeight,
+    frameWidth : data.frameWidth,
+    height     : data.height,
+    img        : data.img,
+    width      : data.width,
+    leftPercent: data.x,
+    topPercent : data.y
+  });
 
   if (this.leftPercent === 0) {
     this.x = 0;

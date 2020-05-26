@@ -10,16 +10,24 @@ export const Projectile = function({
   game,
   origin
 }) {
-  Object.assign(this, origin.weapon);
+  Object.assign(this, {
+    dir             : origin.dir,
+    frameCount      : origin.weapon.frameCount,
+    frameHeight     : origin.weapon.frameHeight,
+    frameWidth      : origin.weapon.frameWidth,
+    height          : origin.weapon.height,
+    isActive        : true,
+    isLastFrame     : false,
+    isLastFrameDrawn: false,
+    name            : origin.weapon.name,
+    origin,
+    speed           : origin.weapon.speed || 30,
+    spriteColumn    : 0,
+    type            : origin.weapon.type,
+    width           : origin.weapon.width
+  });
 
   origin.isWeaponReady = false;
-
-  this.dir              = origin.dir;
-  this.isActive         = true;
-  this.isLastFrame      = false;
-  this.isLastFrameDrawn = false;
-  this.origin           = origin;
-  this.spriteColumn     = 0;
 
   if (this.name === WEAPONS.LASER.name) {
     if (this.dir === CARDINALS.LEFT || this.dir === CARDINALS.RIGHT) {
@@ -32,7 +40,6 @@ export const Projectile = function({
 
     this.frameHeight = this.height;
     this.frameWidth  = this.width;
-    this.speed       = 30;
   }
 
   this.speed = this.speed * (MAGNIFICATION / 5);

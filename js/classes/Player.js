@@ -25,7 +25,25 @@ export const Player = function({
   data,
   game
 }) {
-  Object.assign(this, data);
+  Object.assign(this, {
+    code             : data.code,
+    death            : data.death,
+    frameHeight      : data.frameHeight,
+    frameWidth       : data.frameWidth,
+    height           : data.height,
+    isPropulsive     : data.isPropulsive,
+    moveFrameCount   : data.moveFrameCount,
+    name             : data.name,
+    speed            : data.speed,
+    sprite           : data.sprite,
+    weapon           : data.weapon,
+    weaponColor      : data.weaponColor,
+    weaponOffsetDown : data.weaponOffsetDown,
+    weaponOffsetLeft : data.weaponOffsetLeft,
+    weaponOffsetRight: data.weaponOffsetRight,
+    weaponOffsetUp   : data.weaponOffsetUp,
+    width            : data.width
+  });
 
   this.bounceCount   = 0;
   this.dir           = 'down';

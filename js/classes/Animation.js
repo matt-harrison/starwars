@@ -6,7 +6,13 @@ export const Animation = function({
   game,
   origin
 }) {
-  Object.assign(this, data);
+  Object.assign(this, {
+    frameCount : data.frameCount,
+    frameHeight: data.frameHeight,
+    frameWidth : data.frameWidth,
+    name       : data.name,
+    isRemove   : data.isRemove
+  });
 
   this.height       = this.frameHeight;
   this.isActive     = true;

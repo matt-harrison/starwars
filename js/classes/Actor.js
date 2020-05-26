@@ -23,8 +23,32 @@ export const Actor = function({
   data,
   game
 }) {
-  Object.assign(this, data.character);
-  Object.assign(this, data.details);
+  Object.assign(this, {
+    bounceLimit      : data.details.bounceLimit,
+    code             : data.character.code,
+    death            : data.character.death,
+    dir              : data.details.dir,
+    frameHeight      : data.character.frameHeight,
+    frameWidth       : data.character.frameWidth,
+    height           : data.character.height,
+    hp               : data.details.hp,
+    id               : data.details.id,
+    isOptional       : data.details.isOptional,
+    isPropulsive     : data.character.isPropulsive,
+    moveFrameCount   : data.character.moveFrameCount,
+    name             : data.character.name,
+    spawnFrame       : data.details.spawnFrame,
+    speed            : data.character.speed,
+    sprite           : data.character.sprite,
+    type             : data.details.type,
+    weapon           : data.character.weapon,
+    weaponColor      : data.character.weaponColor,
+    weaponOffsetDown : data.character.weaponOffsetDown,
+    weaponOffsetLeft : data.character.weaponOffsetLeft,
+    weaponOffsetRight: data.character.weaponOffsetRight,
+    weaponOffsetUp   : data.character.weaponOffsetUp,
+    width            : data.character.width
+  });
 
   this.blinkCount   = 0;
   this.bounceCount  = 0;

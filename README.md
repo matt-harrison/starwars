@@ -3,7 +3,6 @@
 
 REFACTOR:
 * code formatting
-  * explicitly map all objects (instead of Object.assign) for readability?
   * distribute functions to relevant class or move to utils
   * migrate all functions from app to utils? (game as arg?)
   * share common logic across actor, player, etc as utils?

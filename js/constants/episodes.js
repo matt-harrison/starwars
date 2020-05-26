@@ -570,7 +570,7 @@ const IV_10_DETENTION = {
       character: CHARACTERS.mousedroid,
       details: {
         dir       : null,
-        hp        : isQuickTest ? 1 : 2,
+        hp        : isQuickTest ? 1 : 1,
         spawnDelay: 1 * FPS
       }
     }
