@@ -134,8 +134,8 @@ const buttonPush = (key, id) => {
     document.getElementById(`btnEpisode${NUMERALS[game.episode]}`).style.color = COLORS.WHITE;
   }
 
-  if (Object.values(BUTTON_NAMES).indexOf(id) > -1) {
-    document.getElementById(id).style.opacity = '1';
+  if (Object.values(BUTTON_NAMES).includes(id)) {
+    game.hud[id].style.opacity = '1';
   }
 }
 
@@ -145,13 +145,19 @@ const buttonUpdate = (event) => {
     const button         = document.querySelector(`[data-key="${cardinal}"]`);
     const bounds         = button.getBoundingClientRect();
 
-    if (event.changedTouches[0].pageX > bounds.left && event.changedTouches[0].pageX < bounds.right && event.changedTouches[0].pageY > bounds.top && event.changedTouches[0].pageY < bounds.bottom) {
-      if (game.keys.indexOf(cardinal) === -1) {
-        buttonRelease(game.player.dir, previousButton.id);
-        buttonPush(cardinal, button.id);
-      }
-    } else if (game.keys.indexOf(cardinal) !== -1) {
-      buttonRelease(game.player.dir, button.id);
+    const isPressing =
+      event.changedTouches[0].pageX > bounds.left &&
+      event.changedTouches[0].pageX < bounds.right &&
+      event.changedTouches[0].pageY > bounds.top &&
+      event.changedTouches[0].pageY < bounds.bottom;
+
+    if (!isPressing && game.keys.includes(cardinal)) {
+      buttonRelease(cardinal, button.id);
+    }
+
+    if (isPressing && !game.keys.includes(cardinal)) {
+      game.player.dir = cardinal;
+      buttonPush(game.player.dir, button.id);
     }
   });
 }
@@ -184,22 +190,29 @@ const buttonRelease = (key, id) => {
     reset();
   }
 
-  const position = game.keys.indexOf(key);
+  if (game.keys.includes(key)) {
+    game.keys.splice(game.keys.indexOf(key), 1);
 
-  if (position !== -1) {
     if (key === KEYS.SPACE) {
       game.player.isAttacking = false;
-    } else if (key === KEYS.Z) {
-    } else {
-      game.player.isRunning    = false;
-      game.player.spriteColumn = 0;
-    }
+    } else if (Object.values(CARDINALS).includes(key)) {
+      let isCardinalPressed = false;
 
-    game.keys.splice(position, 1);
+      Object.values(CARDINALS).forEach(cardinal => {
+        if (game.keys.includes(cardinal)) {
+          isCardinalPressed = true;
+        }
+      });
+
+      if (!isCardinalPressed) {
+        game.player.isRunning    = false;
+        game.player.spriteColumn = 0;
+      }
+    }
   }
 
-  if (Object.values(BUTTON_NAMES).indexOf(id) > -1) {
-    document.getElementById(id).style.opacity = HUD_OPACITY;
+  if (Object.values(BUTTON_NAMES).includes(id)) {
+    game.hud[id].style.opacity = HUD_OPACITY;
   }
 }
 
@@ -281,7 +294,10 @@ const initInterface = () => {
 
     window.addEventListener('touchmove', function(event) {
       event.preventDefault();
-      //buttonUpdate(event);
+
+      if (game.player) {
+        buttonUpdate(event);
+      }
     }, {passive: false});
 
     window.addEventListener('touchend', function(event) {
@@ -289,13 +305,18 @@ const initInterface = () => {
         buttonRelease(event.target.getAttribute('data-key'), event.target.id);
       }
 
-      // Check if touch was released over different d-pad button
+      // Check if touch was released over different dpad button
       Object.values(CARDINALS).forEach(cardinal => {
         const button = document.querySelector(`[data-key="${cardinal}"]`);
         const bounds = button.getBoundingClientRect();
 
-        if (event.pageX > bounds.left && event.pageX < bounds.right && event.pageY > bounds.top && event.pageY < bounds.bottom) {
-          //buttonRelease(game.player.dir, button.id);
+        if (
+          event.changedTouches[0].pageX > bounds.left &&
+          event.changedTouches[0].pageX < bounds.right &&
+          event.changedTouches[0].pageY > bounds.top &&
+          event.changedTouches[0].pageY < bounds.bottom
+        ) {
+          buttonRelease(game.player.dir, button.id);
         }
       });
     }, {passive: false});
@@ -407,6 +428,10 @@ const initInterface = () => {
 
 const initLevel = () => {
   clearStage();
+
+  Object.values(BUTTON_NAMES).forEach(button => {
+    game.hud[button].style.opacity = HUD_OPACITY;
+  });
 
   game.stage = new Stage({
     data: EPISODES[game.episode][game.level],

@@ -10,13 +10,18 @@ REFACTOR:
 CODE FEATURES:
 * add optional X or Y percentage-based coordinate for actors to spawn (like obstacles).
 * make obstacles and/or dead bodies stop projectiles?
+* preload all stage graphics? when?
+* preload all mobile button graphics? when?
+* continuously shoot when mobile???
+  * what about jedi?
+  * what about bombers?
+
 *
 * password menu!
 * episode menu...
 * reward menu: reveal password for random character?
 * npm lint?
 * npm test?
-* sliding touch?
 
 SPRITE FEATURES:
 * add shadow under falcon obstacle (like speeder).
