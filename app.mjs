@@ -285,6 +285,13 @@ const initEnemies = () => {
 
 const initInterface = () => {
   if (IS_MOBILE) {
+    preload('img/hud/btnAttack.png');
+    preload('img/hud/btnDown.png');
+    preload('img/hud/btnLeft.png');
+    preload('img/hud/btnRight.png');
+    preload('img/hud/btnStart.png');
+    preload('img/hud/btnUp.png');
+
     // Init touchscreen controls
     window.addEventListener('touchstart', function(event) {
       if (typeof(event.target.getAttribute('data-key')) !== 'undefined') {

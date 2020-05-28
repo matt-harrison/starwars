@@ -6,7 +6,6 @@ REFACTOR:
 
 CODE FEATURES:
 * preload all stage graphics? when?
-* preload all mobile button graphics? when?
 * add optional X or Y percentage-based coordinate for actors to spawn (like obstacles).
 * make obstacles and/or dead bodies stop projectiles?
 * continuously shoot when mobile???
