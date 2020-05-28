@@ -9,7 +9,7 @@ import { BACKGROUNDS } from './backgrounds.js';
 import { OBSTACLES } from './obstacles.js';
 import { SHIPS } from './ships.js';
 
-const isQuickTest = true;
+const isQuickTest = false;
 
 export const ATTRACTION = {
   bg: BACKGROUNDS.METAL,

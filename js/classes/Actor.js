@@ -28,9 +28,9 @@ export const Actor = function({
     code             : data.character.code,
     death            : data.character.death,
     dir              : data.details.dir,
+    frameCounts      : data.character.frameCounts,
     frameHeight      : data.character.frameHeight,
     frameWidth       : data.character.frameWidth,
-    height           : data.character.height,
     hp               : data.details.hp,
     id               : data.details.id,
     isOptional       : data.details.isOptional,
@@ -46,8 +46,7 @@ export const Actor = function({
     weaponOffsetDown : data.character.weaponOffsetDown,
     weaponOffsetLeft : data.character.weaponOffsetLeft,
     weaponOffsetRight: data.character.weaponOffsetRight,
-    weaponOffsetUp   : data.character.weaponOffsetUp,
-    width            : data.character.width
+    weaponOffsetUp   : data.character.weaponOffsetUp
   });
 
   this.blinkCount   = 0;
@@ -72,7 +71,7 @@ export const Actor = function({
     styles: {
       backgroundImage : `url('img/${this.sprite}.png')`,
       backgroundRepeat: 'no-repeat',
-      backgroundSize  : `${this.width}px ${this.height}px`,
+      backgroundSize  : `${this.frameWidth * this.frameCounts.x}px ${this.frameHeight * this.frameCounts.y}px`,
       height          : `${this.frameHeight}px`,
       position        : 'absolute',
       width           : `${this.frameWidth}px`,

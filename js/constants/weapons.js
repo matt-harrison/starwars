@@ -15,11 +15,9 @@ const GUNGAN_BALL = {
   frameCount : 8,
   frameHeight: 6 * MAGNIFICATION,
   frameWidth : 6 * MAGNIFICATION,
-  height     : 6 * MAGNIFICATION,
   name       : 'gunganBall',
   type       : WEAPON_TYPES.PROJECTILE,
-  speed      : 10,
-  width      : 6 * 8 * MAGNIFICATION
+  speed      : 10
 };
 
 const LASER = {
@@ -38,22 +36,18 @@ const ROCK = {
   frameCount : 4,
   frameHeight: 5 * MAGNIFICATION,
   frameWidth : 5 * MAGNIFICATION,
-  height     : 5 * MAGNIFICATION,
   name       : 'rock',
   type       : WEAPON_TYPES.PROJECTILE,
-  speed      : 10,
-  width      : 5 * 4 * MAGNIFICATION
+  speed      : 10
 };
 
 const STUN = {
   frameCount : 6,
   frameHeight: 10 * MAGNIFICATION,
   frameWidth : 10 * MAGNIFICATION,
-  height     : 10 * MAGNIFICATION,
   name       : 'stun',
   type       : WEAPON_TYPES.PROJECTILE,
-  speed      : 20,
-  width      : 10 * 6 * MAGNIFICATION
+  speed      : 20
 };
 
 export const WEAPONS = {

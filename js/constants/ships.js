@@ -5,24 +5,29 @@ import { WEAPONS }          from '/js/constants/weapons.js';
 const ASTEROID = {
   code          : 'asteroid',
   death         : ANIMATIONS.SPRITZ,
+  frameCounts   : {
+    x: 2,
+    y: 4
+  },
   frameHeight   : 7 * MAGNIFICATION,
   frameWidth    : 7 * MAGNIFICATION,
-  height        : 28 * MAGNIFICATION,
   isPropulsive  : true,
   moveFrameCount: 1,
   name          : 'Asteroid',
   speed         : 4,
   sprite        : 'ships/asteroid',
-  weapon        : null,
-  width         : 7 * 2 * MAGNIFICATION
+  weapon        : null
 };
 
 const DEATHSTAR = {
   code             : 'deathstar',
   death            : ANIMATIONS.EXPLOSION,
+  frameCounts      : {
+    x: 9,
+    y: 4
+  },
   frameHeight      : 10 * MAGNIFICATION,
   frameWidth       : 10 * MAGNIFICATION,
-  height           : 40 * MAGNIFICATION,
   isPropulsive     : true,
   moveFrameCount   : 8,
   name             : 'Death Star',
@@ -33,16 +38,18 @@ const DEATHSTAR = {
   weaponOffsetDown : [3, 5],
   weaponOffsetLeft : [2, 3],
   weaponOffsetRight: [5, 3],
-  weaponOffsetUp   : [3, 0],
-  width            : 10 * 9 * MAGNIFICATION
+  weaponOffsetUp   : [3, 0]
 };
 
 const DEATHSTAR6 = {
   code             : 'deathstar6',
   death            : ANIMATIONS.EXPLOSION,
+  frameCounts      : {
+    x: 9,
+    y: 4
+  },
   frameHeight      : 10 * MAGNIFICATION,
   frameWidth       : 10 * MAGNIFICATION,
-  height           : 40 * MAGNIFICATION,
   isPropulsive     : true,
   moveFrameCount   : 8,
   name             : 'Death Star II',
@@ -53,16 +60,18 @@ const DEATHSTAR6 = {
   weaponOffsetDown : [3, 5],
   weaponOffsetLeft : [2, 3],
   weaponOffsetRight: [5, 3],
-  weaponOffsetUp   : [3, 0],
-  width            : 10 * 9 * MAGNIFICATION
+  weaponOffsetUp   : [3, 0]
 };
 
 const DESTROYER = {
   code             : 'destroyer',
   death            : ANIMATIONS.EXPLOSION,
+  frameCounts      : {
+    x: 2,
+    y: 4
+  },
   frameHeight      : 30 * MAGNIFICATION,
   frameWidth       : 30 * MAGNIFICATION,
-  height           : 120 * MAGNIFICATION,
   isPropulsive     : true,
   moveFrameCount   : 1,
   name             : 'Star Destroyer',
@@ -73,16 +82,18 @@ const DESTROYER = {
   weaponOffsetDown : [15, 12],
   weaponOffsetLeft : [16, 14],
   weaponOffsetRight: [12, 15 ],
-  weaponOffsetUp   : [15, 16],
-  width            : 30 * 2 * MAGNIFICATION
+  weaponOffsetUp   : [15, 16]
 };
 
 const FALCON = {
   code             : 'falcon',
   death            : ANIMATIONS.SPRITZ,
+  frameCounts      : {
+    x: 5,
+    y: 4
+  },
   frameHeight      : 15 * MAGNIFICATION,
   frameWidth       : 15 * MAGNIFICATION,
-  height           : 60 * MAGNIFICATION,
   isPropulsive     : true,
   moveFrameCount   : 4,
   name             : 'Millenium Falcon',
@@ -93,16 +104,18 @@ const FALCON = {
   weaponOffsetDown : [7, 8],
   weaponOffsetLeft : [5, 7],
   weaponOffsetRight: [8, 7],
-  weaponOffsetUp   : [7, 6],
-  width            : 15 * 5 * MAGNIFICATION
+  weaponOffsetUp   : [7, 6]
 };
 
 const TIE = {
   code             : 'tie',
   death            : ANIMATIONS.SPRITZ,
+  frameCounts      : {
+    x: 5,
+    y: 4
+  },
   frameHeight      : 7 * MAGNIFICATION,
   frameWidth       : 7 * MAGNIFICATION,
-  height           : 28 * MAGNIFICATION,
   isPropulsive     : true,
   moveFrameCount   : 4,
   name             : 'TIE Fighter',
@@ -113,8 +126,7 @@ const TIE = {
   weaponOffsetDown : [3, 5],
   weaponOffsetLeft : [0, 3],
   weaponOffsetRight: [5, 3],
-  weaponOffsetUp   : [3, 0],
-  width            : 7 * 5 * MAGNIFICATION
+  weaponOffsetUp   : [3, 0]
 };
 
 const TIE_ADVANCED = {
@@ -126,9 +138,12 @@ const TIE_ADVANCED = {
     name       : 'vadertiedeath',
     isRemove   : true
   },
+  frameCounts      : {
+    x: 5,
+    y: 4
+  },
   frameHeight      : 7 * MAGNIFICATION,
   frameWidth       : 7 * MAGNIFICATION,
-  height           : 28 * MAGNIFICATION,
   isPropulsive     : true,
   moveFrameCount   : 4,
   name             : 'Darth Vader',
@@ -139,16 +154,18 @@ const TIE_ADVANCED = {
   weaponOffsetDown : [3, 5],
   weaponOffsetLeft : [0, 3],
   weaponOffsetRight: [5, 3],
-  weaponOffsetUp   : [3, 0],
-  width            : 7 * 5 * MAGNIFICATION
+  weaponOffsetUp   : [3, 0]
 };
 
 const XWING = {
   code             : 'xwing',
   death            : ANIMATIONS.SPRITZ,
+  frameCounts      : {
+    x: 5,
+    y: 4
+  },
   frameHeight      : 9 * MAGNIFICATION,
   frameWidth       : 9 * MAGNIFICATION,
-  height           : 36 * MAGNIFICATION,
   isPropulsive     : true,
   moveFrameCount   : 4,
   name             : 'X-wing',
@@ -159,8 +176,7 @@ const XWING = {
   weaponOffsetDown : [4, 8],
   weaponOffsetLeft : [1, 4],
   weaponOffsetRight: [8, 4],
-  weaponOffsetUp   : [4, 1],
-  width            : 9 * 5 * MAGNIFICATION
+  weaponOffsetUp   : [4, 1]
 };
 
 export const SHIPS = {

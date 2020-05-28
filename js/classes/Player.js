@@ -28,9 +28,9 @@ export const Player = function({
   Object.assign(this, {
     code             : data.code,
     death            : data.death,
+    frameCounts      : data.frameCounts,
     frameHeight      : data.frameHeight,
     frameWidth       : data.frameWidth,
-    height           : data.height,
     isPropulsive     : data.isPropulsive,
     moveFrameCount   : data.moveFrameCount,
     name             : data.name,
@@ -41,8 +41,7 @@ export const Player = function({
     weaponOffsetDown : data.weaponOffsetDown,
     weaponOffsetLeft : data.weaponOffsetLeft,
     weaponOffsetRight: data.weaponOffsetRight,
-    weaponOffsetUp   : data.weaponOffsetUp,
-    width            : data.width
+    weaponOffsetUp   : data.weaponOffsetUp
   });
 
   this.bounceCount   = 0;
@@ -86,7 +85,7 @@ export const Player = function({
     styles: {
       backgroundImage : `url('img/${this.sprite}.png')`,
       backgroundRepeat: 'no-repeat',
-      backgroundSize  : `${this.width}px ${this.height}px`,
+      backgroundSize  : `${this.frameWidth * this.frameCounts.x}px ${this.frameHeight * this.frameCounts.y}px`,
       height          : `${this.frameHeight}px`,
       position        : 'absolute',
       width           : `${this.frameWidth}px`,

@@ -15,7 +15,7 @@ export const Projectile = function({
     frameCount      : origin.weapon.frameCount,
     frameHeight     : origin.weapon.frameHeight,
     frameWidth      : origin.weapon.frameWidth,
-    height          : origin.weapon.height,
+    height          : origin.weapon.frameHeight,
     isActive        : true,
     isLastFrame     : false,
     isLastFrameDrawn: false,
@@ -24,7 +24,7 @@ export const Projectile = function({
     speed           : origin.weapon.speed || 30,
     spriteColumn    : 0,
     type            : origin.weapon.type,
-    width           : origin.weapon.width
+    width           : origin.weapon.frameWidth * origin.weapon.frameCount
   });
 
   origin.isWeaponReady = false;
