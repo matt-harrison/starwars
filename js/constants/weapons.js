@@ -12,14 +12,14 @@ const BOMB = {
 };
 
 const GUNGAN_BALL = {
-  frameCount : 5,
+  frameCount : 8,
   frameHeight: 6 * MAGNIFICATION,
   frameWidth : 6 * MAGNIFICATION,
   height     : 6 * MAGNIFICATION,
   name       : 'gunganBall',
   type       : WEAPON_TYPES.PROJECTILE,
   speed      : 10,
-  width      : 30 * MAGNIFICATION
+  width      : 48 * MAGNIFICATION
 };
 
 const LASER = {

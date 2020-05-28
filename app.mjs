@@ -429,9 +429,11 @@ const initInterface = () => {
 const initLevel = () => {
   clearStage();
 
-  Object.values(BUTTON_NAMES).forEach(button => {
-    game.hud[button].style.opacity = HUD_OPACITY;
-  });
+  if (IS_MOBILE) {
+    Object.values(BUTTON_NAMES).forEach(button => {
+      game.hud[button].style.opacity = HUD_OPACITY;
+    });
+  }
 
   game.stage = new Stage({
     data: EPISODES[game.episode][game.level],

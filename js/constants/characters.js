@@ -54,23 +54,15 @@ export const ani = {
   width         : 63 * MAGNIFICATION
 };
 
-export const artoo = {
-  code          : 'artoo',
-  frameHeight   : 8 * MAGNIFICATION,
-  frameWidth    : 7 * MAGNIFICATION,
-  height        : 40 * MAGNIFICATION,
-  moveFrameCount: 1,
-  name          : 'R2-D2',
-  isPropulsive  : false,
-  speed         : 10,
-  sprite        : 'characters/artoo',
-  weapon        : WEAPONS.BOMB,
-  width         : 14 * MAGNIFICATION
-};
-
 export const arfive = {
   code          : 'arfive',
-  death         : ANIMATIONS.DEATHS.ARFIVE,
+  death         : {
+    frameCount : 6,
+    frameHeight: 9 * MAGNIFICATION,
+    frameWidth : 5 * MAGNIFICATION,
+    name       : 'arfivedeath',
+    isRemove   : false
+  },
   frameHeight   : 9 * MAGNIFICATION,
   frameWidth    : 5 * MAGNIFICATION,
   height        : 36 * MAGNIFICATION,
@@ -79,6 +71,27 @@ export const arfive = {
   isPropulsive  : false,
   speed         : 6,
   sprite        : 'characters/arfive',
+  weapon        : WEAPONS.BOMB,
+  width         : 10 * MAGNIFICATION
+};
+
+export const artoo = {
+  code          : 'artoo',
+  death         : {
+    frameCount : 6,
+    frameHeight: 9 * MAGNIFICATION,
+    frameWidth : 5 * MAGNIFICATION,
+    name       : 'artoodeath',
+    isRemove   : false
+  },
+  frameHeight   : 8 * MAGNIFICATION,
+  frameWidth    : 5 * MAGNIFICATION,
+  height        : 32 * MAGNIFICATION,
+  moveFrameCount: 1,
+  name          : 'R2-D2',
+  isPropulsive  : false,
+  speed         : 10,
+  sprite        : 'characters/artoo',
   weapon        : WEAPONS.BOMB,
   width         : 10 * MAGNIFICATION
 };
@@ -104,7 +117,13 @@ export const atst = {
 
 export const auntberu = {
   code          : 'auntberu',
-  death         : ANIMATIONS.DEATHS.AUNT_BERU,
+  death         : {
+    frameCount : 10,
+    frameHeight: 12 * MAGNIFICATION,
+    frameWidth : 10 * MAGNIFICATION,
+    name       : 'auntberudeath',
+    isRemove   : false
+  },
   frameHeight   : 11 * MAGNIFICATION,
   frameWidth    : 8 * MAGNIFICATION,
   height        : 44 * MAGNIFICATION,
@@ -166,7 +185,13 @@ export const bb8 = {
 
 export const ben = {
   code             : 'ben',
-  death            : ANIMATIONS.DEATHS.BEN,
+  death            : {
+    frameCount : 6,
+    frameHeight: 12 * MAGNIFICATION,
+    frameWidth : 10 * MAGNIFICATION,
+    name       : 'bendeath',
+    isRemove   : false
+  },
   frameHeight      : 12 * MAGNIFICATION,
   frameWidth       : 10 * MAGNIFICATION,
   height           : 60 * MAGNIFICATION,
@@ -427,7 +452,13 @@ export const darthvader5 = {
 
 export const darthvader6 = {
   code             : 'darthvader6',
-  death            : ANIMATIONS.DEATHS.DARTH_VADER6,
+  death            : {
+    frameCount : 12,
+    frameHeight: 12 * MAGNIFICATION,
+    frameWidth : 10 * MAGNIFICATION,
+    name       : 'darthvader6death',
+    isRemove   : false
+  },
   frameHeight      : 12 * MAGNIFICATION,
   frameWidth       : 10 * MAGNIFICATION,
   height           : 48 * MAGNIFICATION,
@@ -1329,9 +1360,16 @@ export const threebee = {
 
 export const threepio = {
   code          : 'threepio',
+  death         : {
+    frameCount : 14,
+    frameHeight: 10 * MAGNIFICATION,
+    frameWidth : 8 * MAGNIFICATION,
+    name       : 'threepiodeath',
+    isRemove   : false
+  },
   frameHeight   : 10 * MAGNIFICATION,
   frameWidth    : 8 * MAGNIFICATION,
-  height        : 50 * MAGNIFICATION,
+  height        : 40 * MAGNIFICATION,
   moveFrameCount: 8,
   name          : 'C-3PO',
   isPropulsive  : false,
@@ -1400,7 +1438,13 @@ export const typho = {
 
 export const uncleowen = {
   code          : 'uncleowen',
-  death         : ANIMATIONS.DEATHS.UNCLE_OWEN,
+  death         : {
+    frameCount:  10,
+    frameHeight: 12 * MAGNIFICATION,
+    frameWidth:  10 * MAGNIFICATION,
+    name:        'uncleowendeath',
+    isRemove:    false
+  },
   frameHeight   : 12 * MAGNIFICATION,
   frameWidth    : 10 * MAGNIFICATION,
   height        : 48 * MAGNIFICATION,

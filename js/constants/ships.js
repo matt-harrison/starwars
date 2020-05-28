@@ -119,7 +119,13 @@ const TIE = {
 
 const TIE_ADVANCED = {
   code             : 'vadertie',
-  death            : ANIMATIONS.DEATHS.TIE_ADVANCED,
+  death            : {
+    frameCount : 8,
+    frameHeight: 7 * MAGNIFICATION,
+    frameWidth : 7 * MAGNIFICATION,
+    name       : 'vadertiedeath',
+    isRemove   : true
+  },
   frameHeight      : 7 * MAGNIFICATION,
   frameWidth       : 7 * MAGNIFICATION,
   height           : 28 * MAGNIFICATION,
