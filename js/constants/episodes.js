@@ -5,13 +5,14 @@ import {
   FPS,
   INFINITY
 } from '/js/constants/config.js';
+import { BACKGROUNDS } from './backgrounds.js';
 import { OBSTACLES } from './obstacles.js';
 import { SHIPS } from './ships.js';
 
-const isQuickTest = false;
+const isQuickTest = true;
 
 export const ATTRACTION = {
-  bg: 'metal',
+  bg: BACKGROUNDS.METAL,
   bosses: [],
   character: CHARACTERS.rebel,
   cutscenes: [],
@@ -79,7 +80,7 @@ export const ATTRACTION = {
 
 //Episode IV levels
 const IV_01_TANTIVE_IV = {
-  bg: 'metal',
+  bg: BACKGROUNDS.METAL,
   bosses: [
     {
       character: CHARACTERS.officerblack,
@@ -131,7 +132,7 @@ const IV_01_TANTIVE_IV = {
 };
 
 const IV_02_AMBASSADOR = {
-  bg: 'metal',
+  bg: BACKGROUNDS.METAL,
   bosses: [
     {
       character: CHARACTERS.leia,
@@ -173,7 +174,7 @@ const IV_02_AMBASSADOR = {
 };
 
 const IV_03_TATOOINE = {
-  bg: 'sand',
+  bg: BACKGROUNDS.SAND,
   bosses: [
     {
       character: CHARACTERS.artoo,
@@ -239,7 +240,7 @@ const IV_03_TATOOINE = {
 };
 
 const IV_04_SEARCH = {
-  bg: 'sand',
+  bg: BACKGROUNDS.SAND,
   bosses: [
     {
       character: CHARACTERS.bantha,
@@ -298,7 +299,7 @@ const IV_04_SEARCH = {
 };
 
 const IV_05_SANDCRAWLER = {
-  bg: 'rust',
+  bg: BACKGROUNDS.RUST,
   bosses: [
     {
       character: CHARACTERS.threebee,
@@ -349,7 +350,7 @@ const IV_05_SANDCRAWLER = {
 };
 
 const IV_06_MOISTURE_FARM = {
-  bg: 'sand',
+  bg: BACKGROUNDS.SAND,
   bosses: [
     {
       character: CHARACTERS.auntberu,
@@ -385,7 +386,7 @@ const IV_06_MOISTURE_FARM = {
 };
 
 const IV_07_MOS_EISLEY = {
-  bg: 'marble',
+  bg: BACKGROUNDS.MARBLE,
   bosses: [
     {
       character: CHARACTERS.pondababa,
@@ -485,7 +486,7 @@ const IV_07_MOS_EISLEY = {
 };
 
 const IV_08_DOCKING_BAY = {
-  bg: 'dust',
+  bg: BACKGROUNDS.DUST,
   bosses: [
     {
       character: CHARACTERS.garindan,
@@ -530,7 +531,7 @@ const IV_08_DOCKING_BAY = {
 };
 
 const IV_09_ALDERAAN = {
-  bg: 'space',
+  bg: BACKGROUNDS.SPACE,
   bosses: [
     {
       character: SHIPS.TIE,
@@ -564,7 +565,7 @@ const IV_09_ALDERAAN = {
 };
 
 const IV_10_DETENTION = {
-  bg: 'dark',
+  bg: BACKGROUNDS.DARK,
   bosses: [
     {
       character: CHARACTERS.mousedroid,
@@ -619,7 +620,7 @@ const IV_10_DETENTION = {
 };
 
 const IV_11_TRACTOR_BEAM = {
-  bg: 'dark',
+  bg: BACKGROUNDS.DARK,
   bosses: [
     {
       character: CHARACTERS.darthvader,
@@ -655,7 +656,7 @@ const IV_11_TRACTOR_BEAM = {
 };
 
 const IV_12_SHOWDOWN = {
-  bg: 'dark',
+  bg: BACKGROUNDS.DARK,
   bosses: [
     {
       character: CHARACTERS.ben,
@@ -685,7 +686,7 @@ const IV_12_SHOWDOWN = {
 };
 
 const IV_13_ESCAPE_FROM_DEATH_STAR = {
-  bg: 'dark',
+  bg: BACKGROUNDS.DARK,
   bosses: [
     {
       character: CHARACTERS.tiepilot,
@@ -749,7 +750,7 @@ const IV_13_ESCAPE_FROM_DEATH_STAR = {
 };
 
 const IV_14_BATTLE_OF_YAVIN = {
-  bg: 'space',
+  bg: BACKGROUNDS.SPACE,
   bosses: [
     {
       character: SHIPS.TIE,
@@ -823,7 +824,7 @@ const IV_14_BATTLE_OF_YAVIN = {
 };
 
 const IV_15_ASSAULT_ON_DEATH_STAR = {
-  bg: 'space',
+  bg: BACKGROUNDS.SPACE,
   bosses: [
     {
       character: SHIPS.DEATHSTAR,
@@ -854,7 +855,7 @@ const IV_15_ASSAULT_ON_DEATH_STAR = {
 
 //Episode V levels
 const HOTH = {
-  bg: 'snow',
+  bg: BACKGROUNDS.SNOW,
   bosses: [
     {
       character: CHARACTERS.mousedroid, // add wampa
@@ -885,7 +886,7 @@ const HOTH = {
 
 //Episode VI levels
 const ENDOR = {
-  bg: 'grass',
+  bg: BACKGROUNDS.GRASS,
   bosses: [
     {
       character: CHARACTERS.atst,
@@ -925,7 +926,7 @@ const ENDOR = {
 };
 
 const TEST = {
-  bg: 'metal',
+  bg: BACKGROUNDS.METAL,
   bosses: [
     {
       character: CHARACTERS.darthvader,

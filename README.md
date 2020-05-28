@@ -23,7 +23,6 @@ CODE FEATURES:
 * npm test?
 
 SPRITE FEATURES:
-* import sprites at actual size and stretch?
 * add shadow under falcon obstacle (like speeder).
   * rework graphics to match top-down angle???
 * bloodless death frame w/ only animated death bloody?
@@ -44,3 +43,5 @@ SPRITE FEATURES:
 
 BUGS:
 * only delay projectile.remove() if first frame is ALSO last frame
+* show full animation before showing hud
+  * more accurate names for txtTitle and txtDirections?

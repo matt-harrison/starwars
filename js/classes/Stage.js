@@ -25,7 +25,8 @@ export const Stage = function({
     },
     parent: game.selector,
     styles: {
-      backgroundImage: `url('img/backgrounds/${this.bg}.png')`,
+      backgroundImage: `url('img/backgrounds/${this.bg.sprite}.png')`,
+      backgroundSize: `${this.bg.frameWidth}px ${this.bg.frameHeight}px`,
       height         : '100%',
       left           : 0,
       position       : 'absolute',
