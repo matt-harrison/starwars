@@ -6,7 +6,7 @@ const BAR = {
   frameWidth : 23 * MAGNIFICATION,
   height     : 14 * MAGNIFICATION,
   img        : 'bar',
-  width      : 23 * MAGNIFICATION
+  width      : 23 * 1 * MAGNIFICATION
 };
 
 const DESKS = {
@@ -15,7 +15,7 @@ const DESKS = {
   frameWidth : 13 * MAGNIFICATION,
   height     : 40 * MAGNIFICATION,
   img        : 'desks',
-  width      : 13 * MAGNIFICATION
+  width      : 13 * 1 * MAGNIFICATION
 };
 
 const DRAGON = {
@@ -24,7 +24,7 @@ const DRAGON = {
   frameWidth : 62 * MAGNIFICATION,
   height     : 13 * MAGNIFICATION,
   img        : 'dragon',
-  width      : 62 * MAGNIFICATION
+  width      : 62 * 1 * MAGNIFICATION
 };
 
 const FALCON = {
@@ -33,7 +33,7 @@ const FALCON = {
   frameWidth : 76 * MAGNIFICATION,
   height     : 42 * MAGNIFICATION,
   img        : 'falconbig',
-  width      : 76 * MAGNIFICATION
+  width      : 76 * 1 * MAGNIFICATION
 };
 
 const IGLOO = {
@@ -42,7 +42,7 @@ const IGLOO = {
   frameWidth : 28 * MAGNIFICATION,
   height     : 17 * MAGNIFICATION,
   img        : 'igloo',
-  width      : 28 * MAGNIFICATION
+  width      : 28 * 1 * MAGNIFICATION
 };
 
 const SPEEDER = {
@@ -51,7 +51,7 @@ const SPEEDER = {
   frameWidth : 30 * MAGNIFICATION,
   height     : 12 * MAGNIFICATION,
   img        : 'speeder',
-  width      : 120 * MAGNIFICATION
+  width      : 30 * 4 * MAGNIFICATION
 };
 
 const TABLE = {
@@ -60,7 +60,7 @@ const TABLE = {
   frameWidth : 16 * MAGNIFICATION,
   height     : 11 * MAGNIFICATION,
   img        : 'table',
-  width      : 16 * MAGNIFICATION
+  width      : 16 * 1 * MAGNIFICATION
 };
 
 const GENERATOR = {
@@ -69,7 +69,7 @@ const GENERATOR = {
   frameWidth : 20 * MAGNIFICATION,
   height     : 42 * MAGNIFICATION,
   img        : 'tractorBeamGenerator',
-  width      : 80 * MAGNIFICATION
+  width      : 20 * 4 * MAGNIFICATION
 };
 
 export const OBSTACLES = {

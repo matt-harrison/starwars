@@ -19,7 +19,7 @@ const GUNGAN_BALL = {
   name       : 'gunganBall',
   type       : WEAPON_TYPES.PROJECTILE,
   speed      : 10,
-  width      : 48 * MAGNIFICATION
+  width      : 6 * 8 * MAGNIFICATION
 };
 
 const LASER = {
@@ -42,7 +42,7 @@ const ROCK = {
   name       : 'rock',
   type       : WEAPON_TYPES.PROJECTILE,
   speed      : 10,
-  width      : 20 * MAGNIFICATION
+  width      : 5 * 4 * MAGNIFICATION
 };
 
 const STUN = {
@@ -53,7 +53,7 @@ const STUN = {
   name       : 'stun',
   type       : WEAPON_TYPES.PROJECTILE,
   speed      : 20,
-  width      : 60 * MAGNIFICATION
+  width      : 10 * 6 * MAGNIFICATION
 };
 
 export const WEAPONS = {

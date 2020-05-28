@@ -14,7 +14,7 @@ const ASTEROID = {
   speed         : 4,
   sprite        : 'ships/asteroid',
   weapon        : null,
-  width         : 14 * MAGNIFICATION
+  width         : 7 * 2 * MAGNIFICATION
 };
 
 const DEATHSTAR = {
@@ -34,7 +34,7 @@ const DEATHSTAR = {
   weaponOffsetLeft : [2, 3],
   weaponOffsetRight: [5, 3],
   weaponOffsetUp   : [3, 0],
-  width            : 90 * MAGNIFICATION
+  width            : 10 * 9 * MAGNIFICATION
 };
 
 const DEATHSTAR6 = {
@@ -54,7 +54,7 @@ const DEATHSTAR6 = {
   weaponOffsetLeft : [2, 3],
   weaponOffsetRight: [5, 3],
   weaponOffsetUp   : [3, 0],
-  width            : 90 * MAGNIFICATION
+  width            : 10 * 9 * MAGNIFICATION
 };
 
 const DESTROYER = {
@@ -74,7 +74,7 @@ const DESTROYER = {
   weaponOffsetLeft : [16, 14],
   weaponOffsetRight: [12, 15 ],
   weaponOffsetUp   : [15, 16],
-  width            : 60 * MAGNIFICATION
+  width            : 30 * 2 * MAGNIFICATION
 };
 
 const FALCON = {
@@ -94,7 +94,7 @@ const FALCON = {
   weaponOffsetLeft : [5, 7],
   weaponOffsetRight: [8, 7],
   weaponOffsetUp   : [7, 6],
-  width            : 75 * MAGNIFICATION
+  width            : 15 * 5 * MAGNIFICATION
 };
 
 const TIE = {
@@ -114,7 +114,7 @@ const TIE = {
   weaponOffsetLeft : [0, 3],
   weaponOffsetRight: [5, 3],
   weaponOffsetUp   : [3, 0],
-  width            : 35 * MAGNIFICATION
+  width            : 7 * 5 * MAGNIFICATION
 };
 
 const TIE_ADVANCED = {
@@ -140,7 +140,7 @@ const TIE_ADVANCED = {
   weaponOffsetLeft : [0, 3],
   weaponOffsetRight: [5, 3],
   weaponOffsetUp   : [3, 0],
-  width            : 35 * MAGNIFICATION
+  width            : 7 * 5 * MAGNIFICATION
 };
 
 const XWING = {
@@ -160,7 +160,7 @@ const XWING = {
   weaponOffsetLeft : [1, 4],
   weaponOffsetRight: [8, 4],
   weaponOffsetUp   : [4, 1],
-  width            : 45 * MAGNIFICATION
+  width            : 9 * 5 * MAGNIFICATION
 };
 
 export const SHIPS = {

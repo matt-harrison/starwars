@@ -944,7 +944,7 @@ const TEST = {
       }
     }
   ],
-  character: CHARACTERS.jarjar,
+  character: CHARACTERS.ackbar,
   cutscenes: [],
   enemiesOptional: [
     // {
