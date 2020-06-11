@@ -299,7 +299,7 @@ const IV_04_SEARCH = {
 };
 
 const IV_05_SANDCRAWLER = {
-  bg: BACKGROUNDS.SANDCRALWER,
+  bg: BACKGROUNDS.SANDCRAWLER,
   bosses: [
     {
       character: CHARACTERS.threebee,

@@ -638,7 +638,7 @@ export const garindan = {
   weaponOffsetDown : [3, 9],
   weaponOffsetLeft : [0, 5],
   weaponOffsetRight: [10, 5],
-  weaponOffsetUp   : [7, 1]
+  weaponOffsetUp   : [8, 1]
 };
 
 export const gonkdroid = {

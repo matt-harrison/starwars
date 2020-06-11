@@ -24,10 +24,10 @@ const MARBLE = {
   sprite     : 'marble'
 };
 
-const SANDCRALWER = {
+const SANDCRAWLER = {
   frameHeight: 100 * MAGNIFICATION,
   frameWidth : 100 * MAGNIFICATION,
-  sprite     : 'sandcralwer'
+  sprite     : 'sandcrawler'
 };
 
 const SAND = {
@@ -65,7 +65,7 @@ export const BACKGROUNDS = {
   DUST,
   GRASS,
   MARBLE,
-  SANDCRALWER,
+  SANDCRAWLER,
   SAND,
   SNOW,
   SPACE,
