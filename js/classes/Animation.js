@@ -18,8 +18,8 @@ export const Animation = function({
   this.isActive     = true;
   this.spriteColumn = 0;
   this.width        = this.frameWidth * this.frameCount;
-  this.x            = Math.floor(origin.x + (origin.frameWidth - this.frameWidth) / 2);
-  this.y            = Math.floor(origin.y + (origin.frameHeight - this.frameHeight) / 2);
+  this.x            = origin.x;
+  this.y            = origin.y + origin.frameHeight - this.frameHeight;
 
   this.selector = attachNode({
     attributes: {

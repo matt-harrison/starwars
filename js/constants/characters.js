@@ -458,9 +458,16 @@ export const darthmaul = {
 
 export const darthvader = {
   code             : 'darthvader',
+  death            : {
+    frameCount : 4,
+    frameHeight: 12 * MAGNIFICATION,
+    frameWidth : 10 * MAGNIFICATION,
+    name       : 'darthvaderdeath',
+    isRemove   : false
+  },
   frameCounts: {
     x: 10,
-    y: 5
+    y: 4
   },
   frameHeight      : 12 * MAGNIFICATION,
   frameWidth       : 10 * MAGNIFICATION,
@@ -479,9 +486,16 @@ export const darthvader = {
 
 export const darthvader5 = {
   code             : 'darthvader5',
+  death            : {
+    frameCount : 15,
+    frameHeight: 17 * MAGNIFICATION,
+    frameWidth : 12 * MAGNIFICATION,
+    name       : 'darthvader5death',
+    isRemove   : false
+  },
   frameCounts: {
     x: 10,
-    y: 5
+    y: 4
   },
   frameHeight      : 12 * MAGNIFICATION,
   frameWidth       : 10 * MAGNIFICATION,
@@ -489,7 +503,7 @@ export const darthvader5 = {
   name             : 'Darth Vader',
   isPropulsive     : false,
   speed            : 8,
-  sprite           : 'characters/darthvader5',
+  sprite           : 'characters/darthvader',
   weapon           : WEAPONS.LIGHTSABER,
   weaponColor      : COLORS.RED,
   weaponOffsetDown : [1, 8],
@@ -517,7 +531,7 @@ export const darthvader6 = {
   name             : 'Darth Vader',
   isPropulsive     : false,
   speed            : 8,
-  sprite           : 'characters/darthvader6',
+  sprite           : 'characters/darthvader',
   weapon           : WEAPONS.LIGHTSABER,
   weaponColor      : COLORS.RED,
   weaponOffsetDown : [1, 8],
@@ -638,7 +652,7 @@ export const garindan = {
   weaponOffsetDown : [3, 9],
   weaponOffsetLeft : [0, 5],
   weaponOffsetRight: [10, 5],
-  weaponOffsetUp   : [7, 1]
+  weaponOffsetUp   : [8, 1]
 };
 
 export const gonkdroid = {

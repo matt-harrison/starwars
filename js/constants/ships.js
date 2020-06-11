@@ -19,7 +19,7 @@ const ASTEROID = {
   weapon        : null
 };
 
-const DEATHSTAR = {
+const DEATH_STAR = {
   code             : 'deathstar',
   death            : ANIMATIONS.EXPLOSION,
   frameCounts      : {
@@ -41,7 +41,7 @@ const DEATHSTAR = {
   weaponOffsetUp   : [3, 0]
 };
 
-const DEATHSTAR6 = {
+const DEATH_STAR6 = {
   code             : 'deathstar6',
   death            : ANIMATIONS.EXPLOSION,
   frameCounts      : {
@@ -181,8 +181,8 @@ const XWING = {
 
 export const SHIPS = {
   ASTEROID,
-  DEATHSTAR,
-  DEATHSTAR6,
+  DEATH_STAR,
+  DEATH_STAR6,
   DESTROYER,
   FALCON,
   TIE,

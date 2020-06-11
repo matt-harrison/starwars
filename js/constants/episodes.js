@@ -299,7 +299,7 @@ const IV_04_SEARCH = {
 };
 
 const IV_05_SANDCRAWLER = {
-  bg: BACKGROUNDS.SANDCRALWER,
+  bg: BACKGROUNDS.SANDCRAWLER,
   bosses: [
     {
       character: CHARACTERS.threebee,
@@ -827,7 +827,7 @@ const IV_15_ASSAULT_ON_DEATH_STAR = {
   bg: BACKGROUNDS.SPACE,
   bosses: [
     {
-      character: SHIPS.DEATHSTAR,
+      character: SHIPS.DEATH_STAR,
       details: {
         dir       : null,
         hp        : isQuickTest ? 1 : 10,
@@ -926,7 +926,7 @@ const ENDOR = {
 };
 
 const TEST = {
-  bg: BACKGROUNDS.TANTIVE,
+  bg: BACKGROUNDS.DEATH_STAR,
   bosses: [
     {
       character: CHARACTERS.darthvader,
@@ -937,15 +937,23 @@ const TEST = {
       }
     },
     {
+      character: CHARACTERS.darthvader5,
+      details: {
+        dir       : CARDINALS.UP,
+        hp        : isQuickTest ? 1 : 1,
+        spawnDelay: 2 * FPS
+      }
+    },
+    {
       character: CHARACTERS.darthvader6,
       details: {
         dir       : CARDINALS.UP,
-        hp        : isQuickTest ? 1 : 3,
-        spawnDelay: 1.5 * FPS
+        hp        : isQuickTest ? 1 : 1,
+        spawnDelay: 3 * FPS
       }
     }
   ],
-  character: CHARACTERS.ackbar,
+  character: CHARACTERS.artoo,
   cutscenes: [],
   enemiesOptional: [
     // {
@@ -1033,7 +1041,7 @@ const TEST = {
     //   }
     // },
     // {
-    //   character: SHIPS.DEATHSTAR,
+    //   character: SHIPS.DEATH_STAR,
     //   details: {
     //     bounceLimit: INFINITY,
     //     dir        : null,

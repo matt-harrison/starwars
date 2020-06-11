@@ -316,7 +316,7 @@ export const updateHud = ({ game, victim }) => {
 
   switch (victim.type) {
     case ACTOR_TYPES.NEUTRAL:
-      color = COLORS.BLUE_DARK;
+      color = COLORS.BLUE;
       break;
     case ACTOR_TYPES.FRIENDLY:
       color = COLORS.RED;

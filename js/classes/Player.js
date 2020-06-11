@@ -104,11 +104,6 @@ export const Player = function({
           game,
           origin: this
         });
-      } else if (this.weapon.type === WEAPON_TYPES.BOMB) {
-        new Bomb({
-          game,
-          origin: this
-        });
       } else if (this.weapon.type === WEAPON_TYPES.LIGHTSABER) {
         const isLongRange = (key === KEYS.Z);
 
@@ -123,6 +118,11 @@ export const Player = function({
         this.isAttacking  = true;
         this.isRunning    = false;
         this.spriteColumn = this.moveFrameCount + 1;
+      } else {
+        new Bomb({
+          game,
+          origin: this
+        });
       }
 
       this.isWeaponReady = false;

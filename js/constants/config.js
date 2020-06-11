@@ -25,7 +25,6 @@ export const CARDINALS = {
 export const COLORS = {
   BLACK    : '#000',
   BLUE     : '#0ff',
-  BLUE_DARK: '#003471',
   GRAY     : '#ccc',
   GREEN    : '#0f0',
   PURPLE   : '#f0f',
