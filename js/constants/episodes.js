@@ -12,7 +12,7 @@ import { SHIPS } from './ships.js';
 const isQuickTest = false;
 
 export const ATTRACTION = {
-  bg: BACKGROUNDS.METAL,
+  bg: BACKGROUNDS.TANTIVE,
   bosses: [],
   character: CHARACTERS.rebel,
   cutscenes: [],
@@ -80,7 +80,7 @@ export const ATTRACTION = {
 
 //Episode IV levels
 const IV_01_TANTIVE_IV = {
-  bg: BACKGROUNDS.METAL,
+  bg: BACKGROUNDS.TANTIVE,
   bosses: [
     {
       character: CHARACTERS.officerblack,
@@ -132,7 +132,7 @@ const IV_01_TANTIVE_IV = {
 };
 
 const IV_02_AMBASSADOR = {
-  bg: BACKGROUNDS.METAL,
+  bg: BACKGROUNDS.TANTIVE,
   bosses: [
     {
       character: CHARACTERS.leia,
@@ -299,7 +299,7 @@ const IV_04_SEARCH = {
 };
 
 const IV_05_SANDCRAWLER = {
-  bg: BACKGROUNDS.RUST,
+  bg: BACKGROUNDS.SANDCRALWER,
   bosses: [
     {
       character: CHARACTERS.threebee,
@@ -565,7 +565,7 @@ const IV_09_ALDERAAN = {
 };
 
 const IV_10_DETENTION = {
-  bg: BACKGROUNDS.DARK,
+  bg: BACKGROUNDS.DEATH_STAR,
   bosses: [
     {
       character: CHARACTERS.mousedroid,
@@ -620,7 +620,7 @@ const IV_10_DETENTION = {
 };
 
 const IV_11_TRACTOR_BEAM = {
-  bg: BACKGROUNDS.DARK,
+  bg: BACKGROUNDS.DEATH_STAR,
   bosses: [
     {
       character: CHARACTERS.darthvader,
@@ -656,7 +656,7 @@ const IV_11_TRACTOR_BEAM = {
 };
 
 const IV_12_SHOWDOWN = {
-  bg: BACKGROUNDS.DARK,
+  bg: BACKGROUNDS.DEATH_STAR,
   bosses: [
     {
       character: CHARACTERS.ben,
@@ -686,7 +686,7 @@ const IV_12_SHOWDOWN = {
 };
 
 const IV_13_ESCAPE_FROM_DEATH_STAR = {
-  bg: BACKGROUNDS.DARK,
+  bg: BACKGROUNDS.DEATH_STAR,
   bosses: [
     {
       character: CHARACTERS.tiepilot,
@@ -926,7 +926,7 @@ const ENDOR = {
 };
 
 const TEST = {
-  bg: BACKGROUNDS.METAL,
+  bg: BACKGROUNDS.TANTIVE,
   bosses: [
     {
       character: CHARACTERS.darthvader,

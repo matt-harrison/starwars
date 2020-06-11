@@ -1,9 +1,9 @@
 import { MAGNIFICATION } from '/js/constants/config.js';
 
-const DARK = {
+const DEATH_STAR = {
   frameHeight: 28 * MAGNIFICATION,
   frameWidth : 56 * MAGNIFICATION,
-  sprite     : 'dark'
+  sprite     : 'deathstar'
 };
 
 const DUST = {
@@ -24,16 +24,10 @@ const MARBLE = {
   sprite     : 'marble'
 };
 
-const METAL = {
-  frameHeight: 20 * MAGNIFICATION,
-  frameWidth : 20 * MAGNIFICATION,
-  sprite     : 'metal'
-};
-
-const RUST = {
+const SANDCRALWER = {
   frameHeight: 100 * MAGNIFICATION,
   frameWidth : 100 * MAGNIFICATION,
-  sprite     : 'rust'
+  sprite     : 'sandcralwer'
 };
 
 const SAND = {
@@ -60,15 +54,21 @@ const STONE = {
   sprite     : 'stone'
 };
 
+const TANTIVE = {
+  frameHeight: 20 * MAGNIFICATION,
+  frameWidth : 20 * MAGNIFICATION,
+  sprite     : 'tantive'
+};
+
 export const BACKGROUNDS = {
-  DARK,
+  DEATH_STAR,
   DUST,
   GRASS,
   MARBLE,
-  METAL,
-  RUST,
+  SANDCRALWER,
   SAND,
   SNOW,
   SPACE,
-  STONE
+  STONE,
+  TANTIVE
 };
