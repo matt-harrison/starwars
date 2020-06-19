@@ -19,15 +19,15 @@ CODE FEATURES:
 * npm test?
 
 SPRITE FEATURES:
-* improve mousedroid sprite
+* dr evazan
+* use improved running animations
+* streamline non-episode 4 character colors
 * bloodless death frame w/ only animated death bloody?
 * gunganBall projectile splat animation
 * blood splat animation? blood code?
 * add optional bantha shit sprite to Bomb class?
 *
 * recolor backgrounds and/or characters not to conflict?
-  * power of 2 sizes?
-  * choose tier 1 colors (pure white, pure black) to use in sprites and hud, then never use them (or clashing) in BGs
 * rework falcon obstacle to match top-down angle?
 * replace low-detail cutscenes
 * cutscenes for every level

@@ -9,7 +9,7 @@ import { BACKGROUNDS } from './backgrounds.js';
 import { OBSTACLES } from './obstacles.js';
 import { SHIPS } from './ships.js';
 
-const isQuickTest = false;
+const isQuickTest = true;
 
 export const ATTRACTION = {
   bg: BACKGROUNDS.TANTIVE,
@@ -389,11 +389,19 @@ const IV_07_MOS_EISLEY = {
   bg: BACKGROUNDS.MARBLE,
   bosses: [
     {
-      character: CHARACTERS.pondababa,
+      character: CHARACTERS.drevazan,
       details: {
-        dir  : null,
+        dir  : CARDINALS.LEFT,
         hp   : isQuickTest ? 1 : 1,
         spawnDelay: 1 * FPS
+      }
+    },
+    {
+      character: CHARACTERS.pondababa,
+      details: {
+        dir  : CARDINALS.LEFT,
+        hp   : isQuickTest ? 1 : 1,
+        spawnDelay: 1.5 * FPS
       }
     }
   ],
@@ -926,7 +934,7 @@ const ENDOR = {
 };
 
 const TEST = {
-  bg: BACKGROUNDS.DEATH_STAR,
+  bg: BACKGROUNDS.DUST,
   bosses: [
     {
       character: CHARACTERS.darthvader,
@@ -953,7 +961,7 @@ const TEST = {
       }
     }
   ],
-  character: CHARACTERS.artoo,
+  character: CHARACTERS.quigonjinn,
   cutscenes: [],
   enemiesOptional: [
     // {
@@ -1066,6 +1074,7 @@ export const EPISODES = [
   [TEST],
   [TEST],
   [
+    TEST,
     IV_01_TANTIVE_IV,
     IV_02_AMBASSADOR,
     IV_03_TATOOINE,
