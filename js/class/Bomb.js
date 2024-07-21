@@ -8,7 +8,7 @@ import {
   WEAPON_TYPES
 } from '/js/constants/index.js';
 
-import { Animation } from '/js/classes/Animation.js';
+import { Animation } from '/js/class/Animation.js';
 
 export const Bomb = function({
   game,

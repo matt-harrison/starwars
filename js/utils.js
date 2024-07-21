@@ -1,4 +1,4 @@
-import { Player } from '/js/classes/Player.js';
+import { Player } from '/js/class/Player.js';
 
 import {
   ACTOR_TYPES,

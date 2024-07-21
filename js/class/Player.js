@@ -16,10 +16,10 @@ import {
   WEAPONS
 } from '/js/constants/index.js';
 
-import { Animation }  from '/js/classes/Animation.js';
-import { Bomb }       from '/js/classes/Bomb.js';
-import { Lightsaber } from '/js/classes/Lightsaber.js';
-import { Projectile } from '/js/classes/Projectile.js';
+import { Animation }  from '/js/class/Animation.js';
+import { Bomb }       from '/js/class/Bomb.js';
+import { Lightsaber } from '/js/class/Lightsaber.js';
+import { Projectile } from '/js/class/Projectile.js';
 
 export const Player = function({
   data,

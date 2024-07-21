@@ -26,17 +26,17 @@ import {
   WEAPON_TYPES
 } from './js/constants/index.js';
 
-import { Actor }      from './js/classes/Actor.js';
-import { Animation }  from './js/classes/Animation.js';
-import { Bomb }       from './js/classes/Bomb.js';
-import { Cutscene }   from './js/classes/Cutscene.js';
-import { Game }       from './js/classes/Game.js';
-import { Hud }        from './js/classes/Hud.js';
-import { Lightsaber } from './js/classes/Lightsaber.js';
-import { Obstacle }   from './js/classes/Obstacle.js';
-import { Player }     from './js/classes/Player.js';
-import { Projectile } from './js/classes/Projectile.js';
-import { Stage }      from './js/classes/Stage.js';
+import { Actor }      from './js/class/Actor.js';
+import { Animation }  from './js/class/Animation.js';
+import { Bomb }       from './js/class/Bomb.js';
+import { Cutscene }   from './js/class/Cutscene.js';
+import { Game }       from './js/class/Game.js';
+import { Hud }        from './js/class/Hud.js';
+import { Lightsaber } from './js/class/Lightsaber.js';
+import { Obstacle }   from './js/class/Obstacle.js';
+import { Player }     from './js/class/Player.js';
+import { Projectile } from './js/class/Projectile.js';
+import { Stage }      from './js/class/Stage.js';
 
 const game = {
   animations     : [],
