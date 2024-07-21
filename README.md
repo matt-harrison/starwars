@@ -3,6 +3,11 @@ REFACTOR:
   * audit each function
   * audit each class
   * audit each constant
+  * convert data objects to classes with abstract?
+  * convert to Vite project (no framework)?
+  * convert to TypeScript?
+  * implement eslint on save?
+  * 
 
 CODE FEATURES:
 * preload all stage graphics? when?
@@ -11,7 +16,8 @@ CODE FEATURES:
 * continuously shoot when mobile???
   * what about jedi? auto attack on dpad release? no saber throw?
   * what about bombers?
-*
+* throw lightsaber based on hold duration (spacebar)!
+
 * password menu!
 * episode menu...
 * reward menu: reveal password for random character?

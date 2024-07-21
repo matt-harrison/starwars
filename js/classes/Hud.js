@@ -113,7 +113,7 @@ export const Hud = function({ game }) {
   });
 
   if (IS_MOBILE) {
-    //Disable swipe to bounce.
+    // Disable swipe to bounce.
     document.ontouchmove = function(event) {
       window.scrollTo(0, 0);
     }

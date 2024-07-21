@@ -78,7 +78,7 @@ export const ATTRACTION = {
   textColor: COLORS.BLACK
 };
 
-//Episode IV levels
+// Episode IV levels
 const IV_01_TANTIVE_IV = {
   bg: BACKGROUNDS.TANTIVE,
   bosses: [
@@ -143,7 +143,7 @@ const IV_02_AMBASSADOR = {
       }
     }
   ],
-  character: CHARACTERS.stuntrooper,
+  character: CHARACTERS.stormtrooper,
   cutscenes: [
     'episode4-antilles'
   ],
@@ -861,7 +861,7 @@ const IV_15_ASSAULT_ON_DEATH_STAR = {
   textColor: COLORS.YELLOW
 };
 
-//Episode V levels
+// Episode V levels
 const HOTH = {
   bg: BACKGROUNDS.SNOW,
   bosses: [
@@ -892,7 +892,7 @@ const HOTH = {
   textColor: COLORS.BLACK
 };
 
-//Episode VI levels
+// Episode VI levels
 const ENDOR = {
   bg: BACKGROUNDS.GRASS,
   bosses: [
