@@ -7,7 +7,7 @@ REFACTOR:
   * convert to Vite project (no framework)?
   * convert to TypeScript?
   * implement eslint on save?
-  * 
+  * LASER extends PROJECTILE extends WEAPON
 
 CODE FEATURES:
 * preload all stage graphics? when?

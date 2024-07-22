@@ -1,5 +1,9 @@
 import { ANIMATIONS } from './animations.js';
 import * as CHARACTERS from './characters.js';
+import { OBSTACLES } from './obstacles.js';
+import { SHIPS } from './ships.js';
+import { WEAPON_TYPES, WEAPONS } from './weapons.js';
+
 import {
   ACTOR_TYPES,
   BUTTON_NAMES,
@@ -14,13 +18,11 @@ import {
   MODES,
   NUMERALS
 } from './config.js';
+
 import {
   ATTRACTION,
   EPISODES
 } from './episodes.js';
-import { OBSTACLES } from './obstacles.js';
-import { SHIPS } from './ships.js';
-import { WEAPON_TYPES, WEAPONS } from './weapons.js';
 
 export {
   ACTOR_TYPES,

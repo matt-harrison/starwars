@@ -1,64 +1,13 @@
-import { MAGNIFICATION } from '/js/constants/config.js';
-
-const DEATH_STAR = {
-  frameHeight: 28 * MAGNIFICATION,
-  frameWidth : 56 * MAGNIFICATION,
-  sprite     : 'deathstar'
-};
-
-const DUST = {
-  frameHeight: 10 * MAGNIFICATION,
-  frameWidth : 10 * MAGNIFICATION,
-  sprite     : 'dust'
-};
-
-const GRASS = {
-  frameHeight: 10 * MAGNIFICATION,
-  frameWidth : 10 * MAGNIFICATION,
-  sprite     : 'grass'
-};
-
-const MARBLE = {
-  frameHeight: 20 * MAGNIFICATION,
-  frameWidth : 20 * MAGNIFICATION,
-  sprite     : 'marble'
-};
-
-const SANDCRAWLER = {
-  frameHeight: 100 * MAGNIFICATION,
-  frameWidth : 100 * MAGNIFICATION,
-  sprite     : 'sandcrawler'
-};
-
-const SAND = {
-  frameHeight: 20 * MAGNIFICATION,
-  frameWidth : 20 * MAGNIFICATION,
-  sprite     : 'sand'
-};
-
-const SNOW = {
-  frameHeight: 20 * MAGNIFICATION,
-  frameWidth : 20 * MAGNIFICATION,
-  sprite     : 'snow'
-};
-
-const SPACE = {
-  frameHeight: 100 * MAGNIFICATION,
-  frameWidth : 100 * MAGNIFICATION,
-  sprite     : 'space'
-};
-
-const STONE = {
-  frameHeight: 14 * MAGNIFICATION,
-  frameWidth : 20 * MAGNIFICATION,
-  sprite     : 'stone'
-};
-
-const TANTIVE = {
-  frameHeight: 20 * MAGNIFICATION,
-  frameWidth : 20 * MAGNIFICATION,
-  sprite     : 'tantive'
-};
+import { DEATH_STAR } from '/js/class/backgrounds/DeathStar.js';
+import { DUST } from '/js/class/backgrounds/Dust.js';
+import { GRASS } from '/js/class/backgrounds/Grass.js';
+import { MARBLE } from '/js/class/backgrounds/Marble.js';
+import { SANDCRAWLER } from '/js/class/backgrounds/Sandcrawler.js';
+import { SAND } from '/js/class/backgrounds/Sand.js';
+import { SNOW } from '/js/class/backgrounds/Snow.js';
+import { SPACE } from '/js/class/backgrounds/Space.js';
+import { STONE } from '/js/class/backgrounds/Stone.js';
+import { TANTIVE_IV } from '/js/class/backgrounds/TantiveIv.js';
 
 export const BACKGROUNDS = {
   DEATH_STAR,
@@ -70,5 +19,5 @@ export const BACKGROUNDS = {
   SNOW,
   SPACE,
   STONE,
-  TANTIVE
+  TANTIVE_IV
 };
