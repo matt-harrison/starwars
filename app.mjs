@@ -6,7 +6,7 @@ import {
   getIsOnStage,
   getRandom,
   preload
-} from './js/utils.js';
+} from './src/js/utils.js';
 
 import {
   ACTOR_TYPES,
@@ -24,19 +24,19 @@ import {
   MODES,
   NUMERALS,
   WEAPON_TYPES
-} from './js/constants/index.js';
+} from './src/js/constants/index.js';
 
-import { Actor }      from './js/class/Actor.js';
-import { Animation }  from './js/class/Animation.js';
-import { Bomb }       from './js/class/Bomb.js';
-import { Cutscene }   from './js/class/Cutscene.js';
-import { Game }       from './js/class/Game.js';
-import { Hud }        from './js/class/Hud.js';
-import { Lightsaber } from './js/class/Lightsaber.js';
-import { Obstacle }   from './js/class/Obstacle.js';
-import { Player }     from './js/class/Player.js';
-import { Projectile } from './js/class/Projectile.js';
-import { Stage }      from './js/class/Stage.js';
+import { Actor }      from './src/js/class/Actor.js';
+import { Animation }  from './src/js/class/Animation.js';
+import { Bomb }       from './src/js/class/Bomb.js';
+import { Cutscene }   from './src/js/class/Cutscene.js';
+import { Game }       from './src/js/class/Game.js';
+import { Hud }        from './src/js/class/Hud.js';
+import { Lightsaber } from './src/js/class/Lightsaber.js';
+import { Obstacle }   from './src/js/class/Obstacle.js';
+import { Player }     from './src/js/class/Player.js';
+import { Projectile } from './src/js/class/Projectile.js';
+import { Stage }      from './src/js/class/Stage.js';
 
 const game = {
   animations     : [],
@@ -898,7 +898,7 @@ window.playLevel = (level) => {
       skipToLevel = level;
     }
   } else {
-    for (const i = 0; i < EPISODES[3].length; i++) {
+    for (let i = 0; i < EPISODES[3].length; i++) {
       if (level === EPISODES[3][i]) {
         skipToLevel = i;
       }

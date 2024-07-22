@@ -1,0 +1,20 @@
+@font-face {
+  font-family: pressStartK;
+  src: url('fonts/Press-Start-K.ttf');
+}
+
+body {
+  margin: 0;
+  overflow: hidden;
+  font-family: pressStartK, courier new;
+  line-height: 1;
+
+  -moz-user-select: none;
+  -ms-user-select:  none;
+  -webkit-user-select: none;
+  user-select: none;
+
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
+}
