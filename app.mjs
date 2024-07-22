@@ -27,12 +27,9 @@ import {
 } from './src/js/constants/index.js';
 
 import { Actor }      from './src/js/class/Actor.js';
-import { Animation }  from './src/js/class/Animation.js';
-import { Bomb }       from './src/js/class/Bomb.js';
 import { Cutscene }   from './src/js/class/Cutscene.js';
 import { Game }       from './src/js/class/Game.js';
 import { Hud }        from './src/js/class/Hud.js';
-import { Lightsaber } from './src/js/class/Lightsaber.js';
 import { Obstacle }   from './src/js/class/Obstacle.js';
 import { Player }     from './src/js/class/Player.js';
 import { Projectile } from './src/js/class/Projectile.js';
@@ -141,9 +138,8 @@ const buttonPush = (key, id) => {
 
 const buttonUpdate = (event) => {
   Object.values(CARDINALS).forEach(cardinal => {
-    const previousButton = document.querySelector(`[data-key="${game.player.dir}"]`);
-    const button         = document.querySelector(`[data-key="${cardinal}"]`);
-    const bounds         = button.getBoundingClientRect();
+    const button = document.querySelector(`[data-key="${cardinal}"]`);
+    const bounds = button.getBoundingClientRect();
 
     const isPressing =
       event.changedTouches[0].pageX > bounds.left &&
@@ -269,7 +265,7 @@ const initEnemies = () => {
       const enemy = {
         character: character,
         details: {
-          bounceLimit: INFINITY,
+          bounceLimit,
           dir,
           hp,
           isOptional : false,
@@ -339,7 +335,6 @@ const initInterface = () => {
     // Init desktop controls
     window.addEventListener('keydown', function(event) {
       let key = '';
-      let id = '';
 
       if (!game.isPaused) {
         switch (event.keyCode) {
@@ -473,7 +468,7 @@ const initLevel = () => {
   initEnemies(game);
 
   if (IS_MOBILE) {
-    buttons.style.display = '';
+    game.hud.buttons.style.display = '';
   }
 }
 
@@ -512,7 +507,7 @@ const initMode = (mode) => {
     game.hud.selector.setAttribute('data-key', KEYS.ENTER);
 
     if (IS_MOBILE) {
-      buttons.style.display = 'none';
+      game.hud.buttons.style.display = 'none';
     }
   } else if (game.mode === MODES.CUTSCENE) {
     game.counter  = 0;
@@ -723,9 +718,6 @@ const loop = () => {
 
     // Add actors.
     game.stage.bosses?.forEach((boss, index) => {
-      if (game.isBossesReached) {
-      }
-
       if (game.isBossesReached && game.counter === boss.details.spawnFrame) {
         const data = Object.assign({}, boss);
 

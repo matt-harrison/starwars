@@ -1,14 +1,9 @@
-import { Player } from '@/js/class/Player.js';
-
 import {
   ACTOR_TYPES,
   CARDINALS,
-  CHARACTERS,
   COLORS,
-  EPISODES,
   INFINITY,
   MAGNIFICATION,
-  MODES,
 } from '@/js/constants/index.js';
 
 export const add = (num1, num2) => {
@@ -90,7 +85,7 @@ export const getIsCrossing = (actor1, actor2) => {
   return isCrossing;
 }
 
-export const getIsObstructed = ({ actor, obstacles }) => {
+export const getIsObstructed = ({ game, actor, obstacles }) => {
   const actorBottom = actor.y + actor.frameHeight;
   const actorLeft   = actor.x;
   const actorRight  = actor.x + actor.frameWidth;
@@ -227,11 +222,13 @@ export const setPosition = ({ actor, game }) => {
   const isBounceLimitMet = actor.bounceLimit !== INFINITY && actor.bounceCount >= actor.bounceLimit;
   const isOffStage       = getIsOffStage({ actor, game });
   const isObstructed     = getIsObstructed({
+    game,
     actor,
     obstacles: game.obstacles
   });
 
-  let hasClearedStage = false;
+  /*
+  let hasClearedStage = false; // Never checked
 
   switch (actor.dir) {
     case CARDINALS.DOWN:
@@ -255,6 +252,7 @@ export const setPosition = ({ actor, game }) => {
       }
       break;
   }
+  */
 
   if (isObstructed) {
     if (isOffStage) {
