@@ -35,7 +35,7 @@ export const TEST = {
       }
     }
   ],
-  character: CHARACTERS.ewok,
+  character: CHARACTERS.stormtrooper,
   cutscenes: [],
   enemiesOptional: [
     // {

@@ -49,6 +49,7 @@ const game = {
   isInvincible   : false,
   isPaused       : false,
   isLevelDefeated: false,
+  isQuickTest    : true,
   keys           : [],
   level          : 0,
   mode           : MODES.TITLE,

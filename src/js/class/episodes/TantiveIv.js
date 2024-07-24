@@ -12,7 +12,7 @@ export const TANTIVE_IV = {
       {
         character: CHARACTERS.officerblack,
         details: {
-          dir       : null,
+          dir       : CARDINALS.RIGHT,
           hp        : 2,
           spawnDelay: 1 * FPS
         }

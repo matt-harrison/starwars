@@ -18,7 +18,7 @@ export const AMBASSADOR = {
       }
     }
   ],
-  character: CHARACTERS.stormtrooper,
+  character: CHARACTERS.stuntrooper,
   cutscenes: [
     'episode4-antilles'
   ],

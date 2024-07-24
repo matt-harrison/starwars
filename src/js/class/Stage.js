@@ -19,6 +19,10 @@ export const Stage = function({
     textColor          : data.textColor
   });
 
+  if (game.isQuickTest) {
+    this.enemiesRequiredData.count = 1;
+  }
+
   this.selector = attachNode({
     attributes: {
       id: 'stage'

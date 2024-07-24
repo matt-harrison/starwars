@@ -1,4 +1,4 @@
-import { MAGNIFICATION } from '@/js/constants/config.js';
+import { COLORS, MAGNIFICATION } from '@/js/constants/config.js';
 import { WEAPONS } from '@/js/constants/weapons.js';
 
 export const stormtrooper = {
@@ -15,8 +15,9 @@ export const stormtrooper = {
     speed            : 8,
     sprite           : 'characters/stormtrooper',
     weapon           : WEAPONS.LASER,
-    weaponOffsetDown : [0, 6],
-    weaponOffsetLeft : [4, 0],
-    weaponOffsetRight: [6, 0],
-    weaponOffsetUp   : [0, 4]
+    weaponColor      : COLORS.RED,
+    weaponOffsetDown : [3, 7],
+    weaponOffsetLeft : [0, 4],
+    weaponOffsetRight: [10, 4],
+    weaponOffsetUp   : [6, 0]
   };
