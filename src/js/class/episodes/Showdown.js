@@ -21,10 +21,10 @@ export const SHOWDOWN = {
   cutscenes: [],
   enemiesOptional: [],
   enemiesRequiredData: {
-    character    : null,
+    character    : CHARACTERS.stormtrooper,
     count        : 0,
     dir          : null,
-    hp           : null,
+    hp           : 1,
     spawnInterval: null
   },
   friendlies: [],
