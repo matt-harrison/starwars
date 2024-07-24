@@ -114,7 +114,7 @@ export const Hud = function({ game }) {
 
   if (IS_MOBILE) {
     // Disable swipe to bounce.
-    document.ontouchmove = function(event) {
+    document.ontouchmove = function() {
       window.scrollTo(0, 0);
     }
 

@@ -1,5 +1,4 @@
-import { COLORS, MAGNIFICATION } from '@/js/constants/config.js';
-import { WEAPONS } from '@/js/constants/weapons.js';
+import { MAGNIFICATION } from '@/js/constants/config.js';
 
 export const tarkin = {
     code          : 'tarkin',

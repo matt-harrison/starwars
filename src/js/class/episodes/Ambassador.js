@@ -5,7 +5,6 @@ import {
   FPS,
 } from '@/js/constants/config.js';
 import { BACKGROUNDS } from '@/js/constants/backgrounds.js';
-import { SHIPS } from '@/js/constants/ships.js';
 
 export const AMBASSADOR = {
   bg: BACKGROUNDS.TANTIVE_IV,

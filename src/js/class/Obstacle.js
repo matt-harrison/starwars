@@ -1,4 +1,3 @@
-import { MAGNIFICATION } from '@/js/constants/index.js';
 import { attachNode } from '@/js/utils.js';
 
 export const Obstacle = function({

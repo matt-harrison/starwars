@@ -71,6 +71,7 @@ export { sebulba } from '@/js/class/characters/Sebulba.js';
 export { stormtrooper } from '@/js/class/characters/Stormtrooper.js';
 export { stormtrooperhan } from '@/js/class/characters/StormtrooperHan.js';
 export { stormtrooperluke } from '@/js/class/characters/StormtrooperLuke.js';
+export { stuntrooper } from '@/js/class/characters/Stuntrooper.js';
 export { tarkin } from '@/js/class/characters/Tarkin.js';
 export { tauntaun } from '@/js/class/characters/Tauntaun.js';
 export { threebee } from '@/js/class/characters/Threebee.js';

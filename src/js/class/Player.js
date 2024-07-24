@@ -2,7 +2,6 @@ import {
   add,
   advanceFrame,
   attachNode,
-  getRandom,
   preload,
   setPosition
 } from '@/js/utils.js';
@@ -17,9 +16,9 @@ import {
 } from '@/js/constants/index.js';
 
 import { Animation }  from '@/js/class/Animation.js';
-import { Bomb }       from '@/js/class/Bomb.js';
-import { Lightsaber } from '@/js/class/Lightsaber.js';
-import { Projectile } from '@/js/class/Projectile.js';
+import { Bomb }       from '@/js/class/weapons/Bomb.js';
+import { Lightsaber } from '@/js/class/weapons/Lightsaber.js';
+import { Projectile } from '@/js/class/weapons/Projectile.js';
 
 export const Player = function({
   data,

@@ -32,8 +32,8 @@ import { Game }       from './src/js/class/Game.js';
 import { Hud }        from './src/js/class/Hud.js';
 import { Obstacle }   from './src/js/class/Obstacle.js';
 import { Player }     from './src/js/class/Player.js';
-import { Projectile } from './src/js/class/Projectile.js';
 import { Stage }      from './src/js/class/Stage.js';
+import { Projectile } from './src/js/class/weapons/Projectile.js';
 
 const game = {
   animations     : [],

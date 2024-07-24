@@ -7,7 +7,6 @@ import {
 } from '@/js/constants/config.js';
 import { BACKGROUNDS } from '@/js/constants/backgrounds.js';
 import { OBSTACLES } from '@/js/constants/obstacles.js';
-import { SHIPS } from '@/js/constants/ships.js';
 
 export const TATOOINE = {
     bg: BACKGROUNDS.SAND,

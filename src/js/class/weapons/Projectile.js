@@ -1,7 +1,6 @@
 import {
   CARDINALS,
   MAGNIFICATION,
-  WEAPON_TYPES,
   WEAPONS
 } from '@/js/constants/index.js';
 import { attachNode } from '@/js/utils.js';

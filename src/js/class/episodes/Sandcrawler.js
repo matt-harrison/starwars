@@ -3,11 +3,8 @@ import {
   CARDINALS,
   COLORS,
   FPS,
-  INFINITY
 } from '@/js/constants/config.js';
 import { BACKGROUNDS } from '@/js/constants/backgrounds.js';
-import { OBSTACLES } from '@/js/constants/obstacles.js';
-import { SHIPS } from '@/js/constants/ships.js';
 
 export const SANDCRAWLER = {
   bg: BACKGROUNDS.SANDCRAWLER,

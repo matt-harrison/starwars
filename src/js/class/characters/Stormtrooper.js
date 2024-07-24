@@ -1,4 +1,4 @@
-import { COLORS, MAGNIFICATION } from '@/js/constants/config.js';
+import { MAGNIFICATION } from '@/js/constants/config.js';
 import { WEAPONS } from '@/js/constants/weapons.js';
 
 export const stormtrooper = {

@@ -1,4 +1,3 @@
-import { INFINITY } from '@/js/constants/index.js';
 import { add, attachNode } from '@/js/utils.js';
 
 export const Animation = function({
