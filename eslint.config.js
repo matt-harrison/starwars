@@ -1,5 +1,5 @@
 import globals from "globals";
-import pluginJs from "@eslint";
+import pluginJs from "eslint";
 import tseslint from "typescript-eslint";
 
 export default [
