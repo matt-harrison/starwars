@@ -8,14 +8,16 @@
     "coverage": "vitest run --coverage",
     "dev": "vite",
     "lint:fix": "eslint . --fix",
-    "lint": "eslint .",
+    "lint": "eslint ./src",
     "preview": "vite preview",
     "test": "vitest run",
     "type": "tsc --noEmit"
   },
   "dependencies": {
-    "eslint": "^9.8.0",
+    "eslint-config-prettier": "^9.1.0",
+    "globals": "^15.9.0",
     "prettier": "^3.3.3",
+    "typescript-eslint": "^8.0.0",
     "typescript": "^5.2.2",
     "url": "^0.11.4",
     "vite": "^5.3.4",
