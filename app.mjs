@@ -6,7 +6,7 @@ import {
   getIsOnStage,
   getRandom,
   preload
-} from './src/js/utils.js';
+} from './src/utils.js';
 
 import {
   ACTOR_TYPES,
@@ -24,16 +24,16 @@ import {
   MODES,
   NUMERALS,
   WEAPON_TYPES
-} from './src/js/constants/index.js';
+} from './src/constants/index.js';
 
-import { Actor }      from './src/js/class/Actor.js';
-import { Cutscene }   from './src/js/class/Cutscene.js';
-import { Game }       from './src/js/class/Game.js';
-import { Hud }        from './src/js/class/Hud.js';
-import { Obstacle }   from './src/js/class/Obstacle.js';
-import { Player }     from './src/js/class/Player.js';
-import { Stage }      from './src/js/class/Stage.js';
-import { Projectile } from './src/js/class/weapons/Projectile.js';
+import { Actor }      from './src/class/Actor.js';
+import { Cutscene }   from './src/class/Cutscene.js';
+import { Game }       from './src/class/Game.js';
+import { Hud }        from './src/class/Hud.js';
+import { Obstacle }   from './src/class/Obstacle.js';
+import { Player }     from './src/class/Player.js';
+import { Stage }      from './src/class/Stage.js';
+import { Projectile } from './src/class/weapons/Projectile.js';
 
 const game = {
   animations     : [],
