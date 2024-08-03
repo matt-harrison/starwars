@@ -1,10 +1,7 @@
-import { MAGNIFICATION } from '@/constants/config.js';
-
-export const WEAPON_TYPES = {
-  BOMB      : 'bomb',
-  PROJECTILE: 'projectile',
-  LIGHTSABER: 'lightsaber'
-};
+import { 
+  MAGNIFICATION, 
+  WEAPON_TYPES,
+} from '@/constants/Config.js';
 
 const BOMB = {
   name: 'bomb',

@@ -1,4 +1,4 @@
-import { IS_MOBILE } from '@/constants/index.js';
+import { IS_MOBILE } from '@/constants/Config.js';
 import { attachNode } from '@/utils.js';
 
 export const Game = function({ game }) {

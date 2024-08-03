@@ -1,13 +1,13 @@
-import { DEATH_STAR } from '@/class/backgrounds/DeathStar.js';
-import { DUST } from '@/class/backgrounds/Dust.js';
-import { GRASS } from '@/class/backgrounds/Grass.js';
-import { MARBLE } from '@/class/backgrounds/Marble.js';
-import { SANDCRAWLER } from '@/class/backgrounds/Sandcrawler.js';
-import { SAND } from '@/class/backgrounds/Sand.js';
-import { SNOW } from '@/class/backgrounds/Snow.js';
-import { SPACE } from '@/class/backgrounds/Space.js';
-import { STONE } from '@/class/backgrounds/Stone.js';
-import { TANTIVE_IV } from '@/class/backgrounds/TantiveIv.js';
+import { DEATH_STAR } from '@/constants/backgrounds/DeathStar.js';
+import { DUST } from '@/constants/backgrounds/Dust.js';
+import { GRASS } from '@/constants/backgrounds/Grass.js';
+import { MARBLE } from '@/constants/backgrounds/Marble.js';
+import { SANDCRAWLER } from '@/constants/backgrounds/Sandcrawler.js';
+import { SAND } from '@/constants/backgrounds/Sand.js';
+import { SNOW } from '@/constants/backgrounds/Snow.js';
+import { SPACE } from '@/constants/backgrounds/Space.js';
+import { STONE } from '@/constants/backgrounds/Stone.js';
+import { TANTIVE_IV } from '@/constants/backgrounds/TantiveIv.js';
 
 export const BACKGROUNDS = {
   DEATH_STAR,

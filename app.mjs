@@ -1,3 +1,7 @@
+
+import * as CHARACTERS from '@/constants/Characters.js';
+import { WEAPON_TYPES } from '@/constants/Config.js';
+
 import {
   add,
   changeDirection,
@@ -6,25 +10,27 @@ import {
   getIsOnStage,
   getRandom,
   preload
-} from './src/utils.js';
+} from '@/utils.js';
+
 
 import {
   ACTOR_TYPES,
-  ATTRACTION,
   BUTTON_NAMES,
   CARDINALS,
-  CHARACTERS,
   COLORS,
-  EPISODES,
   FPS,
   HUD_OPACITY,
   INFINITY,
   IS_MOBILE,
   KEYS,
   MODES,
-  NUMERALS,
-  WEAPON_TYPES
-} from './src/constants/index.js';
+  NUMERALS
+} from '@/constants/Config.js';
+
+import {
+  ATTRACTION,
+  EPISODES
+} from '@/constants/Episodes.js';
 
 import { Actor }      from './src/class/Actor.js';
 import { Cutscene }   from './src/class/Cutscene.js';
@@ -33,7 +39,7 @@ import { Hud }        from './src/class/Hud.js';
 import { Obstacle }   from './src/class/Obstacle.js';
 import { Player }     from './src/class/Player.js';
 import { Stage }      from './src/class/Stage.js';
-import { Projectile } from './src/class/weapons/Projectile.js';
+import { Projectile } from './src/constants/weapons/Projectile.js';
 
 const game = {
   animations     : [],

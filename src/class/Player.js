@@ -1,3 +1,9 @@
+import { Animation }  from '@/class/Animation.js';
+import { Bomb }       from '@/constants/weapons/Bomb.js';
+import { Lightsaber } from '@/constants/weapons/Lightsaber.js';
+import { Projectile } from '@/constants/weapons/Projectile.js';
+import { WEAPONS } from '@/constants/Weapons.js';
+
 import {
   add,
   advanceFrame,
@@ -11,14 +17,8 @@ import {
   FPS,
   KEYS,
   MAGNIFICATION,
-  WEAPON_TYPES,
-  WEAPONS
-} from '@/constants/index.js';
-
-import { Animation }  from '@/class/Animation.js';
-import { Bomb }       from '@/class/weapons/Bomb.js';
-import { Lightsaber } from '@/class/weapons/Lightsaber.js';
-import { Projectile } from '@/class/weapons/Projectile.js';
+  WEAPON_TYPES, 
+} from '@/constants/Config.js';
 
 export const Player = function({
   data,

@@ -15,7 +15,7 @@ import {
   CARDINALS,
   FPS,
   MAGNIFICATION
-} from '@/constants/index.js';
+} from '@/constants/Config.js';
 
 import { Animation } from '@/class/Animation.js';
 

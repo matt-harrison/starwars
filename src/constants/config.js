@@ -71,3 +71,9 @@ export const NUMERALS = [
   'VIII',
   'IX'
 ];
+
+export const WEAPON_TYPES = {
+  BOMB      : 'bomb',
+  PROJECTILE: 'projectile',
+  LIGHTSABER: 'lightsaber'
+};

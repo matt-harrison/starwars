@@ -4,7 +4,7 @@ import {
   COLORS,
   INFINITY,
   MAGNIFICATION,
-} from '@/constants/index.js';
+} from '@/constants/Config.js';
 
 export const add = (num1, num2) => {
   return Number(num1) + Number(num2);

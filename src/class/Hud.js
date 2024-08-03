@@ -6,7 +6,7 @@ import {
   IS_MOBILE,
   KEYS,
   MODES
-} from '@/constants/index.js';
+} from '@/constants/Config.js';
 import { attachNode } from '@/utils.js';
 
 export const Hud = function({ game }) {

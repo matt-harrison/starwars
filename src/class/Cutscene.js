@@ -1,6 +1,6 @@
 import { attachNode } from '@/utils.js';
 
-import { COLORS, KEYS } from '@/constants/index.js';
+import { COLORS, KEYS } from '@/constants/Config.js';
 
 export const Cutscene = function({
   img,
