@@ -1,50 +1,47 @@
-import { 
-  MAGNIFICATION, 
-  WEAPON_TYPES,
-} from '@/constants/Config.ts';
+import { MAGNIFICATION, WEAPON_TYPES } from "@/constants/Config.ts";
 
 const BOMB = {
-  name: 'bomb',
-  type: WEAPON_TYPES.BOMB
+  name: "bomb",
+  type: WEAPON_TYPES.BOMB,
 };
 
 const GUNGAN_BALL = {
-  frameCount : 8,
+  frameCount: 8,
   frameHeight: 6 * MAGNIFICATION,
-  frameWidth : 6 * MAGNIFICATION,
-  name       : 'gunganBall',
-  type       : WEAPON_TYPES.PROJECTILE,
-  speed      : 10
+  frameWidth: 6 * MAGNIFICATION,
+  name: "gunganBall",
+  type: WEAPON_TYPES.PROJECTILE,
+  speed: 10,
 };
 
 const LASER = {
-  name : 'laser',
+  name: "laser",
   speed: 30,
-  type : WEAPON_TYPES.PROJECTILE
+  type: WEAPON_TYPES.PROJECTILE,
 };
 
 const LIGHTSABER = {
-  name : 'lightsaber',
+  name: "lightsaber",
   speed: 30,
-  type : WEAPON_TYPES.LIGHTSABER
+  type: WEAPON_TYPES.LIGHTSABER,
 };
 
 const ROCK = {
-  frameCount : 4,
+  frameCount: 4,
   frameHeight: 5 * MAGNIFICATION,
-  frameWidth : 5 * MAGNIFICATION,
-  name       : 'rock',
-  type       : WEAPON_TYPES.PROJECTILE,
-  speed      : 10
+  frameWidth: 5 * MAGNIFICATION,
+  name: "rock",
+  type: WEAPON_TYPES.PROJECTILE,
+  speed: 10,
 };
 
 const STUN = {
-  frameCount : 6,
+  frameCount: 6,
   frameHeight: 10 * MAGNIFICATION,
-  frameWidth : 10 * MAGNIFICATION,
-  name       : 'stun',
-  type       : WEAPON_TYPES.PROJECTILE,
-  speed      : 20
+  frameWidth: 10 * MAGNIFICATION,
+  name: "stun",
+  type: WEAPON_TYPES.PROJECTILE,
+  speed: 20,
 };
 
 export const WEAPONS = {
@@ -53,5 +50,5 @@ export const WEAPONS = {
   LASER,
   LIGHTSABER,
   ROCK,
-  STUN
+  STUN,
 };

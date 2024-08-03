@@ -1,18 +1,15 @@
-import { attachNode } from '@/utils.ts';
+import { attachNode } from "@/utils.ts";
 
-export const Obstacle = function({
-  data,
-  game
-}) {
+export const Obstacle = function ({ data, game }) {
   Object.assign(this, {
-    frameCount : data.frameCount,
+    frameCount: data.frameCount,
     frameHeight: data.frameHeight,
-    frameWidth : data.frameWidth,
-    height     : data.height,
-    img        : data.img,
-    width      : data.width,
+    frameWidth: data.frameWidth,
+    height: data.height,
+    img: data.img,
+    width: data.width,
     leftPercent: data.x,
-    topPercent : data.y
+    topPercent: data.y,
   });
 
   if (this.leftPercent === 0) {
@@ -20,7 +17,7 @@ export const Obstacle = function({
   } else if (this.leftPercent === 100) {
     this.x = game.width - this.frameWidth;
   } else {
-    this.x = game.width * (this.leftPercent / 100) - (this.frameWidth / 2);
+    this.x = game.width * (this.leftPercent / 100) - this.frameWidth / 2;
   }
 
   if (this.topPercent === 0) {
@@ -28,24 +25,24 @@ export const Obstacle = function({
   } else if (this.topPercent === 100) {
     this.y = game.height - this.frameHeight;
   } else {
-    this.y = game.height * (this.topPercent / 100) - (this.frameHeight / 2);
+    this.y = game.height * (this.topPercent / 100) - this.frameHeight / 2;
   }
 
   this.selector = attachNode({
     attributes: {
-      id: `obstacle${game.obstacles.length}`
+      id: `obstacle${game.obstacles.length}`,
     },
     parent: game.stage.selector,
     styles: {
       backgroundImage: `url('img/obstacles/${this.img}.png')`,
-      backgroundSize : `${this.width}px ${this.height}px`,
-      height         : `${this.frameHeight}px`,
-      left           : `${this.x}px`,
-      position       : 'absolute',
-      top            : `${this.y}px`,
-      width          : `${this.frameWidth}px`,
-      zIndex         : this.y
-    }
+      backgroundSize: `${this.width}px ${this.height}px`,
+      height: `${this.frameHeight}px`,
+      left: `${this.x}px`,
+      position: "absolute",
+      top: `${this.y}px`,
+      width: `${this.frameWidth}px`,
+      zIndex: this.y,
+    },
   });
 
   game.obstacles.push(this);
@@ -58,11 +55,11 @@ export const Obstacle = function({
         this.spriteColumn = 0;
       }
     }
-  }
+  };
 
   this.draw = () => {
     this.selector.style.backgroundPosition = `${0 - this.spriteColumn * this.frameWidth}px 0`;
-    this.selector.style.left               = `${this.x}px`;
-    this.selector.style.top                = `${this.y}px`;
-  }
+    this.selector.style.left = `${this.x}px`;
+    this.selector.style.top = `${this.y}px`;
+  };
 };

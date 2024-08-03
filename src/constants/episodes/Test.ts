@@ -1,11 +1,7 @@
-import * as CHARACTERS from '@/constants/Characters.ts';
-import {
-  CARDINALS,
-  COLORS,
-  FPS,
-} from '@/constants/Config.ts';
-import { BACKGROUNDS } from '@/constants/Backgrounds.ts';
-import { OBSTACLES } from '@/constants/Obstacles.ts';
+import * as CHARACTERS from "@/constants/Characters.ts";
+import { CARDINALS, COLORS, FPS } from "@/constants/Config.ts";
+import { BACKGROUNDS } from "@/constants/Backgrounds.ts";
+import { OBSTACLES } from "@/constants/Obstacles.ts";
 
 export const TEST = {
   bg: BACKGROUNDS.DUST,
@@ -13,27 +9,27 @@ export const TEST = {
     {
       character: CHARACTERS.darthvader,
       details: {
-        dir       : CARDINALS.DOWN,
-        hp        : 1,
-        spawnDelay: 1 * FPS
-      }
+        dir: CARDINALS.DOWN,
+        hp: 1,
+        spawnDelay: 1 * FPS,
+      },
     },
     {
       character: CHARACTERS.darthvader5,
       details: {
-        dir       : CARDINALS.UP,
-        hp        : 1,
-        spawnDelay: 2 * FPS
-      }
+        dir: CARDINALS.UP,
+        hp: 1,
+        spawnDelay: 2 * FPS,
+      },
     },
     {
       character: CHARACTERS.darthvader6,
       details: {
-        dir       : CARDINALS.UP,
-        hp        : 1,
-        spawnDelay: 3 * FPS
-      }
-    }
+        dir: CARDINALS.UP,
+        hp: 1,
+        spawnDelay: 3 * FPS,
+      },
+    },
   ],
   character: CHARACTERS.stormtrooper,
   cutscenes: [],
@@ -49,11 +45,11 @@ export const TEST = {
     // }
   ],
   enemiesRequiredData: {
-    character    : CHARACTERS.stormtrooper,
-    count        : 1,
-    dir          : CARDINALS.LEFT,
-    hp           : 1,
-    spawnInterval: 1 * FPS
+    character: CHARACTERS.stormtrooper,
+    count: 1,
+    dir: CARDINALS.LEFT,
+    hp: 1,
+    spawnInterval: 1 * FPS,
   },
   friendlies: [
     // {
@@ -66,7 +62,7 @@ export const TEST = {
     //   }
     // }
   ],
-  name: 'Test Kitchen',
+  name: "Test Kitchen",
   neutrals: [
     // {
     //   character: CHARACTERS.arfive,
@@ -135,10 +131,10 @@ export const TEST = {
   obstacles: [
     {
       type: OBSTACLES.TABLE,
-      x   : 75,
-      y   : 75
-    }
+      x: 75,
+      y: 75,
+    },
   ],
-  password: '',
-  textColor: COLORS.BLACK
+  password: "",
+  textColor: COLORS.BLACK,
 };

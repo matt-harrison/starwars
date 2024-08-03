@@ -1,32 +1,28 @@
-import { add, attachNode, collision } from '@/utils.ts';
+import { add, attachNode, collision } from "@/utils.ts";
 
-import { Animation } from '@/class/Animation.ts';
-import { ANIMATIONS } from '@/constants/Animations.ts';
+import { Animation } from "@/class/Animation.ts";
+import { ANIMATIONS } from "@/constants/Animations.ts";
 
 import {
   CARDINALS,
   COLORS,
   MAGNIFICATION,
   WEAPON_TYPES,
-} from '@/constants/Config.ts';
+} from "@/constants/Config.ts";
 
-
-export const Bomb = function({
-  game,
-  origin
-}) {
-  this.frameCount   = 5;
-  this.frameHeight  = 1 * MAGNIFICATION;
-  this.frameWidth   = 1 * MAGNIFICATION;
-  this.isActive     = false;
-  this.origin       = origin;
+export const Bomb = function ({ game, origin }) {
+  this.frameCount = 5;
+  this.frameHeight = 1 * MAGNIFICATION;
+  this.frameWidth = 1 * MAGNIFICATION;
+  this.isActive = false;
+  this.origin = origin;
   this.spriteColumn = 0;
-  this.type         = WEAPON_TYPES.BOMB;
+  this.type = WEAPON_TYPES.BOMB;
 
   switch (origin.dir) {
     case CARDINALS.DOWN:
       this.x = origin.x + origin.frameWidth / 2;
-      this.y = origin.y + origin.frameHeight - (2 * MAGNIFICATION);
+      this.y = origin.y + origin.frameHeight - 2 * MAGNIFICATION;
       break;
     case CARDINALS.LEFT:
       this.x = origin.x + origin.frameWidth;
@@ -44,18 +40,18 @@ export const Bomb = function({
 
   this.selector = attachNode({
     attributes: {
-      id: `bomb${game.props.length}`
+      id: `bomb${game.props.length}`,
     },
     parent: game.stage.selector,
     styles: {
       backgroundColor: COLORS.BLACK,
-      height         : `${this.frameHeight}px`,
-      left           : `${this.x}px`,
-      position       : 'absolute',
-      top            : `${this.y}px`,
-      width          : `${this.frameWidth}px`,
-      zIndex         : add(this.y, this.frameHeight)
-    }
+      height: `${this.frameHeight}px`,
+      left: `${this.x}px`,
+      position: "absolute",
+      top: `${this.y}px`,
+      width: `${this.frameWidth}px`,
+      zIndex: add(this.y, this.frameHeight),
+    },
   });
 
   game.props.push(this);
@@ -68,15 +64,15 @@ export const Bomb = function({
     new Animation({
       data: ANIMATIONS.DETONATION,
       game,
-      origin: this
+      origin: this,
     });
-  }
+  };
 
   this.update = () => {
     if (!this.isActive && !collision(this, this.origin)) {
       this.isActive = true;
     }
-  }
+  };
 
   this.draw = () => {
     if (this.isActive) {
@@ -86,5 +82,5 @@ export const Bomb = function({
         this.selector.style.backgroundColor = COLORS.RED;
       }
     }
-  }
+  };
 };

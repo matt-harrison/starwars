@@ -1,15 +1,15 @@
-import { defineConfig } from 'vitest/config';
-import { fileURLToPath, URL } from 'url';
+import { defineConfig } from "vitest/config";
+import { fileURLToPath, URL } from "url";
 
 // https://vitejs.dev/config/
 export default defineConfig({
   build: {
-    sourcemap: 'inline',
+    sourcemap: "inline",
   },
   plugins: [],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url)),
+      "@": fileURLToPath(new URL("./src", import.meta.url)),
     },
   },
 });

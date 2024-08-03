@@ -1,62 +1,59 @@
-import { Animation }  from '@/class/Animation.ts';
-import { Bomb }       from '@/constants/weapons/Bomb.ts';
-import { Lightsaber } from '@/constants/weapons/Lightsaber.ts';
-import { Projectile } from '@/constants/weapons/Projectile.ts';
-import { WEAPONS } from '@/constants/Weapons.ts';
+import { Animation } from "@/class/Animation.ts";
+import { Bomb } from "@/constants/weapons/Bomb.ts";
+import { Lightsaber } from "@/constants/weapons/Lightsaber.ts";
+import { Projectile } from "@/constants/weapons/Projectile.ts";
+import { WEAPONS } from "@/constants/Weapons.ts";
 
 import {
   add,
   advanceFrame,
   attachNode,
   preload,
-  setPosition
-} from '@/utils.ts';
+  setPosition,
+} from "@/utils.ts";
 
 import {
   ACTOR_TYPES,
   FPS,
   KEYS,
   MAGNIFICATION,
-  WEAPON_TYPES, 
-} from '@/constants/Config.ts';
+  WEAPON_TYPES,
+} from "@/constants/Config.ts";
 
-export const Player = function({
-  data,
-  game
-}) {
+export const Player = function ({ data, game }) {
   Object.assign(this, {
-    code             : data.code,
-    death            : data.death,
-    frameCounts      : data.frameCounts,
-    frameHeight      : data.frameHeight,
-    frameWidth       : data.frameWidth,
-    isPropulsive     : data.isPropulsive,
-    moveFrameCount   : data.moveFrameCount,
-    name             : data.name,
-    speed            : data.speed,
-    sprite           : data.sprite,
-    weapon           : data.weapon,
-    weaponColor      : data.weaponColor,
-    weaponOffsetDown : data.weaponOffsetDown,
-    weaponOffsetLeft : data.weaponOffsetLeft,
+    code: data.code,
+    death: data.death,
+    frameCounts: data.frameCounts,
+    frameHeight: data.frameHeight,
+    frameWidth: data.frameWidth,
+    isPropulsive: data.isPropulsive,
+    moveFrameCount: data.moveFrameCount,
+    name: data.name,
+    speed: data.speed,
+    sprite: data.sprite,
+    weapon: data.weapon,
+    weaponColor: data.weaponColor,
+    weaponOffsetDown: data.weaponOffsetDown,
+    weaponOffsetLeft: data.weaponOffsetLeft,
     weaponOffsetRight: data.weaponOffsetRight,
-    weaponOffsetUp   : data.weaponOffsetUp
+    weaponOffsetUp: data.weaponOffsetUp,
   });
 
-  this.bounceCount   = 0;
-  this.dir           = 'down';
-  this.isActive      = true;
-  this.isAttacking   = false;
+  this.bounceCount = 0;
+  this.dir = "down";
+  this.isActive = true;
+  this.isAttacking = false;
   this.isWeaponReady = true;
-  this.lightsaber    = '';
-  this.isRunning     = false;
-  this.speed         = this.speed * (MAGNIFICATION / 5);
-  this.spriteColumn  = 0;
-  this.spriteRow     = 2;
-  this.type          = ACTOR_TYPES.PLAYER;
+  this.lightsaber = "";
+  this.isRunning = false;
+  this.speed = this.speed * (MAGNIFICATION / 5);
+  this.spriteColumn = 0;
+  this.spriteRow = 2;
+  this.type = ACTOR_TYPES.PLAYER;
   this.weaponCounter = 0;
-  this.x             = Math.floor((game.width - this.frameWidth) / 2);
-  this.y             = Math.floor((game.height - this.frameHeight) / 2);
+  this.x = Math.floor((game.width - this.frameWidth) / 2);
+  this.y = Math.floor((game.height - this.frameHeight) / 2);
 
   switch (this.weapon) {
     case WEAPONS.BOMB:
@@ -64,7 +61,7 @@ export const Player = function({
       break;
     case WEAPONS.LASER:
       this.weaponDelay = FPS / 4;
-      break
+      break;
     case WEAPONS.LIGHTSABER:
     case WEAPONS.STUN:
       this.weaponDelay = FPS / 8;
@@ -78,18 +75,18 @@ export const Player = function({
 
   this.selector = attachNode({
     attributes: {
-      id: 'player'
+      id: "player",
     },
     parent: game.stage.selector,
     styles: {
-      backgroundImage : `url('img/${this.sprite}.png')`,
-      backgroundRepeat: 'no-repeat',
-      backgroundSize  : `${this.frameWidth * this.frameCounts.x}px ${this.frameHeight * this.frameCounts.y}px`,
-      height          : `${this.frameHeight}px`,
-      position        : 'absolute',
-      width           : `${this.frameWidth}px`,
-      zIndex          : add(this.y, this.frameHeight)
-    }
+      backgroundImage: `url('img/${this.sprite}.png')`,
+      backgroundRepeat: "no-repeat",
+      backgroundSize: `${this.frameWidth * this.frameCounts.x}px ${this.frameHeight * this.frameCounts.y}px`,
+      height: `${this.frameHeight}px`,
+      position: "absolute",
+      width: `${this.frameWidth}px`,
+      zIndex: add(this.y, this.frameHeight),
+    },
   });
 
   if (this.death) {
@@ -101,50 +98,50 @@ export const Player = function({
       if (this.weapon.type === WEAPON_TYPES.PROJECTILE) {
         new Projectile({
           game,
-          origin: this
+          origin: this,
         });
       } else if (this.weapon.type === WEAPON_TYPES.LIGHTSABER) {
-        const isLongRange = (key === KEYS.Z);
+        const isLongRange = key === KEYS.Z;
 
         this.lightsaber = new Lightsaber({
           isLongRange,
           game,
-          origin: this
+          origin: this,
         });
 
         game.keys = [key];
 
-        this.isAttacking  = true;
-        this.isRunning    = false;
+        this.isAttacking = true;
+        this.isRunning = false;
         this.spriteColumn = this.moveFrameCount + 1;
       } else {
         new Bomb({
           game,
-          origin: this
+          origin: this,
         });
       }
 
       this.isWeaponReady = false;
     }
-  }
+  };
 
   this.kill = () => {
-    this.isActive     = false;
+    this.isActive = false;
     this.spriteColumn = 0;
-    this.spriteRow    = 4;
+    this.spriteRow = 4;
 
     if (this.death) {
       new Animation({
         data: this.death,
         game,
-        origin: this
+        origin: this,
       });
 
-      if (this.lightsaber !== '') {
+      if (this.lightsaber !== "") {
         this.lightsaber.kill();
       }
     }
-  }
+  };
 
   this.update = () => {
     if (this.isActive) {
@@ -160,13 +157,13 @@ export const Player = function({
         }
       }
     }
-  }
+  };
 
   this.draw = () => {
     this.selector.style.backgroundPosition = `${0 - this.spriteColumn * this.frameWidth}px ${0 - this.spriteRow * this.frameHeight}px`;
-    this.selector.style.left               = `${this.x}px`;
-    this.selector.style.top                = `${this.y}px`;
-    this.selector.style.zIndex             = add(this.y, this.frameHeight);
+    this.selector.style.left = `${this.x}px`;
+    this.selector.style.top = `${this.y}px`;
+    this.selector.style.zIndex = add(this.y, this.frameHeight);
   };
 
   this.draw();
